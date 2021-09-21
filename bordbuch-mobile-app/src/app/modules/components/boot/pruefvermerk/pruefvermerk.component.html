@@ -1,0 +1,50 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="pruefvermerkForm">
+            <div class="relative my-5">
+              <input type="text" formControlName="id" required>
+              <span class="bar"></span>
+              <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+              <input type="number" formControlName="id_ship" required>
+              <span class="bar"></span>
+              <label class="text-black">Id_ship</label>
+            </div>
+            <div class="relative my-5">
+              <input type="datetime-local" formControlName="date">
+              <span class="bar"></span>
+              <label class="text-black">Datum/Uhrzeit</label>
+            </div>
+            <div class="relative my-5">
+              <ng-select [dropdownPosition]="'bottom'" [items]="pruefvermerke" bindLabel="item" bindValue="item"
+                groupBy="kategorie" formControlName="item" required></ng-select>
+              <span class="bar"></span>
+              <label class="text-black">Bestandteil</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="description" required>
+              <span class="bar"></span>
+              <label class="text-black">Beschreibung</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="status" required>
+              <span class="bar"></span>
+              <label class="text-black">Status</label>
+            </div>
+          </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+            <button (click)="create()" *ngIf="!edit" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Prüfvermerk erstellen</button>
+    </div>
+</ng-template>

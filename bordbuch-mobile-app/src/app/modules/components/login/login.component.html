@@ -1,0 +1,27 @@
+<div class="h-screen w-screen grid place-items-center z-0">
+  <!-- <div class="bg-glass h-full w-full z-10"></div> -->
+  <div class="absolute w-full h-full grid place-items-center z-20">
+
+    <div class="w-96 p-10 bg-white rounded-lg shadow-lg z-20">
+      <h1 class="my-10 text-3xl text-gray-800">Bordbuch</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        
+        <div class="relative my-7">
+          <input type="text" formControlName="username" required>
+          <span class="bar"></span>
+          <label class="text-black">Benutzername</label>
+        </div>
+        
+        <div class="relative my-7">
+          <input type="password" formControlName="password" required>
+          <span class="bar"></span>
+          <label class="text-black">Kennwort</label>
+        </div>
+        
+        <div class="flex">
+          <button class="w-full p-3 mt-3 bg-gray-800 text-white rounded-md shadow-lg">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

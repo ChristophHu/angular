@@ -1,0 +1,37 @@
+@import 'tailwindcss/base'
+@import 'tailwindcss/components'
+@import 'tailwindcss/utilities'
+/* You can add global styles to this file, and also import other style files */
+
+@import "~leaflet/dist/leaflet.css"
+
+* 
+    outline: none
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+body
+    @apply bg-gray-100
+
+/* simple-modal */
+app-simple-modal 
+    @apply hidden
+
+    .modal
+        @apply fixed top-20 right-0 bottom-0 left-0 z-50 overflow-auto
+
+        .modal-body
+            @apply w-full mx-auto bg-white rounded-lg shadow-md lg:max-w-lg md:max-w-md
+
+    .overlay 
+        @apply fixed bg-gray-900 opacity-40 top-0 right-0 bottom-0 left-0 z-40    
+
+    header
+        @apply bg-gray-100 border-b px-5 pt-5 rounded-t-lg
+
+    footer
+        @apply bg-gray-100 border-t px-5 py-3 rounded-b-lg
+
+    // .content
+    //     @apply bg-white p-5

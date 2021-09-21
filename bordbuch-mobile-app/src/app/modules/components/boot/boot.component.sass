@@ -1,0 +1,58 @@
+/* input */
+input,
+select,
+ng-select
+  @apply block bg-none text-black text-lg font-medium w-full border-0 border-b border-gray-400
+  padding: 10px 10px 10px 5px
+  caret-color: transparent
+
+  &:focus
+    @apply ring-0 ring-offset-0
+
+  &:focus~label, &:valid~label, &:disabled~label,
+  &.ng-valid~label, &.ng-select-disabled~label
+    top: -14px
+    font-size: 14px
+    color: #363636
+
+  &:focus~.bar:before,
+  &.ng-select-opened~.bar:before
+    @apply w-full
+
+label
+  color: #707070
+  font-size: 18px
+  position: absolute
+  pointer-events: none
+  left: 6px
+  top: 16px
+  transition: 200ms ease all
+
+.bar
+  @apply block relative w-full
+
+  &:before
+    @apply absolute h-0.5 w-0 bottom-0 left-0
+    content: ''
+    background: #2196f3
+    transition: 300ms ease all
+
+.content
+  @apply absolute w-full mt-2 p-2 top-16 bottom-20 overflow-auto
+
+  &::-webkit-scrollbar
+    display: none
+
+.box
+  border-radius: 5px
+  box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%)
+  padding: 10px
+  margin: 10px
+  cursor: pointer
+  transition: all 0.2s ease-in-out
+
+  &:hover
+    transform: translateY(-3px)
+
+.blue 
+  border-top: 3px solid hsl(212, 86%, 64%)

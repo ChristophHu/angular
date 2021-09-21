@@ -1,0 +1,181 @@
+<div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
+  <a class="rotate-180 cursor-pointer" (click)="logout()">
+    <svg class="" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+  </a>
+  <span class="text-2xl text-gray-800">{{ schiff.name }}</span>
+  <a class="cursor-pointer" [routerLink]="['fahrt']" *ngIf="streife.status != 'aktiv'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
+  <a class="cursor-pointer" [routerLink]="['map']" *ngIf="streife.status == 'aktiv'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+    </svg>
+  </a>
+</div>
+
+<div class="content">
+  <div class="w-full bg-white rounded-lg p-2 shadow-lg">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="zweckFormGroup">
+        <form [formGroup]="zweckFormGroup">
+          <ng-template matStepLabel>Zweck der Fahrt</ng-template>
+          <p class="text-sm text-gray-500">
+            Es ist der Rufname und Zweck der Fahrt (Streifen-, Überführungs- oder Probefahrt) anzugeben.
+          </p>
+
+          <div class="relative my-6">
+            <input type="text" formControlName="kennung" required>
+            <span class="bar"></span>
+            <label class="text-black">Rufname</label>
+          </div>
+          <div class="relative my-6">
+            <!-- <input type="text" formControlName="zweck" required> -->
+            <ng-select [items]="zweck" bindLabel="name" bindValue="name" formControlName="zweck" required></ng-select>
+            <span class="bar"></span>
+            <label class="text-black">Fahrtzweck</label>
+          </div>
+
+          <div class="flex">
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button matStepperNext
+              *ngIf="zweckFormGroup.valid || streife.status == 'aktiv'" (click)="updateAktiveStreife()">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="besatzungFormGroup">
+        <!-- <form [formGroup]="besatzungFormGroup"> -->
+          <ng-template matStepLabel>Aktuelle Besatzung</ng-template>
+          <div class="md:space-y-0 space-y-1 p-4">
+            <div class="flex flex-wrap">
+              <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of streife.besatzung; index as index"
+                (click)="editMemberModal(index)">
+                <h2>{{ mitglied.funktion }}</h2>
+                <div class="grid grid-cols-2">
+                  <p class="text-gray-600 mr-2">
+                    Name
+                  </p>
+                  <p>
+                    {{ mitglied.name }}
+                  </p>
+                </div>
+                <div class="grid grid-cols-2">
+                  <p class="text-gray-600 mr-2">
+                    Pers.-Nr.
+                  </p>
+                  <p>
+                    {{ mitglied.persnr }}
+                  </p>
+                </div>
+                <div class="grid grid-cols-2">
+                  <p class="text-gray-600 mr-2">
+                    an Bord
+                  </p>
+                  <p>
+                    {{ mitglied.an_bord }}
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-2">
+                  <p class="text-gray-600 mr-2">
+                    von Bord
+                  </p>
+                  <p>
+                    {{ mitglied.von_bord }}
+                  </p>
+                </div>
+              </div>
+              <div class="box blue w-64 placeholder border border-gray-100 grid justify-center items-center"
+                (click)="addMemberModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- </div> -->
+          <div class="flex">
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+              matStepperPrevious>Zurück</button>
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+              matStepperNext>Weiter</button>
+          </div>
+        <!-- </form> -->
+      </mat-step>
+      <mat-step [stepControl]="bootFormGroup">
+        <form [formGroup]="bootFormGroup">
+          <ng-template matStepLabel>Zählerstände, Einsatzmittel, Mängel und Hinweise</ng-template>
+          
+          <p>Zählerstände</p>
+          <div class="md:space-y-0 space-y-1 p-4">
+            <div class="flex flex-wrap">
+              <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let zaehlerstand of zaehlerstaende; index as index"
+                (click)="editZaehlerstandModal(index)">
+                <div class="flex flex-col p-4">
+                  <h5 class="font-medium">{{ zaehlerstand.zaehlerstandstyp}}: <span>{{ zaehlerstand.value }}</span></h5>
+                  <p class="mt-2 text-sm text-gray-500">{{ zaehlerstand.date | stringToDate | date:'dd.MM.yyyy HH:mm' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <p>Gefertigte Prüfvermerke</p>
+          <div class="md:space-y-0 space-y-1 p-4">
+            <div class="flex flex-wrap">
+              <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let reparatur of reparaturen; index as index"
+                (click)="editPruefvermerkModal(index)">
+                <div class="flex flex-col p-4">
+                  <h5 class="font-medium">{{ reparatur.item }}</h5>
+                  <p class="mt-2 text-sm text-gray-500">{{ reparatur.date | stringToDate | date:'dd.MM.yyyy HH:mm'}}</p>
+                </div>
+              </div>
+              <div class="box blue w-64 rounded-lg shadow-md" (click)="addPruefvermerkModal()">
+                <div class="w-18 p-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+                <div class="flex flex-col p-4">
+                  <h5 class="font-medium">Einen neuen Prüfvermerk hinzufügen</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+              matStepperPrevious>Zurück</button>
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+              matStepperNext>Weiter</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Kontrolle der Eingaben</ng-template>
+        <p>Wenn alle Eingaben getätigt wurden, kann die Streife beginnen.</p>
+        <div>
+          <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+            matStepperPrevious>Zurück</button>
+          <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button (click)="stepper.reset()"
+            *ngIf="streife.status != 'aktiv'">Zurücksetzen</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+    <div class="flex">
+      <button class="p-3 mt-3 w-full bg-green-400 text-white rounded-md shadow-lg" mat-button (click)="startStreife()"
+        *ngIf="streife.status != 'aktiv'">Streife starten</button>
+      <button class="p-3 mt-3 w-full bg-gray-600 text-white rounded-md shadow-lg" mat-button (click)="beendeStreife()"
+        *ngIf="streife.status == 'aktiv'">Streife beenden</button>
+    </div>
+  </div>
+</div>
+

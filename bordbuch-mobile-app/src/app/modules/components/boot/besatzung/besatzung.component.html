@@ -1,0 +1,59 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="besatzungForm">
+            <div class="relative my-5">
+              <input type="text" formControlName="id" required>
+              <span class="bar"></span>
+              <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="id_streife" required>
+              <span class="bar"></span>
+              <label class="text-black">Id_Streife</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="funktion" required>
+              <span class="bar"></span>
+              <label class="text-black">Funktion</label>
+            </div>
+            <div class="relative my-5">
+              <input type="number" formControlName="persnr" required>
+              <span class="bar"></span>
+              <label class="text-black">Personalnummer</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="name" required>
+              <span class="bar"></span>
+              <label class="text-black">Name</label>
+            </div>
+            <div class="relative my-5">
+              <input type="datetime-local" formControlName="an_bord">
+              <span class="bar"></span>
+              <label class="text-black">An Bord</label>
+            </div>
+            <div class="relative my-5">
+              <input type="datetime-local" formControlName="von_bord">
+              <span class="bar"></span>
+              <label class="text-black">Von Bord</label>
+            </div>
+          </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <button (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+        <button (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
+        <div>
+            <button (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Besatzungsmitglied hinzufügen</button>
+            <button *ngIf="edit" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung übernehmen</button>
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        </div>
+    </div>
+</ng-template>
