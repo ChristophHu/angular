@@ -51,8 +51,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .add(
         i.subscribe(data => {
-          const position: Standort = { id_ship: '1', date: new Date().toISOString(), location: { latitude: 0, longitude: 0}, description: 'Testposition', id_streife: '1' }
-          this.appService.insertPosition(position)
+          if (this.appService._id_streife) {
+            const position: Standort = { id_ship: this.id, date: new Date().toISOString(), location: { latitude: 0, longitude: 0}, description: 'Testposition', id_streife: this.appService._id_streife }
+            this.appService.insertPosition(position)
+          }
         })
       )
     this.appService.getPosition(this.id)
@@ -103,8 +105,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setToLocalPosition() {
 	  this.positionSource$.subscribe({
-      next: (el: Position) => {
-        this.map.panTo(new L.LatLng(el.latitude, el.longitude))
+      next: (pos: Position) => {
+        this.map.panTo(new L.LatLng(pos.latitude, pos.longitude))
       },
       error: err => console.log(`error: ${err}`),
       complete: () => console.log(`complete`)
@@ -112,14 +114,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
   addPosition() {
+    console.log('click')
+    console.log(this.appService._id_streife)
     this.positionSource$.subscribe({
-      next: (el: Position) => {
-        this.map.panTo(new L.LatLng(el.latitude, el.longitude))
+      next: (pos: Position) => {
+
+        if (this.appService._id_streife) {
+          const position: Standort = { id_ship: this.id, date: new Date().toISOString(), location: { latitude: pos.latitude, longitude: pos.longitude}, description: 'Testposition', id_streife: this.appService._id_streife }
+          console.log(position)
+          this.appService.insertPosition(position)
+        }
       },
       error: err => console.log(`error: ${err}`),
       complete: () => console.log(`complete`)
-	  })
-
+    })
   }
 
 }

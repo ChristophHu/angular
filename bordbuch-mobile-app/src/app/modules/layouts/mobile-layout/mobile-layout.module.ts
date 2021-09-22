@@ -23,6 +23,8 @@ import { PruefvermerkComponent } from '../../components/boot/pruefvermerk/pruefv
 import { ZaehlerstandComponent } from '../../components/boot/zaehlerstand/zaehlerstand.component';
 import { PositionenComponent } from '../../components/positionen/positionen.component';
 import { PositionsetzenComponent } from '../../components/map/positionsetzen/positionsetzen.component';
+import { PositionComponent } from '../../components/positionen/position/position.component';
+import { TankzettelComponent } from '../../components/positionen/tankzettel/tankzettel.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { PositionsetzenComponent } from '../../components/map/positionsetzen/pos
     StringToDatePipe,
     MapComponent,
     PositionenComponent,
-    PositionsetzenComponent
+    PositionsetzenComponent,
+    PositionComponent,
+    TankzettelComponent
   ],
   imports: [
     RouterModule,

@@ -109,6 +109,13 @@ export class AppService {
         }
     }
 
+    get _dataStore() {
+        return this.dataStore
+    }
+    get _id_streife() {
+        return this.dataStore.aktiveStreife[0].id
+    }
+
     // besatzung
     insertBesatzung(member: Besatzung) {
         if (member.id_streife) {
@@ -165,7 +172,8 @@ export class AppService {
             `id_schiff=${streife.id_schiff}&zweck=${streife.zweck}&status=${streife.status}&start=${streife.start}&kennung=${streife.kennung}`,
             this.httpOptions).subscribe((data: any) => {
                 // startposition
-                const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Beginn der ${streife.zweck}.`, id_streife: data.id }
+                streife.id = data.id
+                const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Beginn der ${streife.zweck}.`, id_streife: streife.id }
                 this.insertPosition(position)
                 // besatzung
                 this.dataStore.aktiveStreife[0].besatzung.forEach((member: Besatzung) => {
@@ -180,7 +188,6 @@ export class AppService {
         this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
         console.log(this.dataStore.aktiveStreife)
     }
-
     updateStreife(streife: Streife) {
         // update db
         this.httpClient.post(
@@ -236,7 +243,7 @@ export class AppService {
             `id=${zaehlerstand.id}&id_schiff=${zaehlerstand.id_ship}&value=${zaehlerstand.value}&date=${zaehlerstand.date}`, 
             this.httpOptions).subscribe((data: any) => {
                 console.log(data)
-            }, error => console.log(error)
+            }, error => console.error(error)
         )
         // update datastore
         this.dataStore.zaehlerstaende = this.dataStore.zaehlerstaende.filter(el => el.id != zaehlerstand.id)
@@ -246,12 +253,12 @@ export class AppService {
 
     // Position
     insertPosition(position: Standort) {
-        console.log(position)
         this.mapService.currentPosition
             .pipe(
                 take(1)
             )
             .subscribe(data => {
+                console.log('got position')
                 position.location = { latitude: data.latitude, longitude: data.longitude }
                 this.httpClient.post(
                     `http://192.168.178.220/polwsp/PolWSP.asmx/insertPosition`,
@@ -262,14 +269,17 @@ export class AppService {
                         )
                         .subscribe((data: any) => {
                             position.id = data.id
-                        }, error => console.log(error)
+                        }, error => console.error(error)
                     )
 
                 this.dataStore.positions.push(position)
                 this._positions.next(Object.assign({}, this.dataStore).positions)
-                console.log(this.dataStore.positions)
-            })
+            }, error => console.error(error)
+            )
         this.mapService.getCurrentPosition()
+    }
+    updatePosition() {
+        console.log('update')
     }
 
     deletePosition(id: string) {

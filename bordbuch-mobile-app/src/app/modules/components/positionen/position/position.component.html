@@ -1,0 +1,62 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">Position</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="positionForm">
+            <div class="relative my-5">
+              <input type="text" formControlName="id" required>
+              <span class="bar"></span>
+              <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="id_streife" required>
+              <span class="bar"></span>
+              <label class="text-black">Id_Streife</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="id_ship" required>
+                <span class="bar"></span>
+                <label class="text-black">Id_Schiff</label>
+              </div>
+              <div class="relative my-5">
+                <input type="datetime-local" formControlName="date">
+                <span class="bar"></span>
+                <label class="text-black">Datum/Uhrzeit</label>
+              </div>
+              <div class="relative my-5">
+                <input type="text" formControlName="location">
+                <span class="bar"></span>
+                <label class="text-black">Position</label>
+              </div>
+              <div class="relative my-5">
+                <input type="text" formControlName="description">
+                <span class="bar"></span>
+                <label class="text-black">Beschreibung</label>
+              </div>
+          </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <!-- <button (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button> -->
+        <a class="flex items-center p-2 bg-gray-800 text-white rounded" (click)="delete()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span> Löschen</span>
+        </a>
+        <button *ngIf="!positionForm.pristine" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung übernehmen</button>
+
+        <!-- <button (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
+        <div>
+            <button (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Besatzungsmitglied hinzufügen</button>
+            <button *ngIf="edit" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung übernehmen</button>
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        </div> -->
+    </div>
+</ng-template>
