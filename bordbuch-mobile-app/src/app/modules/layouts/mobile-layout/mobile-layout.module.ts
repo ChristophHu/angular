@@ -10,11 +10,6 @@ import { BordbuchAuswahlComponent } from '../../components/bordbuch-auswahl/bord
 import { MobileLayoutRoutingModule } from './mobile-layout-routing.module';
 import { BootComponent } from '../../components/boot/boot.component';
 
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatCheckboxModule } from '@angular/material/checkbox'
 import { SimpleModalComponent } from 'src/app/shared/components/simple-modal/simple-modal.component';
 import { StringToDatePipe } from 'src/app/shared/pipes/string-to-date.pipe';
 import { MapComponent } from '../../components/map/map.component';
@@ -22,9 +17,15 @@ import { BesatzungComponent } from '../../components/boot/besatzung/besatzung.co
 import { PruefvermerkComponent } from '../../components/boot/pruefvermerk/pruefvermerk.component';
 import { ZaehlerstandComponent } from '../../components/boot/zaehlerstand/zaehlerstand.component';
 import { PositionenComponent } from '../../components/positionen/positionen.component';
-import { PositionsetzenComponent } from '../../components/map/positionsetzen/positionsetzen.component';
 import { PositionComponent } from '../../components/positionen/position/position.component';
 import { TankzettelComponent } from '../../components/positionen/tankzettel/tankzettel.component';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,6 @@ import { TankzettelComponent } from '../../components/positionen/tankzettel/tank
     StringToDatePipe,
     MapComponent,
     PositionenComponent,
-    PositionsetzenComponent,
     PositionComponent,
     TankzettelComponent
   ],
@@ -56,7 +56,8 @@ import { TankzettelComponent } from '../../components/positionen/tankzettel/tank
     MatFormFieldModule,
     MatTableModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule
   ]
 })
 export class MobileLayoutModule { }

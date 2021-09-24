@@ -51,6 +51,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .add(
         i.subscribe(data => {
+          console.log(this.appService._id_streife)
           if (this.appService._id_streife) {
             const position: Standort = { id_ship: this.id, date: new Date().toISOString(), location: { latitude: 0, longitude: 0}, description: 'Testposition', id_streife: this.appService._id_streife }
             this.appService.insertPosition(position)

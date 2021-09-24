@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Standort } from 'src/app/core/models/standort';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -21,7 +22,10 @@ export class PositionComponent implements OnInit {
       id_streife: [],
       id_ship: [],
       date: [],
-      location: [],
+      location: this._formBuilder.group({
+        latitude: [],
+        longitude: []
+      }),
       description: []
     })
   }
@@ -32,16 +36,23 @@ export class PositionComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalService.getData().then((data) => {
+      this.title = data.data.title
       this.positionForm.patchValue(data.data.position)
     })
   }
 
+  create() {
+    this.appService.insertPosition(this.positionForm.value)
+  }
+
   update() {
-    this.appService.updatePosition()
+    this.appService.updatePosition(this.positionForm.value)
+    this.modal?.close()
   }
 
   delete() {
-    this.appService.deletePosition(this.form.id.value)
+    this.appService.deletePosition(this.positionForm.value.id)
+    this.modal?.close()
   }
 
   cancel() {
