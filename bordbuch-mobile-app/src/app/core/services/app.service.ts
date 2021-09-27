@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { Reparatur } from '../models/reparatur';
 import { Schiff } from '../models/schiff';
 import { Streife } from '../models/streife';
@@ -78,6 +78,8 @@ export class AppService {
         pruefvermerke: [],
         zaehlerstandstypen: []
     }
+
+    private _notifications: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     private httpOptions = {
         headers: new HttpHeaders({
@@ -292,18 +294,19 @@ export class AppService {
                 take(1)
             )
             .subscribe(data => {
-                position.location = { latitude: data.latitude, longitude: data.longitude }
+                position.location = { latitude: (data.latitude+(Math.random()/25)), longitude: (data.longitude+(Math.random()/25)) }
                 position.id = this.reducer('insertPosition', position)
+                this.dataStore.positions.push(position)
+                this._positions.next(Object.assign({}, this.dataStore).positions)
+
+                this._notifications.next('Position gesetzt!')
 
             }, error => console.error(error))
-            this.mapService.getCurrentPosition()
-
-        this.dataStore.positions = this.dataStore.positions.filter(el => el.id != position.id)
-        this.dataStore.positions.push(position)
-        this._positions.next(Object.assign({}, this.dataStore).positions)
+            this.mapService.getCurrentPosition()        
     }
     updatePosition(position: Standort) {
         const status = this.reducer('updatePosition', position)
+        if (+status == 200) this._notifications.next('Position aktualisiert!')
 
         this.dataStore.positions = this.dataStore.positions.filter(el => el.id != position.id)
         this.dataStore.positions.push(position)
@@ -311,6 +314,8 @@ export class AppService {
     }
     deletePosition(id: string) {
         const status = this.reducer('deletePosition', id)
+        console.log(status)
+        if (+status == 200) this._notifications.next('Position gelöscht!')
 
         this.dataStore.positions = this.dataStore.positions.filter(el => el.id != id)
         this._positions.next(Object.assign({}, this.dataStore).positions)
@@ -387,5 +392,11 @@ export class AppService {
 
     reset() {
         this.dataStore = { schiffe: [], lastPositions: [], aktiveStreife: [], besatzung: [], positions: [], reparaturen: [], zaehlerstaende: [], standorte: [], pruefvermerke: [], zaehlerstandstypen: []}
+    }
+
+    /* notifications */
+    get notifications$(): Observable<string>
+    {
+        return this._notifications.asObservable();
     }
 }

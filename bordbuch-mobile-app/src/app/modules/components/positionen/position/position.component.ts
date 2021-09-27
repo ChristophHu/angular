@@ -42,6 +42,7 @@ export class PositionComponent implements OnInit {
   }
 
   create() {
+    console.log(this.positionForm.value)
     this.appService.insertPosition(this.positionForm.value)
   }
 

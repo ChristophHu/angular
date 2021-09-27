@@ -57,7 +57,7 @@ export class PositionenComponent implements OnInit, OnDestroy {
   }
 
   async openPositionModal(id?: string) {
-    
+    console.log('click')
     let position: Standort | undefined
 
     const { PositionComponent } = await import(

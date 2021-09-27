@@ -37,12 +37,14 @@ label
     background: #2196f3
     transition: 300ms ease all
 
+/* content */
 .content
   @apply absolute w-full mt-2 p-2 top-16 bottom-20 overflow-auto
 
   &::-webkit-scrollbar
     display: none
 
+/* blue-cards */
 .box
   border-radius: 5px
   box-shadow: 0px 30px 40px -20px hsl(229, 6%, 66%)
@@ -56,3 +58,18 @@ label
 
 .blue 
   border-top: 3px solid hsl(212, 86%, 64%)
+
+/* touch-scroll*/
+.line
+    @apply flex flex-nowrap -m-2 p-4 pb-8 overflow-auto
+    -webkit-overflow-scrolling: touch
+    -ms-overflow-style: -ms-autohiding-scrollbar
+
+    &::-webkit-scrollbar
+        display: none
+
+    .lineelement
+        @apply flex flex-col flex-none mr-2
+    
+        &:last-child
+            @apply mr-0

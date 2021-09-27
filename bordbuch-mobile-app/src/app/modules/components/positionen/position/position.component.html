@@ -9,7 +9,7 @@
               <span class="bar"></span>
               <label class="text-black">Id</label>
             </div>
-            <div class="relative my-5" hidden>
+            <div class="relative my-5">
               <input type="text" formControlName="id_streife" required>
               <span class="bar"></span>
               <label class="text-black">Id_Streife</label>
@@ -66,10 +66,11 @@
 
         <!-- <button (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button> -->
         <div>
-            <button *ngIf="!form.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+            
             <!-- <button *ngIf="edit" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung übernehmen</button> -->
             <button *ngIf="!positionForm.pristine && form.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
             <button *ngIf="positionForm.pristine" (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Schließen</button>
+            <button *ngIf="!form.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
         </div>
     </div>
 </ng-template>

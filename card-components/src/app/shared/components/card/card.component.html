@@ -1,4 +1,3 @@
-Test
 <!-- Flippable card -->
 <ng-container *ngIf="flippable">
 
@@ -14,18 +13,12 @@ Test
 
 </ng-container>
 
-<!-- Normal card -->
-<ng-container *ngIf="!flippable">
-
-    <!-- Content -->
+<!-- <ng-container *ngIf="!flippable">
     <ng-content></ng-content>
-
-    <!-- Expansion -->
     <div
         class="card-expansion"
         *ngIf="expanded"
         [@expandCollapse]>
         <ng-content select="[CardExpansion]"></ng-content>
     </div>
-
-</ng-container>
+</ng-container> -->

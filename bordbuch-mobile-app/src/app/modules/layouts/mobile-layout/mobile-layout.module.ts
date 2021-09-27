@@ -26,6 +26,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSortModule } from '@angular/material/sort';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { CardModule } from 'src/app/shared/components/card/card.module';
+import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { MatSortModule } from '@angular/material/sort';
     MapComponent,
     PositionenComponent,
     PositionComponent,
-    TankzettelComponent
+    TankzettelComponent,
+    SnackbarComponent
   ],
   imports: [
     RouterModule,
@@ -57,7 +61,10 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatStepperModule,
     MatCheckboxModule,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule,
+
+    CardModule
   ]
 })
 export class MobileLayoutModule { }
