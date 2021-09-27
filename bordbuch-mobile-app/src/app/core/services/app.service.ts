@@ -13,6 +13,7 @@ import { Zaehlerstandstyp } from '../models/zaehlerstandstyp';
 import { StatusStreife } from '../models/statusstreife';
 import { Position } from '../models/position';
 import { debounceTime, delay, distinct, retry, take } from 'rxjs/operators';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +88,7 @@ export class AppService {
         })
     }
 
-    constructor(private httpClient: HttpClient, private mapService: MapService) { }
+    constructor(private httpClient: HttpClient, private mapService: MapService, private notificationService: NotificationService) { }
 
     public dateToLocalISOString(dt: Date): string {
         dt.setHours(new Date().getHours()+2)
@@ -181,11 +182,7 @@ export class AppService {
         }
         
         return this.httpClient.post(baseURL, param, this.httpOptions)
-            .pipe(
-                retry(2),
-                take(1)
-            )
-
+            .pipe(retry(2), take(1))
     }
     getReducer(action: string, data: any): any {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
@@ -217,7 +214,7 @@ export class AppService {
 
     // streife
     insertStreife(streife: Streife) {
-        streife.id = this.reducer('insertStreife', streife)
+        // streife.id = this.reducer('insertStreife', streife)
         // startposition
         const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Beginn der ${streife.zweck}.`, id_streife: streife.id }
         this.insertPosition(position)
@@ -233,16 +230,16 @@ export class AppService {
     updateStreife(streife: Streife) {
         const status = this.reducer('updateStreife', streife)
         // position
-        if (status == '200') {
-            const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Ende der ${streife.zweck}.`, id_streife: streife.id }
-            this.insertPosition(position)
-        }
+        // if (status == '200') {
+        //     const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Ende der ${streife.zweck}.`, id_streife: streife.id }
+        //     this.insertPosition(position)
+        // }
     }
 
     // besatzung
     insertBesatzung(member: Besatzung) {
         if (member.id_streife) {
-            member.id = this.reducer('insertBesatzung', member)
+            // member.id = this.reducer('insertBesatzung', member)
         } else {
             member.id = this.dataStore.aktiveStreife[0].besatzung.length.toString()
         }
@@ -251,7 +248,7 @@ export class AppService {
     }
     updateBesatzung(member: Besatzung) {
         if (member.id_streife) {
-            member.id = this.reducer('updateBesatzung', member)
+            // member.id = this.reducer('updateBesatzung', member)
         }
         this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.id != member.id)
         this.dataStore.aktiveStreife[0].besatzung.push(member)
@@ -267,7 +264,7 @@ export class AppService {
 
     // pruefvermerk
     insertPruefvermerk(reparatur: Reparatur) {
-        reparatur.id = this.reducer('insertReparatur', reparatur)
+        // reparatur.id = this.reducer('insertReparatur', reparatur)
 
         this.dataStore.reparaturen.push(reparatur)
         this._reparaturen.next(Object.assign({}, this.dataStore).reparaturen)
@@ -290,12 +287,13 @@ export class AppService {
             )
             .subscribe(data => {
                 position.location = { latitude: (data.latitude+(Math.random()/25)), longitude: (data.longitude+(Math.random()/25)) }
-                position.id = this.reducer('insertPosition', position)
-                this.dataStore.positions.push(position)
-                this._positions.next(Object.assign({}, this.dataStore).positions)
-
-                this._notifications.next('Position gesetzt!')
-
+                // position.id = this.reducer('insertPosition', position)
+                this.reducer('insertPosition', position).subscribe(data => {
+                    position.id = data.id
+                    this.dataStore.positions.push(position)
+                    this._positions.next(Object.assign({}, this.dataStore).positions)
+                    this.notificationService.create('Position gesetzt!')
+                })
             }, error => console.error(error))
             this.mapService.getCurrentPosition()        
     }
