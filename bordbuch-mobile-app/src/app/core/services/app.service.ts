@@ -122,7 +122,7 @@ export class AppService {
     }
 
 
-    reducer(action: string, data: any): string {
+    reducer(action: string, data: any): Observable<any> {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
@@ -180,17 +180,12 @@ export class AppService {
                 break
         }
         
-        this.httpClient.post(baseURL, param, this.httpOptions)
+        return this.httpClient.post(baseURL, param, this.httpOptions)
             .pipe(
                 retry(2),
                 take(1)
             )
-            .subscribe(
-                (id: any) => {
-                    return id
-                }, error => console.error(error)
-            )
-        return ''
+
     }
     getReducer(action: string, data: any): any {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
