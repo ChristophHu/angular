@@ -30,10 +30,6 @@ export class PositionComponent implements OnInit {
     })
   }
 
-  get form() {
-		return this.positionForm.controls
-	}
-
   ngOnInit(): void {
     this.modalService.getData().then((data) => {
       this.title = data.data.title
@@ -42,8 +38,8 @@ export class PositionComponent implements OnInit {
   }
 
   create() {
-    console.log(this.positionForm.value)
     this.appService.insertPosition(this.positionForm.value)
+    this.modal?.close()
   }
 
   update() {

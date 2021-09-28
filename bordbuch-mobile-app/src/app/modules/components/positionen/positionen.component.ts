@@ -4,7 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 import { Standort } from 'src/app/core/models/standort';
 import { AppService } from 'src/app/core/services/app.service';
-import { MapService } from 'src/app/core/services/map.service';
+import { LocationService } from 'src/app/core/services/location.service';
+import { MapService } from 'src/app/core/services/map2.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from './position/position.component';
 
@@ -25,7 +26,7 @@ export class PositionenComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource<Standort>()
   @ViewChild(MatSort) sort!: MatSort;
   
-  constructor(private appService: AppService, private mapService: MapService, private modalService: ModalService<PositionComponent>) { }
+  constructor(private appService: AppService, private locationService: LocationService, private mapService: MapService, private modalService: ModalService<PositionComponent>) { }
 
   ngOnInit(): void {
     this._positionSubscription
@@ -57,7 +58,6 @@ export class PositionenComponent implements OnInit, OnDestroy {
   }
 
   async openPositionModal(id?: string) {
-    console.log('click')
     let position: Standort | undefined
 
     const { PositionComponent } = await import(
@@ -73,7 +73,7 @@ export class PositionenComponent implements OnInit, OnDestroy {
         }
       })
     } else {
-      this.mapService.currentPosition.subscribe((data: any) => {
+      this.locationService.getCurrentPosition().then((data: any) => {
         position = { id_ship: this.appService._id_schiff, id_streife: this.appService._id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
         this.modalService.open(PositionComponent, {
           data: {
@@ -82,7 +82,17 @@ export class PositionenComponent implements OnInit, OnDestroy {
           }
         })
       }, error => console.error(error))
-      this.mapService.getCurrentPosition()
+
+      // this.mapService.currentPosition.subscribe((data: any) => {
+      //   position = { id_ship: this.appService._id_schiff, id_streife: this.appService._id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
+      //   this.modalService.open(PositionComponent, {
+      //     data: {
+      //       title: 'Position hinzufügen',
+      //       position
+      //     }
+      //   })
+      // }, error => console.error(error))
+      // this.mapService.getCurrentPosition()
     }
   }
 }

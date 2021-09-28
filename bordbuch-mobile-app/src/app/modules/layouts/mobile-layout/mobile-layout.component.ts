@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AppService } from 'src/app/core/services/app.service';
+import { LocationService } from 'src/app/core/services/location.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.component';
 
@@ -31,7 +31,7 @@ export class MobileLayoutComponent implements OnInit, OnDestroy {
 
   openSnackBar(text: string) {
     this.matSnackBar.openFromComponent(SnackbarComponent, {
-      duration: 3000,
+      duration: 5000,
       verticalPosition: 'top',
       data: {
         text: text

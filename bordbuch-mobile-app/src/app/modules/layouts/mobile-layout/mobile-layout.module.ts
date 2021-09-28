@@ -29,6 +29,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { CardModule } from 'src/app/shared/components/card/card.module';
 import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.component';
+import { NumberFormatPipe } from 'src/app/shared/pipes/numberformat.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.c
     PositionenComponent,
     PositionComponent,
     TankzettelComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    NumberFormatPipe
   ],
   imports: [
     RouterModule,

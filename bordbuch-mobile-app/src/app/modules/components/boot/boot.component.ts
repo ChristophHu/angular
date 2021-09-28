@@ -15,6 +15,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
+import { LocationService } from 'src/app/core/services/location.service';
 
 @Component({
   selector: 'app-boot',
@@ -43,7 +44,7 @@ export class BootComponent implements OnInit {
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
 
-  constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private simpleModalService: SimpleModalService, private appService: AppService, private authService: AuthService, private modalService: ModalService<BesatzungComponent>, private modalServiceP: ModalService<PruefvermerkComponent>, private modalServiceZ: ModalService<ZaehlerstandComponent>) {
+  constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private locationService: LocationService, private simpleModalService: SimpleModalService, private appService: AppService, private authService: AuthService, private modalService: ModalService<BesatzungComponent>, private modalServiceP: ModalService<PruefvermerkComponent>, private modalServiceZ: ModalService<ZaehlerstandComponent>) {
 
     // streife
     this.zweckFormGroup = this._formBuilder.group({
@@ -86,10 +87,19 @@ export class BootComponent implements OnInit {
     this.appService.getZaehlerstaende(this.id)
     this.appService.getReparaturen(this.id)
 
-    if (this.streife.status == 'aktiv') {
+    if (this.streife.status == StatusStreife.aktiv) {
+      console.log('Streife aktiv')
       this.fZweck.kennung.disable()
       this.fZweck.zweck.disable()
     }
+
+    console.log(this.streife.status)
+    if (this.streife.status == StatusStreife.aktiv) {
+      this.locationService.locationServiceStart()
+    } else {
+      this.locationService.locationServiceStop()
+    }
+
 
     this.bootFormGroup = this._formBuilder.group({
 

@@ -6,7 +6,7 @@ import { Schiff } from '../models/schiff';
 import { Streife } from '../models/streife';
 import { Standort } from '../models/standort';
 import { Zaehlerstand } from '../models/zaehlerstand';
-import { MapService } from './map.service';
+import { MapService } from './map2.service';
 import { Besatzung } from '../models/besatzung';
 import { Pruefvermerk } from '../models/pruefvermerk';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp';
@@ -14,6 +14,7 @@ import { StatusStreife } from '../models/statusstreife';
 import { Position } from '../models/position';
 import { debounceTime, delay, distinct, retry, take } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
+import { LocationService } from './location.service';
 
 @Injectable({
   providedIn: 'root'
@@ -80,15 +81,13 @@ export class AppService {
         zaehlerstandstypen: []
     }
 
-    private _notifications: ReplaySubject<string> = new ReplaySubject<string>(1);
-
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/x-www-form-urlencoded'
         })
     }
 
-    constructor(private httpClient: HttpClient, private mapService: MapService, private notificationService: NotificationService) { }
+    constructor(private httpClient: HttpClient, private locationService: LocationService, private notificationService: NotificationService) { }
 
     public dateToLocalISOString(dt: Date): string {
         dt.setHours(new Date().getHours()+2)
@@ -215,31 +214,35 @@ export class AppService {
     // streife
     insertStreife(streife: Streife) {
         // streife.id = this.reducer('insertStreife', streife)
-        // startposition
-        const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Beginn der ${streife.zweck}.`, id_streife: streife.id }
-        this.insertPosition(position)
-        // besatzung
-        this.dataStore.aktiveStreife[0].besatzung.forEach((member: Besatzung) => {
-            member.id_streife = streife.id
-            this.insertBesatzung(member)
+        this.reducer('insertStreife', streife).subscribe(data => {
+            // startposition
+            streife.id = data.id
+            const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Beginn der ${streife.zweck}.`, id_streife: data.id }
+            this.insertPosition(position)
+            // besatzung
+            this.dataStore.aktiveStreife[0].besatzung.forEach((member: Besatzung) => {
+                member.id_streife = data.id
+                this.insertBesatzung(member)
+            })
+            this.dataStore.aktiveStreife[0] = streife
+            this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
         })
-
-        this.dataStore.aktiveStreife[0] = streife
-        this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
     }
     updateStreife(streife: Streife) {
-        const status = this.reducer('updateStreife', streife)
-        // position
-        // if (status == '200') {
-        //     const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Ende der ${streife.zweck}.`, id_streife: streife.id }
-        //     this.insertPosition(position)
-        // }
+        this.reducer('updateStreife', streife).subscribe(status => {
+            if (status == '200') {
+                const position: Standort = { id_ship: streife.id_schiff, date: new Date().toISOString(), location: { latitude: 0, longitude: 0 }, description: `Update der ${streife.zweck}.`, id_streife: streife.id }
+                this.insertPosition(position)
+            }
+        })
     }
 
     // besatzung
     insertBesatzung(member: Besatzung) {
         if (member.id_streife) {
-            // member.id = this.reducer('insertBesatzung', member)
+            this.reducer('insertBesatzung', member).subscribe(data => {
+                member.id = data.id
+            })
         } else {
             member.id = this.dataStore.aktiveStreife[0].besatzung.length.toString()
         }
@@ -248,15 +251,20 @@ export class AppService {
     }
     updateBesatzung(member: Besatzung) {
         if (member.id_streife) {
-            // member.id = this.reducer('updateBesatzung', member)
+            this.reducer('updateBesatzung', member).subscribe(data => {
+                member.id = data.id
+                this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.id != member.id)
+                this.dataStore.aktiveStreife[0].besatzung.push(member)
+                this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
+            })
         }
-        this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.id != member.id)
-        this.dataStore.aktiveStreife[0].besatzung.push(member)
-        this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
     }
     deleteBesatzung(member: Besatzung) {
         if (member.id_streife) {
-            const status = this.reducer('deleteBesatzung', member)
+            this.reducer('deleteBesatzung', member).subscribe(status => {
+                if (status == '200') {}
+            })
+
         }
         this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.persnr != member.persnr)
         this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
@@ -264,16 +272,18 @@ export class AppService {
 
     // pruefvermerk
     insertPruefvermerk(reparatur: Reparatur) {
-        // reparatur.id = this.reducer('insertReparatur', reparatur)
-
-        this.dataStore.reparaturen.push(reparatur)
-        this._reparaturen.next(Object.assign({}, this.dataStore).reparaturen)
+        this.reducer('insertReparatur', reparatur).subscribe(data => {
+            reparatur.id = data.id
+            this.dataStore.reparaturen.push(reparatur)
+            this._reparaturen.next(Object.assign({}, this.dataStore).reparaturen)
+        })
     }
 
     // zaehlerstand
     updateZaehlerstand(zaehlerstand: Zaehlerstand) {
-        const status = this.reducer('updateZaehlerstand', zaehlerstand)
-
+        const status = this.reducer('updateZaehlerstand', zaehlerstand).subscribe(status => {
+            if (status == '200') {}
+        })
         this.dataStore.zaehlerstaende = this.dataStore.zaehlerstaende.filter(el => el.id != zaehlerstand.id)
         this.dataStore.zaehlerstaende.push(zaehlerstand)
         this._zaehlerstaende.next(Object.assign({}, this.dataStore).zaehlerstaende)
@@ -281,37 +291,35 @@ export class AppService {
 
     // poition/standort
     insertPosition(position: Standort) {
-        this.mapService.currentPosition
-            .pipe(
-                take(1)
-            )
-            .subscribe(data => {
-                position.location = { latitude: (data.latitude+(Math.random()/25)), longitude: (data.longitude+(Math.random()/25)) }
-                // position.id = this.reducer('insertPosition', position)
-                this.reducer('insertPosition', position).subscribe(data => {
-                    position.id = data.id
-                    this.dataStore.positions.push(position)
-                    this._positions.next(Object.assign({}, this.dataStore).positions)
-                    this.notificationService.create('Position gesetzt!')
-                })
-            }, error => console.error(error))
-            this.mapService.getCurrentPosition()        
+        this.locationService.getCurrentPosition().then(data => {
+            position.location = { latitude: (data.latitude+(Math.random()/25)), longitude: (data.longitude+(Math.random()/25)) }
+            // position.id = this.reducer('insertPosition', position)
+            this.reducer('insertPosition', position).subscribe(data => {
+                position.id = data.id
+                this.dataStore.positions.push(position)
+                this._positions.next(Object.assign({}, this.dataStore).positions)
+                this.notificationService.create('Position gesetzt!')
+            })
+        }, error => console.error(error))    
     }
     updatePosition(position: Standort) {
-        const status = this.reducer('updatePosition', position)
-        if (+status == 200) this._notifications.next('Position aktualisiert!')
-
-        this.dataStore.positions = this.dataStore.positions.filter(el => el.id != position.id)
-        this.dataStore.positions.push(position)
-        this._positions.next(Object.assign({}, this.dataStore).positions)
+        this.reducer('updatePosition', position).subscribe(status => {
+            if (status == '200') {
+                this.dataStore.positions = this.dataStore.positions.filter(el => el.id != position.id)
+                this.dataStore.positions.push(position)
+                this._positions.next(Object.assign({}, this.dataStore).positions)
+                this.notificationService.create('Position aktualisiert!')
+            }
+        })
     }
     deletePosition(id: string) {
-        const status = this.reducer('deletePosition', id)
-        console.log(status)
-        if (+status == 200) this._notifications.next('Position gelöscht!')
-
-        this.dataStore.positions = this.dataStore.positions.filter(el => el.id != id)
-        this._positions.next(Object.assign({}, this.dataStore).positions)
+        this.reducer('deletePosition', id).subscribe(status => {
+            if (status == '200') {
+                this.dataStore.positions = this.dataStore.positions.filter(el => el.id != id)
+                this._positions.next(Object.assign({}, this.dataStore).positions)
+                this.notificationService.create('Position gelöscht!')
+            }
+        })
     }
 
     // get
@@ -320,7 +328,7 @@ export class AppService {
         source$.subscribe((data: any) => {
             this.dataStore.schiffe = data
             this._schiffe.next(Object.assign({}, this.dataStore).schiffe)
-        })        
+        })
     }
 
     getPruefvermerke() {
@@ -385,11 +393,5 @@ export class AppService {
 
     reset() {
         this.dataStore = { schiffe: [], lastPositions: [], aktiveStreife: [], besatzung: [], positions: [], reparaturen: [], zaehlerstaende: [], standorte: [], pruefvermerke: [], zaehlerstandstypen: []}
-    }
-
-    /* notifications */
-    get notifications$(): Observable<string>
-    {
-        return this._notifications.asObservable();
     }
 }
