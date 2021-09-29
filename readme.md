@@ -18,7 +18,7 @@ https://balramchavan.medium.com/best-practices-building-angular-services-using-f
 
 > Fassade ist ein Entwurfsmuster aus dem Bereich der Softwareentwicklung, das zur Kategorie der Strukturmuster (engl. structural design patterns) gehört. Es bietet eine einheitliche und meist vereinfachte Schnittstelle zu einer Menge von Schnittstellen eines Subsystems.
 >
-> <p style="color: gray;">Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides: Entwurfsmuster. 5. Auflage. Addison-Wesley, 1996, S. 212/p>
+> <p style="color: gray;">Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides: Entwurfsmuster. 5. Auflage. Addison-Wesley, 1996, S. 212
 
 Angular Services stellen Anwendungsdaten und Geschäftslogik bereit. Komponenten sollen diese Daten übernehmen und als Bindeglied zwischen View und DIenst fungieren.
 
