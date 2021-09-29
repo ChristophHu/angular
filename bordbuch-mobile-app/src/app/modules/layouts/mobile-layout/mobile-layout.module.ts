@@ -30,6 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { CardModule } from 'src/app/shared/components/card/card.module';
 import { SnackbarComponent } from 'src/app/shared/components/snackbar/snackbar.component';
 import { NumberFormatPipe } from 'src/app/shared/pipes/numberformat.pipe';
+import { IconLibraryModule } from 'projects/icon-library/src/lib/icon-library.module';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { NumberFormatPipe } from 'src/app/shared/pipes/numberformat.pipe';
     MatSortModule,
     MatSnackBarModule,
 
-    CardModule
+    CardModule,
+    IconLibraryModule
   ]
 })
 export class MobileLayoutModule { }

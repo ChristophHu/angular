@@ -122,6 +122,16 @@ export class AppComponent implements OnInit {
 
 ## Icon-Library
 
+### Implementierung
+
+```bash
+ng g library icon-library
+```
+
+```bash
+ng build icon-library
+```
+
 
 
 ## Leaflet
