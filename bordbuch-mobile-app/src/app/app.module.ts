@@ -10,11 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './modules/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TestComponent } from './modules/components/test/test.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    TestComponent
 
   ],
   imports: [

@@ -16,11 +16,11 @@ export class LoginComponent implements OnInit {
 	returnUrl: string = '/'
 	error: string = ''
 
-	constructor( private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthService ) {
-    this.loginForm = this.formBuilder.group({
-			username: ['24225131', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
-			password: ['password', Validators.required]
-		})
+	constructor( private _formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthService ) {
+    this.loginForm = this._formBuilder.group({
+		username: ['24225131', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+		password: ['password', Validators.required]
+	})
   }
 
 	ngOnInit() {
