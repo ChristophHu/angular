@@ -10,6 +10,39 @@ https://medium.com/ngconf/managing-complex-forms-in-angular-167e4141ee0f
 
 ## Documentation
 
+https://medium.com/vincent-ogloblinsky/compodoc-documentation-tool-for-angular-2-applications-44ec650e01a8
+
+### Installation
+
+```bash
+npm install -g @compodoc/compodoc
+```
+
+### Konfiguration
+
+Es ist eine Datei `tsconfig.doc.json`zu erstellen und der folgende Inhalt zu übertragen:
+
+```json
+{
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/app/file-to-exclude.ts"]
+}
+```
+
+In der `package.json` ist das Script zur Ausführung hinzuzufügen:
+
+```json
+"scripts": {
+  "compodoc": "npx compodoc -p tsconfig.doc.json"
+}
+```
+
+### Ausführung
+
+```bash
+npm run compodoc
+```
+
 
 
 ## FacadeService
@@ -87,7 +120,15 @@ export class AppComponent implements OnInit {
 
 
 
+## Icon-Library
+
+
+
 ## Leaflet
 
 https://rodrigokamada.medium.com/adding-the-map-leaflet-component-to-an-angular-application-b2e2cfca0080
+
+
+
+## Splash-Screen
 
