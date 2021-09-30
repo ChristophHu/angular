@@ -1,10 +1,12 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductsModule } from './products/products.module';
+
+import { ProductData } from './product-data';
 
 @NgModule({
   declarations: [
@@ -13,8 +15,8 @@ import { ProductsModule } from './products/products.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ProductsModule,
-    StoreModule.forRoot({}),
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(ProductData),
   ],
   providers: [],
   bootstrap: [AppComponent]

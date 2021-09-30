@@ -15,7 +15,10 @@ export interface ProductState {
 const initialState: ProductState = {
   showProductCode: true,
   currentProductId: null,
-  products: [],
+  products: [] = [
+    { id: 1, productName: 'TestName', productCode: 'TestCode', description: 'TestDescription', starRating: 1},
+    { id: 2, productName: 'TestName', productCode: 'TestCode', description: 'TestDescription', starRating: 1}
+  ],
   error: ''
 };
 

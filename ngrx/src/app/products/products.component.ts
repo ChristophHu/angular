@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+
+import { Product } from './product'
+import { State, getProducts } from './state/state'
 
 @Component({
   selector: 'app-products',
@@ -6,10 +11,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./products.component.sass']
 })
 export class ProductsComponent implements OnInit {
-
-  constructor() { }
+  // displayCode$!: Observable<boolean>
+  // selectedProduct$!: Observable<Product>
+  products$!: Observable<Product[]>
+  // errorMessage$!: Observable<string>
+  
+  constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
+    this.products$ = this.store.select(getProducts)
+    this.products$.subscribe(data => console.log(data))
   }
 
 }

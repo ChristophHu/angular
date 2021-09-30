@@ -16,6 +16,8 @@ import { BesatzungComponent } from './besatzung/besatzung.component';
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 import { LocationService } from 'src/app/core/services/location.service';
+import { Betankung } from 'src/app/core/models/betankung';
+import { TankzettelComponent } from '../boot/tankzettel/tankzettel.component';
 
 @Component({
   selector: 'app-boot',
@@ -27,6 +29,7 @@ export class BootComponent implements OnInit {
   schiff: Schiff = {id: '', name: '', marke: '', typ: '', identifikationsnummer: '', dienststelle: '', zaehlerstaende: []}
   streife: Streife = { id_schiff: this.schiff.id, zweck: '', status: StatusStreife.in_vorbereitung, start: '', ende: '', kennung: '', besatzung: [] }
   reparaturen: Reparatur[] = []
+  betankungen: Betankung[] = []
   zaehlerstaende: Zaehlerstand[] = []
 
   private bootSubscription = new Subscription
@@ -44,7 +47,7 @@ export class BootComponent implements OnInit {
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
 
-  constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private locationService: LocationService, private simpleModalService: SimpleModalService, private appService: AppService, private authService: AuthService, private modalService: ModalService<BesatzungComponent>, private modalServiceP: ModalService<PruefvermerkComponent>, private modalServiceZ: ModalService<ZaehlerstandComponent>) {
+  constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private locationService: LocationService, private simpleModalService: SimpleModalService, private appService: AppService, private authService: AuthService, private modalService: ModalService<BesatzungComponent>, private modalServiceP: ModalService<PruefvermerkComponent>, private modalServiceZ: ModalService<ZaehlerstandComponent>, private modalServiceT: ModalService<TankzettelComponent>) {
 
     // streife
     this.zweckFormGroup = this._formBuilder.group({
@@ -81,11 +84,17 @@ export class BootComponent implements OnInit {
           this.reparaturen = data
         })
       )
+      .add(
+        this.appService.betankung.subscribe(data => {
+          this.betankungen = data
+        })
+      )
     )
     this.appService.getSchiff(this.id)
     this.appService.getStreifeVonSchiff(this.id)
     this.appService.getZaehlerstaende(this.id)
     this.appService.getReparaturen(this.id)
+    this.appService.getBetankungen(this.id)
 
     if (this.streife.status == StatusStreife.aktiv) {
       console.log('Streife aktiv')
@@ -192,5 +201,32 @@ export class BootComponent implements OnInit {
         zaehlerstand: Object.assign(zaehlerstand, { id_ship: this.schiff.id }) 
       }
     })
+  }
+
+  async openBetankungModal(id?: string) {
+    let betankung: Betankung | undefined
+
+    const { TankzettelComponent } = await import(
+      '../boot/tankzettel/tankzettel.component'
+    )
+
+    if (id) {
+      betankung = this.appService._dataStore.betankung.find(el => el.id == id)
+      this.modalServiceT.open(TankzettelComponent, {
+        data: {
+          title: 'Tankzettel bearbeiten',
+        }
+      })
+    } else {
+      this.locationService.getCurrentPosition().then((data: any) => {
+        betankung = { id_ship: this.appService._id_schiff, date: new Date().toISOString(), ort: '', location: {latitude: data.latitude, longitude: data.longitude }, fuel: '', fuelfillingquantity: 0}
+        this.modalServiceT.open(TankzettelComponent, {
+          data: {
+            title: 'Tankzettel hinzufügen',
+            betankung
+          }
+        })
+      }, error => console.error(error))
+    }
   }
 }

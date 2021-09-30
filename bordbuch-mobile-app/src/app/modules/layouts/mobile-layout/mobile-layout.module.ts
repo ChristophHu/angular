@@ -18,7 +18,7 @@ import { PruefvermerkComponent } from '../../components/boot/pruefvermerk/pruefv
 import { ZaehlerstandComponent } from '../../components/boot/zaehlerstand/zaehlerstand.component';
 import { PositionenComponent } from '../../components/positionen/positionen.component';
 import { PositionComponent } from '../../components/positionen/position/position.component';
-import { TankzettelComponent } from '../../components/positionen/tankzettel/tankzettel.component';
+import { TankzettelComponent } from '../../components/boot/tankzettel/tankzettel.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';

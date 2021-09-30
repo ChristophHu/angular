@@ -15,6 +15,7 @@ import { Position } from '../models/position';
 import { debounceTime, delay, distinct, retry, take } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
 import { LocationService } from './location.service';
+import { Betankung } from '../models/betankung';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,9 @@ export class AppService {
 
     private _besatzung = new BehaviorSubject<Besatzung[]>([])
     readonly besatzung = this._besatzung.asObservable()
+
+    private _betankung = new BehaviorSubject<Betankung[]>([])
+    readonly betankung = this._betankung.asObservable()
 
     private _standorte = new BehaviorSubject<Standort[]>([])
     readonly standorte = this._standorte.asObservable()
@@ -58,6 +62,7 @@ export class AppService {
         lastPositions: any[], 
         aktiveStreife: Streife[], 
         besatzung: Besatzung[],
+        betankung: Betankung[],
         positions: Standort[],
 
         reparaturen: Reparatur[], 
@@ -71,6 +76,7 @@ export class AppService {
         lastPositions: [], 
         aktiveStreife: [], 
         besatzung: [],
+        betankung: [],
         positions: [],
 
         reparaturen: [],
@@ -151,6 +157,20 @@ export class AppService {
                 break
             }
 
+            // betankung
+            case 'insertBetankung': {
+                param = `id_schiff=${data.id_schiff}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfilllingquantity}`
+                break
+            }
+            case 'updateBesatzung': {
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfilllingquantity}`
+                break
+            }
+            case 'deleteBesatzung': {
+                param = `id=${data.id}`
+                break
+            }
+
             // pruefvermerk/reparatur
             case 'insertReparatur': {
                 param = `id_schiff=${data.id_ship}&id_status=9f666873-4fc4-4f9b-8f98-f3fa182be7eb&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
@@ -198,10 +218,13 @@ export class AppService {
                 param = `?id_schiff=${data}`
                 break
             
-            
             case 'getPosition':
             case 'getReparaturen':
                 param = `?id_schiff=${data}&all=true`
+                break
+
+            case 'getBetankungen':
+                param = `?id_schiff=${data}&all=false`
                 break
 
             default:
@@ -268,6 +291,31 @@ export class AppService {
         }
         this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.persnr != member.persnr)
         this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
+    }
+
+    // betankung
+    insertBetankung(betankung: Betankung) {
+        this.reducer('insertBetankung', betankung).subscribe(data => {
+            betankung.id = data.id
+            this.dataStore.betankung.push(betankung)
+            this._betankung.next(Object.assign({}, this.dataStore).betankung)
+        })
+    }
+    updateBetankung(betankung: Betankung) {
+        this.reducer('updateBetankung', betankung).subscribe(data => {
+            betankung.id = data.id
+            this.dataStore.betankung = this.dataStore.betankung.filter(el => el.id != betankung.id)
+            this.dataStore.betankung.push(betankung)
+            this._betankung.next(Object.assign({}, this.dataStore).betankung)
+        })
+    }
+    deleteBetankung(betankung: Betankung) {
+        this.reducer('deleteBetankung', betankung).subscribe(status => {
+            if (status == '200') {}
+        })
+
+        this.dataStore.betankung = this.dataStore.betankung.filter(el => el.id != betankung.id)
+        this._betankung.next(Object.assign({}, this.dataStore).betankung)
     }
 
     // pruefvermerk
@@ -366,6 +414,13 @@ export class AppService {
             this._reparaturen.next(Object.assign({}, this.dataStore).reparaturen)
         })
     }
+    getBetankungen(id : string) {
+        const source$ = this.getReducer('getBetankungen', id)
+        source$.subscribe((data: any) => {
+            this.dataStore.betankung = data
+            this._betankung.next(Object.assign({}, this.dataStore).betankung)
+        })
+    }
     getPosition(id : string) {
         const source$ = this.getReducer('getPosition', id)
         source$.subscribe((data: any) => {
@@ -392,6 +447,6 @@ export class AppService {
     }
 
     reset() {
-        this.dataStore = { schiffe: [], lastPositions: [], aktiveStreife: [], besatzung: [], positions: [], reparaturen: [], zaehlerstaende: [], standorte: [], pruefvermerke: [], zaehlerstandstypen: []}
+        this.dataStore = { schiffe: [], lastPositions: [], aktiveStreife: [], besatzung: [], betankung: [], positions: [], reparaturen: [], zaehlerstaende: [], standorte: [], pruefvermerke: [], zaehlerstandstypen: []}
     }
 }

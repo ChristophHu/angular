@@ -134,6 +134,141 @@ ng build icon-library
 
 
 
+## In Memory Web API
+
+Durch eine "In Memory Web API" wird eine API gemockt. Diese kann für Tests verwendet werden und emuliert CRUD-Operationen über eine REST API.
+
+### Installation
+
+```bash
+npm i angular-in-memory-web-api
+```
+
+
+
+### Implementierung
+
+Nach der Installation kann in der `app.module.ts` die Web API importiert werden.
+
+```typescript
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ProductData } from './product-data';
+...
+imports: [
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(ProductData)
+]
+```
+
+Durch die Datei `product-data.ts` wird dann die API bespielt:
+
+```typescript
+import { InMemoryDbService } from 'angular-in-memory-web-api';
+
+export interface Product {
+    id: number | null;
+    productName: string;
+    description: string;
+}
+
+export class ProductData implements InMemoryDbService {
+
+    createDb() {
+        const products: Product[] = [
+            {
+                id: 1,
+                productName: 'Leaf Rake',
+                description: 'Leaf rake with 48-inch wooden handle'
+            },
+            {
+                id: 2,
+                productName: 'Garden Cart',
+                description: '15 gallon capacity rolling garden cart'
+            }
+        ];
+        return { products };
+    }
+}
+
+```
+
+Diese Datenbank erhält im Anschluss eine Anbindung an: `/api/products`.
+
+Ab diesem Zeitpunkt kann durch jeden Service diese API angefragt werde:
+
+```typescript
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProductService implements OnInit {
+    private productsUrl = 'api/products';
+
+    constructor(private http: HttpClient) { }
+
+  ngOnInit(): void {
+    console.log('init')
+    this.http.post('commands/resetDb', { clear: true })
+  }
+
+    getProducts(): Observable<Product[]> {
+        console.log('test')
+        return this.http.get<Product[]>(this.productsUrl)
+          .pipe(
+            tap(data => console.log(JSON.stringify(data))),
+            catchError(this.handleError)
+          );
+    }
+    createProduct(product: Product): Observable<Product> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newProduct = { ...product, id: null };
+    return this.http.post<Product>(this.productsUrl, newProduct, { headers })
+      .pipe(
+        tap(data => console.log('createProduct: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+  deleteProduct(id: number): Observable<{}> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.delete<Product>(url, { headers })
+      .pipe(
+        tap(data => console.log('deleteProduct: ' + id)),
+        catchError(this.handleError)
+      );
+  }
+  updateProduct(product: Product): Observable<Product> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.productsUrl}/${product.id}`;
+    return this.http.put<Product>(url, product, { headers })
+      .pipe(
+        tap(() => console.log('updateProduct: ' + product.id)),
+        map(() => product),
+        catchError(this.handleError)
+      );
+  }
+
+    private handleError(err: any) {
+        let errorMessage: string;
+        if (err.error instanceof ErrorEvent) {
+          errorMessage = `An error occurred: ${err.error.message}`;
+        } else {
+          errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+        }
+        console.error(err);
+        return throwError(errorMessage);
+    }
+}
+```
+
+
+
 ## Leaflet
 
 https://rodrigokamada.medium.com/adding-the-map-leaflet-component-to-an-angular-application-b2e2cfca0080

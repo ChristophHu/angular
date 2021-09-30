@@ -165,6 +165,45 @@
                 </ng-container>
               </app-card>
             </div>
+
+            <p class="text-xl font-semibold leading-tight text-gray-500">Letzter Tankzettel</p>
+            <div class="line">
+              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+                <ng-container CardFront>
+                  <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                      <div>Menge (in L):</div>
+                      <div class="col-span-2">{{ betankung.fuelfillingquantity }}</div>
+                      <div>Erstellt:</div>
+                      <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                    </div>
+                  </div>
+
+                </ng-container>
+                <ng-container CardBack>
+                  <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                      <div>Ort:</div>
+                      <div class="col-span-2">{{ betankung.ort }}</div>
+                      <div>Erstellt:</div>
+                      <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </app-card>
+              <app-card class="lineelement w-80 h-40 mr-3" (click)="openBetankungModal()">
+                <ng-container CardSimple>
+                  <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">Betankung durchführen</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+                </ng-container>
+              </app-card>
+            </div>
           
           <div>
             <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button

@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Standort } from 'src/app/core/models/standort';
 import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { MapService } from 'src/app/core/services/map2.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from './position/position.component';
+import { TankzettelComponent } from '../boot/tankzettel/tankzettel.component';
 
 @Component({
   selector: 'app-positionen',
