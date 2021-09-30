@@ -140,5 +140,11 @@ https://rodrigokamada.medium.com/adding-the-map-leaflet-component-to-an-angular-
 
 
 
+## NgRx
+
+https://medium.com/@ZombieCodeKill/angular-ngrx-getting-started-f0202e0eba47
+
+
+
 ## Splash-Screen
 
