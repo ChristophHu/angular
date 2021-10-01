@@ -1,32 +1,20 @@
 <div class="absolute flex flex-row justify-between items-center w-full bg-gray-200 bg-opacity-90 h-16 px-3 text-gray-800 shadow-lg z-20">
-  <a class="rotate-180 cursor-pointer" [routerLink]="['/mobile', 'boot', id]">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
-    </svg>
+  <a class="cursor-pointer" [routerLink]="['/mobile', 'boot', id]">
+    <icons class="w-8 h-8" name="chevron-left"></icons>
   </a>
   <span class="text-2xl text-gray-800">Navigation</span>
   <div class="flex flex-row">
     <a class="cursor-pointer" (click)="setToLocalPosition()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
+      <icons class="w-8 h-8" name="location-marker"></icons>
     </a>
     <a class="ml-4 cursor-pointer" (click)="showMarkergroup()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-      </svg>
+      <icons class="w-8 h-8" name="refresh"></icons>
     </a>
     <a class="ml-4 cursor-pointer" (click)="openPositionModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-      </svg>
+      <icons class="w-8 h-8" name="location-add"></icons>
     </a>
     <a class="ml-4 cursor-pointer" [routerLink]="['/mobile', 'boot', id, 'positions']">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16M4 18h7" />
-      </svg>
+      <icons class="w-8 h-8" name="menu-alt-2"></icons>
     </a>
   </div>
 </div>
@@ -42,10 +30,3 @@
         </div>
     </div>
 </div>
-
-
-<!-- <div class="absolute w-full h-40 bottom-0 p-2 bg-gray-100 rounded-t-xl z-20">
-    <a class="p-2 bg-gray-800 text-gray-100 rounded cursor-pointer"  (click)="setToLocalPosition()">LocalPosition</a>
-    <a class="p-2 bg-gray-800 text-gray-100 rounded cursor-pointer">GetLocalPosition</a>
-    <a class="p-2 bg-gray-800 text-gray-100 rounded cursor-pointer" (click)="openModal('addPerson')">Position setzen</a>
-</div> -->

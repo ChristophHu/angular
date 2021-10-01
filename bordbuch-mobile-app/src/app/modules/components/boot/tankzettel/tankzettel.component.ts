@@ -13,7 +13,7 @@ export class TankzettelComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<TankzettelComponent> | undefined;
   title: string = ''
   betankungForm: FormGroup
-  edit: boolean = false
+  // edit: boolean = false
   
   constructor(private _formBuilder: FormBuilder, private modalService: ModalService<TankzettelComponent>, private appService: AppService) {
     this.betankungForm = this._formBuilder.group({
@@ -33,22 +33,22 @@ export class TankzettelComponent implements OnInit {
   ngOnInit(): void {
     this.modalService.getData().then((data: any) => {
       this.title = data.data.title
-      this.betankungForm.patchValue(data.data.position)
+      this.betankungForm.patchValue(data.data.betankung)
     })
   }
 
   create() {
-    this.appService.insertPosition(this.betankungForm.value)
+    this.appService.insertBetankung(this.betankungForm.value)
     this.modal?.close()
   }
 
   update() {
-    this.appService.updatePosition(this.betankungForm.value)
+    this.appService.updateBetankung(this.betankungForm.value)
     this.modal?.close()
   }
 
   delete() {
-    this.appService.deletePosition(this.betankungForm.value.id)
+    this.appService.deleteBetankung(this.betankungForm.value.id)
     this.modal?.close()
   }
 

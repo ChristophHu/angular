@@ -159,15 +159,16 @@ export class AppService {
 
             // betankung
             case 'insertBetankung': {
-                param = `id_schiff=${data.id_schiff}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfilllingquantity}`
+                console.log(data)
+                param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
             }
-            case 'updateBesatzung': {
-                param = `id=${data.id}&id_schiff=${data.id_schiff}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfilllingquantity}`
+            case 'updateBetankung': {
+                param = `id=${data.id}&id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
             }
-            case 'deleteBesatzung': {
-                param = `id=${data.id}`
+            case 'deleteBetankung': {
+                param = `id=${data}`
                 break
             }
 
@@ -275,7 +276,7 @@ export class AppService {
     updateBesatzung(member: Besatzung) {
         if (member.id_streife) {
             this.reducer('updateBesatzung', member).subscribe(data => {
-                member.id = data.id
+                member.id = data.id // Fehler?
                 this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.id != member.id)
                 this.dataStore.aktiveStreife[0].besatzung.push(member)
                 this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
@@ -295,7 +296,9 @@ export class AppService {
 
     // betankung
     insertBetankung(betankung: Betankung) {
+        console.log(betankung)
         this.reducer('insertBetankung', betankung).subscribe(data => {
+            console.log(data)
             betankung.id = data.id
             this.dataStore.betankung.push(betankung)
             this._betankung.next(Object.assign({}, this.dataStore).betankung)
@@ -303,18 +306,18 @@ export class AppService {
     }
     updateBetankung(betankung: Betankung) {
         this.reducer('updateBetankung', betankung).subscribe(data => {
-            betankung.id = data.id
+            betankung.id = data.id // Fehler?
             this.dataStore.betankung = this.dataStore.betankung.filter(el => el.id != betankung.id)
             this.dataStore.betankung.push(betankung)
             this._betankung.next(Object.assign({}, this.dataStore).betankung)
         })
     }
-    deleteBetankung(betankung: Betankung) {
-        this.reducer('deleteBetankung', betankung).subscribe(status => {
+    deleteBetankung(id: string) {
+        this.reducer('deleteBetankung', id).subscribe(status => {
             if (status == '200') {}
         })
 
-        this.dataStore.betankung = this.dataStore.betankung.filter(el => el.id != betankung.id)
+        this.dataStore.betankung = this.dataStore.betankung.filter(el => el.id != id)
         this._betankung.next(Object.assign({}, this.dataStore).betankung)
     }
 

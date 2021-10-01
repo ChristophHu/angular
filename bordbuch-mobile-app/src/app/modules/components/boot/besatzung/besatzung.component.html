@@ -30,12 +30,12 @@
               <label class="text-black">Name</label>
             </div>
             <div class="relative my-5">
-              <input type="datetime-local" formControlName="an_bord">
+              <input type="datetime-local" formControlName="an_bord" value="{{besatzungForm.value.an_bord | date:'yyyy-MM-ddTHH:mm':'+2:00'}}">
               <span class="bar"></span>
               <label class="text-black">An Bord</label>
             </div>
             <div class="relative my-5">
-              <input type="datetime-local" formControlName="von_bord">
+              <input type="datetime-local" formControlName="von_bord" value="{{besatzungForm.value.von_bord | date:'yyyy-MM-ddTHH:mm':'+2:00'}}">
               <span class="bar"></span>
               <label class="text-black">Von Bord</label>
             </div>

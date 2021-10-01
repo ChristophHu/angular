@@ -97,18 +97,15 @@ export class BootComponent implements OnInit {
     this.appService.getBetankungen(this.id)
 
     if (this.streife.status == StatusStreife.aktiv) {
-      console.log('Streife aktiv')
       this.fZweck.kennung.disable()
       this.fZweck.zweck.disable()
     }
 
-    console.log(this.streife.status)
     if (this.streife.status == StatusStreife.aktiv) {
       this.locationService.locationServiceStart()
     } else {
       this.locationService.locationServiceStop()
     }
-
 
     this.bootFormGroup = this._formBuilder.group({
 
@@ -215,6 +212,7 @@ export class BootComponent implements OnInit {
       this.modalServiceT.open(TankzettelComponent, {
         data: {
           title: 'Tankzettel bearbeiten',
+          betankung
         }
       })
     } else {

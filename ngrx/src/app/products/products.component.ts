@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 
-import { Product } from './product'
+import { Product } from './models/product'
 import { State, getProducts } from './state/state'
 
 @Component({

@@ -1,24 +1,22 @@
 <div class="flex flex-row justify-between items-center h-16 mb-4 px-3 text-gray-800 shadow-lg">
   <a class="rotate-180 cursor-pointer" (click)="logout()">
-    <svg class="" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-      stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-    </svg>
+    <icons class="w-8 h-8" name="logout"></icons>
   </a>
   <!-- <span class="text-2xl text-gray-800">Bootsauswahl</span> -->
   <div class="flex flex-row">
     <a class="cursor-pointer" (click)="showModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <icons class="w-8 h-8" name="qrcode"></icons>
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
           d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-      </svg>
+      </svg> -->
     </a>
     <a class="cursor-pointer" *ngIf="f.bordbuch.value" [routerLink]="['/mobile', 'boot', f.bordbuch.value]">
-      <svg xmlns="http://www.w3.org/2000/svg" class="ml-8 h-8 w-8" fill="none" viewBox="0 0 24 24"
+      <icons class="w-8 h-8" name="chevron-right"></icons>
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" class="ml-8 h-8 w-8" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
-      </svg>
+      </svg> -->
     </a>
   </div>
 </div>
