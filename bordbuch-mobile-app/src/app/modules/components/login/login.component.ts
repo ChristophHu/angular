@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
 	constructor( private _formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthService ) {
     this.loginForm = this._formBuilder.group({
-		username: ['24225131', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+		username: ['24225131', [Validators.required]],
 		password: ['password', Validators.required]
 	})
   }
@@ -46,11 +46,11 @@ export class LoginComponent implements OnInit {
 			.login(this.f.username.value, this.f.password.value)
 			.pipe() // Fehler: .pipe(first())
 			.subscribe(
-				data => {
+				(data: any) => {
 					this.error = ''
 					this.router.navigate(['auswahl']) // Fehler: this.returnUrl
 				},
-				error => {
+				(error: any) => {
 					console.log(error)
 					this.error = error
 				}
@@ -66,11 +66,11 @@ export class LoginComponent implements OnInit {
 			.login(this.f.username.value, this.f.password.value)
 			.pipe() // Fehler: .pipe(first())
 			.subscribe(
-				data => {
+				(data: any) => {
 					this.error = ''
 					this.router.navigate(['/admin']) // Fehler: this.returnUrl
 				},
-				error => {
+				(error: any) => {
 					console.log(error)
 					this.error = error
 				}
@@ -86,11 +86,11 @@ export class LoginComponent implements OnInit {
 			.login(this.f.username.value, this.f.password.value)
 			.pipe() // Fehler: .pipe(first())
 			.subscribe(
-				data => {
+				(data: any) => {
 					this.error = ''
 					this.router.navigate(['/service']) // Fehler: this.returnUrl
 				},
-				error => {
+				(error: any) => {
 					console.log(error)
 					this.error = error
 				}
@@ -106,11 +106,11 @@ export class LoginComponent implements OnInit {
 			.login(this.f.username.value, this.f.password.value)
 			.pipe() // Fehler: .pipe(first())
 			.subscribe(
-				data => {
+				(data: any) => {
 					this.error = ''
 					this.router.navigate(['/admin']) // Fehler: this.returnUrl
 				},
-				error => {
+				(error: any) => {
 					console.log(error)
 					this.error = error
 				}
