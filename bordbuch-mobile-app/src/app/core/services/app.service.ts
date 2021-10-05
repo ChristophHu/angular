@@ -1,18 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { Reparatur } from '../models/reparatur';
 import { Schiff } from '../models/schiff';
 import { Streife } from '../models/streife';
 import { Standort } from '../models/standort';
 import { Zaehlerstand } from '../models/zaehlerstand';
-import { MapService } from './map2.service';
 import { Besatzung } from '../models/besatzung';
 import { Pruefvermerk } from '../models/pruefvermerk';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp';
 import { StatusStreife } from '../models/statusstreife';
-import { Position } from '../models/position';
-import { debounceTime, delay, distinct, retry, take } from 'rxjs/operators';
+import { retry, take } from 'rxjs/operators';
 import { NotificationService } from './notification.service';
 import { LocationService } from './location.service';
 import { Betankung } from '../models/betankung';
@@ -22,6 +20,9 @@ import { Betankung } from '../models/betankung';
 })
 
 export class AppService {
+
+    private _positionSubscription = new Subscription
+    private i: Observable<number> = interval(60000)
 
     private _schiffe = new BehaviorSubject<Schiff[]>([])
     readonly schiffe = this._schiffe.asObservable()
@@ -93,7 +94,7 @@ export class AppService {
         })
     }
 
-    constructor(private httpClient: HttpClient, private locationService: LocationService, private notificationService: NotificationService) { }
+    constructor(private httpClient: HttpClient, private locationService: LocationService ,private notificationService: NotificationService) { }
 
     public dateToLocalISOString(dt: Date): string {
         dt.setHours(new Date().getHours()+2)
@@ -201,6 +202,7 @@ export class AppService {
                 break
         }
         
+        console.log()
         return this.httpClient.post(baseURL, param, this.httpOptions)
             .pipe(retry(2), take(1))
     }
@@ -274,13 +276,18 @@ export class AppService {
         this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
     }
     updateBesatzung(member: Besatzung) {
+        console.log(member)
         if (member.id_streife) {
-            this.reducer('updateBesatzung', member).subscribe(data => {
-                member.id = data.id // Fehler?
+            this.reducer('updateBesatzung', member).subscribe(status => {
+                if (status == '200') { console.log(200)}
                 this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.id != member.id)
                 this.dataStore.aktiveStreife[0].besatzung.push(member)
                 this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
             })
+        } else {
+            this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.persnr != member.persnr)
+            this.dataStore.aktiveStreife[0].besatzung.push(member)
+            this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
         }
     }
     deleteBesatzung(member: Besatzung) {
@@ -288,7 +295,6 @@ export class AppService {
             this.reducer('deleteBesatzung', member).subscribe(status => {
                 if (status == '200') {}
             })
-
         }
         this.dataStore.aktiveStreife[0].besatzung = this.dataStore.aktiveStreife[0].besatzung.filter(el => el.persnr != member.persnr)
         this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
@@ -342,9 +348,9 @@ export class AppService {
 
     // poition/standort
     insertPosition(position: Standort) {
+        console.log(position)
         this.locationService.getCurrentPosition().then(data => {
             position.location = { latitude: (data.latitude+(Math.random()/25)), longitude: (data.longitude+(Math.random()/25)) }
-            // position.id = this.reducer('insertPosition', position)
             this.reducer('insertPosition', position).subscribe(data => {
                 position.id = data.id
                 this.dataStore.positions.push(position)
@@ -451,5 +457,22 @@ export class AppService {
 
     reset() {
         this.dataStore = { schiffe: [], lastPositions: [], aktiveStreife: [], besatzung: [], betankung: [], positions: [], reparaturen: [], zaehlerstaende: [], standorte: [], pruefvermerke: [], zaehlerstandstypen: []}
+    }
+
+    checkPositionStart() {
+        console.log('checkPositionStart')
+        if (this._positionSubscription.closed) {
+            this._positionSubscription = this.i.subscribe((data: number) => {
+                this.locationService.getCurrentPosition().then(position => {
+                    const aktiveStreife: Streife = this.dataStore.aktiveStreife[0]
+                    const standort: Standort = { id_ship: aktiveStreife.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position`, id_streife: aktiveStreife.id }
+                    this.insertPosition(standort)
+                })
+            })
+        }
+    }
+    checkPositionStop() {
+        console.log('checkPositionStop')
+        this._positionSubscription.unsubscribe()
     }
 }

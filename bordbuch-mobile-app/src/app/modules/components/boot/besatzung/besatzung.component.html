@@ -48,12 +48,13 @@
 
 <ng-template #toolbar>
     <div class="py-3 flex justify-between">
-        <button (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
-        <button (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
         <div>
-            <button (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Besatzungsmitglied hinzufügen</button>
-            <button *ngIf="edit" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung übernehmen</button>
-            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+          <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+          <button *ngIf="besatzungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
+        </div>
+        <div>
+            <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+            <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
         </div>
     </div>
 </ng-template>

@@ -8,6 +8,12 @@ https://medium.com/ngconf/managing-complex-forms-in-angular-167e4141ee0f
 
 
 
+## Component based on User-Role
+
+https://www.geekstrick.com/view-component-based-on-user-role/
+
+
+
 ## Documentation
 
 https://medium.com/vincent-ogloblinsky/compodoc-documentation-tool-for-angular-2-applications-44ec650e01a8

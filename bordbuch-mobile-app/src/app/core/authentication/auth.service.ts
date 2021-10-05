@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { User } from '../models/user'
 import { environment } from '../../../environments/environment'
 import { AppService } from '../services/app.service'
+import { LocationService } from '../services/location.service'
 
 @Injectable({
 	providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
 	public currentUser: Observable<User>
 	private tokenExpirationTimer: any
 
-	constructor(private http: HttpClient, private router: Router, private appService: AppService) {
+	constructor(private http: HttpClient, private router: Router, private appService: AppService, private locationService: LocationService) {
 		this.currentUserSubject = new BehaviorSubject<User>(
 			JSON.parse(localStorage.getItem('currentUser')!)
 		);
@@ -41,6 +42,8 @@ export class AuthService {
 	}
 
 	logout() {
+		this.appService.checkPositionStop()
+		// this.locationService.locationServiceStop()
 		this.appService.reset()
 		
 		localStorage.removeItem('currentUser')

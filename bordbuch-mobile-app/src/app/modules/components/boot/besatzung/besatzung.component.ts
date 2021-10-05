@@ -43,19 +43,16 @@ export class BesatzungComponent implements OnInit {
   }
 
   create() {
-    // console.log(this.besatzungForm.value)
     this.appService.insertBesatzung(this.besatzungForm.value)
     this.modal?.close()
   }
 
   update() {
-    // console.log(this.besatzungForm.value)
     this.appService.updateBesatzung(this.besatzungForm.value)
     this.modal?.close()
   }
 
   delete() {
-    // console.log(this.besatzungForm.value)
     this.appService.deleteBesatzung(this.besatzungForm.value)
     this.modal?.close()
   }

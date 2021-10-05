@@ -136,6 +136,8 @@
                   <div class="m-4">
                     <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
                     <div class="grid grid-cols-3 gap-2 mt-4">
+                      <div>Kategorie:</div>
+                      <div class="col-span-2">{{ reparatur.kategorie }}</div>
                       <div>Status:</div>
                       <div class="col-span-2">{{ reparatur.status }}</div>
                       <div>Erstellt:</div>
@@ -169,7 +171,6 @@
                       <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
                     </div>
                   </div>
-
                 </ng-container>
                 <ng-container CardBack>
                   <div class="m-4">

@@ -28,6 +28,7 @@ export class PruefvermerkComponent implements OnInit, OnDestroy {
       id        : [''],
       id_ship   : [''],
       date      : [''],
+      kategorie : [''],
       item      : [''],
       description: [''],
       status    : [Status.nicht_bearbeitet]
@@ -52,6 +53,10 @@ export class PruefvermerkComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.pruefvermerkSubscription.unsubscribe()
+  }
+
+  onChange($event: Pruefvermerk) {
+    this.pruefvermerkForm.controls.kategorie.setValue($event.kategorie)
   }
 
   create() {

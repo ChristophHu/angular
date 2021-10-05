@@ -68,8 +68,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       // )
     this.appService.getPosition(this.id)
     L.Icon.Default.imagePath = "assets/leaflet/"
-
-
   }
 
   ngAfterViewInit(): void {
