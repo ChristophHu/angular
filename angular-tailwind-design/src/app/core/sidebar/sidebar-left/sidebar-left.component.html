@@ -54,7 +54,7 @@
           </ul>
         </li>
         <li [routerLink]="['service']" class="flex flex-row justify-between ml-3 p-2 hover:bg-gray-200 cursor-pointer">Service</li>
-        <li class="flex flex-row justify-between ml-3 p-2 hover:bg-gray-200 cursor-pointer" *ngIf="isController()">Controlling</li>
+        <li class="flex flex-row justify-between ml-3 p-2 hover:bg-gray-200 cursor-pointer" *ngIf="isController() || isAdmin()">Controlling</li>
         <li *ngIf="isAdmin()">
           <div class="flex flex-row justify-between ml-3 p-2 font-semibold hover:bg-gray-200 cursor-pointer dropdown" appDropdown>
             <a>Verwaltung von</a>

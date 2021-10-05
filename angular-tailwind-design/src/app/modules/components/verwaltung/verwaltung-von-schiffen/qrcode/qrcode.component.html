@@ -3,40 +3,10 @@
         <h2 class="m-3 mb-5 text-xl">QR-Code Anzeige</h2>
     </header>
     <div class="content">
-        <!-- <form [formGroup]="schiffForm">
-            <div class="relative my-5">
-                <input type="text" formControlName="id" required>
-                <span class="bar"></span>
-                <label class="text-black">Id</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="name" required>
-                <span class="bar"></span>
-                <label class="text-black">Name</label>
-            </div>
-            <div class="relative my-5">
-                <ng-select [dropdownPosition]="'bottom'" [items]="dienststellen | async" bindLabel="bezeichnung" bindValue="id" formControlName="dienststelle" [(ngModel)]="selectedDstId" required></ng-select>
-                <span class="bar"></span>
-                <label class="text-black">Dienststelle</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="marke" required>
-                <span class="bar"></span>
-                <label class="text-black">Marke</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="typ" required>
-                <span class="bar"></span>
-                <label class="text-black">Typ</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="identifikationsnummer" required>
-                <span class="bar"></span>
-                <label class="text-black">Identifikationsnummer</label>
-            </div>
-        </form> -->
-        <ngx-qrcode [value] = "id | json"></ngx-qrcode>
-        <p>{{ id | json }}</p>
+        <div class="flex content-center justify-center">
+            <ngx-qrcode [value] = "id | json"></ngx-qrcode>
+            <!-- <p>{{ id | json }}</p> -->
+        </div>
     </div>
     <footer>
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>
