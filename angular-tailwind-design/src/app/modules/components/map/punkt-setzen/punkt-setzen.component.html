@@ -1,0 +1,66 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="punktsetzenForm">
+            <div class="relative my-5">
+                <input type="number" formControlName="id_ship" required>
+                <span class="bar"></span>
+                <label class="text-black">Id_ship</label>
+            </div>
+            <div class="relative my-5">
+                <input type="datetime-local" formControlName="date" required>
+                <span class="bar"></span>
+                <label class="text-black">Datum/Uhrzeit</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="description" required>
+                <span class="bar"></span>
+                <label class="text-black">Beschreibung</label>
+            </div>
+            <div class="flex flex-row items-center">
+                <div class="grid grid-cols-2 gap-3" formGroupName="location">
+                    <div class="relative my-5">
+                        <input type="text" formControlName="latitude" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Latitude</label>
+                    </div>
+                    <div class="relative my-5">
+                        <input type="text" formControlName="longitude" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Longitude</label>
+                    </div>
+                </div>
+                <div class="mx-3 tooltip">
+                    <a class="tooltip" (click)="getLocalPosition()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span class="tooltiptext">Aktuelle Position setzen</span>
+                    </a>
+                </div>
+                <div class="mr-3 tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    <span class="tooltiptext">Position auf Karte setzen</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+    
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-end">
+        <button *ngIf="!isEditable" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+        <button *ngIf="isEditable" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung speichern</button>
+        <button *ngIf="isEditable" (click)="delete()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Position Löschen</button>
+        <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    </div>
+</ng-template>

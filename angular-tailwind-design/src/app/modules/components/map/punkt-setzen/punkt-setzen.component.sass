@@ -1,0 +1,78 @@
+/* input */
+input
+  @apply block bg-none text-black text-lg font-medium w-full border-0 border-b border-gray-400
+  padding: 10px 10px 10px 5px
+
+  &:focus
+    @apply ring-0 ring-offset-0
+
+  &:focus~label, &:valid~label
+    top: -14px
+    font-size: 14px
+    color: #363636
+
+  &:focus~.bar:before
+    @apply w-full
+
+label
+  color: #707070
+  font-size: 18px
+  position: absolute
+  pointer-events: none
+  left: 5px
+  top: 10px
+  transition: 200ms ease all
+
+.bar
+  @apply block relative w-full
+
+  &:before
+    @apply absolute h-0.5 w-0 bottom-0 left-0
+    content: ''
+    background: #2196f3
+    transition: 300ms ease all
+
+.tooltip
+  position: relative
+  display: inline-block
+
+.tooltip .tooltiptext 
+  visibility: hidden
+  width: 120px
+  background-color: #555
+  color: #fff
+  text-align: center
+  padding: 5px 0
+  border-radius: 6px
+
+  position: absolute
+  z-index: 1
+  bottom: 125%
+  left: 50%
+  margin-left: -60px
+
+  opacity: 0
+  transition: opacity 0.3s
+
+.tooltip .tooltiptext::after
+  content: ""
+  position: absolute
+  top: 100%
+  left: 50%
+  margin-left: -5px
+  border-width: 5px
+  border-style: solid
+  border-color: #555 transparent transparent transparent
+
+.tooltip:hover .tooltiptext
+  visibility: visible
+  opacity: 1
+
+header
+  @apply bg-gray-100 border-b px-5 pt-5
+
+footer
+  @apply bg-gray-100 border-t px-5 py-3
+
+.content
+  @apply bg-white p-5

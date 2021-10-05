@@ -1,0 +1,19 @@
+<div class="container mx-auto flex flex-col mt-10">
+  <h3>Anzeige aller Schiffe und Informationen</h3>
+  <div class="flex flex-row">
+    <a class="cursor-pointer" (click)="setToLocalPosition()">LocalPosition</a>
+  </div>
+</div>
+
+<div class="container mx-auto flex flex-row">
+  <div class="flex flex-grow">
+    <div class="map-container">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col w-92 h-96 ml-2" style="height: 800px">
+    <router-outlet></router-outlet>
+  </div>
+</div>

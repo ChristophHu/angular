@@ -1,0 +1,80 @@
+<div class="container mx-auto mt-10 flex flex-col overflow-x-hidden">
+    <h2 class="text-2xl">Service</h2>
+    <div class="my-5">
+        <div>
+            <p>Unter Service werden alle Schäden und laufenden Reparaturen angezeigt.</p>
+            <p>Durch den Prüfvermerk werden festgestellte Schäden mittels der Bordbuch-App aufgenommen und beschrieben. Diese Ausgabe dient der Bootswerkstatt zur aktuellen Anzeige aller festgestellten Schäden an den Booten der Dir ZS WSP.</p>            
+        </div>
+        <div class="my-5">
+            <a class="p-2 bg-gray-800 text-white rounded cursor-pointer" (click)="showModal()">Schaden aufnehmen</a>
+        </div>
+    </div>
+
+    <h3 class="my-5 text-xl text-color_accent">Festgestellte Schäden</h3>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerSchaeden" class="row-border hover display responsive nowrap">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th hidden>ID_Ship</th>
+                <th class="w-28" data-priority="1">Datum</th>
+                <th>Kategorie</th>
+                <th>Bestandteil</th>
+                <th data-priority="2">Schadensbeschreibung</th>
+                <th>Status</th>
+                <th class="w-12" data-priority="1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let schaden of schaeden$ | async">
+                <td hidden>{{ schaden.id }}</td>
+                <td hidden>{{ schaden.id_ship }}</td>
+                <td>{{ schaden.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>{{ schaden.kategorie }}</td>
+                <td>{{ schaden.item }}</td>
+                <td>{{ schaden.description }}</td>
+                <td>{{ schaden.status }}</td>
+                <td class="flex flex-row justify-between text-gray-500">
+                    <a class="cursor-pointer" (click)="showModal('schaden', schaden.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3 class="my-5 text-xl text-color_accent">Durchgeführte Reparaturen</h3>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTriggerReparaturen" class="row-border hover">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th hidden>ID_Ship</th>
+                <th class="w-28">Datum</th>
+                <th>Kategorie</th>
+                <th>Bestandteile</th>
+                <th>Beschreibung Schaden/Reparatur</th>
+                <th>Status</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reparatur of reparaturen$ | async">
+                <td hidden>{{ reparatur.id }}</td>
+                <td hidden>{{ reparatur.id_ship }}</td>
+                <td>{{ reparatur.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>{{ reparatur.kategorie }}</td>
+                <td>{{ reparatur.item }}</td>
+                <td>{{ reparatur.description }}</td>
+                <td>{{ reparatur.status }}</td>
+                <td class="flex flex-row justify-between text-gray-500">
+                    <a class="tooltip" (click)="showModal('reparatue', reparatur.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

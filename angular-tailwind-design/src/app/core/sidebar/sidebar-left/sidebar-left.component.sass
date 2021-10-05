@@ -1,0 +1,38 @@
+.left
+    transition: 0.3s
+
+    @media screen and (max-width: 2600px) 
+        &.active
+
+            header
+                @apply opacity-100
+                transition: 0.3s 0.2s
+
+            .content
+                @apply opacity-100
+                transition: 0.3s 0.2s
+
+            .recht
+                @apply opacity-0
+
+        &:not(.active)
+            @apply overflow-hidden w-14
+
+            .content
+                @apply opacity-0
+
+            .recht
+                @apply opacity-100
+                writing-mode: vertical-lr
+                transform: rotate(180deg)
+
+/* dropdown */
+.dropdown~ul
+    @apply hidden
+
+.dropdown.open~ul
+    @apply block
+
+.dropdown.open
+    a:last-child
+        transform: rotate(180deg)

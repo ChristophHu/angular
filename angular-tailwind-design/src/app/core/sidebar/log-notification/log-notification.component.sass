@@ -1,0 +1,15 @@
+.right
+    transition: 0.3s
+    
+    @media screen and (max-width: 2600px)
+        &.active
+
+            .content
+                @apply opacity-100
+                transition: 0.3s 0.2s
+
+        &:not(.active)
+            @apply overflow-hidden w-0
+
+            .content
+                @apply opacity-0

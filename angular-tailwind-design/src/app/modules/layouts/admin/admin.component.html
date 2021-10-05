@@ -1,0 +1,10 @@
+<div class="container-fluid">
+    <app-sidebar-left [(sidebarActive)]="isSidebarActive" [title]="'Verwaltung'"></app-sidebar-left>
+    <div class="bg flex-grow">
+        <app-simple-navbar (notificationOpen)="isNotificationActive = $event"></app-simple-navbar>
+        <router-outlet></router-outlet>
+        <!-- https://www.heropatterns.com/ -->
+    </div>
+    <app-log-notification [(notificationActive)]="isNotificationActive"></app-log-notification>
+</div>
+<div class="overlay" [ngClass]="{'active': isSidebarActive}" (click)="isSidebarActive = !isSidebarActive"></div>

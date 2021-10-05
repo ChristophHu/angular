@@ -1,0 +1,45 @@
+<div class="right block h-screen w-full w-80 right-0 top-0 botom-0 border-l bg-gray-100 select-none" [ngClass]="{'active': isActive}">
+    <header class="flex flex-row justify-between items-center w-full h-12 p-3 text-gray-500 text">
+        <div class="uppercase tracking-widest">Mitteilungen</div>
+        <div class="text-gray-500 cursor-pointer" (click)="close()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </div>
+    </header>
+    <div class="content">
+        <div class="flex items-center h-6 pl-3 bg-gray-200 border-t border-gray-300 text-gray-500 text-sm">
+            <span>Heute</span>
+        </div>
+        <div *ngFor="let entry of map">
+            <app-map-entry [entry]="entry"></app-map-entry>
+        </div>
+        <div *ngFor="let entry of log">
+            <app-log-entry [entry]="entry"></app-log-entry>
+        </div>
+        <div class="flex items-center h-6 pl-3 bg-gray-200 border-t border-gray-300 text-gray-500 text-sm">
+            <span>Gestern</span>
+        </div>
+        <div *ngFor="let entry of log">
+            <app-log-entry [entry]="entry"></app-log-entry>
+        </div>
+    </div>
+
+    <!-- <footer class="w-full bottom-0 border-t border-gray-300">
+        <div class="h-12 p-3 bottom-0 flex flex-row items-center">
+            <svg class="absolute h-6 w-6 text-gray-500 text-center z-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input class="absolute h-full w-full top-0 left-0 bg-gray-100 outline-none border-0 pl-12 pr-20 text-lg text-gray-500 ring-0 focus:ring-0 ring-offset-0 z-10" type="text" placeholder="Suchen...">
+            <div class="absolute flex flex-row  right-3 h-6 z-20">
+                <svg class="h-6 text-gray-500 text-center cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg> -->
+                <!-- <svg class="h-6 ml-3 text-gray-500 text-center cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg> -->
+            <!-- </div>
+        </div>
+    </footer> -->
+</div>

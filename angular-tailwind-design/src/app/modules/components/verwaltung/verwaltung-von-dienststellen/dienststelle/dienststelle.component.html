@@ -1,0 +1,92 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">Dienststelle</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="dienststelleForm">
+            <div class="relative my-5">
+                <input type="text" formControlName="id" required>
+                <span class="bar"></span>
+                <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="bezeichnung" required>
+                <span class="bar"></span>
+                <label class="text-black">Bezeichnung</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="mailadresse" required>
+                <span class="bar"></span>
+                <label class="text-black">Email-Adresse</label>
+            </div>
+            <div formGroupName="adresse">
+                <div class="grid grid-cols-2 gap-x-3">
+                    <div class="relative my-5">
+                        <input type="text" formControlName="strasse" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Straße</label>
+                    </div>
+                    <div class="relative my-5">
+                        <input type="number" formControlName="hausnummer" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Hausnummer</label>
+                    </div>
+                    <div class="relative my-5">
+                        <input type="number" formControlName="postleitzahl" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Postleitzahl</label>
+                    </div>
+                    <div class="relative my-5">
+                        <input type="text" formControlName="ort" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Ort</label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row items-center" formGroupName="position">
+                <div class="grid grid-cols-2 gap-x-3">
+                    <div class="relative my-5">
+                        <input type="text" formControlName="latitude" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Latitude</label>
+                    </div>
+                    <div class="relative my-5">
+                        <input type="text" formControlName="longitude" required>
+                        <span class="bar"></span>
+                        <label class="text-black">Longitude</label>
+                    </div>
+                </div>
+                <!-- <div class="mx-3">
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </a>
+                </div> -->
+                <div class="ml-3 tooltip cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                   <!-- <span class="tooltiptext">Position auf Karte setzen</span> -->
+                </div>
+            </div>      
+        </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <button *ngIf="id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+        <button *ngIf="!id" (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
+        <div>
+            <button *ngIf="!id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Dienststelle erstellen</button>
+            <button *ngIf="id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung speichern</button>
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        </div>
+    </div>
+</ng-template>

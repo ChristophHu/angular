@@ -1,0 +1,55 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{title}}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="schiffForm">
+            <div class="relative my-5">
+                <input type="text" formControlName="id" required>
+                <span class="bar"></span>
+                <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="name" required>
+                <span class="bar"></span>
+                <label class="text-black">Name</label>
+            </div>
+            <div class="relative my-5">
+                <ng-select [dropdownPosition]="'bottom'" [items]="dienststellen | async" bindLabel="bezeichnung" bindValue="id" formControlName="dienststelle" [(ngModel)]="selectedDstId" required></ng-select>
+                <span class="bar"></span>
+                <label class="text-black">Dienststelle</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="marke" required>
+                <span class="bar"></span>
+                <label class="text-black">Marke</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="typ" required>
+                <span class="bar"></span>
+                <label class="text-black">Typ</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="identifikationsnummer" required>
+                <span class="bar"></span>
+                <label class="text-black">Identifikationsnummer</label>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <button *ngIf="id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+        <button *ngIf="!id" (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
+        <div>
+            <button *ngIf="!id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Schiff erstellen</button>
+            <button *ngIf="id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung speichern</button>
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        </div>
+    </div>
+</ng-template>

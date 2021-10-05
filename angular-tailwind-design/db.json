@@ -1,0 +1,478 @@
+{
+  "positions": [
+    {
+      "id": 1254,
+      "id_ship": 1,
+      "location": {
+        "latitude": 52.519328,
+        "longitude": 13.378559
+      },
+      "date": "2021-07-28T08:28",
+      "description": "Kontrolle eines anderen Bootes"
+    },
+    {
+      "id": 1255,
+      "id_ship": 1,
+      "location": {
+        "latitude": 52.619,
+        "longitude": 13.478
+      },
+      "date": "2021-07-25T14:13",
+      "description": "automatisch gesetzter Punkt2"
+    },
+    {
+      "id": 1257,
+      "id_ship": 1,
+      "location": {
+        "latitude": 52.51751,
+        "longitude": 13.35551
+      },
+      "date": "2021-08-06T14:16",
+      "description": "asdf"
+    },
+    {
+      "id": 1256,
+      "id_ship": 2,
+      "location": {
+        "latitude": 52.519328,
+        "longitude": 13.378559
+      },
+      "date": "2021-07-25T13:12",
+      "description": "Schleusenüberprüfung"
+    },
+    {
+      "id": 1258,
+      "id_ship": 2,
+      "location": {
+        "latitude": 52.51751,
+        "longitude": 13.478
+      },
+      "date": "2021-07-09T13:13",
+      "description": "Angler kontrolliert"
+    },
+    {
+      "id": 1259,
+      "id_ship": 1,
+      "location": {
+        "latitude": 52.51751,
+        "longitude": 13.478
+      },
+      "date": "2021-07-09T13:13",
+      "description": "Angler kontrolliert"
+    },
+    {
+      "id_ship": 1,
+      "date": "2021-07-30T09:19",
+      "description": "funktioniert",
+      "location": {
+        "latitude": 52.715128,
+        "longitude": 13.148514
+      },
+      "id": 1260
+    },
+    {
+      "id_ship": 2,
+      "date": "2021-08-04T08:21",
+      "description": "Test",
+      "location": {
+        "latitude": 52.491972,
+        "longitude": 13.3770421
+      },
+      "id": 1261
+    }
+  ],
+  "reparaturen": [
+    {
+      "id": 1,
+      "id_ship": 1,
+      "date": "2021-03-28T08:28",
+      "kategorie": "Feste Ausrüstung",
+      "item": "Türen, Fenster, Oberlichter",
+      "description": "Dichtung Oberlicht durchlässig",
+      "status": "In Bearbeitung"
+    },
+    {
+      "id": 2,
+      "id_ship": 2,
+      "date": "2021-05-30T13:28",
+      "kategorie": "Schiffsaufbauten",
+      "item": "Decksbeläge",
+      "description": "Boden beschädigt",
+      "status": "Abgeschlossen"
+    },
+    {
+      "id": 3,
+      "id_ship": 1,
+      "date": "2021-08-06T15:03",
+      "kategorie": "Feste Ausrüstung",
+      "item": "1",
+      "description": "sowas",
+      "status": "In Bearbeitung"
+    },
+    {
+      "id": 4,
+      "id_ship": 2,
+      "date": "2021-08-06T15:04",
+      "kategorie": "Schiffsaufbauten",
+      "item": "Deck",
+      "description": "is kapput",
+      "status": "Nicht bearbeitet"
+    }
+  ],
+  "betankungen": [
+    {
+      "id": 2,
+      "id_ship": 2,
+      "date": "2021-03-28T08:28",
+      "ort": "dort",
+      "location": {
+        "longitude": 13,
+        "latitude": 52
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 3,
+      "id_ship": 1,
+      "date": "2021-03-28T08:28",
+      "ort": "hier",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Diesel",
+      "fuelFillingQuantity": 423
+    },
+    {
+      "id": 4,
+      "id_ship": 1,
+      "date": "2021-03-28T08:28",
+      "ort": "hier",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Diesel",
+      "fuelFillingQuantity": 423
+    },
+    {
+      "id": 5,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 6,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 7,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 8,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 9,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 10,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 11,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 12,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 13,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 14,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 15,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 16,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 17,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 18,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 19,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 20,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 21,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 22,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 23,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    },
+    {
+      "id": 24,
+      "id_ship": 1,
+      "date": "2021-03-28T08:29",
+      "ort": "dort",
+      "location": {
+        "latitude": 52,
+        "longitude": 13
+      },
+      "fuel": "Öl",
+      "fuelFillingQuantity": 15
+    }
+  ],
+  "schiffe": [
+    {
+      "id": 1,
+      "name": "Wassernixe 1",
+      "dienststelle": "WSP Nord",
+      "betriebsstunden": "49.191h"
+    },
+    {
+      "id": 2,
+      "name": "Wassernixe 2",
+      "dienststelle": "WSP West",
+      "betriebsstunden": "43.191h"
+    },
+    {
+      "id": 3,
+      "name": "Wassernixe 3",
+      "dienststelle": "WSP Nord",
+      "betriebsstunden": "36.456h"
+    }
+  ],
+  "dienststellen": [
+    {
+      "id": 1,
+      "bezeichnung": "WSP Ost",
+      "emailAdresse": "Dir-E-V-WSP-West-Leitung@polizei.berlin.de",
+      "adresse": {
+        "strasse": "Mertensstraße",
+        "hausnummer": 140,
+        "postleitzahl": 13587,
+        "ort": "Berlin",
+        "adressZusatz": "-"
+      },
+      "position": {
+        "latitude": 13.22522,
+        "longitude": 52.56408
+      }
+    },
+    {
+      "id": 2,
+      "bezeichnung": "WSP Mitte",
+      "emailAdresse": "mittig.de",
+      "adresse": {
+        "strasse": null,
+        "hausnummer": null,
+        "postleitzahl": null,
+        "ort": null,
+        "adressZusatz": null
+      },
+      "position": {
+        "latitude": null,
+        "longitude": null
+      }
+    },
+    {
+      "id": 3,
+      "bezeichnung": "WSP Nord-Ost",
+      "emailAdresse": "Dir-E-V-WSP-Nord-Ost-Leitung@polizei.berlin.de",
+      "adresse": {
+        "strasse": "Beispielstraße",
+        "hausnummer": 10,
+        "postleitzahl": 11111,
+        "ort": "Berlin",
+        "adressZusatz": null
+      },
+      "position": {
+        "latitude": "52.132",
+        "longitude": "13.543"
+      }
+    }
+  ],
+  "pruefvermerke": [
+    {
+      "id": 1,
+      "kategorie": "Feste Ausrüstung",
+      "item": "Türen, Fenster, Oberlichter",
+      "description": "Kontrolle aller Fenster und Türen"
+    }
+  ]
+}

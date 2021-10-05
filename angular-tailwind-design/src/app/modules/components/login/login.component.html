@@ -1,0 +1,37 @@
+<div class="bg h-screen w-screen grid place-items-center z-0">
+  <div class="bg-glass h-full w-full z-10"></div>
+  <div class="absolute w-full h-full grid place-items-center z-20">
+    <div class="w-96 p-10 bg-white rounded-lg z-20">
+      <h1 class="my-10 text-3xl">Bordbuch</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        
+        <div class="relative my-7">
+          <input type="text" formControlName="username" required>
+          <span class="bar"></span>
+          <label class="text-black">Benutzername</label>
+        </div>
+        
+        <div class="relative my-7">
+          <input type="password" formControlName="password" required>
+          <span class="bar"></span>
+          <label class="text-black">Kennwort</label>
+        </div>
+        
+        <div class="flex">
+          <button class="w-full p-3 mt-3 bg-color_secondary text-white rounded-l-md">Login</button>
+          <a class="w-12 p-3 -ml-2 mt-3 bg-color_tertiary text-white rounded-r-md grid place-items-center cursor-pointer" (click)="isClosedLoginMenu = !isClosedLoginMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+        </div>
+        
+        <div [ngClass]="{'hidden': isClosedLoginMenu}" class="flex flex-col justify-center mt-2 w-full bg-color_tertiary rounded-md">
+          <a (click)="administration()" class="p-3 text-center text-white cursor-pointer">Administration</a>
+          <a (click)="service()" class="p-3 text-center text-white cursor-pointer">Service</a>
+          <a class="p-3 text-center text-white cursor-pointer">Leitung</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
