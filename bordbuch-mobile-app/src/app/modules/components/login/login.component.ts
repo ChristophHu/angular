@@ -44,7 +44,11 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value)
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				this.router.navigate(['auswahl']) // Fehler: this.returnUrl
+			}).catch(()=>{
+
+			});
 			// .pipe(first()) // .pipe() // Fehler: 
 			// .subscribe(
 			// 	(data: any) => {

@@ -44,18 +44,23 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				data => {
-					this.error = ''
-					this.router.navigate(['/logged-in']) // Fehler: this.returnUrl
-				},
-				error => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				this.router.navigate(['/logged-in']) // Fehler: this.returnUrl
+			}).catch(()=>{
+
+			});
+			// .login(this.f.username.value, this.f.password.value)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	data => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/logged-in']) // Fehler: this.returnUrl
+			// 	},
+			// 	error => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	administration() {
@@ -64,18 +69,23 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				data => {
-					this.error = ''
-					this.router.navigate(['/admin']) // Fehler: this.returnUrl
-				},
-				error => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			}).catch(()=>{
+
+			});
+			// .login(this.f.username.value, this.f.password.value)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	data => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			// 	},
+			// 	error => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	service() {
@@ -84,18 +94,23 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				data => {
-					this.error = ''
-					this.router.navigate(['/service']) // Fehler: this.returnUrl
-				},
-				error => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				this.router.navigate(['/service']) // Fehler: this.returnUrl
+			}).catch(()=>{
+
+			});
+			// .login(this.f.username.value, this.f.password.value)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	data => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/service']) // Fehler: this.returnUrl
+			// 	},
+			// 	error => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	leitung() {
@@ -104,17 +119,22 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				data => {
-					this.error = ''
-					this.router.navigate(['/admin']) // Fehler: this.returnUrl
-				},
-				error => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			}).catch(()=>{
+
+			});
+			// .login(this.f.username.value, this.f.password.value)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	data => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			// 	},
+			// 	error => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 }

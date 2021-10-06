@@ -91,12 +91,6 @@ export class AppService {
         zaehlerstandstypen: []
     }
 
-    private httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded'
-        })
-    }
-
     constructor(private httpClient: HttpClient, private locationService: LocationService ,private notificationService: NotificationService) { }
 
     public dateToLocalISOString(dt: Date): string {
@@ -137,8 +131,9 @@ export class AppService {
         this.jwttoken = JSON.parse(atob(jwtpayload))
     }
 
-
-
+    gett(): string {
+        return this.token
+    }
 
     reducer(action: string, data: any): Observable<any> {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
@@ -213,8 +208,14 @@ export class AppService {
                 break
         }
         
-        console.log()
-        return this.httpClient.post(baseURL, param, this.httpOptions)
+        return this.httpClient.post(
+            baseURL, 
+            param, 
+            { headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded', 
+                'Authorization': 'Bearer '+this.gett() 
+            }}
+            )
             .pipe(retry(2), take(1))
     }
     getReducer(action: string, data: any): any {
@@ -245,7 +246,7 @@ export class AppService {
                 break
         }
 
-        return this.httpClient.get(baseURL + param).pipe(retry(2),take(1))
+        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': 'Bearer ' + this.gett() } }).pipe(retry(2),take(1))
     }
 
     // streife
