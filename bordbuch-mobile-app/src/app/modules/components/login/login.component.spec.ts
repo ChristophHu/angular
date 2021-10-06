@@ -101,7 +101,7 @@ describe('LoginComponent', () => {
   it('should return true when form is valid', () => {
     const value = {
       username: '24225132',
-      password: 'password'
+      password: 'Abc123!'
     }
 
     component.loginForm.patchValue(value)

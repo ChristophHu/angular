@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { first } from 'rxjs/operators'
 import { AuthService } from 'src/app/core/authentication/auth.service'
 
 @Component({
@@ -18,8 +19,8 @@ export class LoginComponent implements OnInit {
 
 	constructor( private _formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthService ) {
     this.loginForm = this._formBuilder.group({
-		username: ['24225131', [Validators.required]],
-		password: ['password', Validators.required]
+		username: ['24225132', [Validators.required]],
+		password: ['Abc123!', Validators.required]
 	})
   }
 
@@ -44,17 +45,17 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				(data: any) => {
-					this.error = ''
-					this.router.navigate(['auswahl']) // Fehler: this.returnUrl
-				},
-				(error: any) => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			// .pipe(first()) // .pipe() // Fehler: 
+			// .subscribe(
+			// 	(data: any) => {
+			// 		this.error = ''
+			// 		this.router.navigate(['auswahl']) // Fehler: this.returnUrl
+			// 	},
+			// 	(error: any) => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	administration() {
@@ -64,17 +65,17 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				(data: any) => {
-					this.error = ''
-					this.router.navigate(['/admin']) // Fehler: this.returnUrl
-				},
-				(error: any) => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	(data: any) => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			// 	},
+			// 	(error: any) => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	service() {
@@ -84,17 +85,17 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				(data: any) => {
-					this.error = ''
-					this.router.navigate(['/service']) // Fehler: this.returnUrl
-				},
-				(error: any) => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	(data: any) => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/service']) // Fehler: this.returnUrl
+			// 	},
+			// 	(error: any) => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 
 	leitung() {
@@ -104,16 +105,16 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value)
-			.pipe() // Fehler: .pipe(first())
-			.subscribe(
-				(data: any) => {
-					this.error = ''
-					this.router.navigate(['/admin']) // Fehler: this.returnUrl
-				},
-				(error: any) => {
-					console.log(error)
-					this.error = error
-				}
-			)
+			// .pipe() // Fehler: .pipe(first())
+			// .subscribe(
+			// 	(data: any) => {
+			// 		this.error = ''
+			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
+			// 	},
+			// 	(error: any) => {
+			// 		console.log(error)
+			// 		this.error = error
+			// 	}
+			// )
 	}
 }

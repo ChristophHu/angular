@@ -21,6 +21,9 @@ import { Betankung } from '../models/betankung';
 
 export class AppService {
 
+    private token: string = ''
+    private jwttoken: any
+
     private _positionSubscription = new Subscription
     private i: Observable<number> = interval(60000)
 
@@ -127,6 +130,14 @@ export class AppService {
     get _id_streife() {
         return this.dataStore.aktiveStreife[0].id
     }
+
+    t(value: string) {
+        this.token = value
+        const jwtpayload = value.split('.')[1]
+        this.jwttoken = JSON.parse(atob(jwtpayload))
+    }
+
+
 
 
     reducer(action: string, data: any): Observable<any> {
