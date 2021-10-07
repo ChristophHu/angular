@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot('auth', authReducer),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
