@@ -15,36 +15,26 @@ export class AuthService {
 	private backend: any
 
 	private token: string = ''
-    private jwttoken: any
+	private role: string = ''
 
 	constructor(private http: HttpClient, private router: Router) {
 		this.currentUserSubject = new BehaviorSubject<User>(
-			// JSON.parse(localStorage.getItem('currentUser')!)
 			{ username: localStorage.getItem('currentUser')!, password: '', firstName: '', lastName: '', role: Role.bootsstreifendienst}
 		);
 		this.currentUser = this.currentUserSubject.asObservable()
 	}
 
-	// t(value: string) {
-    //     this.token = value
-    //     const jwtpayload = value.split('.')[1]
-    //     this.jwttoken = JSON.parse(atob(jwtpayload))
-    // }
-
-    // gett(): string {
-    //     return this.token
-    // }
-
 	public get currentUserValue(): User {
 		return this.currentUserSubject.value
 	}
 
-	// private httpOptions = {
-    //     headers: new HttpHeaders({
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-	// 		'Authorization': 'Basic MjQyMjUyMjA6UGEkJHcwcmQ='
-    //     })
-    // }
+    public get tokenValue(): string {
+        return this.token
+    }
+    public get roleValue(): string {
+        return this.role
+    }
+
 
 	login(username: string, password: string): Promise<any> {
 		return new Promise((resolve, reject) => {
@@ -54,36 +44,31 @@ export class AuthService {
 			xmlhttp.onreadystatechange = () => {
 				if (xmlhttp.readyState == 4) {
 					if (xmlhttp.status == 200) {
-						const token = xmlhttp.getResponseHeader('Authorization')!.toString().split(' ')[1]
-						// this.appService.t(token)
-						const jwtpayload = token.split('.')[1]
+						this.token = xmlhttp.getResponseHeader('Authorization')!.toString().split(' ')[1]
+						const jwtpayload = this.token.split('.')[1]
 						const jwttoken = JSON.parse(atob(jwtpayload))
 						console.log(jwttoken)
-						// console.log(jwttoken.sub)
 						localStorage.setItem('currentUser', jwttoken.sub)
-						console.log(JSON.parse(jwttoken.allowed_apps))
 						const arr = JSON.parse(jwttoken.allowed_apps)
 						arr.forEach((el: any) => { 
 							if(el.packageid == 'de.berlin.polizei.polwsp') {
 								const backendurl = el.config_json
 								const backend = JSON.parse(backendurl).backendurl
 								localStorage.setItem('backendUrl', backend)
-								this.loginjwt(backend, token).then((result:any)=>{
+								this.loginjwt(backend, this.token).then((result:any)=>{
 									resolve(true);
 								}).catch(()=>{
 									reject();
 								});
 							}
 						})
-	
+						this.autoLogout(jwttoken.exp - (new Date().getTime() / 1000) >> 0)
 					} else {
 						console.log(xmlhttp.status)
 						reject();
 					}
 				}
 			}
-	
-			// de.berlin.polizei.polwsp
 	
 			xmlhttp.open('GET', `http://192.168.178.220/login/Login.asmx/login`, true)
 			xmlhttp.setRequestHeader('Authorization', `Basic ${auth}`)
@@ -110,7 +95,7 @@ export class AuthService {
 			xmlhttp.onreadystatechange = () => {
 				if (xmlhttp.readyState == 4) {
 					if (xmlhttp.status == 200) {
-						console.log(xmlhttp.responseText)
+						this.role = JSON.parse(xmlhttp.responseText).rolle
 						resolve(true)
 					} else {
 						console.error(xmlhttp.status)
@@ -121,7 +106,6 @@ export class AuthService {
 	
 			xmlhttp.open('GET', `${backendUrl}/loginjwt`, true)
 			xmlhttp.setRequestHeader('Authorization', `Bearer ${token}`)
-			// xmlhttp.setRequestHeader('content-type', `text/plain`)
 			xmlhttp.send()
 		})
 	}
@@ -129,15 +113,15 @@ export class AuthService {
 	logout() {
 		this.logoutapi(this.backend, this.token).then((result: any) => {
 			console.log('logout')
+			localStorage.removeItem('currentUser')
+			this.currentUserSubject.next(null!)
 		}).catch(() => { console.error('error')})
 
-		// if (this.tokenExpirationTimer) {
-		// 	clearTimeout(this.tokenExpirationTimer)
-		// }
-		// this.tokenExpirationTimer = null
+		if (this.tokenExpirationTimer) {
+			clearTimeout(this.tokenExpirationTimer)
+		}
+		this.tokenExpirationTimer = null
 
-		// localStorage.removeItem('currentUser')
-		// this.currentUserSubject.next(null!)
 		this.router.navigate(['/login'])
 	}
 
@@ -155,13 +139,9 @@ export class AuthService {
 					}
 				}
 			}
-
-			// console.log(localStorage.getItem('currentUser'))
-			// console.log(this.token)
 	
 			xmlhttp.open('GET', `${localStorage.getItem('backendUrl')}/logout?persnr=${localStorage.getItem('currentUser')}`, true)
 			xmlhttp.setRequestHeader('Authorization', `Bearer ${this.token}`)
-			// xmlhttp.setRequestHeader('content-type', `text/plain`)
 			xmlhttp.send()
 		})
 	}
@@ -170,6 +150,6 @@ export class AuthService {
 		this.tokenExpirationTimer = setTimeout(() => {
 			console.log('auto logout')
 			this.logout()
-		}, expDuration)
+		}, expDuration*1000)
 	}
 }

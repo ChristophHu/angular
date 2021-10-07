@@ -136,6 +136,7 @@ export class AppService {
     }
 
     reducer(action: string, data: any): Observable<any> {
+        console.info(`reducer | action: '${action}', data: ${data}`)
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
@@ -219,6 +220,7 @@ export class AppService {
             .pipe(retry(2), take(1))
     }
     getReducer(action: string, data: any): any {
+        console.info(`getreducer | action: '${action}', data: ${data}`)
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {

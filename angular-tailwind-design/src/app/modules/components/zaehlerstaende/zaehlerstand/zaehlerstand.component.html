@@ -1,0 +1,50 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{title}}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="zaehlerstandForm">
+            <div class="relative my-5">
+                <input type="string" formControlName="id" required>
+                <span class="bar"></span>
+                <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+                <input type="string" formControlName="id_schiff" required>
+                <span class="bar"></span>
+                <label class="text-black">Id_ship</label>
+            </div>
+            <div class="relative my-5">
+                <input type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
+                <span class="bar"></span>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="zaehlerstandstyp" required>
+                <span class="bar"></span>
+                <label class="text-black">Typ</label>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="value" required>
+                <span class="bar"></span>
+                <label class="text-black">Stand</label>
+            </div>            
+        </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <div>
+            <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+            <button *ngIf="zaehlerstandForm.value.id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+        </div>
+        <div>
+            <button *ngIf="!zaehlerstandForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+            <button *ngIf="!zaehlerstandForm.pristine && zaehlerstandForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+        </div>
+    </div>
+</ng-template>

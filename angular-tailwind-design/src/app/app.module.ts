@@ -30,7 +30,10 @@ import { PruefvermerkskategorieComponent } from './modules/components/verwaltung
 import { VerwaltungVonPruefvermerkKatComponent } from './modules/components/verwaltung/verwaltung-von-pruefvermerk-kat/verwaltung-von-pruefvermerk-kat.component';
 import { StreifenComponent } from './modules/components/streifen/streifen.component'
 import { NgxQRCodeModule } from 'ngx-qrcode2'
-import { QRCodeComponent } from './modules/components/verwaltung/verwaltung-von-schiffen/qrcode/qrcode.component'
+import { QRCodeComponent } from './modules/components/verwaltung/verwaltung-von-schiffen/qrcode/qrcode.component';
+import { ZaehlerstaendeComponent } from './modules/components/zaehlerstaende/zaehlerstaende.component';
+import { ZaehlerstandComponent } from './modules/components/zaehlerstaende/zaehlerstand/zaehlerstand.component';
+import { StreifeComponent } from './modules/components/streifen/streife/streife.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { QRCodeComponent } from './modules/components/verwaltung/verwaltung-von-
     PruefvermerkComponent,
     PruefvermerkskategorieComponent,
     VerwaltungVonPruefvermerkKatComponent,
-    StreifenComponent
+    StreifenComponent,
+    ZaehlerstaendeComponent,
+    ZaehlerstandComponent,
+    StreifeComponent
   ],
   imports: [
     BrowserModule,

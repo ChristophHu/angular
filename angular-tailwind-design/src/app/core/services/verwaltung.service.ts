@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { retry, take } from 'rxjs/operators';
+import { AuthService } from '../authentication/auth.service';
 import { Dienststelle } from '../models/dienststelle';
 import { Pruefvermerk } from '../models/pruefvermerk';
 import { Pruefvermerkskategorie } from '../models/Pruefvermerkskategorie';
@@ -12,6 +13,9 @@ import { Schiff } from '../models/schiff';
 })
 
 export class VerwaltungService {
+    private token: string = ''
+    private jwttoken: any
+
     // data dienststellen
     private _dienststellen = new BehaviorSubject<Dienststelle[]>([])
     readonly dienststellen = this._dienststellen.asObservable()
@@ -40,7 +44,7 @@ export class VerwaltungService {
         })
     }
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
     get _dataStore() {
         return this.dataStore
@@ -113,7 +117,14 @@ export class VerwaltungService {
                 break
         }
         
-        return this.httpClient.post(baseURL, param, this.httpOptions)
+        return this.httpClient.post(
+            baseURL, 
+            param, { 
+                headers: { 
+                    'Content-Type': 'application/x-www-form-urlencoded', 
+                    'Authorization': 'Bearer ' + this.authService.tokenValue 
+                }
+            })
             .pipe(retry(2), take(1))
     }
     getReducer(action: string, data: any): any {
@@ -132,7 +143,7 @@ export class VerwaltungService {
                 break
         }
 
-        return this.httpClient.get(baseURL + param).pipe(retry(2),take(1))
+        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': 'Bearer ' + this.authService.tokenValue } }).pipe(retry(2),take(1))
     }
         
     // dienststellen

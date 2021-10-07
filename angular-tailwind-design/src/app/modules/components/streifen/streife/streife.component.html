@@ -1,0 +1,59 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{title}}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="streifeForm">
+            <div class="relative my-5">
+                <input type="string" formControlName="id" required>
+                <span class="bar"></span>
+                <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+                <input type="string" formControlName="id_schiff" required>
+                <span class="bar"></span>
+                <label class="text-black">Id_ship</label>
+            </div>
+            <div class="relative my-5">
+                <input type="string" formControlName="status" required>
+                <span class="bar"></span>
+                <label class="text-black">Status</label>
+            </div>
+            <div class="relative my-5">
+                <input type="string" formControlName="zweck" required>
+                <span class="bar"></span>
+                <label class="text-black">Zweck</label>
+            </div>
+            <div class="relative my-5">
+                <input type="datetime-local" formControlName="start" value="{{streifeForm.value.start | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
+                <span class="bar"></span>
+            </div>
+            <div class="relative my-5">
+                <input type="datetime-local" formControlName="ende" value="{{streifeForm.value.ende | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
+                <span class="bar"></span>
+            </div>
+            <div class="relative my-5">
+                <input type="text" formControlName="kennung" required>
+                <span class="bar"></span>
+                <label class="text-black">Kennung</label>
+            </div>            
+        </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <div>
+            <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+            <button *ngIf="streifeForm.value.id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+        </div>
+        <div>
+            <button *ngIf="!streifeForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+            <button *ngIf="!streifeForm.pristine && streifeForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+        </div>
+    </div>
+</ng-template>

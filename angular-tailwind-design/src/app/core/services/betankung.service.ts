@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { retry, take } from 'rxjs/operators';
+import { AuthService } from '../authentication/auth.service';
 import { Betankung } from '../models/betankung';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class BetankungService {
     })
 }
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   get _dataStore() {
     return this.dataStore
@@ -41,7 +42,7 @@ export class BetankungService {
             break
     }
 
-    return this.httpClient.get(baseURL + param).pipe(retry(2),take(1))
+    return this.httpClient.get(baseURL + param, { headers: { 'Authorization': 'Bearer ' + this.authService.tokenValue } }).pipe(retry(2),take(1))
   }
   
   getBetankungen() {

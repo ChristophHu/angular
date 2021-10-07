@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { Streife } from 'src/app/core/models/streife';
-import { StreifeService } from 'src/app/core/services/streife.service';
+import { Zaehlerstand } from 'src/app/core/models/zaehlerstand';
+import { ZaehlerstaendeService } from 'src/app/core/services/zaehlerstaende.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { StreifeComponent } from './streife/streife.component';
+import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 
 @Component({
-  selector: 'app-streifen',
-  templateUrl: './streifen.component.html',
-  styleUrls: ['./streifen.component.sass']
+  selector: 'app-zaehlerstaende',
+  templateUrl: './zaehlerstaende.component.html',
+  styleUrls: ['./zaehlerstaende.component.sass']
 })
-export class StreifenComponent implements OnInit {
+export class ZaehlerstaendeComponent implements OnInit, OnDestroy {
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
   // data
-  streifen: Observable<Streife[]>
+  zaehlerstaende: Observable<Zaehlerstand[]>
   subscription!: Subscription
 
-  constructor(private modalService: ModalService<StreifeComponent>, private streifeService: StreifeService) {
-    this.streifen = this.streifeService.streifen
+  constructor(private modalService: ModalService<ZaehlerstandComponent>, private zaehlerstaendeService: ZaehlerstaendeService) {
+    this.zaehlerstaende = this.zaehlerstaendeService.zaehlerstande
   }
 
   ngOnInit(): void {
@@ -60,11 +60,11 @@ export class StreifenComponent implements OnInit {
     }
 
     // data
-    this.subscription = this.streifen.subscribe(data => {
+    this.subscription = this.zaehlerstaende.subscribe(data => {
       this.dtTrigger.next()
     })
 
-    this.streifeService.getStreifen()
+    this.zaehlerstaendeService.getZaehlerstaende()
   }
 
   ngOnDestroy(): void {
@@ -72,18 +72,17 @@ export class StreifenComponent implements OnInit {
   }
 
   async showModal(id?: string): Promise<void> {
-    console.log(id)
-    let streife: Streife | undefined
-    const { StreifeComponent } = await import(
-      './streife/streife.component'
+    let zaehlerstand: Zaehlerstand | undefined
+    const { ZaehlerstandComponent } = await import(
+      './zaehlerstand/zaehlerstand.component'
     )
     if (id) {
-      streife = this.streifeService._dataStore.streifen.find(el => el.id == id)
-      console.log(streife)
-      this.modalService.open(StreifeComponent, {
+      zaehlerstand = this.zaehlerstaendeService._dataStore.zaehlerstande.find(el => el.id == id)
+      console.log(zaehlerstand)
+      this.modalService.open(ZaehlerstandComponent, {
         data: {
-          title: 'Betankung bearbeiten',
-          streife
+          title: 'Zaehlerstand bearbeiten',
+          zaehlerstand
         }
       })
     }

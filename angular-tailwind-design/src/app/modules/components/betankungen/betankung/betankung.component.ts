@@ -12,9 +12,8 @@ import { BetankungService } from '../../../../core/services/betankung.service'
 })
 export class BetankungComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<BetankungComponent> | undefined;
-  private id: string = ''
   title: string = ''
-  // private data: any
+
   betankung!: Betankung
   tankzettelForm: FormGroup
 
@@ -51,7 +50,7 @@ export class BetankungComponent implements OnInit {
   }
 
   delete() {
-    this.betankungService.deleteBetankung(this.id)
+    this.betankungService.deleteBetankung(this.tankzettelForm.value.id)
     this.modal?.close()
   }
 

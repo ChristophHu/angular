@@ -14,12 +14,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup
 	submitted = false
 	returnUrl: string = '/'
-	error: string = ''
 
 	constructor( private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthService ) {
     this.loginForm = this.formBuilder.group({
-			username: ['24225131', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
-			password: ['password', Validators.required]
+			username: ['24225132', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+			password: ['Abc123!', Validators.required]
 		})
   }
 
@@ -29,6 +28,7 @@ export class LoginComponent implements OnInit {
 
 		// get return url from route parameters or default to '/'
 		this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/'
+		console.log(this.returnUrl)
 	}
 
 	get f() {
@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
 				this.router.navigate(['/logged-in']) // Fehler: this.returnUrl
-			}).catch(()=>{
-
+			}).catch(error => {
+				console.log(error)
 			});
 			// .login(this.f.username.value, this.f.password.value)
 			// .pipe() // Fehler: .pipe(first())
@@ -71,21 +71,9 @@ export class LoginComponent implements OnInit {
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
 				this.router.navigate(['/admin']) // Fehler: this.returnUrl
-			}).catch(()=>{
-
+			}).catch(error => {
+				console.log(error)
 			});
-			// .login(this.f.username.value, this.f.password.value)
-			// .pipe() // Fehler: .pipe(first())
-			// .subscribe(
-			// 	data => {
-			// 		this.error = ''
-			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
-			// 	},
-			// 	error => {
-			// 		console.log(error)
-			// 		this.error = error
-			// 	}
-			// )
 	}
 
 	service() {
@@ -96,21 +84,9 @@ export class LoginComponent implements OnInit {
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
 				this.router.navigate(['/service']) // Fehler: this.returnUrl
-			}).catch(()=>{
-
+			}).catch(error => {
+				console.log(error)
 			});
-			// .login(this.f.username.value, this.f.password.value)
-			// .pipe() // Fehler: .pipe(first())
-			// .subscribe(
-			// 	data => {
-			// 		this.error = ''
-			// 		this.router.navigate(['/service']) // Fehler: this.returnUrl
-			// 	},
-			// 	error => {
-			// 		console.log(error)
-			// 		this.error = error
-			// 	}
-			// )
 	}
 
 	leitung() {
@@ -121,20 +97,8 @@ export class LoginComponent implements OnInit {
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
 				this.router.navigate(['/admin']) // Fehler: this.returnUrl
-			}).catch(()=>{
-
+			}).catch(error => {
+				console.log(error)
 			});
-			// .login(this.f.username.value, this.f.password.value)
-			// .pipe() // Fehler: .pipe(first())
-			// .subscribe(
-			// 	data => {
-			// 		this.error = ''
-			// 		this.router.navigate(['/admin']) // Fehler: this.returnUrl
-			// 	},
-			// 	error => {
-			// 		console.log(error)
-			// 		this.error = error
-			// 	}
-			// )
 	}
 }
