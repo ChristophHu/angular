@@ -47,7 +47,6 @@ export class AuthService {
 						this.token = xmlhttp.getResponseHeader('Authorization')!.toString().split(' ')[1]
 						const jwtpayload = this.token.split('.')[1]
 						const jwttoken = JSON.parse(atob(jwtpayload))
-						console.log(jwttoken)
 						localStorage.setItem('currentUser', jwttoken.sub)
 						const arr = JSON.parse(jwttoken.allowed_apps)
 						arr.forEach((el: any) => { 
@@ -55,7 +54,7 @@ export class AuthService {
 								const backendurl = el.config_json
 								const backend = JSON.parse(backendurl).backendurl
 								localStorage.setItem('backendUrl', backend)
-								this.loginjwt(backend, this.token).then((result:any)=>{
+								this.loginjwt(backend, this.token).then((result: any)=>{
 									resolve(true);
 								}).catch(()=>{
 									reject();

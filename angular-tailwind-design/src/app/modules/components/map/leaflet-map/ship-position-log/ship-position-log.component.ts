@@ -47,22 +47,22 @@ export class ShipPositionLogComponent implements OnInit, OnDestroy {
 
   updateDataToDatatable() {
     var shipIcon = new L.Icon({ iconUrl: 'assets/location-marker.svg', iconSize: [ 50, 60 ], iconAnchor: [20, 30], popupAnchor: [0, 20] })
-    this.mapService.getShipPositionLog(this.id).subscribe({
-      next: data => { 
-        this.positionLog = data
-        this.dtTrigger.next()
+    // this.mapService.getShipPositionLog(this.id).subscribe({
+    //   next: data => { 
+    //     this.positionLog = data
+    //     this.dtTrigger.next()
 
-        let markerArray: any[] = []
-        data.forEach((el: any) => {
-          markerArray.push({ latitude: el.location.latitude, longitude: el.location.longitude, description: el.description, options: { icon: shipIcon } })
-        })
-        this.mapService.addMarkerToGroup(markerArray)
-      }
-    })
+    //     let markerArray: any[] = []
+    //     data.forEach((el: any) => {
+    //       markerArray.push({ latitude: el.location.latitude, longitude: el.location.longitude, description: el.description, options: { icon: shipIcon } })
+    //     })
+    //     this.mapService.addMarkerToGroup(markerArray)
+    //   }
+    // })
   }
 
   centerOnPosition(position: Position) {
-    this.mapService.sub$.next(position)
+    // this.mapService.sub$.next(position)
   }
 
   getPositionLog() {

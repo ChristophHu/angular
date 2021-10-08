@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
 		this.authService.logout()
 
 		// get return url from route parameters or default to '/'
-		this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/'
-		console.log(this.returnUrl)
+		// this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/'
 	}
 
 	get f() {
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	onSubmit() {
-		console.log(`login: ${this.f.username.value}`)
 		this.submitted = true
 
 		if (this.loginForm.invalid) {
@@ -44,7 +42,7 @@ export class LoginComponent implements OnInit {
 		}
 
 		this.authService
-			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+			.login(this.f.username.value, this.f.password.value).then((res: any)=>{
 				this.router.navigate(['/logged-in']) // Fehler: this.returnUrl
 			}).catch(error => {
 				console.log(error)
@@ -70,25 +68,38 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
-				this.router.navigate(['/admin']) // Fehler: this.returnUrl
+				switch (this.authService.roleValue) {
+					case 'Administration':
+						this.router.navigate(['/admin'])
+						break
+					
+					default:
+						console.error('There is no role to switch.')
+				}
 			}).catch(error => {
 				console.log(error)
 			});
 	}
-
-	service() {
+	controlling() {
 		if (this.loginForm.invalid) {
 			return
 		}
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
-				this.router.navigate(['/service']) // Fehler: this.returnUrl
+				switch (this.authService.roleValue) {
+					case 'Administration':
+					case 'Controlling':
+						this.router.navigate(['/admin'])
+						break
+					
+					default:
+						console.error('There is no role to switch.')
+				}
 			}).catch(error => {
 				console.log(error)
 			});
 	}
-
 	leitung() {
 		if (this.loginForm.invalid) {
 			return
@@ -96,9 +107,39 @@ export class LoginComponent implements OnInit {
 
 		this.authService
 			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
-				this.router.navigate(['/admin']) // Fehler: this.returnUrl
+				switch (this.authService.roleValue) {
+					case 'Administration':
+					case 'Leitung':
+						this.router.navigate(['/admin'])
+						break
+					
+					default:
+						console.error('There is no role to switch.')
+				}
 			}).catch(error => {
 				console.log(error)
 			});
 	}
+	service() {
+		if (this.loginForm.invalid) {
+			return
+		}
+
+		this.authService
+			.login(this.f.username.value, this.f.password.value).then((res:any)=>{
+				switch (this.authService.roleValue) {
+					case 'Administration':
+					case 'Service':
+						this.router.navigate(['/service'])
+						break
+					
+					default:
+						console.error('There is no role to switch.')
+				}
+			}).catch(error => {
+				console.log(error)
+			});
+	}
+
+
 }

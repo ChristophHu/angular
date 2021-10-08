@@ -28,19 +28,10 @@ export class ZaehlerstaendeService {
     let param = ``
     switch (action) {
 
-        // dienststelle
-        // case 'insertDienststelle': {
-        //     param = `bezeichnung=${data.bezeichnung}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&strasse=${data.adresse.strasse}&hausnummer=${data.adresse.hausnummer}&postleitzahl=${data.adresse.postleitzahl}&ort=${data.adresse.ort}&mailadresse=${data.mailadresse}`
-        //     break
-        // }
         case 'updateZaehlerstand': {
             param = `id=${data.id}&id_schiff=${data.id_schiff}&value=${data.value}&date=${data.date}`
             break
         }
-        // case 'deleteDienststelle': {
-        //     param = `id=${data}`
-        //     break
-        // }
 
         default:
             console.error('There is no action to switch.')
@@ -86,7 +77,6 @@ export class ZaehlerstaendeService {
         this._zaehlerstande.next(Object.assign({}, this.dataStore).zaehlerstande)
     })
   }
-
   updateZaehlerstand(zaehlerstand: Zaehlerstand) {
     console.log(zaehlerstand)
     this.reducer('updateZaehlerstand', zaehlerstand).subscribe(success => {

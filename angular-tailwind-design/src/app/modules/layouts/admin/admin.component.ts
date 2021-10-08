@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/authentication/auth.service';
 import { Role } from 'src/app/core/models/role';
@@ -9,7 +9,7 @@ import { User } from 'src/app/core/models/user';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.sass']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   isSidebarActive = false
   isNotificationActive = false
   private currentUser!: User
@@ -19,11 +19,11 @@ export class AdminComponent implements OnInit {
         this.currentUser = user
       });
   }
-  ngOnInit(): void {
-    // this.activatedroute.data.subscribe(data => {
-    //   console.log(data)
-    // })
-  }
+  // ngOnInit(): void {
+  //   this.activatedroute.data.subscribe(data => {
+  //     console.log(data)
+  //   })
+  // }
 
   // get isAdmin() {
   //   return this.currentUser && this.currentUser.role === Role.administration;

@@ -42,9 +42,9 @@ export class PunktSetzenComponent implements OnInit {
       console.log(data.data.id_ship)
       this.id_entry = data.data.id_entry
       if (this.id_entry) {
-        this.mapService.getPositionLogEntry(this.id_entry).subscribe(data => {
-          this.punktsetzenForm.patchValue(data)
-        })
+        // this.mapService.getPositionLogEntry(this.id_entry).subscribe(data => {
+        //   this.punktsetzenForm.patchValue(data)
+        // })
       }
       else {
         this.isEditable = false
@@ -64,20 +64,20 @@ export class PunktSetzenComponent implements OnInit {
 
   create() {
     // console.log(this.punktsetzenForm.value)
-    this.mapService.createPositionLogEntry(this.punktsetzenForm.value)
-    this.modal?.close()
+    // this.mapService.createPositionLogEntry(this.punktsetzenForm.value)
+    // this.modal?.close()
   }
 
   update() {
-    console.log(this.punktsetzenForm.value)
-    console.log(this.id_entry)
-    this.mapService.updatePositionLogEntry(this.id_entry, this.punktsetzenForm.value)
-    this.modal?.close()
+    // console.log(this.punktsetzenForm.value)
+    // console.log(this.id_entry)
+    // this.mapService.updatePositionLogEntry(this.id_entry, this.punktsetzenForm.value)
+    // this.modal?.close()
   }
 
   async delete(): Promise<void> {
-    this.mapService.deletePositionLogEntry(this.id_entry)
-    await this.modal?.close()
+    // this.mapService.deletePositionLogEntry(this.id_entry)
+    // await this.modal?.close()
   }
 
   getLocalPosition() {

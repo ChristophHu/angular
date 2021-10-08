@@ -58,25 +58,21 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
   ngAfterViewInit(): void {
     this.createMap()
     
-    this.mapService.sub$.subscribe(position => { 
-      this.centerMapOnPosition(position)
-    })
+    this.centerMapOnPosition({ latitude: 52.6, longitude: 13.6})
 
-    this.mapService.sub$.next({ latitude: 52.6, longitude: 13.6})
-
-    this.markerGroup = this.mapService.markerGroup$.subscribe(data => {
-      if (this.markergruppe) {
-        this.markergruppe.clearLayers()
-      }
+    // this.markerGroup = this.mapService.markerGroup$.subscribe(data => {
+    //   if (this.markergruppe) {
+    //     this.markergruppe.clearLayers()
+    //   }
       
-      this.arr = []
-      data.forEach(el => {
-        this.arr.push(L.marker([el.latitude, el.longitude], el.options).addTo(this.map).bindPopup(el.description))
-      })
+    //   this.arr = []
+    //   data.forEach(el => {
+    //     this.arr.push(L.marker([el.latitude, el.longitude], el.options).addTo(this.map).bindPopup(el.description))
+    //   })
 
-      this.markergruppe = L.layerGroup(this.arr)
-      this.markergruppe.addTo(this.map)
-    })
+    //   this.markergruppe = L.layerGroup(this.arr)
+    //   this.markergruppe.addTo(this.map)
+    // })
 
     this.setToLocalPosition()
   }

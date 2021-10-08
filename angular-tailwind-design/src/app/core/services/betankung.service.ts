@@ -29,6 +29,37 @@ export class BetankungService {
     return this.dataStore
   }
 
+  reducer(action: string, data: any): Observable<any> {
+    console.info(`reducer | action: '${action}', data: ${data}`)
+    const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+    let param = ``
+    switch (action) {
+
+        case 'updateBetankung': {
+            param = `id=${data.id}&id_schiff=${data.id_schiff}&latitude=${data.latitude}&longitude=${data.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfilllingquantity}`
+            break
+        }
+        case 'deleteBetankung': {
+            param = `id=${data}`
+            break
+        }
+
+        default:
+            console.error('There is no action to switch.')
+            break
+    }
+    
+    return this.httpClient.post(
+        baseURL, 
+        param, { 
+            headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded', 
+                'Authorization': 'Bearer ' + this.authService.tokenValue 
+            }
+        })
+        .pipe(retry(2), take(1))
+  }
+
   getReducer(action: string, data: any): any {
     console.info(`getreducer | action: '${action}', data: ${data}`)
     const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
@@ -53,53 +84,22 @@ export class BetankungService {
         this._betankungen.next(Object.assign({}, this.dataStore).betankungen)
     })
   }
+  createBetankung(betankung: Betankung) {
 
-  createBetankung(body: Betankung) {
-    // console.log(body)
-    // this.httpClient.post<Betankung>(`http://localhost:3000/betankungen`, JSON.stringify(body), this.httpOptions).subscribe(data => {
-    //   this.dataStore.betankungen.push(data)
-    //   this._betankungen.next(Object.assign({}, this.dataStore).betankungen)
-    // }, error => console.log(error))
   }
-
-  updateBetankung(body: Betankung) {
-    console.log(body)
-    this.httpClient.put<Betankung>(`http://localhost:3000/betankungen/${body.id}`, JSON.stringify(body), this.httpOptions).subscribe(data => {
-      this.dataStore.betankungen.forEach((item, index) => {
-        if (item.id === data.id) { this.dataStore.betankungen[index] = data }
-      })
+  updateBetankung(betankung: Betankung) {
+    console.log(betankung)
+    this.reducer('updateBetankung', betankung).subscribe(success => {
+      this.dataStore.betankungen = this.dataStore.betankungen.filter(el => el.id != betankung.id)
+      this.dataStore.betankungen.push(betankung)
       this._betankungen.next(Object.assign({}, this.dataStore).betankungen)
-    }, error => console.log(error))
+    })
   }
-
   deleteBetankung(id: string) {
-    // this.httpClient.delete(`http://localhost:3000/betankungen/${id}`).subscribe(response => {
-    //   this.dataStore.betankungen.forEach((item, index) => {
-    //     if (item.id === id) { this.dataStore.betankungen.splice(index, 1) }
-    //   })
-    //   this._betankungen.next(Object.assign({}, this.dataStore).betankungen)
-    // }, error => console.log(error))
+    console.log(id)
+    this.reducer('deleteBetankung', id).subscribe(success => {
+      this.dataStore.betankungen = this.dataStore.betankungen.filter(el => el.id != id)
+      this._betankungen.next(Object.assign({}, this.dataStore).betankungen)
+    })
   }
-
-  public dateToLocalISOString(dt: Date): string {
-    dt.setHours(new Date().getHours()+2)
-    return dt.toISOString().substring(0,16)
-  }
-
-  // getBetankung(id: number) {
-  //   this.httpClient.get<Betankung>(`http://localhost:3000/betankungen/${id}`).subscribe(data => {
-  //     let notFound = true;
-  //     this.dataStore.betankungen.forEach((item, index) => {
-  //       if (item.id === data.id) {
-  //         this.dataStore.betankungen[index] = data;
-  //         notFound = false;
-  //       }
-  //     });
-  //     if (notFound) {
-  //       this.dataStore.betankungen.push(data);
-  //     }
-  //     this._betankungen.next(Object.assign({}, this.dataStore).betankungen);
-  //   }, error => console.log(error));
-  // }
-
 }

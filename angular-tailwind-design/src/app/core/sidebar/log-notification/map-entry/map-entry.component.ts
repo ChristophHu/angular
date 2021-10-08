@@ -18,7 +18,6 @@ export class MapEntryComponent implements OnInit {
 
   centerOnPosition(position: Position) {
     console.log(position)
-    this.mapService.sub$.next(position)
+    // this.mapService.sub$.next(position)
   }
-
 }
