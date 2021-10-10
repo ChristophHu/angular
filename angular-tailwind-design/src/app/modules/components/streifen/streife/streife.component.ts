@@ -48,8 +48,8 @@ export class StreifeComponent implements OnInit {
   }
 
   delete() {
-    // this.zaehlerstaendeService.deleteBetankung(this.streifeForm.value.id)
-    // this.modal?.close()
+    this.streifeService.deleteStreife(this.streifeForm.value.id)
+    this.modal?.close()
   }
 
   cancel() {

@@ -12,10 +12,11 @@ import { MapService } from '../../../../core/services/map.service';
 export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
   // leaflet
   private map!: L.Map
-  private sub!: Subscription
+  // private sub!: Subscription
   private positionSource$ = new ReplaySubject<Position>(2)
-  private markerGroup!: Subscription
-  private markergruppe: any
+  // private markerGroup!: Subscription
+  // private markergruppe: any
+  subscription!: Subscription
 
   private arr: L.Marker[] = []
   dtTrigger: Subject<any> = new Subject<any>();
@@ -52,13 +53,16 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-
+    this.subscription = this.mapService.centerposition.subscribe((position: Position) => {
+        // this.centerMapOnPosition(position)
+        this.map.panTo(new L.LatLng( position.latitude, position.longitude ))
+      })
   }
 
   ngAfterViewInit(): void {
     this.createMap()
-    
-    this.centerMapOnPosition({ latitude: 52.6, longitude: 13.6})
+
+    this.mapService.centerposition.next({ latitude: 52.6, longitude: 13.6})
 
     // this.markerGroup = this.mapService.markerGroup$.subscribe(data => {
     //   if (this.markergruppe) {
@@ -74,15 +78,16 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
     //   this.markergruppe.addTo(this.map)
     // })
 
+    this.mapService.getLastPositionsFromAllShips()
     this.setToLocalPosition()
   }
 
-  centerMapOnPosition(position: Position) {
-    this.map.panTo(new L.LatLng( position.latitude, position.longitude ))
-  }
+  // centerMapOnPosition(position: Position) {
+  //   this.map.panTo(new L.LatLng( position.latitude, position.longitude ))
+  // }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe()
+    this.subscription.unsubscribe()
   }
  
   getLocalPosition() {
@@ -95,12 +100,12 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   setToLocalPosition() {
-    this.sub = this.positionSource$.subscribe({
+    this.subscription.add(this.positionSource$.subscribe({
       next: (el: Position) => {
         this.map.panTo(new L.LatLng(el.latitude, el.longitude))
       },
       error: err => console.log(`error: ${err}`),
       complete: () => console.log(`complete`)
-    })
-  } 
+    }))
+  }
 }

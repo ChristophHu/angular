@@ -20,7 +20,8 @@ export class MapService implements OnInit {
     // dataStore
     private dataStore: { alleSchiffePositionLog: PositionLogEntry[] } = { alleSchiffePositionLog: [] }
 
-  // public sub$ = new Subject<Position>()
+  public centerposition = new Subject<Position>()
+  public zoom = new Subject<number>()
   // public markerGroup$ = new ReplaySubject<any[]>(1)
   // private markerGroup: Marker[] = [] // L.Marker in leaflet
   
@@ -96,9 +97,8 @@ export class MapService implements OnInit {
   getLastPositionsFromAllShips() {
     const source$ = this.getReducer('getLastPositionsFromAllShips', {})
     source$.subscribe((data: any) => {
-      console.log(data)
-        this.dataStore.alleSchiffePositionLog = data
-        this._alleSchiffePositionLog.next(Object.assign({}, this.dataStore).alleSchiffePositionLog)
+      this.dataStore.alleSchiffePositionLog = data
+      this._alleSchiffePositionLog.next(Object.assign({}, this.dataStore).alleSchiffePositionLog)
     })
   }
 

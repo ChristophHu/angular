@@ -32,10 +32,10 @@ export class StreifeService {
             param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
             break
         }
-        // case 'deleteDienststelle': {
-        //     param = `id=${data}`
-        //     break
-        // }
+        case 'deleteStreife': {
+            param = `id=${data}`
+            break
+        }
 
         default:
             console.error('There is no action to switch.')
@@ -83,6 +83,12 @@ export class StreifeService {
     this.reducer('updateStreife', streife).subscribe(success => {
       this.dataStore.streifen = this.dataStore.streifen.filter(el => el.id != streife.id)
       this.dataStore.streifen.push(streife)
+      this._streifen.next(Object.assign({}, this.dataStore).streifen)
+    })
+  }
+  deleteStreife(id: string) {
+    this.reducer('deleteStreife', id).subscribe(success => {
+      this.dataStore.streifen = this.dataStore.streifen.filter(el => el.id != id)
       this._streifen.next(Object.assign({}, this.dataStore).streifen)
     })
   }

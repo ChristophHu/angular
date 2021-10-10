@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Position } from 'src/app/core/models/position';
 import { PositionLogEntry } from '../../../../../core/models/positionlogentry';
 import { MapService } from '../../../../../core/services/map.service';
@@ -11,20 +11,27 @@ import { MapService } from '../../../../../core/services/map.service';
   styleUrls: ['./ship-position.component.sass']
 })
 export class ShipPositionComponent implements OnInit {
-  // data
-  private positionLog: PositionLogEntry[] = []
+  // // data
+  // private positionLog: PositionLogEntry[] = []
   
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  constructor(private mapService: MapService) { }
+    // data
+    alleSchiffePositionLog: Observable<PositionLogEntry[]>
+    subscription!: Subscription
+
+  constructor(private mapService: MapService) {
+    this.alleSchiffePositionLog = this.mapService.alleSchiffePositionLog
+  }
 
   ngOnInit(): void {
     // datatables
     this.dtOptions
     this.dtOptions = { pagingType: 'full_numbers', pageLength: 8 , language: { url: 'cdn.datatables.net/plug-ins/1.10.25/i18n/German.json' }}
     this.updateDataToDatatable()
+    this.mapService.getLastPositionsFromAllShips()
   }
 
   updateDataToDatatable() {
@@ -40,19 +47,14 @@ export class ShipPositionComponent implements OnInit {
     //   })
     //   this.mapService.addMarkerToGroup(markerArray)
     // })
+    this.dtTrigger.next()
   }
 
-  getPositionLog() {
-    return this.positionLog
-  }
+  // getPositionLog() {
+  //   return this.positionLog
+  // }
 
-  centerOnShipPosition(id: number) {
-    let position!: Position
-    this.positionLog.find((el) => {
-      if (el.id == id) {
-        position = el.location
-      }
-    })
-    // this.mapService.sub$.next(position)
+  centerOnShipPosition(position: Position) {
+    this.mapService.centerposition.next(position)
   }
 }
