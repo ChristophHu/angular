@@ -20,7 +20,7 @@ import { AdminComponent } from './admin/admin.component';
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({}),
-    EffectsModule.forRoot()
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]

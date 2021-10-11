@@ -24,11 +24,14 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.store.subscribe(state => console.log('Store value: ', state))
+    // on refresh
+    const userProfile = localStorage.getItem('user')
+    if (userProfile) {
+      this.store.dispatch(AuthActions.login({ user: JSON.parse(userProfile) }))
+    }
   }
 
   logout() {
     this.store.dispatch(AuthActions.logout())
-    this.router.navigateByUrl('/')
   }
 }

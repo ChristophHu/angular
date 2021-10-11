@@ -12,6 +12,7 @@ import { interval } from 'rxjs';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positionen/position/position.component';
 import { LocationService } from 'src/app/core/services/location.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-map',
@@ -28,10 +29,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   positionForm: FormGroup
 
   private positionSubscription = new Subscription
+  private currentPositionSubscription = new Subscription
   
   private positions: Standort[] = []
   private markergroup: any
   private arr: L.Marker[] = []
+
+  // Position from all ships
+  private allShips: L.Marker[] = []
+  private allShippsGroup: L.LayerGroup = L.layerGroup()
 
   constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private appService: AppService, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
     this.positionForm = this._formBuilder.group({
@@ -39,9 +45,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  ngOnInit(): void {
-    // const i = interval(30000)
+//   <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">
+//   <path fill="#cc756b" stroke="#FFF" stroke-width="6" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/>
+//   <circle fill="#fff" cx="74" cy="75" r="61"/>
+//   <circle fill="#FFF" cx="74" cy="75" r="48"/>
+//   <text fill="#FFF" x="0" y="0">Test</text>
+// </svg>
 
+  ngOnInit(): void {
     this.positionSubscription
       .add(
         this.activatedRoute.params.subscribe(
@@ -52,11 +63,66 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.appService.positions.subscribe((data: any) => {
           this.positions = []
           this.positions = data
-          data.forEach((pos: Standort) => {
-            this.arr.push(L.marker([pos.location.latitude, pos.location.longitude]).bindPopup(pos.description))
+          data.forEach((pos: Standort, index: number) => {
+
+            var svgIcon = L.divIcon({
+              html: `
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">
+                <path fill="#4287f5" stroke="#FFF" stroke-width="5" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/>
+                <g>
+                  <circle fill="#FFF" cx="74" cy="75" r="48"/>
+                  <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-size="64" fill="#000">${index+1}</text>
+                </g>
+              </svg>
+              `,
+              className: "svg-icon",
+              iconSize: [24, 40],
+              iconAnchor: [12, 40],
+              popupAnchor: [12, -40]
+            });
+
+            this.arr.push(L.marker([pos.location.latitude, pos.location.longitude], { icon: svgIcon }).bindPopup(`Beschreibung: ${pos.description}<br>Datum: ${pos.date}`))
           })
           this.markergroup = L.layerGroup(this.arr)
         })
+      )
+      .add(
+        this.appService.lastPositions.subscribe((data: any) => {
+          this.allShips.length = 0
+          data.forEach((ship: any) => {
+            var svgIcon = L.divIcon({
+              html: `
+              <div class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">
+                  <path fill="#4287f5" stroke="#FFF" stroke-width="5" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/>
+                  <g>
+                    <circle fill="#FFF" cx="74" cy="75" r="48"/>
+                    <svg x="22%" y="20%" width="80" height="80" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" />
+                      <path d="M4 18l-1 -5h18l-2 4" />
+                      <path d="M5 13v-6h8l4 6" />
+                      <path d="M7 7v-4h-1" />
+                    </svg>
+                  </g>
+                </svg>
+                <p class="absolute -left-4 w-20 text-center bg-gray-200 bg-opacity-60">${ship.id_ship}</p>
+              </div>
+              
+              `,
+              className: "svg-icon",
+              iconSize: [24, 40],
+              iconAnchor: [12, 40],
+              popupAnchor: [12, -40]
+            });
+            this.allShips.push(L.marker([ship.location.latitude, ship.location.longitude], { icon: svgIcon }).bindPopup(`Datum: ${ship.date}`))
+          })
+          if (this.map && this.allShips.length > 0) {
+            this.map.removeLayer(this.allShippsGroup)
+            this.allShippsGroup = L.layerGroup(this.allShips)
+            this.allShippsGroup.addTo(this.map)
+          }
+        }, error => console.error(error))
       )
       // .add(
       //   i.subscribe(data => {
@@ -67,17 +133,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       //   })
       // )
     this.appService.getPosition(this.id)
+    this.appService.getLastPositionsFromAllShips()
     L.Icon.Default.imagePath = "assets/leaflet/"
+
+    this.cposition()
   }
 
   ngAfterViewInit(): void {
     this.createMap()
     this.setToLocalPosition()
-    this.showMarkergroup()   
+    this.markergroup.addTo(this.map)
+    this.allShippsGroup.addTo(this.map)
   }
 
   ngOnDestroy(): void {
     this.positionSubscription.unsubscribe()
+    this.currentPositionSubscription.unsubscribe()
   }
 
   createMap() {
@@ -145,6 +216,38 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   hideMarkergroup() {
     this.markergroup.remove()
+  }
+
+  cposition() {
+    var svgIcon = L.divIcon({
+      html: `
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">
+        <path fill="#f55660" stroke="#FFF" stroke-width="5" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/>
+        <g>
+          <circle fill="#FFF" cx="74" cy="75" r="48"/>
+          <svg x="22%" y="20%" width="80" height="80" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" />
+            <path d="M4 18l-1 -5h18l-2 4" />
+            <path d="M5 13v-6h8l4 6" />
+            <path d="M7 7v-4h-1" />
+          </svg>
+        </g>
+      </svg>
+      `,
+      className: "svg-icon",
+      iconSize: [24, 40],
+      iconAnchor: [12, 40],
+      popupAnchor: [12, -40]
+    });
+
+    this.currentPositionSubscription = interval(10*1000).subscribe((data: number) => {
+        this.locationService.getCurrentPosition().then(position => {
+          const Pos = L.layerGroup([L.marker([position.latitude, position.longitude], { icon: svgIcon}).bindPopup('Aktuelle Position')])
+          Pos.remove()
+          Pos.addTo(this.map)
+        })
+    })
   }
 
   async openPositionModal(id?: string) {

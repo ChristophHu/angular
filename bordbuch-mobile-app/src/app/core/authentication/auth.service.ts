@@ -152,12 +152,8 @@ export class AuthService {
 				}
 			}
 
-			console.log(localStorage.getItem('currentUser'))
-			console.log(this.appService.gett())
-	
 			xmlhttp.open('GET', `${localStorage.getItem('backendUrl')}/logout?persnr=${localStorage.getItem('currentUser')}`, true)
 			xmlhttp.setRequestHeader('Authorization', `Bearer ${this.appService.gett()}`)
-			// xmlhttp.setRequestHeader('content-type', `text/plain`)
 			xmlhttp.send()
 		})
 	}

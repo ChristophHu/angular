@@ -227,6 +227,7 @@ export class AppService {
             case 'getPruefvermerke':
             case 'getSchiffe':
             case 'getZaehlerstandstypen':
+            case 'getLastPositionsFromAllShips':  
                 param = ``
                 break
 
@@ -461,6 +462,14 @@ export class AppService {
 
     getSchiff(id: string) {
         this._schiffe.next(this.dataStore.schiffe.filter(el => el.id == id))
+    }
+    getLastPositionsFromAllShips() {
+        const source$ = this.getReducer('getLastPositionsFromAllShips', {})
+        source$.subscribe((data: any) => {
+            data = data.filter((el: any) => el.id_ship != this._id_schiff)
+            this.dataStore.lastPositions = data
+            this._lastPositions.next(Object.assign({}, this.dataStore).lastPositions)
+        })
     }
 
     updateAktiveStreife(kennung: string, zweck: string) {
