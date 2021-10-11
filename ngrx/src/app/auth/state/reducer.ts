@@ -1,12 +1,9 @@
-import { User } from '../model/user.model'
-import { AuthActions } from '../actions/index'
+import { AuthActions } from './index'
 import { createReducer, on } from '@ngrx/store'
+import { AuthState } from '../model/authstate.model'
 
-export interface AuthState {
-  user: User
-}
 export const initialAuthState: AuthState = {
-  user: { id: '', email: '', role: ''}
+  user: undefined
 }
 
 // export const reducers: ActionReducerMap<AuthState> = { }
@@ -20,7 +17,7 @@ export const authReducer = createReducer(
     }),
     on(AuthActions.logout, (state, action) => {
         return {
-            user: { id: '', email: '', role: ''}
+            user: undefined
         }
     })
 )

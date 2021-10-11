@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { noop } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { AuthActions } from '../actions';
+import { AuthActions } from '../state';
 import { AuthService } from '../auth.service';
 import { User } from '../model/user.model';
 

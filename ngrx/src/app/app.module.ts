@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,8 @@ import { AdminComponent } from './admin/admin.component';
     AppRoutingModule,
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
-    StoreDevtoolsModule.instrument({})
+    StoreDevtoolsModule.instrument({}),
+    EffectsModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
