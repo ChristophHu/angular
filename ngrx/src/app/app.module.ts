@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AdminComponent } from './admin/admin.component';
+import { reducers } from './app.state';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,13 @@ import { AdminComponent } from './admin/admin.component';
     AuthModule.forRoot(),
     StoreModule.forRoot(reducers, {}),
     StoreDevtoolsModule.instrument({}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({ 
+      stateKey: 'router', 
+      routerState: RouterState.Minimal 
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-function reducers(reducers: any, arg1: { metaReducers: any; runtimeChecks: { strictStateImmutability: true; strictActionImmutability: true; strictActionSerializability: true; strictStateSerializability: true; }; }): any[] | import("@angular/core").Type<any> | import("@angular/core").ModuleWithProviders<{}> {
-  throw new Error('Function not implemented.');
-}
-
