@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AdminComponent } from './admin/admin.component';
-import { reducers } from './app.state';
+import { metaReducers, reducers } from './app.state';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,12 @@ import { reducers } from './app.state';
     BrowserModule,
     AppRoutingModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true
+      }
+    }),
     StoreDevtoolsModule.instrument({}),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({ 
