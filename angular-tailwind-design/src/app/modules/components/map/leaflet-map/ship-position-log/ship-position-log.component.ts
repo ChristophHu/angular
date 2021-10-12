@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Params, Router } from '@angular/router'
 import { data } from 'jquery'
 import * as L from 'leaflet'
-import { Subject, Subscription } from 'rxjs'
+import { Observable, Subject, Subscription } from 'rxjs'
 import { ModalService } from 'src/app/shared/components/modal/modal.service'
 import { Position } from 'src/app/core/models/position'
 import { PunktSetzenComponent } from '../../punkt-setzen/punkt-setzen.component'
@@ -15,58 +15,102 @@ import { MapService } from '../../../../../core/services/map.service'
   styleUrls: ['./ship-position-log.component.sass']
 })
 export class ShipPositionLogComponent implements OnInit, OnDestroy {
-  
-  // route
-  private subscription!: Subscription
-  id: number = 0
-  
-  // data
-  private positionLog: PositionLogEntry[] = []
-
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private mapService: MapService, private modalService: ModalService<PunktSetzenComponent>) { }
+  // data
+  lastPositions: Observable<PositionLogEntry[]>
+  // subscription!: Subscription
+  private positionSubscription = new Subscription
+
+  // route
+  id: string = ''
+  
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private mapService: MapService, private modalService: ModalService<PunktSetzenComponent>) {
+    this.lastPositions = this.mapService.lastPositions
+  }
 
   ngOnInit(): void {
-    // route
-    this.subscription = this.activatedRoute.params.subscribe(
-      (params: Params) => this.id = params['id']
-    )
-
     // datatables
-    this.dtOptions = { pagingType: 'full_numbers', pageLength: 8 }
-    this.updateDataToDatatable()
+    this.dtOptions = { 
+      pagingType: 'full_numbers', 
+      pageLength: 10, 
+      responsive: true, 
+      // "paging"  : false,
+      // "ordering": false,
+      // "processing": true,
+      // "info"    : false,
+      "autoWidth": true,
+      // "retrieve": true,
+      // data:this.dtUsers,
+      // columns: [{title: 'User ID', data: 'id'},
+      //       {title: 'First Name', data: 'firstName'},
+      //       {title: 'Last Name', data: 'lastName' }],
+      "language": {
+        // "processing": "Procesando...",
+        "search": "Suche:",
+        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
+        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
+        // "infoEmpty": "Mostrando ningún elemento.",
+        // "infoFiltered": "(filtrado _MAX_ elementos total)",
+        // "infoPostFix": "",
+        // "loadingRecords": "Cargando registros...",
+        // "zeroRecords": "No se encontraron registros",
+        "emptyTable": "Keine Datensätze vorhanden",
+        "paginate": {
+          "first": "Erste",
+          "previous": "Vorherige",
+          "next": "Nächste",
+          "last": "Letzte"
+        },
+      }
+    }
+
+    // data
+    this.positionSubscription
+      .add(
+        this.activatedRoute.params.subscribe(
+          (params: Params) => this.id = params['id']
+        )
+      )
+      .add(
+        this.mapService.lastPositions.subscribe(data => {
+          this.dtTrigger.next()
+        })
+      )
+    
+    this.mapService.getPosition()
+
+    // this.updateDataToDatatable()
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-    this.dtTrigger.unsubscribe()
+    this.positionSubscription.unsubscribe()
   }
 
-  updateDataToDatatable() {
-    var shipIcon = new L.Icon({ iconUrl: 'assets/location-marker.svg', iconSize: [ 50, 60 ], iconAnchor: [20, 30], popupAnchor: [0, 20] })
-    // this.mapService.getShipPositionLog(this.id).subscribe({
-    //   next: data => { 
-    //     this.positionLog = data
-    //     this.dtTrigger.next()
+  // updateDataToDatatable() {
+  //   var shipIcon = new L.Icon({ iconUrl: 'assets/location-marker.svg', iconSize: [ 50, 60 ], iconAnchor: [20, 30], popupAnchor: [0, 20] })
+  //   // this.mapService.getShipPositionLog(this.id).subscribe({
+  //   //   next: data => { 
+  //   //     this.positionLog = data
+  //   //     this.dtTrigger.next()
 
-    //     let markerArray: any[] = []
-    //     data.forEach((el: any) => {
-    //       markerArray.push({ latitude: el.location.latitude, longitude: el.location.longitude, description: el.description, options: { icon: shipIcon } })
-    //     })
-    //     this.mapService.addMarkerToGroup(markerArray)
-    //   }
-    // })
-  }
+  //   //     let markerArray: any[] = []
+  //   //     data.forEach((el: any) => {
+  //   //       markerArray.push({ latitude: el.location.latitude, longitude: el.location.longitude, description: el.description, options: { icon: shipIcon } })
+  //   //     })
+  //   //     this.mapService.addMarkerToGroup(markerArray)
+  //   //   }
+  //   // })
+  // }
 
   centerOnPosition(position: Position) {
     // this.mapService.sub$.next(position)
   }
 
   getPositionLog() {
-    return this.positionLog
+    // return this.positionLog
   }
 
   async showModal(id_ship: number, id_entry?: number): Promise<void> {

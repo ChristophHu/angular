@@ -34,7 +34,7 @@ export class StreifenComponent implements OnInit {
       // "processing": true,
       // "info"    : false,
       "autoWidth": true,
-      // "retrieve": true,
+      retrieve: true,
       // data:this.dtUsers,
       // columns: [{title: 'User ID', data: 'id'},
       //       {title: 'First Name', data: 'firstName'},

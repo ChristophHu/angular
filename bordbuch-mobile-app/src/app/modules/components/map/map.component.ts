@@ -26,7 +26,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private map!: L.Map
   private positionSource$ = new ReplaySubject<Position>(2)
 
-  positionForm: FormGroup
+  // positionForm: FormGroup
 
   private positionSubscription = new Subscription
   private currentPositionSubscription = new Subscription
@@ -39,10 +39,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private allShips: L.Marker[] = []
   private allShippsGroup: L.LayerGroup = L.layerGroup()
 
-  constructor(private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private appService: AppService, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
-    this.positionForm = this._formBuilder.group({
-      funktion: ['']
-    })
+  constructor(private activatedRoute: ActivatedRoute, private appService: AppService, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
+    // this.positionForm = this._formBuilder.group({
+    //   funktion: ['']
+    // })
   }
 
 //   <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">

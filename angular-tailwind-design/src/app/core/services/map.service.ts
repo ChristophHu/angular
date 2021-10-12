@@ -14,11 +14,11 @@ import { AuthService } from '../authentication/auth.service';
 export class MapService implements OnInit {
 
     // data
-    private _alleSchiffePositionLog = new BehaviorSubject<PositionLogEntry[]>([])
-    readonly alleSchiffePositionLog = this._alleSchiffePositionLog.asObservable()
+    private _lastPositions = new BehaviorSubject<PositionLogEntry[]>([])
+    readonly lastPositions = this._lastPositions.asObservable()
 
     // dataStore
-    private dataStore: { alleSchiffePositionLog: PositionLogEntry[] } = { alleSchiffePositionLog: [] }
+    private dataStore: { lastPositions: PositionLogEntry[] } = { lastPositions: [] }
 
   public centerposition = new Subject<Position>()
   public zoom = new Subject<number>()
@@ -82,6 +82,10 @@ export class MapService implements OnInit {
             param = ``
             break
 
+        case 'getPosition':
+          param = `?id_schiff=${data}&all=true`
+          break
+
         default:
             break
     }
@@ -97,8 +101,15 @@ export class MapService implements OnInit {
   getLastPositionsFromAllShips() {
     const source$ = this.getReducer('getLastPositionsFromAllShips', {})
     source$.subscribe((data: any) => {
-      this.dataStore.alleSchiffePositionLog = data
-      this._alleSchiffePositionLog.next(Object.assign({}, this.dataStore).alleSchiffePositionLog)
+      this.dataStore.lastPositions = data
+      this._lastPositions.next(Object.assign({}, this.dataStore).lastPositions)
+    })
+  }
+  getPosition() {
+    const source$ = this.getReducer('getPosition', '1')
+    source$.subscribe((data: any) => {
+      this.dataStore.lastPositions = data
+      this._lastPositions.next(Object.assign({}, this.dataStore).lastPositions)
     })
   }
 
