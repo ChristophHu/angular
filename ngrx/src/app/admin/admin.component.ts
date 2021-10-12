@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../app.state';
+import { Data } from './model/data.model';
+import { selectAllData, selectData, selectDataCount, selectPicture } from './state/data.selectors';
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +12,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  data$!: Observable<Data[]>
+  picture$!: Observable<Data[]>
+  dataCount$!: Observable<number>
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.reload()
+  }
+
+  reload() {
+    this.data$ = this.store.pipe(select(selectData))
+    this.picture$ = this.store.pipe(select(selectPicture))
+    this.dataCount$ = this.store.pipe(select(selectDataCount))
   }
 
 }

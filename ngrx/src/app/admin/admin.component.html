@@ -1,1 +1,3 @@
-<p>admin works!</p>
+<p *ngFor="let data of data$ | async">{{ data.id }}</p>
+<p>{{ dataCount$ | async }}</p>
+<p *ngFor="let picture of picture$ | async">{{ picture.id }}</p>
