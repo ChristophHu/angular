@@ -7,7 +7,6 @@ import { DataTablesModule } from 'angular-datatables'
 import { LeafletMapModule } from './modules/components/map/leaflet-map/leaflet-map.module'
 import { MarkdownModule } from 'ngx-markdown'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { PunktSetzenComponent } from './modules/components/map/punkt-setzen/punkt-setzen.component'
 import { HttpClientModule } from '@angular/common/http'
 import { ReparaturenServiceComponent } from './modules/components/reparaturen-service/reparaturen-service.component'
 import { ReparaturComponent } from './modules/components/reparaturen-service/reparatur/reparatur.component'
@@ -34,12 +33,12 @@ import { QRCodeComponent } from './modules/components/verwaltung/verwaltung-von-
 import { ZaehlerstaendeComponent } from './modules/components/zaehlerstaende/zaehlerstaende.component';
 import { ZaehlerstandComponent } from './modules/components/zaehlerstaende/zaehlerstand/zaehlerstand.component';
 import { StreifeComponent } from './modules/components/streifen/streife/streife.component'
+import { PositionComponent } from './modules/components/map/leaflet-map/position/position.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PunktSetzenComponent,
     ModalComponent,
     ReparaturenServiceComponent,
     ReparaturComponent,
@@ -57,7 +56,8 @@ import { StreifeComponent } from './modules/components/streifen/streife/streife.
     StreifenComponent,
     ZaehlerstaendeComponent,
     ZaehlerstandComponent,
-    StreifeComponent
+    StreifeComponent,
+    PositionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Params, Router } from '@angular/router'
-import { data } from 'jquery'
-import * as L from 'leaflet'
 import { Observable, Subject, Subscription } from 'rxjs'
 import { ModalService } from 'src/app/shared/components/modal/modal.service'
 import { Position } from 'src/app/core/models/position'
-import { PunktSetzenComponent } from '../../punkt-setzen/punkt-setzen.component'
 import { PositionLogEntry } from '../../../../../core/models/positionlogentry'
 import { MapService } from '../../../../../core/services/map.service'
+import { PositionComponent } from '../position/position.component'
+import { Standort } from 'src/app/core/models/standort'
 
 @Component({
   selector: 'app-ship-position-log',
@@ -20,23 +19,24 @@ export class ShipPositionLogComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject()
 
   // data
-  lastPositions: Observable<PositionLogEntry[]>
+  lastPositions: Observable<Standort[]>
   // subscription!: Subscription
   private positionSubscription = new Subscription
 
   // route
-  id: string = ''
+  id_ship: string = ''
+  id_streife: string = ''
   
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private mapService: MapService, private modalService: ModalService<PunktSetzenComponent>) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private mapService: MapService, private modalService: ModalService<PositionComponent>) {
     this.lastPositions = this.mapService.lastPositions
   }
 
   ngOnInit(): void {
     // datatables
     this.dtOptions = { 
-      pagingType: 'full_numbers', 
-      pageLength: 10, 
-      responsive: true, 
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      responsive: true,
       // "paging"  : false,
       // "ordering": false,
       // "processing": true,
@@ -71,16 +71,17 @@ export class ShipPositionLogComponent implements OnInit, OnDestroy {
     this.positionSubscription
       .add(
         this.activatedRoute.params.subscribe(
-          (params: Params) => this.id = params['id']
+          (params: Params) => this.id_ship = params['id']
         )
       )
       .add(
         this.mapService.lastPositions.subscribe(data => {
+          this.id_streife = data[1].id_streife!
           this.dtTrigger.next()
         })
       )
     
-    this.mapService.getPosition()
+    this.mapService.getPosition(this.id_ship)
 
     // this.updateDataToDatatable()
   }
@@ -113,31 +114,29 @@ export class ShipPositionLogComponent implements OnInit, OnDestroy {
     // return this.positionLog
   }
 
-  async showModal(id_ship: number, id_entry?: number): Promise<void> {
-    let title: string = id_entry ? 'Position bearbeiten' : 'Position hinzufügen'
+  async showModal(id_ship: string, id_streife: string, id_entry?: string): Promise<void> {
+    let position: Standort | undefined
     
-    const { PunktSetzenComponent } = await import(
-      '../../punkt-setzen/punkt-setzen.component'
+    const { PositionComponent } = await import(
+      '../position/position.component'
     );
 
     if (id_entry) {
-      // Position bearbeiten
-      this.modalService.open(PunktSetzenComponent, {
+      position = this.mapService._dataStore.lastPositions.find((el: any) => el.id == id_entry)
+      console.log(position)
+      this.modalService.open(PositionComponent, {
         data: {
-          title: title,
-          id_ship: id_ship,
-          id_entry: id_entry
+          title: 'Position bearbeiten',
+          position
         }
       });
     } else {
-      // Position setzen
-      this.modalService.open(PunktSetzenComponent, {
+      this.modalService.open(PositionComponent, {
         data: {
-          title: title,
-          id_ship: id_ship
+          title: 'Position hinzufügen',
+          position: { id_ship: id_ship, id_streife: id_streife, date: new Date(), location: { latitude: 0, longitude: 0}, description: ''}          
         }
       });
     }
   }
-
 }

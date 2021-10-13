@@ -1,12 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Position } from 'src/app/core/models/position';
-import { Marker } from '../models/marker';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { PositionLogEntry } from '../models/positionlogentry';
 import { retry, take } from 'rxjs/operators';
 import { AuthService } from '../authentication/auth.service';
+import { Standort } from '../models/standort';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +12,11 @@ import { AuthService } from '../authentication/auth.service';
 export class MapService implements OnInit {
 
     // data
-    private _lastPositions = new BehaviorSubject<PositionLogEntry[]>([])
+    private _lastPositions = new BehaviorSubject<Standort[]>([])
     readonly lastPositions = this._lastPositions.asObservable()
 
     // dataStore
-    private dataStore: { lastPositions: PositionLogEntry[] } = { lastPositions: [] }
+    private dataStore: { lastPositions: Standort[] } = { lastPositions: [] }
 
   public centerposition = new Subject<Position>()
   public zoom = new Subject<number>()
@@ -30,6 +28,10 @@ export class MapService implements OnInit {
   ngOnInit(): void {
     // const position: Position = { latitude: 52.5, longitude: 13.5}
     // this.sub$.next(position)
+  }
+
+  get _dataStore() {
+    return this.dataStore
   }
 
   public dateToLocalISOString(dt: Date): string {
@@ -105,8 +107,8 @@ export class MapService implements OnInit {
       this._lastPositions.next(Object.assign({}, this.dataStore).lastPositions)
     })
   }
-  getPosition() {
-    const source$ = this.getReducer('getPosition', '1')
+  getPosition(id: string) {
+    const source$ = this.getReducer('getPosition', id)
     source$.subscribe((data: any) => {
       this.dataStore.lastPositions = data
       this._lastPositions.next(Object.assign({}, this.dataStore).lastPositions)

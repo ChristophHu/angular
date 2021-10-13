@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Betankung } from 'src/app/core/models/betankung';
 import { Position } from 'src/app/core/models/position';
+import { Standort } from 'src/app/core/models/standort';
 import { BetankungService } from 'src/app/core/services/betankung.service';
 import { PositionLogEntry } from '../../../../../core/models/positionlogentry';
 import { MapService } from '../../../../../core/services/map.service';
@@ -18,7 +19,7 @@ export class ShipPositionComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject()
 
   // data
-  lastPositions: Observable<PositionLogEntry[]>
+  lastPositions: Observable<Standort[]>
   subscription!: Subscription
   // betankungen: Observable<Betankung[]>
   // subscription!: Subscription

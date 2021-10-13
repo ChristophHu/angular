@@ -7,6 +7,7 @@ import { ShipPositionLogComponent } from './ship-position-log/ship-position-log.
 import { LeafletMapRoutingModule } from './leaflet-map-routing.module';
 import { LeafletMapComponent } from './leaflet-map.component';
 import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     LeafletMapComponent,

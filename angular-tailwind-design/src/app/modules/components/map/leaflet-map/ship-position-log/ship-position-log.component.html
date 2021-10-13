@@ -1,4 +1,4 @@
-<h3 class="text-xl mb-3">{{ id }}</h3>
+<h3 class="text-xl mb-3">{{ id_ship }}</h3>
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
         <tr>
@@ -13,18 +13,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let entry of lastPositions | async">
-            <td>{{ entry.date | date: 'HH:mm' }}</td>
-            <td hidden>{{ entry.id }}</td>
-            <td>{{ entry.description }}</td>
+        <tr *ngFor="let lastPosition of lastPositions | async">
+            <td>{{ lastPosition.date | date: 'HH:mm' }}</td>
+            <td hidden>{{ lastPosition.id }}</td>
+            <td>{{ lastPosition.description }}</td>
             <td class="flex flex-row justify-between text-gray-500">
-                <a (click)="centerOnPosition({ latitude: entry.location.latitude, longitude: entry.location.longitude })">
+                <a (click)="centerOnPosition({ latitude: lastPosition.location.latitude, longitude: lastPosition.location.longitude })">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </a>
-                <a>
+                <a (click)="showModal(id_ship, id_streife, lastPosition.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
@@ -34,7 +34,7 @@
     </tbody>
 </table>
 <div class="flex flex-row">
-    <button class="flex flex-row mt-5 mr-3 p-2 bg-gray-800 text-white rounded">
+    <button class="flex flex-row mt-5 mr-3 p-2 bg-gray-800 text-white rounded" (click)="showModal(id_ship, id_streife)">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
