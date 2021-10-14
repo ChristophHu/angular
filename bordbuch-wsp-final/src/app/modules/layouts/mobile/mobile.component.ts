@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { select, Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+import { selectSub } from '../../auth/state/selectors'
 
 @Component({
   selector: 'app-mobile',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MobileComponent implements OnInit {
 
-  constructor() { }
+  backendResponse$!: Observable<string>
+
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    
+    this.backendResponse$ = this.store.pipe(select(selectSub))
   }
 }

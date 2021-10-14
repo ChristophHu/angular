@@ -1,0 +1,54 @@
+<div class="flex flex-row justify-between items-center h-16 mb-4 px-3 text-gray-800 shadow-lg">
+  <a class="rotate-180 cursor-pointer" (click)="logout()">
+    <!-- <icons class="w-8 h-8" name="logout"></icons> -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="ml-8 h-8 w-8" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
+  <span class="text-2xl text-gray-800">Bootsauswahl</span>
+  <div class="flex flex-row">
+    <!-- <a class="cursor-pointer" (click)="showModal()">
+      <icons class="w-8 h-8" name="qrcode"></icons>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+          d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+      </svg>
+    </a>
+    <a class="cursor-pointer" *ngIf="f.bordbuch.value" [routerLink]="['/mobile', 'boot', f.bordbuch.value]">
+      <icons class="w-8 h-8" name="chevron-right"></icons>
+      <svg xmlns="http://www.w3.org/2000/svg" class="ml-8 h-8 w-8" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
+      </svg>
+    </a> -->
+  </div>
+</div>
+
+<!-- <div class="content">
+  <div class="w-full bg-white rounded-lg shadow-md">
+    <div class="p-4 border-b">
+      <h2 class="text-2xl ">Auswahl des Bordbuches</h2>
+      <p class="text-sm text-gray-500">
+        Bitte wählen Sie hier das Bordbuch aus. Scannen Sie dafür den vorgesehenen QR-Code oder treffen Sie in der Liste
+        eine
+        Auswahl.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="bordbuchForm">
+        <div class="hover:bg-gray-50 space-y-1 p-4 border-b">
+          <div class="relative my-5">
+            <ng-select [dropdownPosition]="'bottom'" [items]="schiffe | async" bindLabel="name" bindValue="id"
+              groupBy="dienststelle" formControlName="bordbuch" required></ng-select>
+            <span class="bar"></span>
+            <label class="text-black">Bordbuch</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
+
+<h2>All Data</h2>
+<p *ngFor="let data of allShips$ | async">Test</p>

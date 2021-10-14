@@ -14,11 +14,11 @@ export class SplashScreenComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.windowWidth = `-${window.innerWidth}px`
+      this.windowWidth = `-${window.innerWidth+300}px`
 
       setTimeout(() => {
         this.showSplash = !this.showSplash;
       }, 500);
-    }, 1000);
+    }, 3000);
   }
 }

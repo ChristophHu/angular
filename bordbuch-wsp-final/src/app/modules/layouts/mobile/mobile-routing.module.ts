@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BordbuchAuswahlComponent } from '../../components/bordbuch-auswahl/bordbuch-auswahl.component';
 import { MobileComponent } from './mobile.component';
 
 const routes: Routes = [
-  { path: '', component: MobileComponent,
+  { path: '', loadChildren: () => import('../../components/bordbuch-auswahl/bordbuch-auswahl.module').then(m => m.BordbuchAuswahlModule) }
     // children: [
     //   { path: 'boot/:id', component: BootComponent },
     //   { path: 'boot/:id/map', component: MapComponent },
@@ -11,7 +12,6 @@ const routes: Routes = [
 
     //   // { path: '**', redirectTo: '' }
     // ]
-  }
 ];
 
 @NgModule({

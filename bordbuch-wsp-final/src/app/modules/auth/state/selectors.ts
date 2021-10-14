@@ -12,3 +12,18 @@ export const isLoggedOut = createSelector(
     isLoggedIn,
     loggedIn => !loggedIn
 )
+
+export const selectSub = createSelector(
+    selectAuthState,
+    (auth) => auth.backendResponse!.sub
+)
+
+export const selectToken = createSelector(
+    selectAuthState,
+    (auth) => auth.backendResponse!.token
+)
+
+export const selectBackendresponse = createSelector(
+    selectAuthState,
+    (auth) => auth.backendResponse
+)
