@@ -227,7 +227,7 @@ export class AppService {
             case 'getPruefvermerke':
             case 'getSchiffe':
             case 'getZaehlerstandstypen':
-            case 'getLastPositionsFromAllShips':  
+            case 'getLastPositionsFromAllShips':
                 param = ``
                 break
 
