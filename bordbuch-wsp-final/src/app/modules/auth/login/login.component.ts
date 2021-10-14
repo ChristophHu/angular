@@ -15,7 +15,8 @@ import { login } from '../state/actions'
 import { AuthService } from '../auth.service'
 
 // model
-import { User } from '../model/user.model'
+// import { User } from '../model/user.model'
+import { BackendResponse } from '../model/backendresponse.model'
 
 @Component({
   selector: 'app-login',
@@ -28,17 +29,17 @@ export class LoginComponent {
 
 	constructor( private _formBuilder: FormBuilder, private store: Store, private router: Router, private authService: AuthService) {
 		this.loginForm = this._formBuilder.group({
-			username: ['', [Validators.required]],
-			password: ['', Validators.required]
+			username: ['24225132', [Validators.required]],
+			password: ['Abc123!', Validators.required]
 		})
 	}
 
 	login() {
 		const form = this.loginForm.value
-		this.authService.login(form.email, form.password)
+		this.authService.login(form.username, form.password)
 		  .pipe(
-			tap((user: User) => {
-			  this.store.dispatch(login({ user }))
+			tap((backendResponse: BackendResponse) => {
+			  this.store.dispatch(login({ backendResponse }))
 			  this.router.navigateByUrl('/mobile')
 			})
 		  )

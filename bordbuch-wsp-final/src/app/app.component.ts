@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { login, logout } from './modules/auth/state/actions';
-import { AppState } from './state/app.state';
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { login, logout } from './modules/auth/state/actions'
+import { AppState } from './state/app.state'
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,7 @@ export class AppComponent implements OnInit {
     // on refresh
     const userProfile = localStorage.getItem('user')
     if (userProfile) {
-      this.store.dispatch(login({ user: JSON.parse(userProfile) }))
+      this.store.dispatch(login({ backendResponse: JSON.parse(userProfile) }))
     }
   }
 

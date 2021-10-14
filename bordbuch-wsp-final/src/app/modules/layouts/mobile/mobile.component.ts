@@ -12,5 +12,4 @@ export class MobileComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
 }

@@ -3,7 +3,7 @@ import { AuthState } from '../model/authstate.model'
 import { login, logout } from './actions'
 
 export const initialAuthState: AuthState = {
-  user: undefined
+    backendResponse: undefined
 }
 
 // export const reducers: ActionReducerMap<AuthState> = { }
@@ -12,12 +12,12 @@ export const authReducer = createReducer(
 	initialAuthState,
     on(login, (state, action) => {
         return {
-            user: action.user
+            backendResponse: action.backendResponse
         }
     }),
     on(logout, (state, action) => {
         return {
-            user: undefined
+            backendResponse: undefined
         }
     })
 )

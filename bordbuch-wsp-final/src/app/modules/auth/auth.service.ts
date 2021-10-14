@@ -1,35 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { from, Observable } from 'rxjs';
-import { User } from './model/user.model';
-import { User2 } from './model/user2.model';
-
-export interface BackendResponse {
-  sub         : string
-  iat         : string
-  exp         : string
-  jti         : string
-  email       : string
-  given_name  : string
-  family_name : string
-  role        : string
-}
+import { BackendResponse } from './model/backendresponse.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = ''
 
   constructor(private httpClient: HttpClient) { }
 
-  login(username: string, password: string): Observable<User> {
+  login(username: string, password: string): Observable<BackendResponse> { // User
 
-    this.auth_login(username, password).subscribe(data => {
-      console.log(data)
-    })
-    const user = from([{ id: '24225132', email: 'christoph@hu.de', role: 'Admin' }])
-    return user
+    // this.auth_login(username, password).subscribe(data => {
+    //   console.log(data)
+    // })
+    // const user = from([{ id: '24225132', email: 'christoph@hu.de', role: 'Admin' }])
+    return this.auth_login(username, password)
   }
 
   auth_login(username: string, password: string): Observable<BackendResponse> {
@@ -53,16 +40,15 @@ export class AuthService {
               if (el.packageid == packageid) {
                 const backendUrl = JSON.parse(el.config_json).backendurl
                 this.backend_login(backendUrl, backend_token).subscribe(data => {
-                  console.log(`backend_role: ${data}`)
                   observer.next({
                     sub: json_jwt_payload.sub, 
-                    iat: json_jwt_payload.iat, 
                     exp: json_jwt_payload.exp, 
-                    jti: json_jwt_payload.jti, 
                     email: json_jwt_payload.email, 
                     given_name: json_jwt_payload.given_name, 
                     family_name: json_jwt_payload.family_name,
-                    role: JSON.parse(data).rolle
+                    role: JSON.parse(data).rolle,
+                    token: jwt_token,
+                    backendUrl: backendUrl
                   })
                   }, error => observer.error(error)
                 )

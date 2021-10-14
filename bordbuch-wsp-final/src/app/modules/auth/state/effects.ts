@@ -10,7 +10,7 @@ export class AuthEffects {
     login$ = createEffect(() => 
         this.actions$.pipe(
             ofType(login),
-            tap(action => localStorage.setItem('user', JSON.stringify(action.user)))
+            tap(action => localStorage.setItem('user', JSON.stringify(action.backendResponse)))
         )
     , { dispatch: false }) // dispatch = false to prevent circular dependencies
 
