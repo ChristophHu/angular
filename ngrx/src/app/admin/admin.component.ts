@@ -12,6 +12,7 @@ import { selectAllData, selectData, selectDataCount, selectPicture } from './sta
 })
 export class AdminComponent implements OnInit {
 
+  allData$!: Observable<Data[]>
   data$!: Observable<Data[]>
   picture$!: Observable<Data[]>
   dataCount$!: Observable<number>
@@ -23,6 +24,7 @@ export class AdminComponent implements OnInit {
   }
 
   reload() {
+    this.allData$ = this.store.pipe(select(selectAllData))
     this.data$ = this.store.pipe(select(selectData))
     this.picture$ = this.store.pipe(select(selectPicture))
     this.dataCount$ = this.store.pipe(select(selectDataCount))

@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, map } from 'rxjs/operators';
 import { DataService } from '../data.service';
 import { Data } from '../model/data.model';
-import { allDataLoaded } from './data.actions';
 import { DataActions } from './data.actions-type';
  
 @Injectable()

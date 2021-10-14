@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { Data } from "../model/data.model";
+import { compareData, Data } from "../model/data.model";
 
 export interface DataState extends EntityState<Data> {
     // simple
@@ -10,7 +10,10 @@ export interface DataState extends EntityState<Data> {
     // ids: number[]
 }
 
-export const adapter = createEntityAdapter<Data>();
+export const adapter = createEntityAdapter<Data>({
+    sortComparer: compareData,
+    // selectId: data => data.id    
+});
 
 export const initialDataState = adapter.getInitialState()
 
