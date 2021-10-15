@@ -9,5 +9,8 @@ export const dataReducer = createReducer(
             action.data,
             {...state, isAllDataLoaded: true}
         )
+    ),
+    on(DataActions.dataUpdate, (state, action) => 
+        adapter.updateOne(action.update, state)
     )
 )

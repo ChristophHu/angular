@@ -5,8 +5,8 @@
 <p>{{ dataCount$ | async }}</p>
 <p *ngFor="let picture of picture$ | async">{{ picture.id }}</p>
 
-<form [formGroupName]="dataForm">
-    <input [formControlName]="data">
+<form [formGroup]="dataForm">
+    <input formControlName="data">
 </form>
 
 <button (click)="onSave()">Speichern</button>
