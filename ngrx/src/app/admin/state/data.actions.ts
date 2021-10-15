@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity'
 import { createAction, props } from '@ngrx/store'
 import { Data } from '../model/data.model'
 
@@ -10,4 +11,9 @@ export const loadAllData = createAction(
 export const allDataLoaded = createAction(
 	"[Load Data Effect] All Data Loaded",
 	props<{data: Data[]}>()
+)
+
+export const dataUpdate = createAction(
+	"[Edit Data Dialog] Data Updates",
+	props<{update: Update<Data>}>()
 )

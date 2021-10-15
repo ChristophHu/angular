@@ -4,5 +4,10 @@ import { adapter, initialDataState } from "./data.adapter";
 
 export const dataReducer = createReducer(
     initialDataState,
-    on(DataActions.allDataLoaded, (state, action) => adapter.addMany(action.data, state))
+    on(DataActions.allDataLoaded, 
+        (state, action) => adapter.addMany(
+            action.data,
+            {...state, isAllDataLoaded: true}
+        )
+    )
 )

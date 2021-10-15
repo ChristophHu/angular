@@ -3,6 +3,11 @@ import { DataState, selectAll } from "./data.adapter";
 
 export const selectDataState = createFeatureSelector<DataState>('data')
 
+export const isDataLoaded = createSelector(
+    selectDataState,
+    state => state.isAllDataLoaded
+)
+
 export const selectAllData = createSelector(
     selectDataState,
     selectAll

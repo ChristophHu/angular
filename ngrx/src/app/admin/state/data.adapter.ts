@@ -1,13 +1,9 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
 import { compareData, Data } from "../model/data.model";
+import { allDataLoaded } from "./data.actions";
 
 export interface DataState extends EntityState<Data> {
-    // simple
-    // data: Data[]
-
-    // simple entity without extends EntityState<Data>
-    // entities: {[key: number]: Data},
-    // ids: number[]
+    isAllDataLoaded: boolean
 }
 
 export const adapter = createEntityAdapter<Data>({
@@ -15,6 +11,8 @@ export const adapter = createEntityAdapter<Data>({
     // selectId: data => data.id    
 });
 
-export const initialDataState = adapter.getInitialState()
+export const initialDataState = adapter.getInitialState({
+    isAllDataLoaded: false
+})
 
 export const { selectAll } = adapter.getSelectors()
