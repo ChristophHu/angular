@@ -1,0 +1,3 @@
+<div *ngIf="isLoggedOut$ |async">Login!</div>
+<div *ngIf="isLoggedIn$ | async" (click)="logout()">Logout</div>
+<router-outlet></router-outlet>
