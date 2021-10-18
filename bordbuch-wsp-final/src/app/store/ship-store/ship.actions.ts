@@ -1,12 +1,13 @@
-import { createAction } from "@ngrx/store"
+import { createAction, props } from "@ngrx/store"
+import { Ship } from "src/app/core/model/ship.model"
 
 // load data
-export const loadAllData = createAction(
-	"[Data Resolver] Load All Data"
+export const loadShip = createAction(
+	"[Ship Resolver] Load All Data"
 )
 
 // store loaded data
-// export const allDataLoaded = createAction(
-// 	"[Load Data Effect] All Data Loaded",
-// 	props<{data: Data[]}>()
-// )
+export const shipLoaded = createAction(
+	"[Load Ship Effect] Ship Loaded",
+	props<{ship: Ship[]}>()
+)

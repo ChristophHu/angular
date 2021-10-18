@@ -4,7 +4,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 // import { ShipResolver } from './state/ship.resolver';
 import { AppService } from '../../../core/services/app.service';
-import { shipReducer } from './state/ship.reducers';
 import { BordbuchAuswahlComponent } from './bordbuch-auswahl.component';
 // import { ShipEffects } from './state/ship.effects';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -31,10 +30,11 @@ export const dataRoutes: Routes = [
     NgQrScannerModule,
     NgSelectModule,
 
+    // routes
     RouterModule.forChild(dataRoutes),
-    ShipSelectionModule,
-    // StoreModule.forFeature(Features.Ship, shipReducer),
-    // EffectsModule.forFeature([ShipEffects])
+
+    // store
+    ShipSelectionModule
   ],
   providers: [
     ShipSelectionResolver,

@@ -9,7 +9,7 @@ export const isDataLoaded = createSelector(
     state => state.isAllDataLoaded
 )
 
-export const selectAllShip = createSelector(
+export const selectShip = createSelector(
     selectShipState,
     selectAll
 )

@@ -40,6 +40,10 @@ export class AppService {
                 param = ``
                 break
 
+            case 'getSchiff':
+                param = `?id=${data}`
+                break
+
             default:
                 break
         }
@@ -52,6 +56,15 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiffe', {})
             source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getSchiff(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getSchiff', id)
+            source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

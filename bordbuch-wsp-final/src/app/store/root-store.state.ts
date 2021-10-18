@@ -3,10 +3,12 @@ import { ActionReducer, ActionReducerMap, MetaReducer } from "@ngrx/store"
 import { environment } from "src/environments/environment"
 import { AuthState } from "../modules/auth/model/authstate.model"
 import { ShipSelectionState } from "./ship-selection-store"
+import { ShipState } from "./ship-store"
 
 export interface RootStoreState {
     auth: AuthState
     shipSelection: ShipSelectionState.State
+    ship: ShipState.State
 }
 
 export interface State {

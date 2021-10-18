@@ -1,15 +1,14 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { filter, finalize, first, tap } from "rxjs/operators";
-import { RootStoreState } from "src/app/store/root-store.state";
-import { loadAllShip } from "./ship.actions";
-import { isDataLoaded } from "./ship.selectors";
+import { Injectable } from "@angular/core"
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router"
+import { select, Store } from "@ngrx/store"
+import { Observable } from "rxjs"
+import { filter, finalize, first, tap } from "rxjs/operators"
+import { RootStoreState } from "src/app/store/root-store.state"
+import { loadShip } from "./ship.actions"
+import { isDataLoaded } from "./ship.selectors"
 
 @Injectable()
 export class ShipResolver implements Resolve<any> {
-    // loading-flag to dispatch only once
     loading = false
 
     constructor(private store: Store<RootStoreState>) {}
@@ -20,7 +19,7 @@ export class ShipResolver implements Resolve<any> {
             tap(isDataLoaded => {
                 if (!this.loading && !isDataLoaded) {
                     this.loading = true
-                    this.store.dispatch(loadAllShip())
+                    this.store.dispatch(loadShip())
                 }
             }),
             filter(dataLoaded => dataLoaded),
@@ -28,5 +27,4 @@ export class ShipResolver implements Resolve<any> {
             finalize(() => this.loading = false)
         )
     }
-
 }

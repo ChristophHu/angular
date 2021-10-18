@@ -1,22 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { logout } from '../../auth/state/actions';
-import { Ship } from '../../../core/model/ship.model';
-
-import { AppService } from '../../../core/services/app.service';
-
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
-// import { AuthService } from 'src/app/core/authentication/auth.service';
-// import { Schiff } from 'src/app/core/models/schiff';
-// import { AppService } from 'src/app/core/services/app.service';
-// import { ModalService } from 'src/app/shared/components/modal/modal.service';
-// import { QrscannerComponent } from './qrscanner/qrscanner.component';
+import { ShipSelection } from 'src/app/core/model/ship-selection.model';
 
 @Component({
   selector: 'app-bordbuch-auswahl',
@@ -25,7 +16,7 @@ import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
 })
 export class BordbuchAuswahlComponent {
 
-  allShips$!: Observable<Ship[]>
+  allShips$!: Observable<ShipSelection[]>
   
   bordbuchForm: FormGroup
   
