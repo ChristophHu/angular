@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { finalize, first, tap } from "rxjs/operators";
-import { AppState } from "src/app/state/app.state";
+import { filter, finalize, first, tap } from "rxjs/operators";
+import { AppState } from "src/app/store/app.state";
 import { loadAllShip } from "./ship.actions";
+import { isDataLoaded } from "./ship.selectors";
 
 @Injectable()
 export class ShipResolver implements Resolve<any> {
@@ -15,14 +16,15 @@ export class ShipResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
-            tap(() => {
-                if (!this.loading) {
+            select(isDataLoaded),
+            tap(isDataLoaded => {
+                if (!this.loading && !isDataLoaded) {
                     this.loading = true
                     this.store.dispatch(loadAllShip())
                 }
             }),
+            filter(dataLoaded => dataLoaded),
             first(),
-            // after finalize set loading-flag false again
             finalize(() => this.loading = false)
         )
     }

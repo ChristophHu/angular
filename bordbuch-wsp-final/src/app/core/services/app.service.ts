@@ -47,18 +47,13 @@ export class AppService {
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
 
-    
     // get
     getSchiffe(): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiffe', {})
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
-                // this.dataStore.schiffe = data
-                // this._schiffe.next(Object.assign({}, this.dataStore).schiffe)
             }, (error: any) => observer.error(error))
         })
-
     }
 }

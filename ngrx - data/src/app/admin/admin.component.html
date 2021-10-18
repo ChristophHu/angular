@@ -1,17 +1,3 @@
 <h2>NgRx-Data</h2>
 
-
-<hr>
-
-<h2>NgRx-Entity</h2>
-<p *ngFor="let data of allData$ | async">{{ data.id }}</p>
-<hr>
-<p *ngFor="let data of data$ | async">{{ data.id }}</p>
-<p>{{ dataCount$ | async }}</p>
-<p *ngFor="let picture of picture$ | async">{{ picture.id }}</p>
-
-<form [formGroup]="dataForm">
-    <input formControlName="data">
-</form>
-
-<button (click)="onSave()">Speichern</button>
+<p *ngIf="isLoading$">True</p>

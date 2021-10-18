@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store'
-import { Ship } from '../model/ship.model'
+import { Ship } from '../../../../core/model/ship.model'
 
 // load data
 export const loadAllShip = createAction(

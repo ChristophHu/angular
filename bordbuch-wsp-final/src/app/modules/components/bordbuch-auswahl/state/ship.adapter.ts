@@ -1,18 +1,14 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity"
-import { Ship } from "../model/ship.model"
-
+import { Ship } from "../../../../core/model/ship.model"
 
 export interface ShipState extends EntityState<Ship> {
-    // simple
-    // data: Data[]
-
-    // simple entity without extends EntityState<Data>
-    // entities: {[key: number]: Data},
-    // ids: number[]
+    isAllDataLoaded: boolean
 }
 
 export const adapter = createEntityAdapter<Ship>()
 
-export const initialDataState = adapter.getInitialState()
+export const initialDataState = adapter.getInitialState({
+    isAllDataLoaded: false
+})
 
 export const { selectAll } = adapter.getSelectors()

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MobileComponent } from './mobile.component';
+import { IconLibraryComponent } from './icon-library.component';
 
-describe('MobileComponent', () => {
-  let component: MobileComponent;
-  let fixture: ComponentFixture<MobileComponent>;
+describe('IconLibraryComponent', () => {
+  let component: IconLibraryComponent;
+  let fixture: ComponentFixture<IconLibraryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MobileComponent ]
+      declarations: [ IconLibraryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MobileComponent);
+    fixture = TestBed.createComponent(IconLibraryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

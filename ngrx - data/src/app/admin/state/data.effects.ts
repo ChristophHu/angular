@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, map, tap } from 'rxjs/operators';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { Data } from '../model/data.model';
 import { dataUpdate } from './data.actions';
 import { DataActions } from './data.actions-type';

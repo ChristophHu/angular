@@ -4,7 +4,6 @@ select,
 ng-select
   @apply block bg-none text-black text-lg font-medium w-full border-0 border-b border-gray-400
   padding: 10px 10px 10px 5px
-  caret-color: transparent
 
   &:focus
     @apply ring-0 ring-offset-0
@@ -24,8 +23,8 @@ label
   font-size: 18px
   position: absolute
   pointer-events: none
-  left: 6px
-  top: 16px
+  left: 5px
+  top: 10px
   transition: 200ms ease all
 
 .bar
@@ -37,8 +36,11 @@ label
     background: #2196f3
     transition: 300ms ease all
 
-.content
-  @apply absolute w-full p-2 top-16 bottom-20 overflow-auto
+header
+  @apply bg-gray-100 border-b px-5 pt-5
 
-  &::-webkit-scrollbar
-    display: none
+footer
+  @apply bg-gray-100 border-t px-5 py-3
+
+.content
+  @apply bg-white p-5

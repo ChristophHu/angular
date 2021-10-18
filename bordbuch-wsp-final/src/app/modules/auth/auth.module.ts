@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AuthGuard } from './auth.guard'
 import { AuthEffects } from './state/effects'
 import { authReducer } from './state/reducer'
+import { Features } from 'src/app/core/model/feature'
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { authReducer } from './state/reducer'
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild([ { path: '', component: LoginComponent } ]),
-    StoreModule.forFeature('auth', authReducer),
+    StoreModule.forFeature(Features.Auth, authReducer),
     EffectsModule.forFeature([AuthEffects])
   ],
   declarations: [

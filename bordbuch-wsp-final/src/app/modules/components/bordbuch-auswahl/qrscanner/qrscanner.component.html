@@ -1,0 +1,19 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">Standort</h2>
+    </header>
+    <div class="content">
+        <qr-scanner class="mt-5" [debug]="false" [canvasWidth]="1080" [canvasHeight]="720" [stopAfterScan]="true" [updateTime]="500"></qr-scanner>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <div>
+            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        </div>
+    </div>
+</ng-template>

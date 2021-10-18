@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { AdminComponent } from './admin/admin.component';
 import { metaReducers, reducers } from './app.state';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EntityDataModule } from '@ngrx/data';
 
 @NgModule({
   declarations: [
@@ -23,14 +24,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true
-      }
-    }),
+    StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({}),
     EffectsModule.forRoot([]),
+    EntityDataModule.forRoot({}),
     StoreRouterConnectingModule.forRoot({ 
       stateKey: 'router', 
       routerState: RouterState.Minimal 

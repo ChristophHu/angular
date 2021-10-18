@@ -10,7 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { SplashScreenComponent } from './shared/components/splash-screen/splash-screen.component';
-import { metaReducers, reducers } from './state/app.state';
+import { metaReducers, reducers } from './store/app.state';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { metaReducers, reducers } from './state/app.state';
     StoreRouterConnectingModule.forRoot({ 
       stateKey: 'router', 
       routerState: RouterState.Minimal 
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

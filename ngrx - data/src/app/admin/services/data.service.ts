@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { Data } from './model/data.model';
+import { Data } from '../model/data.model';
 
 @Injectable()
 export class DataService {
