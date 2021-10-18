@@ -5,8 +5,8 @@ import { adapter, initialDataState } from "./ship.adapter"
 export const shipReducer = createReducer(
     initialDataState,
     on(shipLoaded, (state, action) => 
-        adapter.addMany(
-            action.ship, 
+        adapter.addOne(
+            action.ship,
             {...state, 
                 isAllDataLoaded: true
             }
