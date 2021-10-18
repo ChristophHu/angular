@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity"
 import { ShipSelection } from "src/app/core/model/ship-selection.model"
 
-export interface ShipState extends EntityState<ShipSelection> {
+export interface ShipSelectionState extends EntityState<ShipSelection> {
     isAllDataLoaded: boolean
 }
 

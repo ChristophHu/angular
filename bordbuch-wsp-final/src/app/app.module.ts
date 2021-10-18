@@ -10,8 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { SplashScreenComponent } from './shared/components/splash-screen/splash-screen.component';
-import { metaReducers, reducers } from './store/app.state';
+import { metaReducers, reducers } from './store/root-store.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RootStoreModule } from './store/root-store.module';
 
 @NgModule({
   declarations: [
@@ -20,21 +21,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true
-      }
-    }),
-    StoreDevtoolsModule.instrument({}),
-    EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({ 
-      stateKey: 'router', 
-      routerState: RouterState.Minimal 
-    }),
-    BrowserAnimationsModule
+    RootStoreModule
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

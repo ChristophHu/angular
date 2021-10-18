@@ -3,13 +3,13 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { select, Store } from "@ngrx/store"
 import { Observable } from "rxjs"
 import { tap } from "rxjs/operators"
-import { AppState } from "src/app/store/app.state"
+import { RootStoreState } from "src/app/store/root-store.state"
 import { isLoggedIn } from "./state/selectors"
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    constructor(private store: Store<AppState>, private router: Router) {}
+    constructor(private store: Store<RootStoreState>, private router: Router) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         return this.store.pipe(

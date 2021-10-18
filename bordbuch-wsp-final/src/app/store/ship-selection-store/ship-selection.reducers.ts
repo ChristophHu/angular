@@ -1,12 +1,12 @@
-import { createReducer, on } from "@ngrx/store";
-import { allShipLoaded } from "./ship-selection.actions";
-import { adapter, initialDataState } from "./ship-selection.adapter";
+import { createReducer, on } from "@ngrx/store"
+import { allShipLoaded } from "./ship-selection.actions"
+import { adapter, initialDataState } from "./ship-selection.adapter"
 
-export const shipReducer = createReducer(
+export const shipSelectionReducer = createReducer(
     initialDataState,
     on(allShipLoaded, (state, action) => 
         adapter.addMany(
-            action.ship, 
+            action.shipSelection, 
             {...state, 
                 isAllDataLoaded: true
             }

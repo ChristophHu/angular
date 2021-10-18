@@ -2,9 +2,11 @@ import { routerReducer, RouterReducerState } from "@ngrx/router-store"
 import { ActionReducer, ActionReducerMap, MetaReducer } from "@ngrx/store"
 import { environment } from "src/environments/environment"
 import { AuthState } from "../modules/auth/model/authstate.model"
+import { ShipSelectionState } from "./ship-selection-store"
 
-export interface AppState {
+export interface RootStoreState {
     auth: AuthState
+    shipSelection: ShipSelectionState.State
 }
 
 export interface State {

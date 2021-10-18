@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { ShipResolver } from './state/ship.resolver';
+// import { ShipResolver } from './state/ship.resolver';
 import { AppService } from '../../../core/services/app.service';
 import { shipReducer } from './state/ship.reducers';
 import { BordbuchAuswahlComponent } from './bordbuch-auswahl.component';
-import { ShipEffects } from './state/ship.effects';
+// import { ShipEffects } from './state/ship.effects';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
-import { Features } from 'src/app/core/model/feature';
+// import { Features } from 'src/app/core/model/feature';
+import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
+import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 
 export const dataRoutes: Routes = [
-  { path: '', component: BordbuchAuswahlComponent, resolve: { data : ShipResolver }}
+  { path: '', component: BordbuchAuswahlComponent, resolve: { data : ShipSelectionResolver }}
 ]
 
 @NgModule({
@@ -30,11 +32,12 @@ export const dataRoutes: Routes = [
     NgSelectModule,
 
     RouterModule.forChild(dataRoutes),
-    StoreModule.forFeature(Features.Ship, shipReducer),
-    EffectsModule.forFeature([ShipEffects])
+    ShipSelectionModule,
+    // StoreModule.forFeature(Features.Ship, shipReducer),
+    // EffectsModule.forFeature([ShipEffects])
   ],
   providers: [
-    ShipResolver,
+    ShipSelectionResolver,
     AppService
   ]
 })

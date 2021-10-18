@@ -9,5 +9,5 @@ export const loadAllShip = createAction(
 // store loaded data
 export const allShipLoaded = createAction(
 	"[Load Ship Effect] All Ship Loaded",
-	props<{ship: ShipSelection[]}>()
+	props<{shipSelection: ShipSelection[]}>()
 )

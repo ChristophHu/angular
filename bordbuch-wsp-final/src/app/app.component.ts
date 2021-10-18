@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { login, logout } from './modules/auth/state/actions'
-import { AppState } from './store/app.state'
+import { RootStoreState } from './store/root-store.state'
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import { AppState } from './store/app.state'
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<RootStoreState>) {}
 
   ngOnInit() {
     // on refresh

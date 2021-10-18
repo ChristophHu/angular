@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/r
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { filter, finalize, first, tap } from "rxjs/operators";
-import { AppState } from "src/app/store/app.state";
+import { RootStoreState } from "src/app/store/root-store.state";
 import { loadAllShip } from "./ship.actions";
 import { isDataLoaded } from "./ship.selectors";
 
@@ -12,7 +12,7 @@ export class ShipResolver implements Resolve<any> {
     // loading-flag to dispatch only once
     loading = false
 
-    constructor(private store: Store<AppState>) {}
+    constructor(private store: Store<RootStoreState>) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
