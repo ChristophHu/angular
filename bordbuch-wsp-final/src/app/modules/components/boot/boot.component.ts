@@ -13,14 +13,20 @@ import { logout } from '../../auth/state/actions';
 })
 export class BootComponent implements OnInit {
 
+  isPatrolActive$!: Observable<boolean>
+
   constructor(private store: Store<RootStoreState>) {
-    
+    this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
   }
 
   ngOnInit(): void {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       console.log(ship)
     })
+  }
+
+  startPatrol() {
+    
   }
 
   logout() {

@@ -3,11 +3,14 @@
     <icons class="w-8 h-8" name="logout"></icons>
   </a>
   <span class="text-2xl text-gray-800">Name</span>
-  <a class="cursor-pointer" [routerLink]="['map']">
+  <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
+    <icons class="w-8 h-8" name="chevron-right"></icons>
+  </a>
+  <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
     <icons class="w-8 h-8" name="map"></icons>
   </a>
 </div>
 
 <div class="content">
-
+  <p *ngIf="isPatrolActive$">Aktiv</p>
 </div>

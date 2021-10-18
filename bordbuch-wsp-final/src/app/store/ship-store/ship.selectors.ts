@@ -24,3 +24,8 @@ export const selectedShip = createSelector(
     selectShipState,
     state => state.ship
 )
+
+export const isPatrolActive = createSelector(
+    selectShipState,
+    state => state.patrol?.purpose == 'active'
+)
