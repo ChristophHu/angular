@@ -41,7 +41,12 @@ export class AppService {
                 break
 
             case 'getSchiff':
+            
                 param = `?id=${data}`
+                break
+
+            case 'getStreifeVonSchiff':
+                param = `?id_schiff=${data}`
                 break
 
             default:
@@ -65,7 +70,16 @@ export class AppService {
             const source$ = this.getReducer('getSchiff', id)
             source$.subscribe((data: any) => {
                 console.log(data)
-                observer.next(data)
+                observer.next(data[0])
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getStreifeVonSchiff(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getStreifeVonSchiff', id)
+            source$.subscribe((data: any) => {
+                console.log(data)
+                observer.next(data[0])
             }, (error: any) => observer.error(error))
         })
     }

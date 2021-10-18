@@ -5,17 +5,19 @@ import { BootComponent } from './boot.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ShipResolver } from 'src/app/store/ship-store/ship.resolver';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
+import { _actionTypeUniquenessCheck } from '@ngrx/store/src/runtime_checks';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 export const routes: Routes = [
   { path: '', component: BootComponent,
-    // children: [
-    //   { path: 'boot/:id', component: BootComponent },
-    //   // { path: 'boot/:id/map', component: MapComponent },
-    //   // { path: 'boot/:id/positions', component: PositionenComponent },
+    children: [
+      { path: ':id', component: BootComponent, resolve: { data : ShipResolver }, data: { param: 'id'} },
+      // { path: 'boot/:id/map', component: MapComponent },
+      // { path: 'boot/:id/positions', component: PositionenComponent },
 
-    //   // { path: '**', redirectTo: '' }
-    // ]
-    resolve: { data : ShipResolver }
+      // { path: '**', redirectTo: '' }
+    ],
+    
   }
 ]
 
@@ -24,7 +26,7 @@ export const routes: Routes = [
     BootComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
 
     // router
     RouterModule.forChild(routes),

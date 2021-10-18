@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store"
+import { Patrol } from "src/app/core/model/patrol.model"
 import { Ship } from "src/app/core/model/ship.model"
 
 // load data
@@ -16,4 +17,9 @@ export const shipLoaded = createAction(
 export const loadPatrol = createAction(
 	"[Ship Resolver] Load Patrol",
 	props<{ id_ship: string }>()
+)
+
+export const patrolLoaded = createAction(
+	"[Load Patrol Effect] Patrol Loaded",
+	props<{ patrol: Patrol }>()
 )
