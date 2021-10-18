@@ -13,4 +13,34 @@
 
 <div class="content">
   <p *ngIf="isPatrolActive$">Aktiv</p>
+  <div class="w-full bg-white rounded-lg p-2 shadow-lg">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="zweckFormGroup">
+        <form [formGroup]="zweckFormGroup">
+          <ng-template matStepLabel>Zweck der Fahrt</ng-template>
+          <p class="text-sm text-gray-500">
+            Es ist der Rufname und Zweck der Fahrt (Streifen-, Überführungs- oder Probefahrt) anzugeben.
+          </p>
+
+          <div class="relative my-6">
+            <input type="text" formControlName="kennung" required>
+            <span class="bar"></span>
+            <label class="text-black">Rufname</label>
+          </div>
+          <div class="relative my-6">
+            <input type="text" formControlName="zweck" required>
+            <!-- <ng-select [items]="zweck" bindLabel="name" bindValue="name" formControlName="zweck" required></ng-select> -->
+            <span class="bar"></span>
+            <label class="text-black">Fahrtzweck</label>
+          </div>
+
+          <div class="flex">
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button matStepperNext
+              *ngIf="zweckFormGroup.valid">Next</button>
+              <!-- || streife.status == 'aktiv'" (click)="updateAktiveStreife()" -->
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </div>
 </div>

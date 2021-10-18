@@ -7,6 +7,7 @@ import { State } from "./ship.state"
 
 export const initialDataState: State = {
     ship: undefined,
+    // patrol: { id_ship: '', purpose: '', status: 'In Vorbereitung', crew: [], start: '', end: '', identifier: ''},
     isAllDataLoaded: false
 }
 

@@ -5,16 +5,7 @@ import { State } from './ship.state'
 
 export const selectShipState = createFeatureSelector<State>(Features.Ship)
 
-// export const isShipLoaded = createSelector(
-//     selectShipState,
-//     state => state.isAllDataLoaded
-// )
-
-// export const selectShip = createSelector(
-//     selectShipState,
-//     selectAll
-// )
-
+// ship
 export const isShipLoaded = createSelector(
     selectShipState,
     state => state.isAllDataLoaded
@@ -25,7 +16,13 @@ export const selectedShip = createSelector(
     state => state.ship
 )
 
+// patrol
 export const isPatrolActive = createSelector(
     selectShipState,
     state => state.patrol?.purpose == 'active'
+)
+
+export const selectedPatrol = createSelector(
+    selectShipState,
+    state => state.patrol
 )

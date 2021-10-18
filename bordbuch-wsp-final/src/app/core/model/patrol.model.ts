@@ -6,7 +6,7 @@ export interface Patrol {
     purpose     : string
     status      : string
     start       : string
-    ende?       : string
+    end?        : string
     crew        : CrewMember[]
     identifier  : string
 }
