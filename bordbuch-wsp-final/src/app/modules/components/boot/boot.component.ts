@@ -15,22 +15,35 @@ import { logout } from '../../auth/state/actions';
 })
 export class BootComponent implements OnInit {
 
+  // status
+  status: any[] = [
+    { name: 'In Vorbereitung'},
+    { name: 'Aktiv' },
+    { name: 'Beendet' }
+  ]
+
+  // zweck
+  zweck: any[] = [
+    { name: "Streifenfahrt" },
+    { name: "Überführungsfahrt" },
+    { name: "Probefahrt" }
+  ]
+
+  isLinear: boolean = true
   isPatrolActive$!: Observable<boolean>
 
   patrol!: Patrol
 
-  zweckFormGroup: FormGroup
+  zweckFormGroup!: FormGroup
+  besatzungFormGroup!: FormGroup
+  bootFormGroup!: FormGroup
   
   constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder) {
     this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      console.log(patrol)
-      this.patrol = patrol!
-    })
-
     this.zweckFormGroup = this._formBuilder.group({
-      kennung   : [this.patrol.identifier, Validators.required],
-      zweck     : [this.patrol.purpose, Validators.required]
+      kennung   : ['', Validators.required],
+      zweck     : ['', Validators.required],
+      status    : ['', Validators.required]
     });
   }
 
@@ -38,6 +51,14 @@ export class BootComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       console.log(ship)
     })
+
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+      if (patrol) this.patrol = patrol!
+      this.zweckFormGroup.patchValue(patrol!)
+      console.log(this.patrol)
+    })
+
+
   }
 
   startPatrol() {

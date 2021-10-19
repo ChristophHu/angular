@@ -1,4 +1,4 @@
-export interface CrewMember {
+export interface Besatzung {
     id?: string
     id_streife?: string
     persnr: string

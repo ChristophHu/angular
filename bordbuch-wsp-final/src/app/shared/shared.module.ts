@@ -9,6 +9,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ModalModule } from './components/modal/modal.module';
 import { CardModule } from './components/card/card.module';
 import { IconLibraryModule } from 'projects/icon-library/src/public-api';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
@@ -19,6 +20,8 @@ import { IconLibraryModule } from 'projects/icon-library/src/public-api';
         // shared
         ModalModule,
         CardModule,
+
+        NgSelectModule,
 
         // library
         IconLibraryModule,
@@ -37,6 +40,8 @@ import { IconLibraryModule } from 'projects/icon-library/src/public-api';
         // shared
         ModalModule,
         CardModule,
+
+        NgSelectModule,
 
         // library
         IconLibraryModule,

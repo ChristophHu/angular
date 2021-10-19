@@ -6,7 +6,6 @@ import { StoreModule } from '@ngrx/store';
 import { AppService } from '../../../core/services/app.service';
 import { BordbuchAuswahlComponent } from './bordbuch-auswahl.component';
 // import { ShipEffects } from './state/ship.effects';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
@@ -28,7 +27,6 @@ export const dataRoutes: Routes = [
 
     // npm pkg
     NgQrScannerModule,
-    NgSelectModule,
 
     // routes
     RouterModule.forChild(dataRoutes),

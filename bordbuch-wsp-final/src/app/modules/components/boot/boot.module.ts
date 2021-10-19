@@ -12,12 +12,11 @@ export const routes: Routes = [
   { path: '', component: BootComponent,
     children: [
       { path: ':id', component: BootComponent, resolve: { data : ShipResolver }, data: { param: 'id'} },
-      // { path: 'boot/:id/map', component: MapComponent },
+      // { path: ':id/map', component: MapComponent },
       // { path: 'boot/:id/positions', component: PositionenComponent },
 
       // { path: '**', redirectTo: '' }
     ],
-    
   }
 ]
 

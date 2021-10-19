@@ -36,12 +36,12 @@ export class AppService {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
+            case 'getPruefvermerke':
             case 'getSchiffe':
                 param = ``
                 break
 
             case 'getSchiff':
-            
                 param = `?id=${data}`
                 break
 
@@ -80,6 +80,15 @@ export class AppService {
             source$.subscribe((data: any) => {
                 console.log(data)
                 observer.next(data[0])
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getPruefvermerke(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPruefvermerke', {})
+            source$.subscribe((data: any) => {
+                console.log(data)
+                observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }

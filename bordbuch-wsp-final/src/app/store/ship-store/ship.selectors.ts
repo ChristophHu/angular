@@ -19,7 +19,7 @@ export const selectedShip = createSelector(
 // patrol
 export const isPatrolActive = createSelector(
     selectShipState,
-    state => state.patrol?.purpose == 'active'
+    state => !!(state.patrol?.status == 'active')
 )
 
 export const selectedPatrol = createSelector(
