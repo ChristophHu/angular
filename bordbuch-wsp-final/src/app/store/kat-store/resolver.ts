@@ -4,7 +4,7 @@ import { select, Store } from "@ngrx/store"
 import { Observable } from "rxjs"
 import { filter, finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
-import { loadPruefvermerke } from "./actions"
+import { loadPruefvermerke, loadZaehlerstandstypen } from "./actions"
 import { isKatLoaded } from "./selectors"
 
 @Injectable()
@@ -20,6 +20,7 @@ export class Resolver implements Resolve<any> {
                 if (!this.loading && !isKatLoaded) {
                     this.loading = true
                     this.store.dispatch(loadPruefvermerke())
+                    this.store.dispatch(loadZaehlerstandstypen())
                 }
             }),
             filter(isKatLoaded => isKatLoaded),

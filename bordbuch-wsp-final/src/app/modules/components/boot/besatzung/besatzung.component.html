@@ -1,0 +1,60 @@
+<app-modal #modalComponent>
+    <header>
+        <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+    </header>
+    <div class="content">
+        <form [formGroup]="besatzungForm">
+            <div class="relative my-5">
+              <input type="text" formControlName="id" required>
+              <span class="bar"></span>
+              <label class="text-black">Id</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="id_streife" required>
+              <span class="bar"></span>
+              <label class="text-black">Id_Streife</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="funktion" required>
+              <span class="bar"></span>
+              <label class="text-black">Funktion</label>
+            </div>
+            <div class="relative my-5">
+              <input type="number" formControlName="persnr" required>
+              <span class="bar"></span>
+              <label class="text-black">Personalnummer</label>
+            </div>
+            <div class="relative my-5">
+              <input type="text" formControlName="name" required>
+              <span class="bar"></span>
+              <label class="text-black">Name</label>
+            </div>
+            <div class="relative my-5">
+              <input type="datetime-local" formControlName="an_bord" value="{{besatzungForm.value.an_bord | date:'yyyy-MM-ddTHH:mm':'+2:00'}}">
+              <span class="bar"></span>
+              <label class="text-black">An Bord</label>
+            </div>
+            <div class="relative my-5">
+              <input type="datetime-local" formControlName="von_bord" value="{{besatzungForm.value.von_bord | date:'yyyy-MM-ddTHH:mm':'+2:00'}}">
+              <span class="bar"></span>
+              <label class="text-black">Von Bord</label>
+            </div>
+          </form>
+    </div>
+    <footer>
+        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+</app-modal>
+
+<ng-template #toolbar>
+    <div class="py-3 flex justify-between">
+        <div>
+          <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+          <button *ngIf="besatzungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
+        </div>
+        <div>
+            <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+            <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+        </div>
+    </div>
+</ng-template>

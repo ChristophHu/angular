@@ -9,12 +9,11 @@ import { BordbuchAuswahlComponent } from './bordbuch-auswahl.component';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
-// import { Features } from 'src/app/core/model/feature';
 import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 
 export const dataRoutes: Routes = [
-  { path: '', component: BordbuchAuswahlComponent, resolve: { data : ShipSelectionResolver }}
+  { path: '', component: BordbuchAuswahlComponent, resolve: { data: ShipSelectionResolver }}
 ]
 
 @NgModule({

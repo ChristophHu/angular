@@ -4,7 +4,8 @@ import { select, Store } from "@ngrx/store"
 import { Observable } from "rxjs"
 import { filter, finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
-import { loadPatrol, loadShip } from "./ship.actions"
+import { ShipAction } from "."
+import { KatAction } from "../kat-store"
 import { isShipLoaded } from "./ship.selectors"
 
 @Injectable()
@@ -15,17 +16,27 @@ export class ShipResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
-            select(isShipLoaded),
-            tap((isShipLoaded) => {
-                if (!this.loading && !isShipLoaded) {
+            // select(isShipLoaded),
+            tap(() => {
+                if (!this.loading) {
                     this.loading = true
-                    this.store.dispatch(loadShip({ id_ship: route.params[route.data.param] }))
-                    this.store.dispatch(loadPatrol({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadShip({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadPatrol({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadZaehlerstaende({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadReparaturen({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadBetankungen({ id_ship: route.params[route.data.param] }))
+
+                    // kat
+                    this.store.dispatch(KatAction.loadPruefvermerke())
+                    this.store.dispatch(KatAction.loadZaehlerstandstypen())
                 }
             }),
-            filter(isShipLoaded => isShipLoaded),
+            // filter(isShipLoaded => isShipLoaded),
             first(),
-            finalize(() => this.loading = false)
+            finalize(() => {
+                this.loading = false
+                console.log('fertig')
+            })
         )
     }
 }

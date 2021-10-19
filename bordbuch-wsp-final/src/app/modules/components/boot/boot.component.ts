@@ -2,11 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { retry, take } from 'rxjs/operators';
+import { Besatzung } from 'src/app/core/model/besatzung.model';
+import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
+import { Reparatur } from 'src/app/core/model/reparatur';
 import { Ship } from 'src/app/core/model/ship.model';
+import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store';
 import { ShipSelectors } from 'src/app/store/ship-store';
 import { logout } from '../../auth/state/actions';
+import { BesatzungComponent } from './besatzung/besatzung.component';
+import { BetankungComponent } from './betankung/betankung.component';
+import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
+import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 
 @Component({
   selector: 'app-boot',
@@ -14,6 +24,9 @@ import { logout } from '../../auth/state/actions';
   styleUrls: ['./boot.component.sass']
 })
 export class BootComponent implements OnInit {
+
+  id_ship!: string | undefined
+  id_streife!: string | undefined
 
   // status
   status: any[] = [
@@ -31,6 +44,11 @@ export class BootComponent implements OnInit {
 
   isLinear: boolean = true
   isPatrolActive$!: Observable<boolean>
+  zaehlerstaende$!: Observable<Zaehlerstand[] | undefined>
+  reparaturen$!: Observable<Reparatur[] | undefined>
+  betankungen$!: Observable<Betankung[] | undefined>
+
+  zaehlerstaende: Zaehlerstand[] | undefined
 
   patrol!: Patrol
 
@@ -38,8 +56,21 @@ export class BootComponent implements OnInit {
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
   
-  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder) {
+  constructor(
+    private store: Store<RootStoreState>, 
+    private _formBuilder: FormBuilder,
+    private modalService: ModalService<BesatzungComponent>,
+    private modalServiceZ: ModalService<ZaehlerstandComponent>,
+    private modalServiceP: ModalService<PruefvermerkComponent>,
+    private modalServiceB: ModalService<BetankungComponent>) 
+    {
     this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
+    this.zaehlerstaende$ = this.store.pipe(select(ShipSelectors.selectZaehlerstaende))
+    this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
+    this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
+
+    this.store.pipe(select(ShipSelectors.selectShipId))
+
     this.zweckFormGroup = this._formBuilder.group({
       kennung   : ['', Validators.required],
       zweck     : ['', Validators.required],
@@ -58,7 +89,18 @@ export class BootComponent implements OnInit {
       console.log(this.patrol)
     })
 
+    this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
+      this.id_ship = id_ship
+    })
 
+    this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
+      if (id_streife) this.id_streife = id_streife
+    })
+
+    this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
+      this.zaehlerstaende = zaehlerstaende
+      console.log(zaehlerstaende)
+    })
   }
 
   startPatrol() {
@@ -67,6 +109,72 @@ export class BootComponent implements OnInit {
 
   logout() {
     this.store.dispatch(logout())
+  }
+
+  async openBesatzungModal(id?: string) {
+    let besatzung: Besatzung | undefined
+
+    const { BesatzungComponent } = await import(
+      './besatzung/besatzung.component'
+    )
+
+    if (id) {
+      besatzung = this.patrol.besatzung.find(el => el.id == id)
+      this.modalService.open(BesatzungComponent, {
+        data: {
+          title: 'Tankzettel bearbeiten',
+          besatzung
+        }
+      })
+    } else {
+      this.modalService.open(BesatzungComponent, {
+        data: {
+          title: 'Besatzungsmitglied hinzufügen',
+          besatzung: { id_streife: this.id_streife, persnr: '', funktion: '', an_bord: '', von_bord: ''}
+        }
+      })
+    }
+  }
+
+  async openZaehlerstandModal(id: string | undefined) {
+    let zaehlerstand: Zaehlerstand | undefined
+    zaehlerstand = this.zaehlerstaende!.find(el => el.id == id)
+    const { ZaehlerstandComponent } = await import(
+      './zaehlerstand/zaehlerstand.component'
+    )
+    this.modalServiceZ.open(ZaehlerstandComponent, {
+      data: {
+        title: 'Zählerstand aktualisieren',
+        zaehlerstand
+        // zaehlerstand: Object.assign(zaehlerstand, { id_ship: this.id_ship }) 
+      }
+    })
+  }
+
+  async openPruefvermerkModal() {
+    const { PruefvermerkComponent } = await import(
+      './pruefvermerk/pruefvermerk.component'
+    )
+    this.modalServiceP.open(PruefvermerkComponent, {
+      data: {
+        title: 'Prüfvermerk erstellen',
+        id_ship: this.id_ship,
+        date: new Date().toISOString()
+      }
+    })
+  }
+
+  async openBetankungModal() {
+    const { BetankungComponent } = await import(
+      './betankung/betankung.component'
+    )
+    this.modalServiceB.open(BetankungComponent, {
+      data: {
+        title: 'Betankung durchführen',
+        id_ship: this.id_ship,
+        date: new Date().toISOString()
+      }
+    })
   }
 
 }

@@ -1,22 +1,23 @@
 import { createReducer, on } from "@ngrx/store"
-import { pruefvermerkeLoaded } from "./actions"
+import { pruefvermerkeLoaded, zaehlerstandstypenLoaded } from "./actions"
 import { State } from "./state"
 
 export const initialDataState: State = {
     pruefvermerke: undefined,
+    Zaehlerstandstypen: undefined,
     isAllDataLoaded: false
 }
 
-export const shipReducer = createReducer(
+export const reducer = createReducer(
     initialDataState,
     on(pruefvermerkeLoaded, (state, action) => {
         return {
-            pruefvermerke: action.pruefvermerke, isAllDataLoaded: true
+            pruefvermerke: action.pruefvermerke, Zaehlerstandstypen: state.Zaehlerstandstypen, isAllDataLoaded: false
         }
     }),
-    // on(patrolLoaded, (state, action) => {
-    //     return {
-    //         ship: state.ship, patrol: action.patrol, isAllDataLoaded: true
-    //     }
-    // })
+    on(zaehlerstandstypenLoaded, (state, action) => {
+        return {
+            pruefvermerke: state.pruefvermerke, Zaehlerstandstypen: action.zaehlerstandstypen, isAllDataLoaded: false
+        }
+    })
 )

@@ -11,7 +11,7 @@ export const isKatLoaded = createSelector(
     state => state.isAllDataLoaded
 )
 
-export const selectedShip = createSelector(
+export const selectpruefvermerke = createSelector(
     katState,
     state => state.pruefvermerke
 )

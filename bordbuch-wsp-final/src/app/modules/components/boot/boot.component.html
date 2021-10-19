@@ -28,13 +28,11 @@
             <label class="text-black">Rufname</label>
           </div>
           <div class="relative my-6">
-            <!-- <input type="text" formControlName="zweck" required> -->
             <ng-select [items]="zweck" bindLabel="name" bindValue="name" formControlName="zweck" required></ng-select>
             <span class="bar"></span>
             <label class="text-black">Fahrtzweck</label>
           </div>
           <div class="relative my-6">
-            <!-- <input type="text" formControlName="zweck" required> -->
             <ng-select [items]="status" bindLabel="name" bindValue="name" formControlName="status" required></ng-select>
             <span class="bar"></span>
             <label class="text-black">Status</label>
@@ -51,8 +49,7 @@
           <ng-template matStepLabel>Aktuelle Besatzung</ng-template>
           <div class="md:space-y-0 space-y-1 p-4">
             <div class="flex flex-wrap">
-              <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of patrol.besatzung; index as index">
-                <!-- (click)="editMemberModal(index)" -->
+              <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of patrol.besatzung; index as index" (click)="openBesatzungModal(mitglied.id)">)
                 <h2>{{ mitglied.funktion }}</h2>
                 <div class="grid grid-cols-2">
                   <p class="text-gray-600 mr-2">
@@ -88,8 +85,7 @@
                   </p>
                 </div>
               </div>
-              <div class="box blue w-64 placeholder border border-gray-100 grid justify-center items-center">
-                <!-- (click)="addMemberModal()" -->
+              <div class="box blue w-64 placeholder border border-gray-100 grid justify-center items-center" (click)="openBesatzungModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -105,29 +101,29 @@
               matStepperNext>Weiter</button>
           </div>
       </mat-step>
-      <!-- <mat-step [stepControl]="bootFormGroup">
+      <mat-step [stepControl]="bootFormGroup">
           <ng-template matStepLabel>Zählerstände, Einsatzmittel, Mängel und Hinweise</ng-template>
           
           <p class="text-xl font-semibold text-gray-500">Zählerstände</p>
-            <div class="line">
-              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="false" *ngFor="let zaehlerstand of zaehlerstaende; index as index" >
-                <ng-container CardSimple>
-                  <div class="m-4">
-                    <div class="text-xl font-semibold leading-tight">{{ zaehlerstand.zaehlerstandstyp }}</div>
-                    <div class="grid grid-cols-3 gap-2 mt-4">
-                      <div>Value:</div>
-                      <div class="col-span-2">{{ zaehlerstand.value }}</div>
-                      <div>Aktualisiert:</div>
-                      <div class="col-span-2 text-gray-500">{{ zaehlerstand.date }}</div>
-                    </div>
+          <div class="line">
+            <app-card class="lineelement w-80 h-40 mr-3" [flippable]="false" *ngFor="let zaehlerstand of zaehlerstaende$ | async; index as index" (click)=openZaehlerstandModal(zaehlerstand.id)>
+              <ng-container CardSimple>
+                <div class="m-4">
+                  <div class="text-xl font-semibold leading-tight">{{ zaehlerstand.zaehlerstandstyp }}</div>
+                  <div class="grid grid-cols-3 gap-2 mt-4">
+                    <div>Value:</div>
+                    <div class="col-span-2">{{ zaehlerstand.value }}</div>
+                    <div>Aktualisiert:</div>
+                    <div class="col-span-2 text-gray-500">{{ zaehlerstand.date }}</div>
                   </div>
-                </ng-container>
-              </app-card>
-            </div>
+                </div>
+              </ng-container>
+            </app-card>
+          </div>
 
           <p class="text-xl font-semibold leading-tight text-gray-500">Gefertigte Prüfvermerke</p>
             <div class="line">
-              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let reparatur of reparaturen; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let reparatur of reparaturen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
                 <ng-container CardFront>
                   <div class="m-4">
                     <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
@@ -148,7 +144,7 @@
                   </div>
                 </ng-container>
               </app-card>
-              <app-card class="lineelement w-80 h-40 mr-3" >
+              <app-card class="lineelement w-80 h-40 mr-3" (click)="openPruefvermerkModal()">
                 <ng-container CardSimple>
                   <div class="m-4">
                     <div class="text-xl font-semibold leading-tight">Prüfvermerk erstellen</div>
@@ -162,7 +158,7 @@
 
             <p class="text-xl font-semibold leading-tight text-gray-500">Letzter Tankzettel</p>
             <div class="line">
-              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
                 <ng-container CardFront>
                   <div class="m-4">
                     <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
@@ -186,7 +182,7 @@
                   </div>
                 </ng-container>
               </app-card>
-              <app-card class="lineelement w-80 h-40 mr-3" >
+              <app-card class="lineelement w-80 h-40 mr-3" (click)="openBetankungModal()">
                 <ng-container CardSimple>
                   <div class="m-4">
                     <div class="text-xl font-semibold leading-tight">Betankung durchführen</div>
@@ -204,7 +200,15 @@
             <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
               matStepperNext>Weiter</button>
           </div>
-      </mat-step> -->
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Kontrolle der Eingaben</ng-template>
+        <p>Wenn alle Eingaben getätigt wurden, kann die Streife beginnen.</p>
+        <div>
+          <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+            matStepperPrevious>Zurück</button>
+        </div>
+      </mat-step>
     </mat-stepper>
   </div>
 </div>

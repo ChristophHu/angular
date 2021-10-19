@@ -1,0 +1,46 @@
+<app-modal #modalComponent>
+  <header>
+    <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+  </header>
+  <div class="content">
+    <form [formGroup]="zaehlerstandForm">
+      <div class="relative my-5">
+        <input type="text" formControlName="id" required>
+        <span class="bar"></span>
+        <label class="text-black">Id</label>
+      </div>
+      <div class="relative my-5">
+        <input type="text" formControlName="id_schiff" required>
+        <span class="bar"></span>
+        <label class="text-black">Id_ship</label>
+      </div>
+      <div class="relative my-5">
+        <input type="text" formControlName="zaehlerstandstyp" required>
+        <span class="bar"></span>
+        <label class="text-black">Gerät</label>
+      </div>
+      <div class="relative my-5">
+        <input type="datetime-local" formControlName="date"
+          value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
+        <span class="bar"></span>
+        <label class="text-black">Datum/Uhrzeit</label>
+      </div>
+      <div class="relative my-5">
+        <input type="number" formControlName="value" required>
+        <span class="bar"></span>
+        <label class="text-black">Einheiten</label>
+      </div>
+    </form>
+  </div>
+  <footer>
+    <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+  </footer>
+</app-modal>
+
+<ng-template #toolbar>
+  <div class="py-3 flex justify-between">
+    <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    <button (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Zählerstand
+      übernehemn</button>
+  </div>
+</ng-template>
