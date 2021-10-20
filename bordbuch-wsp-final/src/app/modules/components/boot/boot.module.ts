@@ -11,16 +11,21 @@ import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { BetankungComponent } from './betankung/betankung.component';
 import { DataModule } from 'src/app/store/positionreport-store/data.module';
 import { ZaehlerstandModule } from 'src/app/store/zaehlerstand-store/data.module';
-import { MapComponent } from '../map/map.component';
+import { MapComponent } from './map/map.component';
+import { StreifeComponent } from './streife/streife.component';
+import { StreifeModule } from './streife/streife.module';
 
 export const routes: Routes = [
-  { path: '', component: BootComponent,
+  { path: ':id', component: BootComponent,
     children: [
-      { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'} },
-      { path: ':id/map', component: MapComponent },
-      // { path: 'boot/:id/positions', component: PositionenComponent },
+      { path: '', component: StreifeComponent, resolve: { data: ShipResolver }, data: { param: 'id'}},
+      { path: 'map', component: MapComponent },
+      { path: 'positions', loadChildren: () => import('./positions/positions.module').then(m => m.PositionsModule) }
+    //   { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'} },
+    //   { path: ':id/map', component: MapComponent },
+    //   // { path: 'boot/:id/positions', component: PositionenComponent },
 
-      // { path: '**', redirectTo: '' }
+    //   // { path: '**', redirectTo: '' }
     ],
   }
 ]
@@ -32,12 +37,13 @@ export const routes: Routes = [
     ZaehlerstandComponent,
     PruefvermerkComponent,
     BetankungComponent,
-    MapComponent
+    MapComponent,
   ],
   imports: [
     SharedModule,
 
     // router
+    StreifeModule,
     RouterModule.forChild(routes),
 
     // store

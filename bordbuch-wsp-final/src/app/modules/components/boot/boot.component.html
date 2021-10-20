@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
   <a class="rotate-180 cursor-pointer" (click)="logout()">
     <icons class="w-8 h-8" name="logout"></icons>
@@ -6,8 +7,11 @@
   <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
     <icons class="w-8 h-8" name="chevron-right"></icons>
   </a>
-  <a class="cursor-pointer" [routerLink]="['1', 'map']" *ngIf="isPatrolActive$">
+  <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
     <icons class="w-8 h-8" name="map"></icons>
+  </a>
+  <a class="cursor-pointer" [routerLink]="['positions']">
+    <icons class="w-8 h-8" name="chevron-right"></icons>
   </a>
 </div>
 

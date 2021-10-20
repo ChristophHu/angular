@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { AppService } from '../../../core/services/app.service';
 import { BordbuchAuswahlComponent } from './bordbuch-auswahl.component';
 import { NgQrScannerModule } from 'angular2-qrscanner';

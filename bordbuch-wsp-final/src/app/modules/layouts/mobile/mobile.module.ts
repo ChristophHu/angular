@@ -4,9 +4,6 @@ import { MobileRoutingModule } from './mobile-routing.module';
 import { BordbuchAuswahlModule } from '../../components/bordbuch-auswahl/bordbuch-auswahl.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
-// import { BootComponent } from '../../components/boot/boot.component';
-
 @NgModule({
   declarations: [
     MobileComponent
