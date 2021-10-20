@@ -6,7 +6,7 @@
   <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
     <icons class="w-8 h-8" name="chevron-right"></icons>
   </a>
-  <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
+  <a class="cursor-pointer" [routerLink]="['1', 'map']" *ngIf="isPatrolActive$">
     <icons class="w-8 h-8" name="map"></icons>
   </a>
 </div>

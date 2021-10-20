@@ -1,0 +1,32 @@
+<div class="absolute flex flex-row justify-between items-center w-full bg-gray-200 bg-opacity-90 h-16 px-3 text-gray-800 shadow-lg z-20">
+  <a class="cursor-pointer" [routerLink]="['/mobile', 'boot', id]">
+    <icons class="w-8 h-8" name="chevron-left"></icons>
+  </a>
+  <span class="text-2xl text-gray-800">Navigation</span>
+  <div class="flex flex-row">
+    <a class="cursor-pointer" (click)="setToLocalPosition()">
+      <icons class="w-8 h-8" name="location-marker"></icons>
+    </a>
+    <a class="ml-4 cursor-pointer" (click)="showMarkergroup()">
+      <icons class="w-8 h-8" name="refresh"></icons>
+    </a>
+    <a class="ml-4 cursor-pointer" (click)="openPositionModal()">
+      <icons class="w-8 h-8" name="location-add"></icons>
+    </a>
+    <a class="ml-4 cursor-pointer" [routerLink]="['/mobile', 'boot', id, 'positions']">
+      <icons class="w-8 h-8" name="menu-alt-2"></icons>
+    </a>
+  </div>
+</div>
+
+<div class="content">
+    <div class="z-10">
+        <div class="w-screen h-screen top-0 left-0">
+            <div class="map-container">
+                <div class="map-frame">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
