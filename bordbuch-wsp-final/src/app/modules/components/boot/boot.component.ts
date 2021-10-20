@@ -12,6 +12,7 @@ import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store';
 import { ShipSelectors } from 'src/app/store/ship-store';
+import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 import { logout } from '../../auth/state/actions';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { BetankungComponent } from './betankung/betankung.component';
@@ -67,7 +68,9 @@ export class BootComponent implements OnInit {
     {
     this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
     this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
-    this.zaehlerstaende$ = this.store.pipe(select(ShipSelectors.selectZaehlerstaende))
+
+    this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+
     this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
     this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
 
@@ -140,7 +143,10 @@ export class BootComponent implements OnInit {
 
   async openZaehlerstandModal(id: string | undefined) {
     let zaehlerstand: Zaehlerstand | undefined
-    zaehlerstand = this.zaehlerstaende!.find(el => el.id == id)
+  
+    this.store.pipe(select(ZaehlerstandSelectors.selectDatyById(id))).subscribe(data => {
+      zaehlerstand = data
+    })
     const { ZaehlerstandComponent } = await import(
       './zaehlerstand/zaehlerstand.component'
     )

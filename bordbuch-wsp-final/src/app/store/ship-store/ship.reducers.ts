@@ -1,6 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
 import { ShipAction } from "."
-import { loadPatrol, patrolLoaded, shipLoaded, zaehlerstaendeLoaded } from "./ship.actions"
 import { State } from "./ship.state"
 // export interface State {
 //     ship: Ship | undefined
@@ -22,11 +21,6 @@ export const shipReducer = createReducer(
     on(ShipAction.patrolLoaded, (state, action) => {
         return {
             ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
-        }
-    }),
-    on(ShipAction.zaehlerstaendeLoaded, (state, action) => {
-        return {
-            ship: state.ship, patrol: state.patrol, zaehlerstaende: action.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
         }
     }),
 

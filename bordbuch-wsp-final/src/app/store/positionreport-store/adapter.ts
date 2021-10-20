@@ -1,12 +1,12 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { compareData, Data } from "./data.model";
+import { PositionReport } from "src/app/core/model/positionreport.model";
 
-export interface DataState extends EntityState<Data> {
+export interface DataState extends EntityState<PositionReport> {
     isAllDataLoaded: boolean
 }
 
-export const adapter = createEntityAdapter<Data>({
-    sortComparer: compareData,
+export const adapter = createEntityAdapter<PositionReport>({
+    // sortComparer: compareData,
     // selectId: data => data.id    
 });
 

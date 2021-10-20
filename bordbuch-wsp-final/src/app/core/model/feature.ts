@@ -1,8 +1,8 @@
 export enum Features {
     Auth    = 'auth',
-    Data    = 'data',
+    Positionreport    = 'positionreport',
     Kat     = 'kat',
-    Positions = 'positions',
     Ship    = 'ship',
-    ShipSelection = 'ship-selection'
+    ShipSelection = 'ship-selection',
+    Zaehlerstand = 'zaehlerstand'
 }

@@ -6,7 +6,7 @@ export const reducer = createReducer(
     initialDataState,
     on(allDataLoaded, 
         (state, action) => adapter.addMany(
-            action.data,
+            action.positionReport,
             {...state, isAllDataLoaded: true}
         )
     ),

@@ -27,23 +27,6 @@ export class ShipEffects {
         )
     })
 
-    loadZaehlerstaende$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(ShipAction.loadZaehlerstaende),
-            concatMap(action => this.appService.getZaehlerstaende(action.id_ship)),
-            map((zaehlerstaende: Zaehlerstand[]) => ShipAction.zaehlerstaendeLoaded({ zaehlerstaende }))
-        )
-    })
-    updateZaehlerstand$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(ShipAction.updateZaehlerstand),
-            tap(action => console.log(action)),
-            map(action => {
-                this.appService.updateZaehlerstand(action.zaehlerstand)
-            })
-        ), { dispatch: false }
-    )
-
     loadReparaturen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadReparaturen),

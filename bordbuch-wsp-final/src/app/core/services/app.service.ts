@@ -94,7 +94,18 @@ export class AppService {
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
 
-    updateZaehlerstand(zaehlerstand: Zaehlerstand) {
+    updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateZaehlerstand', changes)
+            source$.subscribe((status: any) => {
+                console.log(status)
+                // observer.next(data)
+            })
+            // , (error: any) => observer.error(error))
+        })
+    }
+
+    pdateZaehlerstand(zaehlerstand: Zaehlerstand) {
         console.log(zaehlerstand)
         // return new Observable ((observer) => {
             const source$ = this.reducer('updateZaehlerstand', zaehlerstand)
@@ -137,7 +148,7 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
-    getZaehlerstaende(id : string): Observable<any> {
+    getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
         console.log(id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstaende', id)

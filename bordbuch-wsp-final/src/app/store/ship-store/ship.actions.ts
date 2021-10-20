@@ -28,20 +28,6 @@ export const patrolLoaded = createAction(
 	props<{ patrol: Patrol }>()
 )
 
-// zaehlerstaende
-export const loadZaehlerstaende = createAction(
-	"[Ship Resolver] Load Zaehlerstaende",
-	props<{ id_ship: string }>()
-)
-export const zaehlerstaendeLoaded = createAction(
-	"[Load Ship Effect] Zaehlerstaende Loaded",
-	props<{ zaehlerstaende: Zaehlerstand[] }>()
-)
-export const updateZaehlerstand = createAction(
-	"[Edit Data Dialog] Zaehlerstaend Updates",
-	props<{ zaehlerstand: Zaehlerstand }>()
-)
-
 // reparaturen
 export const loadReparaturen = createAction(
 	"[Ship Resolver] Load Reparaturen",

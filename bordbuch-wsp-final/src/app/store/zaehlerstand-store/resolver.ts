@@ -20,7 +20,7 @@ export class DataResolver implements Resolve<any> {
             tap(dataLoaded => {
                 if (!this.loading && !dataLoaded) {
                     this.loading = true
-                    this.store.dispatch(loadAllData())
+                    this.store.dispatch(loadAllData({ id_ship: route.params[route.data.param] }))
                 }
             }),
             filter(dataLoaded => dataLoaded),
@@ -28,5 +28,4 @@ export class DataResolver implements Resolve<any> {
             finalize(() => this.loading = false)
         )
     }
-
 }

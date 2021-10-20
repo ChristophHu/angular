@@ -8,11 +8,11 @@ import { reducer } from './reducers'
 
 @NgModule({
   imports: [
-    StoreModule.forFeature(Features.Positions, reducer),
+    StoreModule.forFeature(Features.Zaehlerstand, reducer),
     EffectsModule.forFeature([Effects])
   ],
   providers: [
     AppService
   ]
 })
-export class PositionModule { }
+export class ZaehlerstandModule { }

@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { BootComponent } from './boot.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ShipResolver } from 'src/app/store/ship-store/ship.resolver';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
-import { _actionTypeUniquenessCheck } from '@ngrx/store/src/runtime_checks';
+// import { _actionTypeUniquenessCheck } from '@ngrx/store/src/runtime_checks';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { KatModule } from 'src/app/store/kat-store/kat.module';
-import { KatResolver } from 'src/app/store/kat-store';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { BetankungComponent } from './betankung/betankung.component';
-import { PositionModule } from 'src/app/store/position-store/position.module';
-import { DataModule } from 'src/app/store/data-store/data.module';
+import { DataModule } from 'src/app/store/positionreport-store/data.module';
+import { ZaehlerstandModule } from 'src/app/store/zaehlerstand-store/data.module';
 
 export const routes: Routes = [
   { path: '', component: BootComponent,
@@ -44,9 +41,9 @@ export const routes: Routes = [
 
     // store
     DataModule,
-    PositionModule,
     KatModule,
-    ShipModule
+    ShipModule,
+    ZaehlerstandModule
   ],
   providers: [
     ShipResolver

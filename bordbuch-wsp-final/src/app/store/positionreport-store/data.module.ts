@@ -8,7 +8,7 @@ import { reducer } from './reducers'
 
 @NgModule({
   imports: [
-    StoreModule.forFeature(Features.Data, reducer),
+    StoreModule.forFeature(Features.Positionreport, reducer),
     EffectsModule.forFeature([Effects])
   ],
   providers: [
