@@ -12,9 +12,9 @@ import { StreifeComponent } from './streife/streife.component';
 import { StreifeModule } from './streife/streife.module';
 
 export const routes: Routes = [
-  { path: ':id', component: BootComponent,
+  { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'},
     children: [
-      { path: '', component: StreifeComponent, resolve: { data: ShipResolver }, data: { param: 'id'}},
+      { path: '', component: StreifeComponent},
       { path: 'map', component: MapComponent },
       { path: 'positions', loadChildren: () => import('./positions/positions.module').then(m => m.PositionsModule) }
     ],
