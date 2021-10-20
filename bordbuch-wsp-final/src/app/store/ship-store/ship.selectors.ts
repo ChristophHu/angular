@@ -38,6 +38,11 @@ export const selectPatrolId = createSelector(
     patrol => patrol?.id
 )
 
+export const selectBesatzung = createSelector(
+    selectedPatrol,
+    patrol => patrol?.besatzung
+)
+
 // zaehlerstaende
 export const selectZaehlerstaende = createSelector(
     selectShipState,

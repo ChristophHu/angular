@@ -5,8 +5,9 @@ import { Observable } from "rxjs"
 import { filter, finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
 import { ShipAction } from "."
+import { loadAllData } from "../data-store/actions"
 import { KatAction } from "../kat-store"
-import { isShipLoaded } from "./ship.selectors"
+import { PositionAction } from "../position-store"
 
 @Injectable()
 export class ShipResolver implements Resolve<any> {
@@ -29,6 +30,13 @@ export class ShipResolver implements Resolve<any> {
                     // kat
                     this.store.dispatch(KatAction.loadPruefvermerke())
                     this.store.dispatch(KatAction.loadZaehlerstandstypen())
+
+                    // positions
+                    this.store.dispatch(PositionAction.loadPositions({ id_ship: route.params[route.data.param] }))
+
+                    // data
+                    this.store.dispatch(loadAllData())
+
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

@@ -45,6 +45,7 @@ export class BootComponent implements OnInit {
   isLinear: boolean = true
   isPatrolActive$!: Observable<boolean>
   zaehlerstaende$!: Observable<Zaehlerstand[] | undefined>
+  besatzung$!: Observable<Besatzung[] | undefined>
   reparaturen$!: Observable<Reparatur[] | undefined>
   betankungen$!: Observable<Betankung[] | undefined>
 
@@ -65,6 +66,7 @@ export class BootComponent implements OnInit {
     private modalServiceB: ModalService<BetankungComponent>) 
     {
     this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
+    this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
     this.zaehlerstaende$ = this.store.pipe(select(ShipSelectors.selectZaehlerstaende))
     this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
     this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))

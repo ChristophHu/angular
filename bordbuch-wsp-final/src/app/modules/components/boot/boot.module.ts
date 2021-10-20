@@ -13,6 +13,8 @@ import { BesatzungComponent } from './besatzung/besatzung.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { BetankungComponent } from './betankung/betankung.component';
+import { PositionModule } from 'src/app/store/position-store/position.module';
+import { DataModule } from 'src/app/store/data-store/data.module';
 
 export const routes: Routes = [
   { path: '', component: BootComponent,
@@ -41,6 +43,8 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
 
     // store
+    DataModule,
+    PositionModule,
     KatModule,
     ShipModule
   ],

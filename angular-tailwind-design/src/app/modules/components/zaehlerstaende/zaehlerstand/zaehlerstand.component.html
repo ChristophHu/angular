@@ -9,7 +9,12 @@
                 <span class="bar"></span>
                 <label class="text-black">Id</label>
             </div>
-            <div class="relative my-5">
+            <div class="relative my-5" *ngIf="!zaehlerstandForm.value.id">
+                <ng-select [dropdownPosition]="'bottom'" [items]="schiffe$ | async" bindLabel="name" bindValue="id" formControlName="id_schiff" required></ng-select>
+                <span class="bar"></span>
+                <label class="text-black">Typ</label>
+            </div>
+            <div class="relative my-5" *ngIf="zaehlerstandForm.value.id">
                 <input type="string" formControlName="id_schiff" required>
                 <span class="bar"></span>
                 <label class="text-black">Id_ship</label>
@@ -18,7 +23,12 @@
                 <input type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
                 <span class="bar"></span>
             </div>
-            <div class="relative my-5">
+            <div class="relative my-5" *ngIf="!zaehlerstandForm.value.id">
+                <ng-select [dropdownPosition]="'bottom'" [items]="zaehlerstaendstypen$ | async" bindLabel="zaehlerstandstyp" bindValue="id" formControlName="zaehlerstandstyp" required></ng-select>
+                <span class="bar"></span>
+                <label class="text-black">Typ</label>
+            </div>
+            <div class="relative my-5" *ngIf="zaehlerstandForm.value.id">
                 <input type="text" formControlName="zaehlerstandstyp" required>
                 <span class="bar"></span>
                 <label class="text-black">Typ</label>
@@ -40,7 +50,7 @@
     <div class="py-3 flex justify-between">
         <div>
             <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-            <button *ngIf="zaehlerstandForm.value.id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
+            <!-- <button *ngIf="zaehlerstandForm.value.id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button> -->
         </div>
         <div>
             <button *ngIf="!zaehlerstandForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>

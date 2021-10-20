@@ -38,10 +38,10 @@ export class ShipEffects {
         () => this.actions$.pipe(
             ofType(ShipAction.updateZaehlerstand),
             tap(action => console.log(action)),
-            concatMap(action => {
+            map(action => {
                 this.appService.updateZaehlerstand(action.zaehlerstand)
             })
-        )
+        ), { dispatch: false }
     )
 
     loadReparaturen$ = createEffect(() => {

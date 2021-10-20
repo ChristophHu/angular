@@ -34,7 +34,7 @@ export class ZaehlerstaendeComponent implements OnInit, OnDestroy {
       // "processing": true,
       // "info"    : false,
       "autoWidth": true,
-      // "retrieve": true,
+      retrieve: true,
       // data:this.dtUsers,
       // columns: [{title: 'User ID', data: 'id'},
       //       {title: 'First Name', data: 'firstName'},
@@ -83,6 +83,12 @@ export class ZaehlerstaendeComponent implements OnInit, OnDestroy {
         data: {
           title: 'Zaehlerstand bearbeiten',
           zaehlerstand
+        }
+      })
+    } else {
+      this.modalService.open(ZaehlerstandComponent, {
+        data: {
+          title: 'Zaehlerstand hinzufügen',
         }
       })
     }

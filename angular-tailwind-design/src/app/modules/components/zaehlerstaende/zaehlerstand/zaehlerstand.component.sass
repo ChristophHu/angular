@@ -1,17 +1,21 @@
 /* input */
-input
+input,
+select,
+ng-select
   @apply block bg-none text-black text-lg font-medium w-full border-0 border-b border-gray-400
   padding: 10px 10px 10px 5px
 
   &:focus
     @apply ring-0 ring-offset-0
 
-  &:focus~label, &:valid~label
+  &:focus~label, &:valid~label,
+  &.ng-valid~label
     top: -14px
     font-size: 14px
     color: #363636
 
-  &:focus~.bar:before
+  &:focus~.bar:before,
+  &.ng-select-opened~.bar:before
     @apply w-full
 
 label

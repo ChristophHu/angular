@@ -3,6 +3,7 @@ import { ActionReducer, ActionReducerMap, MetaReducer } from "@ngrx/store"
 import { environment } from "src/environments/environment"
 import { AuthState } from "../modules/auth/model/authstate.model"
 import { KatState } from "./kat-store"
+import { PositionsState } from "./position-store/adapter"
 import { ShipSelectionState } from "./ship-selection-store"
 import { ShipState } from "./ship-store"
 
@@ -11,6 +12,7 @@ export interface RootStoreState {
     shipSelection: ShipSelectionState.State
     ship: ShipState.State
     kat: KatState.State
+    positions: PositionsState
 }
 
 export interface State {

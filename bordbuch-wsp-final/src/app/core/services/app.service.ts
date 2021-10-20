@@ -78,6 +78,7 @@ export class AppService {
                 param = `?id_schiff=${data}`
                 break
             
+            case 'getPosition':
             case 'getReparaturen':
                 param = `?id_schiff=${data}&all=true`
                 break
@@ -93,13 +94,16 @@ export class AppService {
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
 
-    updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<Zaehlerstand> {
-        return new Observable ((observer) => {
+    updateZaehlerstand(zaehlerstand: Zaehlerstand) {
+        console.log(zaehlerstand)
+        // return new Observable ((observer) => {
             const source$ = this.reducer('updateZaehlerstand', zaehlerstand)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+            source$.subscribe((status: any) => {
+                console.log(status)
+                // observer.next(data)
+            })
+            // , (error: any) => observer.error(error))
+        // })
         // const status = this.reducer('updateZaehlerstand', zaehlerstand).subscribe(status => {
         //     if (status == '200') {}
         // })
@@ -134,17 +138,21 @@ export class AppService {
         })
     }
     getZaehlerstaende(id : string): Observable<any> {
+        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstaende', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
+
     }
     getReparaturen(id : string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getReparaturen', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -153,11 +161,20 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getBetankungen', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }
-
+    getPosition(id : string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPosition', id)
+            source$.subscribe((data: any) => {
+                console.log(data)
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
 
     // kat
     getPruefvermerke(): Observable<any> {
