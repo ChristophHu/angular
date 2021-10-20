@@ -1,13 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { StreifeComponent } from './streife.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { BesatzungComponent } from './besatzung/besatzung.component';
+import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
+import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
+import { BetankungComponent } from './betankung/betankung.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    StreifeComponent
+    StreifeComponent,
+    BesatzungComponent,
+    ZaehlerstandComponent,
+    PruefvermerkComponent,
+    BetankungComponent,
   ],
   imports: [
-    CommonModule
+    SharedModule,
+    RouterModule
   ]
 })
 export class StreifeModule { }

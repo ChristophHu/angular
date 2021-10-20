@@ -1,1 +1,220 @@
-<p>streife works!</p>
+<div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
+    <a class="rotate-180 cursor-pointer" (click)="logout()">
+      <icons class="w-8 h-8" name="logout"></icons>
+    </a>
+    <span class="text-2xl text-gray-800">Name</span>
+    <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
+      <icons class="w-8 h-8" name="chevron-right"></icons>
+    </a>
+    <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
+      <icons class="w-8 h-8" name="map"></icons>
+    </a>
+    <a class="cursor-pointer" [routerLink]="['positions']">
+      <icons class="w-8 h-8" name="chevron-right"></icons>
+    </a>
+  </div>
+  
+  <div class="content">
+    <p *ngIf="isPatrolActive$">Aktiv</p>
+    <div class="w-full bg-white rounded-lg p-2 shadow-lg">
+      <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="zweckFormGroup">
+          <form [formGroup]="zweckFormGroup">
+            <ng-template matStepLabel>Zweck der Fahrt</ng-template>
+            <p class="text-sm text-gray-500">
+              Es ist der Rufname und Zweck der Fahrt (Streifen-, Überführungs- oder Probefahrt) anzugeben.
+            </p>
+  
+            <div class="relative my-6">
+              <input type="text" formControlName="kennung" required>
+              <span class="bar"></span>
+              <label class="text-black">Rufname</label>
+            </div>
+            <div class="relative my-6">
+              <ng-select [items]="zweck" bindLabel="name" bindValue="name" formControlName="zweck" required></ng-select>
+              <span class="bar"></span>
+              <label class="text-black">Fahrtzweck</label>
+            </div>
+            <div class="relative my-6">
+              <ng-select [items]="status" bindLabel="name" bindValue="name" formControlName="status" required></ng-select>
+              <span class="bar"></span>
+              <label class="text-black">Status</label>
+            </div>
+  
+            <div class="flex">
+              <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button matStepperNext
+                *ngIf="zweckFormGroup.valid">Weiter</button>
+                <!-- || streife.status == 'aktiv'" (click)="updateAktiveStreife()" -->
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="besatzungFormGroup">
+            <ng-template matStepLabel>Aktuelle Besatzung</ng-template>
+            <div class="md:space-y-0 space-y-1 p-4">
+              <div class="flex flex-wrap">
+                <!-- <div *ngIf="">
+  
+                </div> -->
+                <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
+                  <h2>{{ mitglied.funktion }}</h2>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      Name
+                    </p>
+                    <p>
+                      {{ mitglied.name }}
+                    </p>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      Pers.-Nr.
+                    </p>
+                    <p>
+                      {{ mitglied.persnr }}
+                    </p>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      an Bord
+                    </p>
+                    <p>
+                      {{ mitglied.an_bord }}
+                    </p>
+                  </div>
+  
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      von Bord
+                    </p>
+                    <p>
+                      {{ mitglied.von_bord }}
+                    </p>
+                  </div>
+                </div>
+                <div class="box blue w-64 placeholder border border-gray-100 grid justify-center items-center" (click)="openBesatzungModal()">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+  
+            <div class="flex">
+              <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+                matStepperPrevious>Zurück</button>
+              <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+                matStepperNext>Weiter</button>
+            </div>
+        </mat-step>
+        <mat-step [stepControl]="bootFormGroup">
+            <ng-template matStepLabel>Zählerstände, Einsatzmittel, Mängel und Hinweise</ng-template>
+            
+            <p class="text-xl font-semibold text-gray-500">Zählerstände</p>
+            <div class="line">
+              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="false" *ngFor="let zaehlerstand of zaehlerstaende$ | async; index as index" (click)=openZaehlerstandModal(zaehlerstand.id)>
+                <ng-container CardSimple>
+                  <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">{{ zaehlerstand.zaehlerstandstyp }}</div>
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                      <div>Value:</div>
+                      <div class="col-span-2">{{ zaehlerstand.value }}</div>
+                      <div>Aktualisiert:</div>
+                      <div class="col-span-2 text-gray-500">{{ zaehlerstand.date }}</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </app-card>
+            </div>
+  
+            <p class="text-xl font-semibold leading-tight text-gray-500">Gefertigte Prüfvermerke</p>
+              <div class="line">
+                <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let reparatur of reparaturen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+                  <ng-container CardFront>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
+                      <div class="mt-4 text-gray-500">{{ reparatur.description }}</div>
+                    </div>
+                  </ng-container>
+                  <ng-container CardBack>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Kategorie:</div>
+                        <div class="col-span-2">{{ reparatur.kategorie }}</div>
+                        <div>Status:</div>
+                        <div class="col-span-2">{{ reparatur.status }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ reparatur.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-card>
+                <app-card class="lineelement w-80 h-40 mr-3" (click)="openPruefvermerkModal()">
+                  <ng-container CardSimple>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">Prüfvermerk erstellen</div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </ng-container>
+                </app-card>
+              </div>
+  
+              <p class="text-xl font-semibold leading-tight text-gray-500">Letzter Tankzettel</p>
+              <div class="line">
+                <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+                  <ng-container CardFront>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Menge (in L):</div>
+                        <div class="col-span-2">{{ betankung.fuelfillingquantity }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container CardBack>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Ort:</div>
+                        <div class="col-span-2">{{ betankung.ort }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-card>
+                <app-card class="lineelement w-80 h-40 mr-3" (click)="openBetankungModal()">
+                  <ng-container CardSimple>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">Betankung durchführen</div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </ng-container>
+                </app-card>
+              </div>
+            
+            <div>
+              <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+                matStepperPrevious>Zurück</button>
+              <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+                matStepperNext>Weiter</button>
+            </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Kontrolle der Eingaben</ng-template>
+          <p>Wenn alle Eingaben getätigt wurden, kann die Streife beginnen.</p>
+          <div>
+            <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
+              matStepperPrevious>Zurück</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
