@@ -8,6 +8,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
 import { ShipSelection } from 'src/app/core/model/ship-selection.model';
+import { KatSelectors } from 'src/app/store/kat-store';
 
 @Component({
   selector: 'app-bordbuch-auswahl',
@@ -25,7 +26,7 @@ export class BordbuchAuswahlComponent {
       bordbuch: []
     })
 
-    this.allShips$ = this.store.pipe(select(ShipSelectionSelectors.selectAllShip))
+    this.allShips$ = this.store.pipe(select(ShipSelectionSelectors.selectAllShip)) as Observable<ShipSelection[]>
   }
 
   async showModal(): Promise<void> {

@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
+import { KatResolver } from 'src/app/store/kat-store';
 
 export const dataRoutes: Routes = [
   { path: '', component: BordbuchAuswahlComponent, resolve: { data: ShipSelectionResolver }}
@@ -30,6 +31,7 @@ export const dataRoutes: Routes = [
     ShipSelectionModule
   ],
   providers: [
+    // KatResolver.Resolver,
     ShipSelectionResolver,
     AppService
   ]

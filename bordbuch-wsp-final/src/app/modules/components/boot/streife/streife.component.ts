@@ -125,7 +125,7 @@ export class StreifeComponent implements OnInit {
       besatzung = this.patrol.besatzung.find(el => el.id == id)
       this.modalService.open(BesatzungComponent, {
         data: {
-          title: 'Tankzettel bearbeiten',
+          title: 'Besatzungsmitglied bearbeiten',
           besatzung
         }
       })

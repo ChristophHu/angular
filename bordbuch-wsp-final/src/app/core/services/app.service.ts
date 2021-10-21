@@ -59,7 +59,7 @@ export class AppService {
     }
 
     getReducer(action: string, data: any): any {
-        console.info(`getreducer | action: '${action}', data: ${data}`)
+        console.info(`getreducer | action: '${action}', data: `, data)
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {

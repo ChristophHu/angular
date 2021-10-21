@@ -23,13 +23,6 @@ export const shipReducer = createReducer(
             ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
         }
     }),
-
-    // on(ShipAction.updateZaehlerstand, (state, action) => {
-    //     return {
-    //         ship: state.ship, patrol: state.patrol, zaehlerstaende: action.zaehlerstand, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
-    //     }
-    // }),
-
     on(ShipAction.reparaturenLoaded, (state, action) => {
         return {
             ship: state.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: action.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
