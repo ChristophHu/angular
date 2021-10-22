@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Update } from '@ngrx/entity';
+import { select, Store } from '@ngrx/store';
+import { Besatzung } from 'src/app/core/model/besatzung.model';
+import { Patrol } from 'src/app/core/model/patrol.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { RootStoreState } from 'src/app/store/root-store.state';
+import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
 @Component({
   selector: 'app-besatzung',
@@ -15,7 +21,7 @@ export class BesatzungComponent implements OnInit {
   besatzungForm: FormGroup
   edit: boolean = false
 
-  constructor(private _formBuilder: FormBuilder, private modalService: ModalService<BesatzungComponent>, private appService: AppService) {
+  constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BesatzungComponent>, private appService: AppService) {
     this.besatzungForm = this._formBuilder.group({
       id: [],
       id_streife: [],
@@ -39,13 +45,17 @@ export class BesatzungComponent implements OnInit {
   }
 
   create() {
-    // this.appService.insertBesatzung(this.besatzungForm.value)
-    // this.modal?.close()
+    this.store.dispatch(ShipAction.insertPatrolBesatzung({}))
+    this.modal?.close()
   }
 
   update() {
-    // this.appService.updateBesatzung(this.besatzungForm.value)
-    // this.modal?.close()
+    const update: Update<Patrol> = {
+      id: this.besatzungForm.value.id_streife,
+      changes: { besatzung: this.besatzungForm.value}
+    }
+    this.store.dispatch(ShipAction.updatePatrolBesatzung({ update }))
+    this.modal?.close()
   }
 
   delete() {
