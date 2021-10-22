@@ -2,7 +2,7 @@
     <a class="rotate-180 cursor-pointer" (click)="logout()">
       <icons class="w-8 h-8" name="logout"></icons>
     </a>
-    <span class="text-2xl text-gray-800">Name</span>
+    <span class="text-2xl text-gray-800">{{ ship$.name | async }}</span>
     <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
       <icons class="w-8 h-8" name="chevron-right"></icons>
     </a>

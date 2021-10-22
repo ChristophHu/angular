@@ -6,6 +6,7 @@ import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
+import { Ship } from 'src/app/core/model/ship.model';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -41,7 +42,11 @@ export class StreifeComponent implements OnInit {
     { name: "Probefahrt" }
   ]
 
+  // stepper
   isLinear: boolean = true
+
+  // observables
+  ship$: Observable<Ship | undefined>
   isPatrolActive$!: Observable<boolean>
   zaehlerstaende$!: Observable<Zaehlerstand[] | undefined>
   besatzung$!: Observable<Besatzung[] | undefined>
@@ -64,22 +69,23 @@ export class StreifeComponent implements OnInit {
     private modalServiceP: ModalService<PruefvermerkComponent>,
     private modalServiceB: ModalService<BetankungComponent>) 
     {
-    this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
-    this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
+      this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
+      this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
+      this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
 
-    this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
 
-    this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
-    this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
+      this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
+      this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
 
-    this.store.pipe(select(ShipSelectors.selectShipId))
+      this.store.pipe(select(ShipSelectors.selectShipId))
 
-    this.zweckFormGroup = this._formBuilder.group({
-      kennung   : ['', Validators.required],
-      zweck     : ['', Validators.required],
-      status    : ['', Validators.required]
-    });
-  }
+      this.zweckFormGroup = this._formBuilder.group({
+        kennung   : ['', Validators.required],
+        zweck     : ['', Validators.required],
+        status    : ['', Validators.required]
+      });
+    }
 
   ngOnInit(): void {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
