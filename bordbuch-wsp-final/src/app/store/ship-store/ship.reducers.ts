@@ -1,9 +1,10 @@
 import { createReducer, on } from "@ngrx/store"
+import { Besatzung } from "src/app/core/model/besatzung.model"
+import { Betankung } from "src/app/core/model/betankung"
+import { Reparatur } from "src/app/core/model/reparatur"
 import { ShipAction } from "."
 import { State } from "./ship.state"
-// export interface State {
-//     ship: Ship | undefined
-// }
+
 
 export const initialDataState: State = {
     ship: undefined,
@@ -32,5 +33,53 @@ export const shipReducer = createReducer(
         return {
             ship: state.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: action.betankungen, isAllDataLoaded: false
         }
-    })
+    }),
+
+    // besatzung
+    on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {
+        let besatzung: Besatzung = Object.assign({}, action.action.insert, { id: action.id })
+        let clearedBesatzung: Besatzung[] | undefined = state.patrol?.besatzung
+        clearedBesatzung = [...clearedBesatzung!, ...[besatzung]]
+        return {
+            ...state,
+            patrol: Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
+        }
+    }),
+    on(ShipAction.updatePatrolBesatzung, (state, action) => {
+        let clearedBesatzung: Besatzung[] = state.patrol?.besatzung.filter(el => el.id != action.update.changes.id)!
+        clearedBesatzung.push(action.update.changes as Besatzung)
+        return {
+            ...state,
+            patrol: Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
+        }
+    }),
+    on(ShipAction.deletePatrolBesatzung, (state, action) => {
+        const newState = state.patrol?.besatzung.filter(el => el.id !== action.id)
+        return {
+            ...state,
+            patrol: Object.assign({}, state.patrol, { besatzung: newState })
+        }
+    }),
+
+    // betankung
+    on(ShipAction.insertBetankungSuccess, (state, action) => {
+        let betankung: Betankung = Object.assign({}, action.action.insert, { id: action.id })
+        let clearedBetankung: Betankung[] | undefined = state.betankungen
+        clearedBetankung = [...clearedBetankung!, ...[betankung]]
+        return {
+            ...state,
+            betankungen: clearedBetankung
+        }
+    }),
+
+    // pruefvermerk
+    on(ShipAction.insertReparaturSuccess, (state, action) => {
+        let pruefvermerk: Reparatur = Object.assign({}, action.action.insert, { id: action.id })
+        let clearedPruefvermerk: Reparatur[] | undefined = state.reparaturen
+        clearedPruefvermerk = [...clearedPruefvermerk!, ...[pruefvermerk]]
+        return {
+            ...state,
+            reparaturen: clearedPruefvermerk
+        }
+    }),
 )

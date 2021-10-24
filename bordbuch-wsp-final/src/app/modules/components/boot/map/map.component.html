@@ -1,1 +1,14 @@
-<p>map works!</p>
+<div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
+  <a class="rotate-180 cursor-pointer" (click)="logout()">
+    <icons class="w-8 h-8" name="logout"></icons>
+  </a>
+  <span class="text-2xl text-gray-800"></span>
+  <div class="flex flex-row justify-between items-center w-24">
+    <a class="cursor-pointer" [routerLink]="['..']">
+        <icons class="w-8 h-8" name="file-info"></icons>
+      </a>
+    <a class="cursor-pointer" [routerLink]="['..', 'positions']">
+      <icons class="w-8 h-8" name="table"></icons>
+    </a>
+  </div>
+</div>

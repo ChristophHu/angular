@@ -20,7 +20,7 @@
               <label class="text-black">Funktion</label>
             </div>
             <div class="relative my-5">
-              <input type="number" formControlName="persnr" required>
+              <input type="string" formControlName="persnr" required>
               <span class="bar"></span>
               <label class="text-black">Personalnummer</label>
             </div>
@@ -50,7 +50,7 @@
     <div class="py-3 flex justify-between">
         <div>
           <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-          <button *ngIf="besatzungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
+          <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
         </div>
         <div>
             <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>

@@ -45,22 +45,24 @@ export class BesatzungComponent implements OnInit {
   }
 
   create() {
-    this.store.dispatch(ShipAction.insertPatrolBesatzung({}))
+    const insert: Besatzung = this.besatzungForm.value
+    console.log(insert)
+    this.store.dispatch(ShipAction.insertPatrolBesatzung({ insert }))
     this.modal?.close()
   }
 
   update() {
-    const update: Update<Patrol> = {
+    const update: Update<Besatzung> = {
       id: this.besatzungForm.value.id_streife,
-      changes: { besatzung: this.besatzungForm.value}
+      changes: this.besatzungForm.value 
     }
     this.store.dispatch(ShipAction.updatePatrolBesatzung({ update }))
     this.modal?.close()
   }
 
-  delete() {
-    // this.appService.deleteBesatzung(this.besatzungForm.value)
-    // this.modal?.close()
+  delete(id: string) {
+    this.store.dispatch(ShipAction.deletePatrolBesatzung({ id }))
+    this.modal?.close()
   }
 
   cancel() {

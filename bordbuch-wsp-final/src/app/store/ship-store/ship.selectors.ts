@@ -33,6 +33,11 @@ export const selectedPatrol = createSelector(
     state => state.patrol
 )
 
+export const selectedPatrolBesatzung = createSelector(
+    selectedPatrol,
+    patrol => patrol?.besatzung
+)
+
 export const selectPatrolId = createSelector(
     selectedPatrol,
     patrol => patrol?.id

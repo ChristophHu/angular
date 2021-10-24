@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { Besatzung } from '../model/besatzung.model';
+import { Betankung } from '../model/betankung';
+import { Patrol } from '../model/patrol.model';
+import { Reparatur } from '../model/reparatur';
 import { Ship } from '../model/ship.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
 
@@ -38,8 +42,35 @@ export class AppService {
         let param = ``
         switch (action) {
 
+            // besatzung
+            case 'insertBesatzung': {
+                param = `id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
+                break
+            }
+            case 'updateBesatzung': {
+                param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
+                break
+            }
+            case 'deleteBesatzung': {
+                param = `id=${data}`
+                break
+            }
+
+            // betankung
+            case 'insertBetankung': {
+                console.log(data)
+                param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                break
+            }
+
             case 'updateZaehlerstand': {
                 param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
+                break
+            }
+
+            // pruefvermerk/reparatur
+            case 'insertReparatur': {
+                param = `id_schiff=${data.id_ship}&id_status=9f666873-4fc4-4f9b-8f98-f3fa182be7eb&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
                 break
             }
 
@@ -94,6 +125,60 @@ export class AppService {
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
 
+    insertBesatzung(besatzung: Besatzung): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertBesatzung', besatzung)
+            source$.subscribe((data: any) => {
+                console.log(data.id)
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+        // if (member.id_streife) {
+        //     this.reducer('insertBesatzung', member).subscribe(data => {
+        //         member.id = data.id
+        //     })
+        // } else {
+        //     member.id = this.dataStore.aktiveStreife[0].besatzung.length.toString()
+        // }
+        // this.dataStore.aktiveStreife[0].besatzung.push(member)
+        // this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
+    }
+    updateBesatzung(changes: Partial<Besatzung>): Observable<any> {
+        console.log(changes)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateBesatzung', changes)
+            source$.subscribe((status: any) => {
+                console.log(status)
+                // observer.next(data)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+    deleteBesatzung(id: string): Observable<any> {
+        console.log(id)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteBesatzung', id)
+            source$.subscribe((status: any) => {
+                console.log(status)
+                observer.next(status)
+            })
+            , (error: any) => observer.error(error)
+        })
+    }
+
+    insertBetankung(betankung: Betankung): Observable<any> {
+        console.log(betankung)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertBetankung', betankung)
+            source$.subscribe((data: any) => {
+                console.log(data.id)
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+
     updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.reducer('updateZaehlerstand', changes)
@@ -101,26 +186,21 @@ export class AppService {
                 console.log(status)
                 // observer.next(data)
             })
-            // , (error: any) => observer.error(error))
+            // , (error: any) => observer.error(error)
         })
     }
 
-    pdateZaehlerstand(zaehlerstand: Zaehlerstand) {
-        console.log(zaehlerstand)
-        // return new Observable ((observer) => {
-            const source$ = this.reducer('updateZaehlerstand', zaehlerstand)
-            source$.subscribe((status: any) => {
-                console.log(status)
-                // observer.next(data)
+    // pruefvermerk
+    insertReparatur(reparatur: Reparatur): Observable<any> {
+        console.log(reparatur)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertReparatur', reparatur)
+            source$.subscribe((data: any) => {
+                console.log(data.id)
+                observer.next(data.id)
             })
-            // , (error: any) => observer.error(error))
-        // })
-        // const status = this.reducer('updateZaehlerstand', zaehlerstand).subscribe(status => {
-        //     if (status == '200') {}
-        // })
-        // this.dataStore.zaehlerstaende = this.dataStore.zaehlerstaende.filter(el => el.id != zaehlerstand.id)
-        // this.dataStore.zaehlerstaende.push(zaehlerstand)
-        // this._zaehlerstaende.next(Object.assign({}, this.dataStore).zaehlerstaende)
+            // , (error: any) => observer.error(error)
+        })
     }
 
     // get

@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model';
+import { Reparatur } from 'src/app/core/model/reparatur';
 import { Status } from 'src/app/core/model/status';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store';
 import { KatSelectors } from 'src/app/store/kat-store';
+import { ShipAction } from 'src/app/store/ship-store';
 
 @Component({
   selector: 'app-pruefvermerk',
@@ -54,8 +56,11 @@ export class PruefvermerkComponent implements OnInit {
   }
 
   create() {
+    const insert: Reparatur = this.pruefvermerkForm.value
+    console.log(insert)
+    this.store.dispatch(ShipAction.insertReparatur({ insert }))
     // this.appService.insertPruefvermerk(this.pruefvermerkForm.value)
-    // this.modal?.close()
+    this.modal?.close()
   }
 
   cancel() {

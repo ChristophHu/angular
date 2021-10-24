@@ -60,6 +60,7 @@ export class StreifeComponent implements OnInit {
   zweckFormGroup!: FormGroup
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
+  checkFormGroup!: FormGroup
   
   constructor(
     private store: Store<RootStoreState>, 
@@ -85,6 +86,9 @@ export class StreifeComponent implements OnInit {
         zweck     : ['', Validators.required],
         status    : ['', Validators.required]
       });
+      this.checkFormGroup = this._formBuilder.group({
+        check     : [false]
+      })
     }
 
   ngOnInit(): void {
@@ -93,6 +97,7 @@ export class StreifeComponent implements OnInit {
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+      console.log(patrol?.besatzung)
       if (patrol) this.patrol = patrol!
       this.zweckFormGroup.patchValue(patrol!)
       console.log(this.patrol)

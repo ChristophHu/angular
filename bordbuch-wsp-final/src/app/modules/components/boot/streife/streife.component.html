@@ -1,18 +1,20 @@
 <div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
-    <a class="rotate-180 cursor-pointer" (click)="logout()">
-      <icons class="w-8 h-8" name="logout"></icons>
-    </a>
-    <span class="text-2xl text-gray-800">{{ ship$.name | async }}</span>
-    <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
-      <icons class="w-8 h-8" name="chevron-right"></icons>
-    </a>
+  <a class="rotate-180 cursor-pointer" (click)="logout()">
+    <icons class="w-8 h-8" name="logout"></icons>
+  </a>
+  <span class="text-2xl text-gray-800"></span>
+  <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
+    <icons class="w-8 h-8" name="chevron-right"></icons>
+  </a>
+  <div class="flex flex-row justify-between items-center w-24">
     <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
       <icons class="w-8 h-8" name="map"></icons>
     </a>
-    <a class="cursor-pointer" [routerLink]="['positions']">
-      <icons class="w-8 h-8" name="chevron-right"></icons>
+    <a class="cursor-pointer" [routerLink]="['positions']" *ngIf="isPatrolActive$">
+      <icons class="w-8 h-8" name="table"></icons>
     </a>
   </div>
+</div>
   
   <div class="content">
     <div class="w-full bg-white rounded-lg p-2 shadow-lg">
@@ -206,14 +208,27 @@
                 matStepperNext>Weiter</button>
             </div>
         </mat-step>
-        <mat-step>
+        <mat-step [stepControl]="checkFormGroup">
+          <form [formGroup]="checkFormGroup">
           <ng-template matStepLabel>Kontrolle der Eingaben</ng-template>
           <p>Wenn alle Eingaben getätigt wurden, kann die Streife beginnen.</p>
           <div>
+            <div>
+              <div class="relative my-6 flex flex-row items-center">
+                <input class="free" type="checkbox" formControlName="check" required>
+                <span class="bar"></span>
+                <label class="text-black">Alle Eingaben sind korrekt</label>
+              </div>
+            </div>
             <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button
               matStepperPrevious>Zurück</button>
           </div>
+          </form>
         </mat-step>
       </mat-stepper>
     </div>
+  </div>
+  <div *ngIf="checkFormGroup.value.check" class="absolute flex bottom-0 h-20 w-full rounded-t-xl bg-gray-100 drop-shadow-xl">
+    <button *ngIf="!isPatrolActive$" class="p-3 mt-3 mx-3 w-full h-12 bg-green-800 text-white rounded-md shadow-lg" mat-button>Streife starten</button>
+    <button *ngIf="isPatrolActive$" class="p-3 mt-3 mx-3 w-full h-12 bg-gray-600 text-white rounded-md shadow-lg" mat-button>Streife beenden</button>
   </div>

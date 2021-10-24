@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, tap } from 'rxjs/operators'
+import { EMPTY, NEVER, of } from 'rxjs'
+import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators'
 import { Betankung } from 'src/app/core/model/betankung'
 import { Patrol } from 'src/app/core/model/patrol.model'
 import { Reparatur } from 'src/app/core/model/reparatur'
 import { Ship } from 'src/app/core/model/ship.model'
-import { Zaehlerstand } from 'src/app/core/model/zaehlerstand'
 import { AppService } from 'src/app/core/services/app.service'
 import { ShipAction } from '.'
  
@@ -34,6 +34,16 @@ export class ShipEffects {
             map((reparaturen: Reparatur[]) => ShipAction.reparaturenLoaded({ reparaturen }))
         )
     })
+    insertReparatur$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertReparatur),
+            switchMap(action => {
+                return this.appService.insertReparatur(action.insert).pipe(
+                    map(id => ShipAction.insertReparaturSuccess({ action, id }))
+                )
+            })
+        )
+    })
 
     loadBetankungen$ = createEffect(() => {
         return this.actions$.pipe(
@@ -42,6 +52,55 @@ export class ShipEffects {
             map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
         )
     })
+    insertBetankung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertBetankung),
+            switchMap(action => {
+                return this.appService.insertBetankung(action.insert).pipe(
+                    map(id => ShipAction.insertBetankungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+
+    insertBesatzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertPatrolBesatzung),
+            switchMap(action => {
+                return this.appService.insertBesatzung(action.insert).pipe(
+                    map(id => ShipAction.insertPatrolBesatzungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateBesatzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updatePatrolBesatzung),
+            switchMap(action => {
+                return this.appService.updateBesatzung(action.update.changes)
+            })
+        )
+    })
+    deleteBesatzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.deletePatrolBesatzung),
+            switchMap(action => {
+                return this.appService.deleteBesatzung(action.id)
+            })
+
+            // map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
+            // tap((action) => {
+            //     ShipAction.deletePatrolBesatzungSuccess(action)
+            //     console.log(action)
+                
+            // }),
+            // concatMap(action => this.appService.deleteBesatzung(action.id)),
+            // tap(action => console.log(action)),
+            // map(action => ShipAction.deletePatrolBesatzungSuccess({action}))
+
+        )
+    }, { dispatch: false })
+    
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Betankung } from 'src/app/core/model/betankung';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
 @Component({
   selector: 'app-betankung',
@@ -14,7 +17,7 @@ export class BetankungComponent implements OnInit {
   title: string = ''
   betankungForm: FormGroup
   
-  constructor(private _formBuilder: FormBuilder, private modalService: ModalService<BetankungComponent>, private appService: AppService) {
+  constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BetankungComponent>, private appService: AppService) {
     this.betankungForm = this._formBuilder.group({
       id: [],
       id_ship: [],
@@ -37,8 +40,10 @@ export class BetankungComponent implements OnInit {
   }
 
   create() {
-    // this.appService.insertBetankung(this.betankungForm.value)
-    // this.modal?.close()
+    const insert: Betankung = this.betankungForm.value
+    console.log(insert)
+    this.store.dispatch(ShipAction.insertBetankung({ insert }))
+    this.modal?.close()
   }
 
   update() {
