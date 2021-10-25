@@ -448,7 +448,6 @@ export class AppService {
     getPosition(id : string) {
         const source$ = this.getReducer('getPosition', id)
         source$.subscribe((data: any) => {
-            console.log(data)
             this.dataStore.positions = data
             this._positions.next(Object.assign({}, this.dataStore).positions)
         })

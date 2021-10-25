@@ -6,6 +6,7 @@ import { selectToken } from 'src/app/modules/auth/state/selectors';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
 import { Patrol } from '../model/patrol.model';
+import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
 import { Ship } from '../model/ship.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
@@ -74,6 +75,20 @@ export class AppService {
                 break
             }
 
+            // position
+            case 'insertPosition': {
+                param = `id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
+                break
+            }
+            case 'updatePosition': {
+                param = `id=${data.id}&id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
+                break
+            }
+            case 'deletePosition': {
+                param = `id=${data}`
+                break
+            }
+
             default:
                 console.error('There is no action to switch.')
                 break
@@ -95,6 +110,7 @@ export class AppService {
         let param = ``
         switch (action) {
             case 'getPruefvermerke':
+            case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getZaehlerstandstypen':
                 param = ``
@@ -149,7 +165,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('updateBesatzung', changes)
             source$.subscribe((status: any) => {
-                console.log(status)
                 // observer.next(data)
             })
             // , (error: any) => observer.error(error)
@@ -160,7 +175,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('deleteBesatzung', id)
             source$.subscribe((status: any) => {
-                console.log(status)
                 observer.next(status)
             })
             , (error: any) => observer.error(error)
@@ -172,7 +186,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertBetankung', betankung)
             source$.subscribe((data: any) => {
-                console.log(data.id)
                 observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
@@ -183,7 +196,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('updateZaehlerstand', changes)
             source$.subscribe((status: any) => {
-                console.log(status)
                 // observer.next(data)
             })
             // , (error: any) => observer.error(error)
@@ -196,7 +208,38 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertReparatur', reparatur)
             source$.subscribe((data: any) => {
-                console.log(data.id)
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+
+    // position
+    insertPosition(position: PositionReport): Observable<any> {
+        console.log(position)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertPosition', position)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+    updatePosition(position: PositionReport): Observable<any> {
+        console.log(position)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updatePosition', position)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+    deletePosition(id: string): Observable<any> {
+        console.log(id)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deletePosition', id)
+            source$.subscribe((data: any) => {
                 observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
@@ -229,21 +272,17 @@ export class AppService {
         })
     }
     getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
-        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstaende', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
-
     }
     getReparaturen(id : string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getReparaturen', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -252,7 +291,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getBetankungen', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -261,7 +299,14 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getPosition', id)
             source$.subscribe((data: any) => {
-                console.log(data)
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getLastPositionsFromAllShips(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getLastPositionsFromAllShips', {})
+            source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

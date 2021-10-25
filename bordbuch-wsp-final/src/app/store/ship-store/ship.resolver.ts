@@ -6,6 +6,7 @@ import { finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
 import { ShipAction } from "."
 import { KatAction } from "../kat-store"
+import { LastPositionActions } from "../lastposition-store"
 import { PositionActions } from "../positionreport-store"
 
 import { ZaehlerstandAction } from "../zaehlerstand-store"
@@ -37,6 +38,9 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(KatAction.loadAllShip())
                     this.store.dispatch(KatAction.loadPruefvermerke())
                     this.store.dispatch(KatAction.loadZaehlerstandstypen())
+
+                    // lastPositions
+                    this.store.dispatch(LastPositionActions.loadData())
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

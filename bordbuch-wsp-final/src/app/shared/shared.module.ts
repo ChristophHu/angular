@@ -55,7 +55,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
         MatStepperModule,
     ],
     declarations: [
-      
+        
     ]
 })
 export class SharedModule {}

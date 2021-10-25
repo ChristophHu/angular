@@ -1,5 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { allDataLoaded, dataUpdate } from "./actions";
+import { PositionActions } from ".";
+import { allDataLoaded } from "./actions";
 import { adapter, initialDataState } from "./adapter";
 
 export const reducer = createReducer(
@@ -10,7 +11,13 @@ export const reducer = createReducer(
             {...state, isAllDataLoaded: true}
         )
     ),
-    on(dataUpdate, (state, action) => 
+    on(PositionActions.insertData, (state, action) => 
+        adapter.addOne(action.positionReport, state)
+    ),
+    on(PositionActions.updateData, (state, action) => 
         adapter.updateOne(action.update, state)
+    ),
+    on(PositionActions.deleteData, (state, action) => 
+        adapter.removeOne(action.id, state)
     )
 )

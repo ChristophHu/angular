@@ -11,10 +11,17 @@ export const loadAllData = createAction(
 // store loaded data
 export const allDataLoaded = createAction(
 	"[Load Data Effect] All Lage Loaded",
-	props<{positionReport: PositionReport[]}>()
+	props<{ positionReport: PositionReport[] }>()
 )
-
-export const dataUpdate = createAction(
-	"[Edit Data Dialog] Lage Updates",
-	props<{update: Update<PositionReport>}>()
+export const insertData = createAction(
+	"[Position Component] insert PositionReport",
+	props<{ positionReport: PositionReport }>()
+)
+export const updateData = createAction(
+	"[Position Component] update PositionReport",
+	props<{ update: Update<PositionReport> }>()
+)
+export const deleteData = createAction(
+	"[Position Component] delete PositionReport",
+	props<{ id: string }>()
 )

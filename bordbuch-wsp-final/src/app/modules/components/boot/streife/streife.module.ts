@@ -6,6 +6,7 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { BetankungComponent } from './betankung/betankung.component';
 import { RouterModule } from '@angular/router';
+import { PositionComponent } from '../positions/position/position.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     ZaehlerstandComponent,
     PruefvermerkComponent,
     BetankungComponent,
+    PositionComponent
   ],
   imports: [
     SharedModule,
