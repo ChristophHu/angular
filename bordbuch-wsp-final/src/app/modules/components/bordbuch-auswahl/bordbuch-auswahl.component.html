@@ -8,7 +8,7 @@
       <a class="cursor-pointer" (click)="showModal()">
         <icons class="w-8 h-8" name="qrcode"></icons>
       </a>
-      <a class="cursor-pointer" *ngIf="bordbuchForm.value" [routerLink]="['/mobile', 'boot', bordbuchForm.value.bordbuch]">
+      <a class="cursor-pointer" *ngIf="!!bordbuchForm.value.bordbuch" [routerLink]="['/mobile', 'boot', bordbuchForm.value.bordbuch]">
         <icons class="w-8 h-8" name="chevron-right"></icons>
       </a>
     </div>

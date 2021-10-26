@@ -12,6 +12,14 @@
 </head>
 <body class="dark mat-typography">
   <app-root></app-root>
-  <script type=”text/javascript” src=”cordova.js”></script>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script>
+    document.addEventListener('deviceready', onDeviceReady, false);
+
+    function onDeviceReady() {
+      console.log('onDeviceReady has been called');
+      console.log(navigator.camera)
+    }
+  </script>
 </body>
 </html>

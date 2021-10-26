@@ -25,6 +25,7 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 })
 export class StreifeComponent implements OnInit {
 
+  name!: string | undefined
   id_ship!: string | undefined
   id_streife!: string | undefined
 
@@ -93,7 +94,7 @@ export class StreifeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-
+      this.name = ship?.name
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {

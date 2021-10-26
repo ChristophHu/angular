@@ -5,5 +5,20 @@
 
 @import "~leaflet/dist/leaflet.css"
 
+// 4 mobile use
+*
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+input
+    -webkit-user-select: auto !important
+    -khtml-user-select: auto !important
+    -moz-user-select: auto !important
+    -ms-user-select: auto !important
+    user-select: auto !important
+
 .ng-dropdown-panel
     @apply -ml-1.5 p-2 bg-white opacity-30 rounded-b-lg shadow-lg border-t-0 border-solid border border-gray-300

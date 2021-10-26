@@ -35,9 +35,10 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
           }
       }
       if (videoDevices.length > 0){
+        console.log(videoDevices)
           let choosenDev;
           for (const dev of videoDevices){
-              if (dev.label.includes('front')){
+              if (dev.label.includes('environment')){  // front
                   choosenDev = dev;
                   break;
               }
@@ -45,13 +46,14 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
           if (choosenDev) {
               this.qrScannerComponent.chooseCamera.next(choosenDev);
           } else {
-              this.qrScannerComponent.chooseCamera.next(videoDevices[0]);
+              this.qrScannerComponent.chooseCamera.next(videoDevices[0]); // 1
           }
       }
   });
 
   this.qrScannerComponent.capturedQr.subscribe((result: any) => {
       let QRCode: QRCodeJSON = JSON.parse(result)
+      console.log(result)
       this.modal?.close()
       this.router.navigate(['/mobile', 'boot', QRCode.id])
   });

@@ -1,9 +1,14 @@
 <app-modal #modalComponent>
     <header>
-        <h2 class="m-3 mb-5 text-xl">Standort</h2>
+        <h2 class="m-3 mb-5 text-xl">Boot scannen</h2>
     </header>
     <div class="content">
-        <qr-scanner class="mt-5" [debug]="false" [canvasWidth]="1080" [canvasHeight]="720" [stopAfterScan]="true" [updateTime]="500"></qr-scanner>
+        <qr-scanner class="mt-5" 
+        [debug]="false"
+        [canvasWidth]="1080" 
+        [canvasHeight]="720"
+        [stopAfterScan]="true" 
+        [updateTime]="500"></qr-scanner>
     </div>
     <footer>
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>
