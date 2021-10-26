@@ -93,14 +93,12 @@ export class StreifeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-      console.log(ship)
+
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      console.log(patrol?.besatzung)
       if (patrol) this.patrol = patrol!
       this.zweckFormGroup.patchValue(patrol!)
-      console.log(this.patrol)
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
@@ -113,7 +111,6 @@ export class StreifeComponent implements OnInit {
 
     this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
       this.zaehlerstaende = zaehlerstaende
-      console.log(zaehlerstaende)
     })
   }
 

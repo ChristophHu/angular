@@ -27,8 +27,8 @@ export class MapComponent implements OnInit {
   id_streife!: string | undefined
   
   // view
-  public positionToggle: boolean = false
-  public allPositionToggle: boolean = false
+  public positionToggle: boolean = true
+  public allPositionToggle: boolean = true
 
   // leaflet
   private map!: L.Map
@@ -143,24 +143,24 @@ export class MapComponent implements OnInit {
     // this.allShippsGroup.addTo(this.map)
   }
 
-  showAllShips() {
-    this.allPositionToggle = true
-    this.allShippsGroup.addTo(this.map)
+  toggleAllShips() {
+    if (this.allPositionToggle) {
+      this.allPositionToggle = false
+      this.allShippsGroup.addTo(this.map)
+    } else {
+      this.allPositionToggle = true
+      this.allShippsGroup.remove()
+    }
+  }
 
-  }
-  hideAllShips() {
-    this.allPositionToggle = false
-    this.allShippsGroup.remove()
-  }
-
-  showMarkergroup() {
-    this.positionToggle = true
-    this.markergroup.remove()
-    this.markergroup.addTo(this.map)
-  }
-  hideMarkergroup() {
-    this.positionToggle = false
-    this.markergroup.remove()
+  toggleMarkergroup() {
+    if (this.positionToggle) {
+      this.positionToggle = false
+      this.markergroup.addTo(this.map)
+    } else {
+      this.positionToggle = true
+      this.markergroup.remove()
+    }
   }
 
   logout() {
@@ -244,6 +244,7 @@ export class MapComponent implements OnInit {
 	}
 
   async openPositionModal() {
+    console.log('open')
     let position: PositionReport | undefined
 
     const { PositionComponent } = await import(
@@ -251,7 +252,7 @@ export class MapComponent implements OnInit {
     )
 
     this.locationService.getCurrentPosition().then((data: any) => {
-      position = { id_ship: this.id_ship!, name: this.name! ,id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
+      position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
       this.modalService.open(PositionComponent, {
         data: {
           title: 'Position hinzufügen',

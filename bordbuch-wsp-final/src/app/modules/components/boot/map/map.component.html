@@ -3,20 +3,6 @@
     <icons class="w-8 h-8" name="logout"></icons>
   </a>
   <span class="text-2xl text-gray-800"></span>
-  <div class="flex flex-row justify-between items-center w-24">
-    <a class="cursor-pointer" (click)="showMarkergroup()" *ngIf="!positionToggle">
-        <icons class="w-8 h-8" name="eye"></icons>
-      </a>
-    <a class="cursor-pointer" (click)="hideMarkergroup()" *ngIf="positionToggle">
-      <icons class="w-8 h-8" name="eye-off"></icons>
-    </a>
-    <a class="cursor-pointer" (click)="showAllShips()" *ngIf="!allPositionToggle">
-      <icons class="w-8 h-8" name="eye"></icons>
-    </a>
-  <a class="cursor-pointer" (click)="hideAllShips()" *ngIf="allPositionToggle">
-    <icons class="w-8 h-8" name="eye-off"></icons>
-  </a>
-  </div>
   <div class="flex flex-row justify-between items-center w-32">
     <a class="cursor-pointer" (click)="openPositionModal()">
       <icons class="w-8 h-8" name="location-add"></icons>
@@ -40,4 +26,25 @@
           </div>
       </div>
   </div>
+</div>
+
+<div class="absolute flex flex-col ml-2 bottom-0 left-0 z-20">
+  <button class="flex items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleMarkergroup()">
+    <a class="mr-2" *ngIf="positionToggle">
+      <icons class="w-8 h-8" name="eye"></icons>
+    </a>
+  <a class="mr-2" *ngIf="!positionToggle">
+    <icons class="w-8 h-8" name="eye-off"></icons>
+  </a>
+    Positionen
+  </button>
+  <button class="flex items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleAllShips()">
+    <a class="mr-2" *ngIf="allPositionToggle">
+      <icons class="w-8 h-8" name="eye"></icons>
+    </a>
+    <a class="mr-2" *ngIf="!allPositionToggle">
+      <icons class="w-8 h-8" name="eye-off"></icons>
+    </a>
+    Schiffe
+  </button>
 </div>

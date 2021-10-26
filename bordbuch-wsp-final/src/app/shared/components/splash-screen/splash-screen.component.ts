@@ -7,18 +7,30 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class SplashScreenComponent implements OnInit {
-  windowWidth!: string;
-  showSplash = true;
+  windowWidth!: string
+  showSplash = true
 
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.windowWidth = `-${window.innerWidth+300}px`
+    // setTimeout(() => {
+    //   this.windowWidth = `-${window.innerWidth+300}px`
 
-      setTimeout(() => {
-        this.showSplash = !this.showSplash;
-      }, 500);
-    }, 1000);
+    //   setTimeout(() => {
+    //     this.showSplash = !this.showSplash;
+    //   }, 500);
+    // }, 3000);
   }
+
+  check() {
+    this.windowWidth = `-${window.innerWidth+300}px`
+    setTimeout(() => {
+      this.showSplash = !this.showSplash;
+    }, 1500);
+  }
+  // fade() {
+  //     setTimeout(() => {
+  //       this.showSplash = !this.showSplash;
+  //     }, 1500);
+  // }
 }

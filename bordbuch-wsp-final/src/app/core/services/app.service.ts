@@ -43,6 +43,16 @@ export class AppService {
         let param = ``
         switch (action) {
 
+            // streife
+            case 'insertStreife': {
+                param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
+                break
+            }
+            case 'updateStreife': {
+                param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
+                break
+            }
+
             // besatzung
             case 'insertBesatzung': {
                 param = `id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
@@ -141,6 +151,29 @@ export class AppService {
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
 
+    // streife
+    insertStreife(patrol: Patrol): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertStreife', patrol)
+            source$.subscribe((data: any) => {
+                console.log(data.id)
+                observer.next(data.id)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+    updateStreife(patrol: Patrol): Observable<any> {
+        console.log(patrol)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateStreife', patrol)
+            source$.subscribe((status: any) => {
+                // observer.next(data)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
+
+    // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertBesatzung', besatzung)
@@ -150,15 +183,6 @@ export class AppService {
             })
             // , (error: any) => observer.error(error)
         })
-        // if (member.id_streife) {
-        //     this.reducer('insertBesatzung', member).subscribe(data => {
-        //         member.id = data.id
-        //     })
-        // } else {
-        //     member.id = this.dataStore.aktiveStreife[0].besatzung.length.toString()
-        // }
-        // this.dataStore.aktiveStreife[0].besatzung.push(member)
-        // this._aktiveStreife.next(Object.assign({}, this.dataStore).aktiveStreife)
     }
     updateBesatzung(changes: Partial<Besatzung>): Observable<any> {
         console.log(changes)
@@ -181,6 +205,7 @@ export class AppService {
         })
     }
 
+    // betankung
     insertBetankung(betankung: Betankung): Observable<any> {
         console.log(betankung)
         return new Observable ((observer) => {
@@ -192,6 +217,7 @@ export class AppService {
         })
     }
 
+    // zaehlerstaende
     updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.reducer('updateZaehlerstand', changes)
