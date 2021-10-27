@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
+import { Patrol } from "src/app/core/model/patrol.model"
 import { Reparatur } from "src/app/core/model/reparatur"
 import { ShipAction } from "."
 import { State } from "./ship.state"
@@ -22,6 +23,23 @@ export const shipReducer = createReducer(
     on(ShipAction.patrolLoaded, (state, action) => {
         return {
             ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
+        }
+    }),
+    on(ShipAction.insertPatrol, (state, action) => {
+        let patrol: Patrol = Object.assign({}, action.patrol, { id: action.patrol.id })
+        // let clearedPatrol: Patrol | undefined = patrol
+        // clearedPatrol = [...clearedPatrol!, ...[patrol]]
+        return {
+            ...state,
+            patrol: patrol
+        }
+    }),
+    on(ShipAction.updatePatrol, (state, action) => {
+        let patrol: Patrol = action.patrol
+        return {
+            ...state,
+            patrol: patrol
+            // Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
         }
     }),
     on(ShipAction.reparaturenLoaded, (state, action) => {

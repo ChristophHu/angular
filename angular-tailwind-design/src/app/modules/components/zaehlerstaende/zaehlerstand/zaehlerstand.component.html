@@ -12,7 +12,7 @@
             <div class="relative my-5" *ngIf="!zaehlerstandForm.value.id">
                 <ng-select [dropdownPosition]="'bottom'" [items]="schiffe$ | async" bindLabel="name" bindValue="id" formControlName="id_schiff" required></ng-select>
                 <span class="bar"></span>
-                <label class="text-black">Typ</label>
+                <label class="text-black">Schiff</label>
             </div>
             <div class="relative my-5" *ngIf="zaehlerstandForm.value.id">
                 <input type="string" formControlName="id_schiff" required>

@@ -25,6 +25,7 @@ export class ShipPositionLogComponent implements OnInit, OnDestroy {
 
   // route
   id_ship: string = ''
+  name: string = ''
   id_streife: string = ''
   
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private mapService: MapService, private modalService: ModalService<PositionComponent>) {

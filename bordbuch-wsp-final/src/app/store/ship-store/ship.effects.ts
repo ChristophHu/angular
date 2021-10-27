@@ -26,6 +26,25 @@ export class ShipEffects {
             map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
         )
     })
+    
+    insertPatrol$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertPatrol),
+            switchMap(action => {
+                return this.appService.insertStreife(action.patrol).pipe(
+                    map(id => ShipAction.insertPatrolSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updatePatrol$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updatePatrol),
+            switchMap(action => {
+                return this.appService.updateStreife(action.patrol)
+            })
+        )
+    })
 
     loadReparaturen$ = createEffect(() => {
         return this.actions$.pipe(

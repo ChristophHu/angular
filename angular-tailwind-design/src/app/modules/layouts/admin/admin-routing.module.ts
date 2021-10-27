@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Role } from 'src/app/core/models/role';
 import { BetankungenComponent } from '../../components/betankungen/betankungen.component';
+import { KontaktComponent } from '../../components/kontakt/kontakt.component';
 import { LeafletMapComponent } from '../../components/map/leaflet-map/leaflet-map.component';
 import { ReparaturenServiceComponent } from '../../components/reparaturen-service/reparaturen-service.component';
 import { StreifenComponent } from '../../components/streifen/streifen.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'pruefvermerkeverwaltung', component: VerwaltungVonPruefvermerkenComponent },
       { path: 'katpruefvermerkeverwaltung', component: VerwaltungVonPruefvermerkKatComponent },
       { path: 'schiffeverwaltung', component: VerwaltungVonSchiffenComponent },
+      { path: 'kontakt', component: KontaktComponent },
 
       { path: '', component: LeafletMapComponent },
     ], data: { roles: [Role.administration] }

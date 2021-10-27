@@ -34,6 +34,8 @@ import { ZaehlerstaendeComponent } from './modules/components/zaehlerstaende/zae
 import { ZaehlerstandComponent } from './modules/components/zaehlerstaende/zaehlerstand/zaehlerstand.component';
 import { StreifeComponent } from './modules/components/streifen/streife/streife.component'
 import { PositionComponent } from './modules/components/map/leaflet-map/position/position.component'
+import { SplashScreenComponent } from './shared/components/modal/splash-screen/splash-screen.component';
+import { KontaktComponent } from './modules/components/kontakt/kontakt.component'
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { PositionComponent } from './modules/components/map/leaflet-map/position
     ZaehlerstaendeComponent,
     ZaehlerstandComponent,
     StreifeComponent,
-    PositionComponent
+    PositionComponent,
+    SplashScreenComponent,
+    KontaktComponent
   ],
   imports: [
     BrowserModule,

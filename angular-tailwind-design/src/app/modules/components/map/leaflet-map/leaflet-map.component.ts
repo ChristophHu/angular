@@ -87,7 +87,7 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy, OnInit {
                     </svg>
                   </g>
                 </svg>
-                <p class="absolute -left-4 w-20 text-center bg-gray-200 bg-opacity-60">${ship.id_ship}</p>
+                <p class="absolute -left-4 w-20 text-center bg-gray-200 bg-opacity-60">${ship.name}</p>
               </div>
               
               `,

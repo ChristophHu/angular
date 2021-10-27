@@ -23,7 +23,7 @@ export class SplashScreenComponent implements OnInit {
   }
 
   check() {
-    this.windowWidth = `-${window.innerWidth+300}px`
+    this.windowWidth = `-${window.innerWidth+1000}px`
     setTimeout(() => {
       this.showSplash = !this.showSplash;
     }, 1500);

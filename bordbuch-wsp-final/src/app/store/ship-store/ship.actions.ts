@@ -24,9 +24,20 @@ export const loadPatrol = createAction(
 	"[Ship Resolver] Load Patrol",
 	props<{ id_ship: string }>()
 )
-
 export const patrolLoaded = createAction(
 	"[Load Patrol Effect] Patrol Loaded",
+	props<{ patrol: Patrol }>()
+)
+export const insertPatrol = createAction(
+	"[Streife] Insert Patrol",
+	props<{ patrol: Patrol }>()
+)
+export const insertPatrolSuccess = createAction(
+	"[Streife] Insert Patrol",
+	props<{ action: { patrol: Patrol }, id: string }>()
+)
+export const updatePatrol = createAction(
+	"[Streife] Update Patrol",
 	props<{ patrol: Patrol }>()
 )
 
