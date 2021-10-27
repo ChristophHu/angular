@@ -1,5 +1,15 @@
 # Angular
 
+## cdk-Stepper
+
+Bei dem cdl-Stepper handelt es sich um eine API, die alle benötigten Stepper-Komponenten enthält. Diese sind einfach anzuwenden und flexibel anpassbar.
+
+```bash
+npm i @angular/cdk
+```
+
+In der Datei `app.module.ts` ist anschließend das `CdkStepperModule` mit auf zu nehmen.
+
 
 
 ## Complex-Forms
