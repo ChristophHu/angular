@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { SimpleStepperComponent } from './simple-stepper.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('CustomStepperComponent', () => {
+  let component: SimpleStepperComponent;
+  let fixture: ComponentFixture<SimpleStepperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ SimpleStepperComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(SimpleStepperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

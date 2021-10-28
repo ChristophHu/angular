@@ -10,6 +10,56 @@ npm i @angular/cdk
 
 In der Datei `app.module.ts` ist anschließend das `CdkStepperModule` mit auf zu nehmen.
 
+DIe ausführung des Steppers erfolgt in der jeweiligen Komponente:
+
+```html
+<simple-stepper>
+  <cdk-step>
+    <p>This is any content of "Step 1"</p>
+  </cdk-step>
+  <cdk-step>
+    <p>This is any content of "Step 2"</p>
+  </cdk-step>
+</simple-stepper>
+```
+
+Wie an den Tags zu erkennen ist, existiert eine weitere Komponente `SimpleStepper`. Diese kann erstellt werden und beinhaltet den allgemeinen Aufbau. Der Inhalt der Tags `cdk-step` wird dann Zum Inhalt der einzelnen Step-Darstellungen.
+
+Die Komponente `SimpleStepper` nutzt das `[ngTemplateOutlet]` zur Ausgabe des angesprochenen Inhalts. In diesem Fall sind im Footer die Buttons zum Vor- und Zurück-springen (`cdkStepperPrevious` und `cdkStepperNext`) sowie der direkten Auswahl.
+
+```html
+<section class="example-container">
+  <header>
+    <h2>Step {{ selectedIndex + 1 }}/{{ steps.length }}</h2>
+  </header>
+
+  <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
+
+  <footer class="example-step-navigation-bar">
+    <button class="example-nav-button" cdkStepperPrevious>&larr;</button>
+    <button class="example-step" [class.example-active]="selectedIndex === i" *ngFor="let step of steps; let i = index"
+      (click)="selectStepByIndex(i)">
+      Step {{ i + 1 }}
+    </button>
+    <button class="example-nav-button" cdkStepperNext>&rarr;</button>
+  </footer>
+</section>
+```
+
+Die Einbindung der CDK erfolgt in der `.ts`-Datei. Dort wird diese unter Providers aufgenommen und die Klasse `CdkStepper` der Klasse vererbt:
+
+```typescript
+import { CdkStepper } from '@angular/cdk/stepper'	
+	...
+	providers: [{ provide: CdkStepper, useExisting: SimpleStepperComponent}]
+})
+export class SimpleStepperComponent extends CdkStepper {
+  selectStepByIndex(index: number): void {
+    this.selectedIndex = index;
+  }
+}
+```
+
 
 
 ## Complex-Forms
