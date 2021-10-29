@@ -29,4 +29,8 @@ export class CustomStepperHeadlineComponent extends CdkStepper implements OnInit
     this.selectedIndex = index;
   }
 
+  goToFirst() {
+    this.selectedIndex = 1
+  }
+
 }
