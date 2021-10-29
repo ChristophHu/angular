@@ -1,5 +1,5 @@
 <svg class="progress__svg w-20 h-20" viewBox="0 0 120 120">
     <circle [attr.r]="radius" cx="60" cy="60" class="progress__meter"></circle>
     <circle [style.strokeDasharray]="circumference" [style.strokeDashoffset]="dashoffset" [attr.r]="radius" cx="60" cy="60" class="progress__value"></circle>
-    <text class="progress__text" x="50%" y="60%" text-anchor="middle" transform="rotate(90, 60, 60)">{{ value }}/{{ maxvalue }}</text>
+    <text class="progress__text" x="50%" y="55%" text-anchor="middle" transform="rotate(90, 60, 60)">{{ value }} von {{ maxvalue }}</text>
 </svg>

@@ -2,10 +2,8 @@
   <header>
     <div>
       <app-progress [value]="selectedIndex + 1" [maxvalue]="steps.length"></app-progress>
-      <h2>Headline</h2>
     </div>
   </header>
-
   <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
 
   <footer class="example-step-navigation-bar">

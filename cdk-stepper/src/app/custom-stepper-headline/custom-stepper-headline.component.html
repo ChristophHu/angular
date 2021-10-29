@@ -1,0 +1,52 @@
+<div class="grid grid-cols-2 gap-4">
+  <div class="example-container">
+    <header class="w-96">
+      <div class="flex flex-row">
+        <app-progress [value]="selectedIndex + 1" [maxvalue]="steps.length"></app-progress>
+        
+          <ng-container *ngFor="let step of steps; let i = index;">
+            <div *ngIf="selectedIndex === i">
+              <ng-container *ngIf="step.stepLabel; else showLabelText" [ngTemplateOutlet]="step.stepLabel.template">
+              </ng-container>
+              <ng-template #showLabelText class="text-4xl">
+                Kein Label vorhanden.
+              </ng-template>
+
+            </div>
+          </ng-container>
+  
+        <!-- <ng-container *ngFor="let step of steps; let i = index;">
+          <ol>
+            <li [ngClass]="(selectedIndex === i) ? activeClass : ''">
+              <a (click)="selectedIndex = i">
+                <ng-container *ngIf="step.stepLabel; else showLabelText" [ngTemplateOutlet]="step.stepLabel.template">
+                </ng-container>
+                <ng-template #showLabelText>
+                  {{ step.label }}
+                </ng-template>
+              </a>
+            </li>
+          </ol>
+        </ng-container> -->
+      </div>
+  
+    </header>
+  
+    <ng-container [ngTemplateOutlet]="selected ? selected.content : null"></ng-container>
+  
+    <footer class="example-step-navigation-bar">
+      <button cdkStepperPrevious>&larr;</button>
+      <button [class.example-active]="selectedIndex === i" *ngFor="let step of steps; let i = index"
+        (click)="selectStepByIndex(i)">
+        Step {{ i + 1 }}
+      </button>
+      <button cdkStepperNext>&rarr;</button>
+      <button (click)="print()">Print</button>
+      
+    </footer>
+  </div>
+  <div>
+    <pre>{{ print() | json }}</pre>
+  </div>
+  
+</div>

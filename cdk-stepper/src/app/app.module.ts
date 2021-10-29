@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { SimpleStepperComponent } from './simple-stepper/simple-stepper.component';
 import { CustomStepperComponent } from './custom-stepper/custom-stepper.component';
 import { ProgressComponent } from './custom-stepper/progress/progress.component';
+import { CustomStepperHeadlineComponent } from './custom-stepper-headline/custom-stepper-headline.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SimpleStepperComponent,
     CustomStepperComponent,
-    ProgressComponent
+    ProgressComponent,
+    CustomStepperHeadlineComponent
   ],
   imports: [
     BrowserModule,
