@@ -19,7 +19,7 @@ export class CustomStepperHeadlineComponent extends CdkStepper implements OnInit
         completed: step.completed,
         hasError: step.hasError,
         editable: step.editable,
-        label: step.label,
+        // label: step.label,
         interacted: step.interacted
       }
     })
@@ -28,9 +28,4 @@ export class CustomStepperHeadlineComponent extends CdkStepper implements OnInit
   selectStepByIndex(index: number): void {
     this.selectedIndex = index;
   }
-
-  goToFirst() {
-    this.selectedIndex = 1
-  }
-
 }

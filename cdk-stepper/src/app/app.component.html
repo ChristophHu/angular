@@ -36,13 +36,12 @@
 
 <h3 class="text-4xl">Custom-Stepper with Progress-Circle and Headline</h3>
 <custom-stepper-headline [linear]="isLinear">
-  <cdk-step [editable]="isEditable">
+  <cdk-step [editable]="isEditable" [optional]="false">
     <ng-template cdkStepLabel>
       <div class="ml-5">
         <h4 class="text-2xl text-blue-600">Personal Details</h4>
-        <p class="text-lg text-gray-600">Next: Practical Details</p>
+        <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Practical Details</button></p>
       </div>
-      
     </ng-template>
     <p>This is any content of "Step 1"</p>
   </cdk-step>
@@ -53,12 +52,164 @@
         <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Theroetical Details</button></p>
       </div>
     </ng-template>
-    <p>This is any content of "<a>Step 2</a>"</p>
+    <p>This is any content of "Step 2"</p>
   </cdk-step>
   <cdk-step>
-    <!-- <ng-template cdkStepLabel>
-      <span>Theroetical Details</span>
-    </ng-template> -->
-    <p>This is any content of "Step 3"</p>
+    <ng-template cdkStepLabel>
+      <div class="ml-5">
+        <h4 class="text-2xl text-blue-600">Theroetical Details</h4>
+        <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Next Details</button></p>
+      </div>
+    </ng-template>
+    <p>This is any content of "<a>Step 3</a>"</p>
+  </cdk-step>
+  <cdk-step>
+    <ng-template cdkStepLabel>
+      <div class="ml-5">
+        <h4 class="text-2xl text-blue-600">Next Details</h4>
+        <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Theroetical Details</button></p>
+      </div>
+    </ng-template>
+    <p>This is any content of "<a>Step 4</a>"</p>
+  </cdk-step>
+  <cdk-step>
+    <!-- step with no label -->
+    <p>This is any content of "Step 5"</p>
   </cdk-step>
 </custom-stepper-headline>
+
+<hr>
+
+<h3 class="text-4xl">Custom-Stepper with Progress-Circle and Headline and Form</h3>
+<custom-stepper-headline-form [linear]="isLinear">
+  <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="firstFormName">
+    <ng-template cdkStepLabel>
+      <div class="ml-5">
+        <h4 class="text-2xl text-blue-600">First Form</h4>
+        <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p>
+      </div>
+    </ng-template>
+    <form [formGroup]="firstFormName">
+      <label class="label">FirstControl</label>
+      <input class="input" type="text" formControlName="firstControl">
+    </form>
+  </cdk-step>
+  <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="secondFormName">
+    <ng-template cdkStepLabel>
+      <div class="ml-5">
+        <h4 class="text-2xl text-blue-600">Second Form</h4>
+        <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Complete</button></p>
+      </div>
+    </ng-template>
+    <form [formGroup]="secondFormName">
+      <label class="label">SecondControl</label>
+      <input class="input" type="text" formControlName="SecondControl">
+    </form>
+  </cdk-step>
+  <cdk-step [editable]="isEditable" [optional]="false">
+    <ng-template cdkStepLabel>
+      <div class="ml-5">
+        <h4 class="text-2xl text-blue-600">Complete</h4>
+      </div>
+    </ng-template>
+    <p>This is any content of "Step 3"</p>
+  </cdk-step>
+</custom-stepper-headline-form>
+
+<hr>
+
+<h3 class="text-4xl">Custom-Stepper with Progress-Circle and Headline and FormArray</h3>
+<form [formGroup]="singleArrayFormName">
+  <custom-stepper-headline-form [linear]="isLinear" formArrayName="steps">
+    <cdk-step [editable]="isEditable" [optional]="false" formGroupName="0" [stepControl]="singleArrayFormName.get('steps.0')!">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">First Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p>
+        </div>
+      </ng-template>
+      <label class="label">FirstControl</label>
+      <input class="input" type="text" formControlName="firstSingleControl">
+    </cdk-step>
+    <cdk-step [editable]="isEditable" [optional]="false" formGroupName="1" [stepControl]="singleArrayFormName.get('steps.1')!">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">Second Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Complete</button></p>
+        </div>
+      </ng-template>
+      <label class="label">SecondControl</label>
+      <input class="input" type="text" formControlName="secondSingleControl">
+    </cdk-step>
+    <cdk-step [editable]="isEditable" [optional]="true">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">Complete</h4>
+        </div>
+      </ng-template>
+      <p>This is any content of "Step 3"</p>
+    </cdk-step>
+  </custom-stepper-headline-form>
+</form>
+
+<hr>
+
+<h3 class="text-4xl">Custom-Stepper with Progress-Circle and Headline and FormGroup</h3>
+<form [formGroup]="singleGroupFormName">
+  <custom-stepper-headline-form [linear]="isLinear" formGroupName="steps">
+    <cdk-step [editable]="isEditable" [optional]="false" formGroupName="first" [stepControl]="singleGroupFormName.get('steps')!.get('first')!">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">First Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p>
+        </div>
+      </ng-template>
+      <label class="label">FirstControl</label>
+      <input class="input" type="text" formControlName="firstSingleControl">
+    </cdk-step>
+    <cdk-step [editable]="isEditable" [optional]="false" formGroupName="second" [stepControl]="singleGroupFormName.get('steps')!.get('second')!" #step>
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">Second Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Complete</button></p>
+        </div>
+      </ng-template>
+      <label class="label">SecondControl</label>
+      <input class="input" type="text" formControlName="secondSingleControl">
+      <p *ngIf="step.interacted && singleGroupFormName.get('steps')!.get('second')!.get('secondSingleControl')!.hasError('required')">Eingabe ist erforderlich</p>
+    </cdk-step>
+    <cdk-step label="TestLabel" [editable]="isEditable" [optional]="true">
+      <p>This is any content of "Step 3"</p>
+    </cdk-step>
+  </custom-stepper-headline-form>
+</form>
+
+<hr>
+
+<h3 class="text-4xl">Custom-Stepper with Progress-Circle and Headline and ComplexForms</h3>
+<p style="color: red">Fehlerhaft - ChangeDetection einbauen.</p>
+<form [formGroup]="complexFormName">
+  <custom-stepper-headline-form [linear]="isLinear" formArrayName="subForms">
+    <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="complexFormName.get('subForms.0')!">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">First Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p>
+        </div>
+      </ng-template>
+      <third-form (formReady)="subFormAdd($event)"></third-form>
+    </cdk-step>
+    <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="complexFormName.get('subForms.1')!">
+      <ng-template cdkStepLabel>
+        <div class="ml-5">
+          <h4 class="text-2xl text-blue-600">First Form</h4>
+          <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p>
+        </div>
+      </ng-template>
+      <third-form (formReady)="subFormAdd($event)"></third-form>
+    </cdk-step>
+  </custom-stepper-headline-form>
+  <!-- <p>SubForm1: {{ isSubformValid(0) }}</p> -->
+  <!-- <p>SubForm2: {{ isSubformValid(1) }}</p>-->
+  <!-- <p>AllForms: {{ complexFormName.valid }}</p>  -->
+</form>
