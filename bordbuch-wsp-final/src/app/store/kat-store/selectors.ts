@@ -15,6 +15,15 @@ export const selectShips = createSelector(
     katState,
     state => state.shipSelection
 )
+export const selectShipByDienststelle = (dienststelle: string) => createSelector(
+    selectShips,
+    ship => ship!.filter(el => el.dienststelle == dienststelle)
+)
+
+export const selectDienststellen = createSelector(
+    katState,
+    state => state.dienststellen
+)
 
 export const selectpruefvermerke = createSelector(
     katState,

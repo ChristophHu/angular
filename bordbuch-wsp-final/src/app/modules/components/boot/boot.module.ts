@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShipResolver } from 'src/app/store/ship-store/ship.resolver';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { KatModule } from 'src/app/store/kat-store/kat.module';
 import { DataModule } from 'src/app/store/positionreport-store/data.module';
 import { ZaehlerstandModule } from 'src/app/store/zaehlerstand-store/data.module';
 import { MapComponent } from './map/map.component';
@@ -40,7 +39,6 @@ export const routes: Routes = [
     // store
     DataModule,
     LastPositionModule,
-    KatModule,
     ShipModule,
     ZaehlerstandModule
   ],

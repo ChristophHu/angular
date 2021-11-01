@@ -11,6 +11,9 @@ import { ModalModule } from './components/modal/modal.module'
 import { CardModule } from './components/card/card.module'
 import { IconLibraryModule } from 'projects/icon-library/src/public-api'
 import { NgSelectModule } from '@ng-select/ng-select'
+import { MatSelectModule } from '@angular/material/select';
+import { HeadlineStepperComponent } from './components/headline-stepper/headline-stepper.component'
+import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module'
 
 @NgModule({
     imports: [
@@ -41,7 +44,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
         // shared
         ModalModule,
         CardModule,
-
+        HeadlineStepperModule,
         NgSelectModule,
 
         // library
@@ -53,9 +56,10 @@ import { NgSelectModule } from '@ng-select/ng-select'
         MatFormFieldModule,
         MatTableModule,
         MatStepperModule,
+        MatSelectModule
     ],
     declarations: [
-        
+
     ]
 })
 export class SharedModule {}

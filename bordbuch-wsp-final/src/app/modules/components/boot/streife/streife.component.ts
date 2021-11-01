@@ -37,14 +37,21 @@ export class StreifeComponent implements OnInit {
   ]
 
   // zweck
-  zweck: any[] = [
-    { name: "Streifenfahrt" },
-    { name: "Überführungsfahrt" },
-    { name: "Probefahrt" }
+  zwecke: any[] = [
+    { id: 1, bezeichnung: "Streifenfahrt" },
+    { id: 2, bezeichnung: "Überführungsfahrt" },
+    { id: 3, bezeichnung: "Probefahrt" }
+  ]
+
+  kennungen: any[] = [
+    { id: 1, bezeichnung: "Nixe 1" },
+    { id: 1, bezeichnung: "Nixe 2" },
+    { id: 1, bezeichnung: "Nixe 3" }
   ]
 
   // stepper
   isLinear: boolean = true
+  isEditable: boolean = true
 
   // observables
   ship$: Observable<Ship | undefined>
@@ -59,6 +66,7 @@ export class StreifeComponent implements OnInit {
   patrol!: Patrol
 
   zweckFormGroup!: FormGroup
+  testFormGroup!: FormGroup
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
   checkFormGroup!: FormGroup
@@ -87,6 +95,13 @@ export class StreifeComponent implements OnInit {
         zweck     : ['', Validators.required],
         status    : ['', Validators.required]
       });
+      this.testFormGroup = this._formBuilder.group({
+        streife: this._formBuilder.group({
+          kennung   : ['', Validators.required],
+          zweck     : ['', Validators.required],
+          status    : ['', Validators.required]
+        })
+      })
       this.checkFormGroup = this._formBuilder.group({
         check     : [false]
       })

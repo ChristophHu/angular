@@ -12,6 +12,10 @@ import { AuthGuard } from './auth.guard'
 import { AuthEffects } from './state/effects'
 import { authReducer } from './state/reducer'
 import { Features } from 'src/app/core/model/feature'
+import { MarkdownModule } from 'ngx-markdown'
+import { MatInputModule } from '@angular/material/input'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { KatModule } from 'src/app/store/kat-store/kat.module'
 
 @NgModule({
   imports: [
@@ -19,9 +23,13 @@ import { Features } from 'src/app/core/model/feature'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MarkdownModule.forChild(),
     RouterModule.forChild([ { path: '', component: LoginComponent } ]),
     StoreModule.forFeature(Features.Auth, authReducer),
-    EffectsModule.forFeature([AuthEffects])
+    EffectsModule.forFeature([AuthEffects]),
+    KatModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   declarations: [
     LoginComponent

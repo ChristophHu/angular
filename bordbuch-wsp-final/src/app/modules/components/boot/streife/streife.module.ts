@@ -7,6 +7,7 @@ import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
 import { BetankungComponent } from './betankung/betankung.component';
 import { RouterModule } from '@angular/router';
 import { PositionComponent } from '../positions/position/position.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PositionComponent } from '../positions/position/position.component';
   ],
   imports: [
     SharedModule,
-    RouterModule
+    RouterModule,
+    CdkStepperModule
   ]
 })
 export class StreifeModule { }

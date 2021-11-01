@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store"
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model"
 import { ShipSelection } from "src/app/core/model/ship-selection.model"
 import { Zaehlerstandstyp } from "src/app/core/model/zaehlerstandstyp"
+import { Dienststelle } from "src/app/core/model/dienststelle.model"
 
 // load data
 export const loadAllShip = createAction(
@@ -12,6 +13,9 @@ export const loadPruefvermerke = createAction(
 )
 export const loadZaehlerstandstypen = createAction(
 	"[Kat Resolver] Load Zaehlerstandstypen"
+)
+export const loadDienststellen = createAction(
+	"[Kat Resolver] Load Dienststellen"
 )
 
 // store loaded data
@@ -26,4 +30,8 @@ export const pruefvermerkeLoaded = createAction(
 export const zaehlerstandstypenLoaded = createAction(
 	"[Load Kat Effect] Zaehlerstandstypen Loaded",
 	props<{ zaehlerstandstypen: Zaehlerstandstyp[] }>()
+)
+export const dienststellenLoaded = createAction(
+	"[Load Kat Effect] Dienststellen Loaded",
+	props<{ dienststellen: Dienststelle[] }>()
 )

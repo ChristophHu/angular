@@ -18,13 +18,16 @@ import { AuthService } from '../auth.service'
 // import { User } from '../model/user.model'
 import { BackendResponse } from '../model/backendresponse.model'
 
+import { Animations } from 'src/app/shared/animations';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  styleUrls: ['./login.component.sass'],
+  animations   : Animations
 })
 export class LoginComponent {
-
+	opened: boolean = false
   	loginForm: FormGroup
 
 	constructor( private _formBuilder: FormBuilder, private store: Store, private router: Router, private authService: AuthService) {
@@ -47,5 +50,10 @@ export class LoginComponent {
 			noop,
 			() => alert('Login Failed')
 		  )
+	}
+
+	toggleChangeLog() {
+		console.log(this.opened)
+		this.opened = !this.opened
 	}
 }

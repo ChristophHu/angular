@@ -119,6 +119,7 @@ export class AppService {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
+            case 'getDienststellen':
             case 'getPruefvermerke':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
@@ -350,6 +351,14 @@ export class AppService {
     getZaehlerstandstypen(): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstandstypen', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getDienststellen(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getDienststellen', {})
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))

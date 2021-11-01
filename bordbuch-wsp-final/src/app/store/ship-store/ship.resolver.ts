@@ -34,11 +34,6 @@ export class ShipResolver implements Resolve<any> {
                     // data
                     this.store.dispatch(ZaehlerstandAction.loadAllData({ id_ship: route.params[route.data.param] }))
 
-                    // kat
-                    this.store.dispatch(KatAction.loadAllShip())
-                    this.store.dispatch(KatAction.loadPruefvermerke())
-                    this.store.dispatch(KatAction.loadZaehlerstandstypen())
-
                     // lastPositions
                     this.store.dispatch(LastPositionActions.loadData())
                 }

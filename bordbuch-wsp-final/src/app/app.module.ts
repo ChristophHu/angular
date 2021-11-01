@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RootStoreModule } from './store/root-store.module'
 import { SplashScreenComponent } from './shared/components/splash-screen/splash-screen.component'
 import { SharedModule } from './shared/shared.module'
+import { MarkdownModule } from 'ngx-markdown'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SharedModule } from './shared/shared.module'
     AppRoutingModule,
     AuthModule.forRoot(),
     RootStoreModule,
-    SharedModule
+    SharedModule,
+    MarkdownModule.forRoot()
   ],
   providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]

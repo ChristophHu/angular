@@ -9,6 +9,7 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
 import { ShipSelection } from 'src/app/core/model/ship-selection.model';
 import { KatSelectors } from 'src/app/store/kat-store';
+import { Dienststelle } from 'src/app/core/model/dienststelle.model';
 
 @Component({
   selector: 'app-bordbuch-auswahl',
@@ -18,6 +19,10 @@ import { KatSelectors } from 'src/app/store/kat-store';
 export class BordbuchAuswahlComponent {
 
   allShips$!: Observable<ShipSelection[]>
+  dienststellen$!: Observable<Dienststelle[]>
+  ships$!: Observable<ShipSelection[] | undefined>
+
+  selectedIdShip!: string
   
   bordbuchForm: FormGroup
   
@@ -27,6 +32,15 @@ export class BordbuchAuswahlComponent {
     })
 
     this.allShips$ = this.store.pipe(select(ShipSelectionSelectors.selectAllShip)) as Observable<ShipSelection[]>
+    this.dienststellen$ = this.store.pipe(select(KatSelectors.selectDienststellen)) as Observable<Dienststelle[]>
+  }
+
+  selectDienststelle(dienststelle: string) {
+    this.ships$ = this.store.pipe(select(KatSelectors.selectShipByDienststelle(dienststelle))) as Observable<ShipSelection[] | undefined>
+  }
+
+  selectSchiff(id_ship: string) {
+    this.selectedIdShip = id_ship
   }
 
   async showModal(): Promise<void> {

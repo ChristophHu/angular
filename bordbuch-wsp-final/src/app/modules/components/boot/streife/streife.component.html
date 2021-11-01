@@ -6,18 +6,225 @@
   <a class="cursor-pointer" *ngIf="!isPatrolActive$" (click)="startPatrol()">
     <icons class="w-8 h-8" name="chevron-right"></icons>
   </a>
-  <div class="flex flex-row justify-between items-center w-24">
-    <a class="cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
+  <div class="flex flex-row justify-end items-center w-24">
+    <a class="ml-4 cursor-pointer" [routerLink]="['map']" *ngIf="isPatrolActive$">
       <icons class="w-8 h-8" name="map"></icons>
     </a>
-    <a class="cursor-pointer" [routerLink]="['positions']" *ngIf="isPatrolActive$">
+    <a class="ml-4 cursor-pointer" [routerLink]="['positions']" *ngIf="isPatrolActive$">
       <icons class="w-8 h-8" name="table"></icons>
     </a>
   </div>
 </div>
   
   <div class="content">
-    <div class="w-full bg-white rounded-lg p-2 shadow-lg">
+    <form [formGroup]="zweckFormGroup">
+      <headline-stepper [linear]="isLinear">
+        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="testFormGroup.get('kennung')!">
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Streife</h4>
+              <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p>
+            </div>
+          </ng-template>
+          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Kennung</mat-label>
+              <input type="text" matInput formControlName="kennung">
+              <mat-error *ngIf="testFormGroup.get('kennung')?.hasError('required')">Ein Benutzername ist erforderlich!</mat-error>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Kennung</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
+                  {{ kennung.bezeichnung }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Fahrtzweck</mat-label>
+              <input type="text" matInput formControlName="zweck">
+              <mat-error *ngIf="testFormGroup.get('zweck')?.hasError('required')">Ein Benutzername ist erforderlich!</mat-error>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Fahrtzweck</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let zweck of zwecke" [value]="zweck.bezeichnung">
+                  {{ zweck.bezeichnung }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </cdk-step>
+        <cdk-step [editable]="isEditable" [optional]="false">
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Besatzung</h4>
+              <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Second Form</button></p> -->
+            </div>
+          </ng-template>
+          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+            <div class="md:space-y-0 space-y-1 p-4">
+              <div class="flex flex-wrap">
+                <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
+                  <h2>{{ mitglied.funktion }}</h2>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      Name
+                    </p>
+                    <p>
+                      {{ mitglied.name }}
+                    </p>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      Pers.-Nr.
+                    </p>
+                    <p>
+                      {{ mitglied.persnr }}
+                    </p>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      an Bord
+                    </p>
+                    <p>
+                      {{ mitglied.an_bord }}
+                    </p>
+                  </div>
+  
+                  <div class="grid grid-cols-2">
+                    <p class="text-gray-600 mr-2">
+                      von Bord
+                    </p>
+                    <p>
+                      {{ mitglied.von_bord }}
+                    </p>
+                  </div>
+                </div>
+                <div class="box blue w-64 placeholder border border-gray-100 grid justify-center items-center" (click)="openBesatzungModal()">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </cdk-step>
+        <cdk-step [editable]="isEditable" [optional]="false">
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Zählerstände, EInsatzmittel, Mängel und Hinweise</h4>
+              <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p>
+            </div>
+          </ng-template>
+          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+            <p class="text-xl font-semibold text-gray-500">Zählerstände</p>
+            <div class="line">
+              <app-card class="lineelement w-80 h-40 mr-3" [flippable]="false" *ngFor="let zaehlerstand of zaehlerstaende$ | async; index as index" (click)=openZaehlerstandModal(zaehlerstand.id)>
+                <ng-container CardSimple>
+                  <div class="m-4">
+                    <div class="text-xl font-semibold leading-tight">{{ zaehlerstand.zaehlerstandstyp }}</div>
+                    <div class="grid grid-cols-3 gap-2 mt-4">
+                      <div>Value:</div>
+                      <div class="col-span-2">{{ zaehlerstand.value }}</div>
+                      <div>Aktualisiert:</div>
+                      <div class="col-span-2 text-gray-500">{{ zaehlerstand.date }}</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </app-card>
+            </div>
+  
+            <p class="text-xl font-semibold leading-tight text-gray-500">Gefertigte Prüfvermerke</p>
+              <div class="line">
+                <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let reparatur of reparaturen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+                  <ng-container CardFront>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
+                      <div class="mt-4 text-gray-500">{{ reparatur.description }}</div>
+                    </div>
+                  </ng-container>
+                  <ng-container CardBack>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ reparatur.item }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Kategorie:</div>
+                        <div class="col-span-2">{{ reparatur.kategorie }}</div>
+                        <div>Status:</div>
+                        <div class="col-span-2">{{ reparatur.status }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ reparatur.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-card>
+                <app-card class="lineelement w-80 h-40 mr-3" (click)="openPruefvermerkModal()">
+                  <ng-container CardSimple>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">Prüfvermerk erstellen</div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </ng-container>
+                </app-card>
+              </div>
+  
+              <p class="text-xl font-semibold leading-tight text-gray-500">Letzter Tankzettel</p>
+              <div class="line">
+                <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
+                  <ng-container CardFront>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Menge (in L):</div>
+                        <div class="col-span-2">{{ betankung.fuelfillingquantity }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container CardBack>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">{{ betankung.fuel }}</div>
+                      <div class="grid grid-cols-3 gap-2 mt-4">
+                        <div>Ort:</div>
+                        <div class="col-span-2">{{ betankung.ort }}</div>
+                        <div>Erstellt:</div>
+                        <div class="col-span-2 text-gray-500">{{ betankung.date }}</div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-card>
+                <app-card class="lineelement w-80 h-40 mr-3" (click)="openBetankungModal()">
+                  <ng-container CardSimple>
+                    <div class="m-4">
+                      <div class="text-xl font-semibold leading-tight">Betankung durchführen</div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </ng-container>
+                </app-card>
+              </div>
+          </div>
+        </cdk-step>
+        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="testFormGroup.get('kennung')!">
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Kontrolle der Eingaben</h4>
+              <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p> -->
+            </div>
+          </ng-template>
+          <div class="w-full bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+
+          </div>
+        </cdk-step>
+      </headline-stepper>
+    </form>
+
+    <!-- <div class="w-full bg-white rounded-lg p-2 shadow-lg">
       <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
         <mat-step [stepControl]="zweckFormGroup">
           <form [formGroup]="zweckFormGroup">
@@ -45,17 +252,13 @@
             <div class="flex">
               <button class="p-3 mt-3 mr-2 bg-gray-800 text-white rounded-md shadow-lg" mat-button matStepperNext
                 *ngIf="zweckFormGroup.valid">Weiter</button>
-                <!-- || streife.status == 'aktiv'" (click)="updateAktiveStreife()" -->
             </div>
           </form>
         </mat-step>
         <mat-step [stepControl]="besatzungFormGroup">
             <ng-template matStepLabel>Aktuelle Besatzung</ng-template>
             <div class="md:space-y-0 space-y-1 p-4">
-              <div class="flex flex-wrap">
-                <!-- <div *ngIf="">
-  
-                </div> -->
+
                 <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
                   <h2>{{ mitglied.funktion }}</h2>
                   <div class="grid grid-cols-2">
@@ -226,7 +429,7 @@
           </form>
         </mat-step>
       </mat-stepper>
-    </div>
+    </div> -->
   </div>
   <div *ngIf="checkFormGroup.value.check" class="absolute flex bottom-0 h-20 w-full rounded-t-xl bg-gray-100 drop-shadow-xl">
     <button *ngIf="!isPatrolActive$" class="p-3 mt-3 mx-3 w-full h-12 bg-green-800 text-white rounded-md shadow-lg" mat-button>Streife starten</button>

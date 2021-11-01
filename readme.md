@@ -347,5 +347,39 @@ https://medium.com/@ZombieCodeKill/angular-ngrx-getting-started-f0202e0eba47
 
 
 
+## Markdown
+
+```bash
+npm i -g ngx-markdown
+```
+
+In die `angular.json`
+
+```json
+"scripts": [
+    "node_modules/marked/lib/marked.js",
+    "node_modules/prismjs/prism.js",
+    "node_modules/prismjs/components/prism-csharp.min.js",
+    "node_modules/prismjs/components/prism-css.min.js"
+]
+```
+
+In die `app.module.ts`
+
+```typescript
+imports: [
+    ...
+    MarkdownModule.forRoot()
+]
+```
+
+
+
+```typescript
+<markdown [src]="'assets/md/changelog.md'"></markdown>
+```
+
+
+
 ## Splash-Screen
 

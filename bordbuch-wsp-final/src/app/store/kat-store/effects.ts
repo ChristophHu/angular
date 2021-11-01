@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map } from 'rxjs/operators'
+import { Dienststelle } from 'src/app/core/model/dienststelle.model'
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded } from './actions'
  
 @Injectable()
 export class Effects {
@@ -28,6 +29,13 @@ export class Effects {
             ofType(loadZaehlerstandstypen),
             concatMap(action => this.appService.getZaehlerstandstypen()),
             map((zaehlerstandstypen: Zaehlerstandstyp[]) => zaehlerstandstypenLoaded({ zaehlerstandstypen }))
+        )
+    })
+    loadDienststellen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadDienststellen),
+            concatMap(action => this.appService.getDienststellen()),
+            map((dienststellen: Dienststelle[]) => dienststellenLoaded({ dienststellen }))
         )
     })
 
