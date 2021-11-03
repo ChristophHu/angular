@@ -15,11 +15,16 @@
     </a>
   </div>
 </div>
+
+<tabbar class="z-50" [tabs]="list" labelField="username" [active]="active" (onTabSelect)="changeTab($event)"></tabbar>
   
   <div class="content">
+    <form [formGroup]="testForm">
+      <streifeform (formReady)="subformReady($event)"></streifeform>
+    </form>
     <form [formGroup]="zweckFormGroup">
       <headline-stepper [linear]="isLinear">
-        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="testFormGroup.get('kennung')!">
+        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="zweckFormGroup.get('kennung')!">
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Streife</h4>
@@ -27,24 +32,15 @@
             </div>
           </ng-template>
           <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Kennung</mat-label>
-              <input type="text" matInput formControlName="kennung">
-              <mat-error *ngIf="testFormGroup.get('kennung')?.hasError('required')">Ein Benutzername ist erforderlich!</mat-error>
-            </mat-form-field> -->
+            
             <mat-form-field appearance="fill">
               <mat-label>Kennung</mat-label>
-              <mat-select>
+              <mat-select [formControl]="kennung">
                 <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
                   {{ kennung.bezeichnung }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Fahrtzweck</mat-label>
-              <input type="text" matInput formControlName="zweck">
-              <mat-error *ngIf="testFormGroup.get('zweck')?.hasError('required')">Ein Benutzername ist erforderlich!</mat-error>
-            </mat-form-field> -->
             <mat-form-field appearance="fill">
               <mat-label>Fahrtzweck</mat-label>
               <mat-select>
@@ -210,7 +206,7 @@
               </div>
           </div>
         </cdk-step>
-        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="testFormGroup.get('kennung')!">
+        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="zweckFormGroup.get('kennung')!">
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Kontrolle der Eingaben</h4>

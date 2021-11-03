@@ -9,9 +9,7 @@ import { CdkStepper } from '@angular/cdk/stepper'
 })
 export class HeadlineStepperComponent extends CdkStepper implements OnInit  {
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   selectStepByIndex(index: number): void {
     this.selectedIndex = index;

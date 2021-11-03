@@ -8,6 +8,8 @@ import { BetankungComponent } from './betankung/betankung.component';
 import { RouterModule } from '@angular/router';
 import { PositionComponent } from '../positions/position/position.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
+import { StreifeformComponent } from './streifeform/streifeform.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +18,14 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
     ZaehlerstandComponent,
     PruefvermerkComponent,
     BetankungComponent,
-    PositionComponent
+    PositionComponent,
+    StreifeformComponent
   ],
   imports: [
     SharedModule,
     RouterModule,
-    CdkStepperModule
+    CdkStepperModule,
+    TabbarModule
   ]
 })
 export class StreifeModule { }

@@ -1,0 +1,9 @@
+<nav class="absolute h-12 w-full bottom-0 bg-gray-400">
+    <ul class="flex flex-row justify-between">
+        <li *ngFor="let tab of tabs" 
+            [ngClass]="{'active': tab.id === active?.id}"
+            (click)="select(tab)">
+          <a>{{tab.label || tab[labelField]}}</a>
+        </li>
+    </ul>
+</nav>

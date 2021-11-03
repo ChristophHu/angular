@@ -1,0 +1,10 @@
+<form [formGroup]="zweckFormGroup">
+  <mat-form-field appearance="fill">
+    <mat-label>Kennung</mat-label>
+    <mat-select [formControl]="kennung">
+      <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
+        {{ kennung.bezeichnung }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

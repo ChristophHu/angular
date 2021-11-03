@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
@@ -30,11 +30,11 @@ export class StreifeComponent implements OnInit {
   id_streife!: string | undefined
 
   // status
-  status: any[] = [
-    { name: 'In Vorbereitung'},
-    { name: 'Aktiv' },
-    { name: 'Beendet' }
-  ]
+  // status: any[] = [
+  //   { name: 'In Vorbereitung'},
+  //   { name: 'Aktiv' },
+  //   { name: 'Beendet' }
+  // ]
 
   // zweck
   zwecke: any[] = [
@@ -66,11 +66,20 @@ export class StreifeComponent implements OnInit {
   patrol!: Patrol
 
   zweckFormGroup!: FormGroup
-  testFormGroup!: FormGroup
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
   checkFormGroup!: FormGroup
-  
+  testForm!: FormGroup
+
+  kennung = new FormControl('Nixe 1', Validators.required)
+  zweck = new FormControl('Streifenfahrt', Validators.required)
+  status = new FormControl('', Validators.required)
+  // zweckFormGroup = this._formBuilder.group({
+  //   kennung: ['Nixe 1', Validators.required],
+  //   zweck: new FormControl('Zweck', Validators.required),
+  //   status: new FormControl('Aktiv', Validators.required)
+  // });
+
   constructor(
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
@@ -91,23 +100,36 @@ export class StreifeComponent implements OnInit {
       this.store.pipe(select(ShipSelectors.selectShipId))
 
       this.zweckFormGroup = this._formBuilder.group({
-        kennung   : ['', Validators.required],
+        kennung   : new FormControl('Test', Validators.required),
         zweck     : ['', Validators.required],
         status    : ['', Validators.required]
       });
-      this.testFormGroup = this._formBuilder.group({
-        streife: this._formBuilder.group({
-          kennung   : ['', Validators.required],
-          zweck     : ['', Validators.required],
-          status    : ['', Validators.required]
-        })
-      })
       this.checkFormGroup = this._formBuilder.group({
         check     : [false]
       })
     }
 
+  get subforms(): FormArray {
+    return this.testForm.get("subforms") as FormArray;
+  }
+
+  subformReady(subform: FormGroup) {
+    this.subforms.push(subform);
+    console.log(this.testForm);
+    console.log(this.subforms);
+    console.log(this.isSubformValid(0))
+  }
+
+  isSubformValid(index: number) {
+    return this.subforms.at(index).valid;
+  }
+
   ngOnInit(): void {
+    this.testForm = this._formBuilder.group({
+      subform: this._formBuilder.array([])
+    });
+    console.log(this.zweckFormGroup)
+
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       this.name = ship?.name
     })
@@ -115,6 +137,7 @@ export class StreifeComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
       if (patrol) this.patrol = patrol!
       this.zweckFormGroup.patchValue(patrol!)
+      console.log(this.zweckFormGroup)
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
@@ -128,6 +151,24 @@ export class StreifeComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
       this.zaehlerstaende = zaehlerstaende
     })
+  }
+
+  // list of tabs
+  list = [
+    { id: 1, label: 'Next' },
+    { id: 2, label: 'Prev' },
+    // { id: 1, label: 'Streife' },
+    // { id: 2, label: 'Besatzung' },
+    // { id: 3, label: 'Zählerstände' },
+    // { id: 4, label: 'Kontrolle' },
+  ];
+
+  // current Tab
+  active = this.list[0];
+
+  // Invoked when Tab Changes
+  changeTab(tab: any) {
+    this.active = tab;
   }
 
   startPatrol() {
