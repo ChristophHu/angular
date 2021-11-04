@@ -17,12 +17,12 @@
 
   <ng-container [ngTemplateOutlet]="selected ? selected.content : null"></ng-container>
 
-  <footer class="example-step-navigation-bar">
+  <!-- <footer class="example-step-navigation-bar">
     <button cdkStepperPrevious>&larr;</button>
     <button [class.example-active]="selectedIndex === i" *ngFor="let step of steps; let i = index"
       (click)="selectStepByIndex(i)">
       Step {{ i + 1 }}
     </button>
     <button cdkStepperNext>&rarr;</button>
-  </footer>
+  </footer> -->
 </div>

@@ -1,5 +1,7 @@
+import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
@@ -44,9 +46,11 @@ export class StreifeComponent implements OnInit {
   ]
 
   kennungen: any[] = [
+    { id: 0, bezeichnung: "" },
     { id: 1, bezeichnung: "Nixe 1" },
-    { id: 1, bezeichnung: "Nixe 2" },
-    { id: 1, bezeichnung: "Nixe 3" }
+    { id: 2, bezeichnung: "Nixe 2" },
+    { id: 3, bezeichnung: "Nixe 3" },
+    { id: 4, bezeichnung: "Nixe 11" }
   ]
 
   // stepper
@@ -71,14 +75,11 @@ export class StreifeComponent implements OnInit {
   checkFormGroup!: FormGroup
   testForm!: FormGroup
 
-  kennung = new FormControl('Nixe 1', Validators.required)
-  zweck = new FormControl('Streifenfahrt', Validators.required)
-  status = new FormControl('', Validators.required)
-  // zweckFormGroup = this._formBuilder.group({
-  //   kennung: ['Nixe 1', Validators.required],
-  //   zweck: new FormControl('Zweck', Validators.required),
-  //   status: new FormControl('Aktiv', Validators.required)
-  // });
+  // kennung = new FormControl('Nixe 1', Validators.required)
+  // zweck = new FormControl('Streifenfahrt', Validators.required)
+
+  kennung = ''
+  zweck = ''
 
   constructor(
     private store: Store<RootStoreState>, 
@@ -99,36 +100,19 @@ export class StreifeComponent implements OnInit {
 
       this.store.pipe(select(ShipSelectors.selectShipId))
 
-      this.zweckFormGroup = this._formBuilder.group({
-        kennung   : new FormControl('Test', Validators.required),
-        zweck     : ['', Validators.required],
-        status    : ['', Validators.required]
-      });
       this.checkFormGroup = this._formBuilder.group({
         check     : [false]
       })
     }
 
-  get subforms(): FormArray {
-    return this.testForm.get("subforms") as FormArray;
-  }
-
-  subformReady(subform: FormGroup) {
-    this.subforms.push(subform);
-    console.log(this.testForm);
-    console.log(this.subforms);
-    console.log(this.isSubformValid(0))
-  }
-
-  isSubformValid(index: number) {
-    return this.subforms.at(index).valid;
-  }
-
   ngOnInit(): void {
+    this.zweckFormGroup = this._formBuilder.group({
+      kennung: ['', Validators.required],
+      zweck: ['', Validators.required]
+    })
     this.testForm = this._formBuilder.group({
       subform: this._formBuilder.array([])
     });
-    console.log(this.zweckFormGroup)
 
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       this.name = ship?.name
@@ -137,7 +121,6 @@ export class StreifeComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
       if (patrol) this.patrol = patrol!
       this.zweckFormGroup.patchValue(patrol!)
-      console.log(this.zweckFormGroup)
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
@@ -169,6 +152,13 @@ export class StreifeComponent implements OnInit {
   // Invoked when Tab Changes
   changeTab(tab: any) {
     this.active = tab;
+  }
+
+  next(stepper: CdkStepper) {
+    stepper.next()
+  }
+  previous(stepper: CdkStepper) {
+    stepper.previous()
   }
 
   startPatrol() {

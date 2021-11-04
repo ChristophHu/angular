@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { PositionComponent } from '../positions/position/position.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
-import { StreifeformComponent } from './streifeform/streifeform.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { StreifeformComponent } from './streifeform/streifeform.component';
     ZaehlerstandComponent,
     PruefvermerkComponent,
     BetankungComponent,
-    PositionComponent,
-    StreifeformComponent
+    PositionComponent
   ],
   imports: [
     SharedModule,
