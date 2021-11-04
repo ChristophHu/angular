@@ -191,11 +191,11 @@ export class AppComponent implements OnInit {
 ### Implementierung
 
 ```bash
-ng g library icon-library
+ng g library icons
 ```
 
 ```bash
-ng build icon-library
+ng build icons
 ```
 
 
