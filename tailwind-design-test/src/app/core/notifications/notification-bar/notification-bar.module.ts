@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { NotificationBarComponent } from './notification-bar.component';
+import { IconsModule } from 'projects/icons/src/lib/icons.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    NotificationBarComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    IconsModule
+  ],
+  exports: [
+    NotificationBarComponent
   ]
 })
 export class NotificationBarModule { }

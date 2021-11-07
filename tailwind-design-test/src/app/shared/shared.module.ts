@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconsModule } from 'icons';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalModule } from './components/modal/modal.module';
+import { IconsModule } from 'projects/icons/src/lib/icons.module';
+
 
 @NgModule({
   declarations: [],
@@ -10,7 +13,14 @@ import { IconsModule } from 'icons';
   ],
   exports: [
     CommonModule,
-    IconsModule
+    FormsModule,
+    ReactiveFormsModule,
+    
+    // lib
+    IconsModule,
+
+    // shared
+    ModalModule
   ]
 })
 export class SharedModule { }

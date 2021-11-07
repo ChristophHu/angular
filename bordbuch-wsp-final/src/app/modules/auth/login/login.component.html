@@ -42,6 +42,8 @@
 <div class="absolute h-64  bg-gray-50 m-2 p-2 bottom-0 rounded shadow-lg overflow-hidden z-40" *ngIf="opened" @slideInBottom @slideOutBottom>
   <h2 class="text-2xl text-gray-800">Change Log</h2>
   <div class="h-48 w-full scrollbar-hide">
+    <!-- h2-h4 cann be sticky inside the div -->
+    <!-- <div class="sticky top-0 ...">Sticky Heading 1</div> -->
     <markdown [src]="'assets/md/changelog.md'"></markdown>
   </div>
 </div>

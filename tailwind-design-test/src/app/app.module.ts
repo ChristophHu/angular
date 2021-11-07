@@ -1,25 +1,33 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { IconsModule } from 'projects/icons/src/lib/icons.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopnavModule } from './core/navbar/topnav/topnav.module';
+import { NotificationBarModule } from './core/notifications/notification-bar/notification-bar.module';
+
 import { SharedModule } from './shared/shared.module';
-import { NotificationBarComponent } from './core/notifications/notification-bar/notification-bar.component';
+import { NotificationModalComponent } from './core/notifications/notification-modal/notification-modal.component';
+import { NotificationsComponent } from './core/notifications/notification-modal/notifications/notifications.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotificationBarComponent
+    NotificationModalComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    TopnavModule,
 
+    // components
+    TopnavModule,
+    NotificationBarModule,
+
+    // shared
     SharedModule
   ],
   providers: [],
