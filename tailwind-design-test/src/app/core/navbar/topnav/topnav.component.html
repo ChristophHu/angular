@@ -3,7 +3,7 @@
     <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
     </button>
-    <button *ngIf="status === true" aria-label="close" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
+    <button *ngIf="status === true" aria-label="close" (click)="status = !status" class="w-8 h-8 focus:outline-none ">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
     </button>
   </div>

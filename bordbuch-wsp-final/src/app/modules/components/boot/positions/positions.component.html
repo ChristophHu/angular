@@ -1,17 +1,17 @@
 <div class="absolute flex flex-row justify-between items-center w-full h-16 px-3 text-gray-800 shadow-lg z-20">
-  <a class="rotate-180 cursor-pointer" (click)="logout()">
-    <icons class="w-8 h-8" name="logout"></icons>
+  <a class="w-8 h-8 rotate-180 cursor-pointer" (click)="logout()">
+    <icons class="w-8 h-8 stroke-1 stroke-current" name="logout"></icons>
   </a>
   <span class="text-2xl text-gray-800">{{ name }}</span>
   <div class="flex flex-row justify-between items-center w-32">
-    <a class="cursor-pointer" (click)="openPositionModal()">
-      <icons class="w-8 h-8" name="location-add"></icons>
+    <a class="w-8 h-8 cursor-pointer" (click)="openPositionModal()">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="location-add"></icons>
     </a>
-    <a class="cursor-pointer" [routerLink]="['..']">
-        <icons class="w-8 h-8" name="file-info"></icons>
+    <a class="w-8 h-8 cursor-pointer" [routerLink]="['..']">
+        <icons class="w-8 h-8 stroke-1 stroke-current" name="file-info"></icons>
       </a>
-    <a class="cursor-pointer" [routerLink]="['..', 'map']">
-      <icons class="w-8 h-8" name="map"></icons>
+    <a class="w-8 h-8 cursor-pointer" [routerLink]="['..', 'map']">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
     </a>
   </div>
 </div>
@@ -47,14 +47,14 @@
         <th mat-header-cell *matHeaderCellDef> Aktion </th>
         <td mat-cell *matCellDef="let element">
           <div class="flex flex-row">
-            <a class="cursor-pointer" (click)="deletePosition(element.id)">
-              <icons class="w-6 h-6" name="trash"></icons>
+            <a class="w-6 h-6 cursor-pointer" (click)="deletePosition(element.id)">
+              <icons class="w-6 h-6 stroke-1 stroke-current" name="trash"></icons>
             </a>
-            <a class="ml-4 cursor-pointer">
-              <icons class="w-6 h-6" name="map"></icons>
+            <a class="w-6 h-6 ml-4 cursor-pointer">
+              <icons class="w-6 h-6 stroke-1 stroke-current" name="map"></icons>
             </a>
-            <a class="ml-4 cursor-pointer" (click)="openPositionModal(element.id)">
-              <icons class="w-6 h-6" name="edit"></icons>
+            <a class="w-6 h-6 ml-4 cursor-pointer" (click)="openPositionModal(element.id)">
+              <icons class="w-6 h-6 stroke-1 stroke-current" name="edit"></icons>
             </a>
           </div>
         </td>
