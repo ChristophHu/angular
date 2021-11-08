@@ -1,5 +1,4 @@
 import { Component } from '@angular/core'
-import { Store } from '@ngrx/store'
 
 @Component({
   selector: 'app-mobile',
@@ -8,6 +7,6 @@ import { Store } from '@ngrx/store'
 })
 export class MobileComponent {
 
-  constructor(private store: Store) { }
+  constructor() { }
 
 }

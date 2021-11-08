@@ -8,6 +8,7 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 import { KatResolver } from 'src/app/store/kat-store';
+import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module';
 
 export const dataRoutes: Routes = [
   { path: '', component: BordbuchAuswahlComponent, resolve: { data: ShipSelectionResolver }}
@@ -20,6 +21,7 @@ export const dataRoutes: Routes = [
   ],
   imports: [
     SharedModule,
+    TopnavModule,
 
     // npm pkg
     NgQrScannerModule,

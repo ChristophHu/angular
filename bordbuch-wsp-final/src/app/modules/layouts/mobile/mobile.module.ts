@@ -11,7 +11,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule,
     MobileRoutingModule,
-    BordbuchAuswahlModule,
+    BordbuchAuswahlModule
   ]
 })
 export class MobileModule { }

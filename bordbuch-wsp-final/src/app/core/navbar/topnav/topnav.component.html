@@ -1,4 +1,4 @@
-<div class="rounded flex justify-between w-full p-6 items-center border-b border-gray-200 ">
+<div class="rounded flex justify-between w-full p-6 items-center border-b border-gray-200 z-50">
   <div aria-label="toggler" class="flex justify-center items-center">
     <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
@@ -12,39 +12,31 @@
     <icons class="w-8 h-8" name="logo-or"></icons>
   </div>
 </div>
-<div class="sidebar" *ngIf="status" @slideInLeft @slideOutLeft>
+<div class="sidebar z-30" *ngIf="status" @slideInLeft @slideOutLeft>
   <div class="mt-6 flex flex-col justify-start items-center  px-4 w-full space-y-3 pb-5 ">
     <!-- <button class="w-full py-1 pl-2 mb-6 flex items-center space-x-6 rounded text-gray-800 focus:outline-none" (click)="sidebarHandler()">
       <icons name="menu-off"></icons>
     </button> -->
-    <button class="btn">
+    <button class="btn" [routerLink]="['/mobile']">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
-      <p class="text-base leading-4">Dashboard</p>
+      <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="users"></icons>
-      <p class="text-base leading-4">Users</p>
+    <button class="btn" [routerLink]="['/mobile', 'boot', 1]">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+      <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="messages"></icons>
-      <p class="text-base leading-4">Messages</p>
+    <button class="btn" [routerLink]="['/mobile', 'boot', 1, 'map']">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+      <p class="text-base leading-4">Map</p>
     </button>
-    <button class="btn">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="security"></icons>
-      <p class="text-base leading-4">Security</p>
-    </button>
-    <button class="btn">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="notification"></icons>
-      <p class="text-base leading-4">Notifications</p>
+    <button class="btn" [routerLink]="['/mobile', 'boot', 1, 'positions']">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+      <p class="text-base leading-4">Positionen</p>
     </button>
   </div>
   <div class="flex flex-col justify-between items-center h-full space-y-80 w-full">
     <div class="space-y-3 flex pt-8 border-gray-200 border-t justify-start pb-6 px-4 pl-4 flex-col items-center w-full">
-      <button class="btn">
-        <icons class="w-8 h-8 stroke-1 stroke-current" name="settings"></icons>
-        <p class="text-base leading-4">Settings</p>
-      </button>
-      <button class="btn">
+      <button class="btn" (click)="logout()">
         <icons class="w-8 h-8 stroke-1 stroke-current" name="logout"></icons>
         <p class="text-base leading-4">Logout</p>
       </button>

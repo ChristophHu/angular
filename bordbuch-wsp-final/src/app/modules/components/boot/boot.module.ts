@@ -11,6 +11,7 @@ import { StreifeComponent } from './streife/streife.component';
 import { StreifeModule } from './streife/streife.module';
 import { PositionsComponent } from './positions/positions.component';
 import { LastPositionModule } from 'src/app/store/lastposition-store/data.module';
+import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'},
@@ -31,6 +32,7 @@ export const routes: Routes = [
   ],
   imports: [
     SharedModule,
+    TopnavModule,
 
     // router
     StreifeModule,
