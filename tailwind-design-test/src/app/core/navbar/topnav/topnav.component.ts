@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Animations } from 'src/app/shared/animations';
+
 @Component({
   selector: 'topnav',
   templateUrl: './topnav.component.html',
@@ -7,7 +8,7 @@ import { Animations } from 'src/app/shared/animations';
   animations   : Animations
 })
 export class TopnavComponent implements OnInit {
-  status: boolean = false
+  status: boolean = true
 
   sidebarHandler() {
     this.status = !this.status

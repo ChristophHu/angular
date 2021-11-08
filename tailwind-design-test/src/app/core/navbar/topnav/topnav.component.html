@@ -1,15 +1,15 @@
 <div class="rounded flex justify-between w-full p-6 items-center border-b border-gray-200 ">
   <div aria-label="toggler" class="flex justify-center items-center">
-    <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="focus:outline-none ">
-      <icons name="menu"></icons>
+    <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
     </button>
-    <button *ngIf="status === true" aria-label="close" (click)="sidebarHandler()" class=" focus:outline-none ">
-      <icons name="menu-off"></icons>
+    <button *ngIf="status === true" aria-label="close" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
     </button>
   </div>
   <div class="flex justify-between items-center space-x-3">
     <p class="text-2xl leading-6 text-gray-800">RingO</p>
-    <icons name="logo-or"></icons>
+    <icons class="w-8 h-8" name="logo-or"></icons>
   </div>
 </div>
 <div class="sidebar" *ngIf="status" @slideInLeft @slideOutLeft>
@@ -18,35 +18,35 @@
       <icons name="menu-off"></icons>
     </button> -->
     <button class="btn">
-      <icons name="dashboard"></icons>
-      <p class="text-base leading-4 ">Dashboard</p>
+      <icons class="w-8 h-8 strohe-1 stroke-current" name="dashboard"></icons>
+      <p class="text-base leading-4">Dashboard</p>
     </button>
     <button class="btn">
-      <icons name="users"></icons>
-      <p class="text-base leading-4 ">Users</p>
+      <icons class="w-8 h-8 strohe-1 stroke-current" name="users"></icons>
+      <p class="text-base leading-4">Users</p>
     </button>
     <button class="btn">
-      <icons name="messages"></icons>
+      <icons class="w-8 h-8 strohe-1 stroke-current" name="messages"></icons>
       <p class="text-base leading-4">Messages</p>
     </button>
     <button class="btn">
-      <icons name="security"></icons>
-      <p class="text-base leading-4  ">Security</p>
+      <icons class="w-8 h-8 strohe-1 stroke-current" name="security"></icons>
+      <p class="text-base leading-4">Security</p>
     </button>
     <button class="btn">
-      <icons name="notification"></icons>
-      <p class="text-base leading-4  ">Notifications</p>
+      <icons class="w-8 h-8 strohe-1 stroke-current" name="notification"></icons>
+      <p class="text-base leading-4">Notifications</p>
     </button>
   </div>
   <div class="flex flex-col justify-between items-center h-full space-y-80 w-full">
     <div class="space-y-3 flex pt-8 border-gray-200 border-t justify-start pb-6 px-4 pl-4 flex-col items-center w-full">
       <button class="btn">
-        <icons name="settings2"></icons>
-        <p class="text-base leading-4  ">Settings</p>
+        <icons class="w-8 h-8 strohe-1 stroke-current" name="settings"></icons>
+        <p class="text-base leading-4">Settings</p>
       </button>
       <button class="btn">
-        <icons name="logout2"></icons>
-        <p class="text-base leading-4  ">Logout</p>
+        <icons class="w-8 h-8 strohe-1 stroke-current" name="logout"></icons>
+        <p class="text-base leading-4">Logout</p>
       </button>
     </div>
   </div>
