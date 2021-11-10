@@ -1,3 +1,4 @@
+<app-splash-screen></app-splash-screen>
 <div class="h-screen w-screen grid place-items-center overflow-hidden z-0">
   <div class="absolute w-full h-full grid place-items-center z-20">
 
@@ -25,7 +26,10 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Kennwort</mat-label>
-          <input type="password" matInput formControlName="password">
+          <input type="password" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <button class="w-6" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
+          </button>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Die Eingabe eines Kennworts ist erforderlich!</mat-error>
         </mat-form-field>
         

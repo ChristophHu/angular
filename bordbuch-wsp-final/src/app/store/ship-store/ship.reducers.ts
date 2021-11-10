@@ -17,7 +17,7 @@ export const shipReducer = createReducer(
     initialDataState,
     on(ShipAction.shipLoaded, (state, action) => {
         return {
-            ship: action.ship, isAllDataLoaded: false
+            ship: action.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
         }
     }),
     on(ShipAction.patrolLoaded, (state, action) => {
@@ -25,8 +25,8 @@ export const shipReducer = createReducer(
             ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
         }
     }),
-    on(ShipAction.insertPatrol, (state, action) => {
-        let patrol: Patrol = Object.assign({}, action.patrol, { id: action.patrol.id })
+    on(ShipAction.insertPatrolSuccess, (state, action) => {
+        let patrol: Patrol = Object.assign({}, action.action.insert, { id: action.id })
         // let clearedPatrol: Patrol | undefined = patrol
         // clearedPatrol = [...clearedPatrol!, ...[patrol]]
         return {
@@ -35,13 +35,19 @@ export const shipReducer = createReducer(
         }
     }),
     on(ShipAction.updatePatrol, (state, action) => {
-        let patrol: Patrol = action.patrol
+        let patrol: Patrol = action.update
         return {
             ...state,
             patrol: patrol
-            // Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
         }
     }),
+    on(ShipAction.deletePatrol, (state, action) => {
+        return {
+            ...state,
+            patrol: undefined
+        }
+    }),
+    
     on(ShipAction.reparaturenLoaded, (state, action) => {
         return {
             ship: state.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: action.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
@@ -57,6 +63,7 @@ export const shipReducer = createReducer(
     on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {
         let besatzung: Besatzung = Object.assign({}, action.action.insert, { id: action.id })
         let clearedBesatzung: Besatzung[] | undefined = state.patrol?.besatzung
+        console.log(clearedBesatzung)
         clearedBesatzung = [...clearedBesatzung!, ...[besatzung]]
         return {
             ...state,
@@ -100,4 +107,11 @@ export const shipReducer = createReducer(
             reparaturen: clearedPruefvermerk
         }
     }),
+    on(ShipAction.resetStore, (state, action)  => {
+        // return {
+        //     ship: undefined,
+        //     isAllDataLoaded: false
+        // }
+        return Object.assign({}, initialDataState)
+    })
 )

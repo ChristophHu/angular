@@ -5,7 +5,6 @@ import { Observable } from "rxjs"
 import { finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
 import { ShipAction } from "."
-import { KatAction } from "../kat-store"
 import { LastPositionActions } from "../lastposition-store"
 import { PositionActions } from "../positionreport-store"
 
@@ -23,6 +22,7 @@ export class ShipResolver implements Resolve<any> {
             tap(() => {
                 if (!this.loading) {
                     this.loading = true
+                    console.log(route.params[route.data.param])
                     this.store.dispatch(ShipAction.loadShip({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadPatrol({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadReparaturen({ id_ship: route.params[route.data.param] }))

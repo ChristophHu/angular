@@ -1,22 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { logout } from '../../auth/state/actions';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { QrscannerComponent } from './qrscanner/qrscanner.component';
-import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
-import { ShipSelection } from 'src/app/core/model/ship-selection.model';
-import { KatSelectors } from 'src/app/store/kat-store';
 import { Dienststelle } from 'src/app/core/model/dienststelle.model';
+import { ShipSelection } from 'src/app/core/model/ship-selection.model';
+import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
+import { RootStoreState } from 'src/app/store/root-store.state';
+import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
+import { logout } from '../../auth/state/actions';
+import { QrscannerComponent } from './qrscanner/qrscanner.component';
 
 @Component({
-  selector: 'app-bordbuch-auswahl',
-  templateUrl: './bordbuch-auswahl.component.html',
-  styleUrls: ['./bordbuch-auswahl.component.sass']
+  selector: 'app-boot-auswahl',
+  templateUrl: './boot-auswahl.component.html',
+  styleUrls: ['./boot-auswahl.component.sass']
 })
-export class BordbuchAuswahlComponent {
+export class BootAuswahlComponent {
 
   allShips$!: Observable<ShipSelection[]>
   dienststellen$!: Observable<Dienststelle[]>
@@ -44,7 +44,7 @@ export class BordbuchAuswahlComponent {
   }
 
   async showModal(): Promise<void> {
-    const { QrscannerComponent } = await import('./qrscanner/qrscanner.component')
+    const { QrscannerComponent } = await import('../boot-auswahl/qrscanner/qrscanner.component')
     this.modalService.open(QrscannerComponent, {
       data: {
         // id: id

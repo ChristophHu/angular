@@ -1,5 +1,5 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { select, Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
+import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { BetankungComponent } from './betankung/betankung.component';
@@ -28,15 +28,15 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 export class StreifeComponent implements OnInit {
 
   name!: string | undefined
-  id_ship!: string | undefined
-  id_streife!: string | undefined
+  id_schiff!: string | undefined
+  id!: string | undefined
 
   // status
-  // status: any[] = [
-  //   { name: 'In Vorbereitung'},
-  //   { name: 'Aktiv' },
-  //   { name: 'Beendet' }
-  // ]
+  status: any[] = [
+    { id: 1, bezeichnung: 'in Vorbereitung'},
+    { id: 2, bezeichnung: 'aktiv' },
+    { id: 3, bezeichnung: 'beendet' }
+  ]
 
   // zweck
   zwecke: any[] = [
@@ -73,13 +73,15 @@ export class StreifeComponent implements OnInit {
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
   checkFormGroup!: FormGroup
-  testForm!: FormGroup
+  // testForm!: FormGroup
 
   // kennung = new FormControl('Nixe 1', Validators.required)
   // zweck = new FormControl('Streifenfahrt', Validators.required)
 
   kennung = ''
   zweck = ''
+  start = ''
+  // ende = ''
 
   constructor(
     private store: Store<RootStoreState>, 
@@ -101,34 +103,38 @@ export class StreifeComponent implements OnInit {
       this.store.pipe(select(ShipSelectors.selectShipId))
 
       this.checkFormGroup = this._formBuilder.group({
-        check     : [false]
+        check: [false]
       })
     }
 
   ngOnInit(): void {
-    this.zweckFormGroup = this._formBuilder.group({
+    this.zweckFormGroup = this._formBuilder.group({  
+      // ende: [],
+      id: ['', Validators.required],
+      id_schiff: ['', Validators.required],
       kennung: ['', Validators.required],
-      zweck: ['', Validators.required]
+      start: [],
+      status: ['in Vorbereitung', Validators.required],
+      zweck: ['', Validators.required],
     })
-    this.testForm = this._formBuilder.group({
-      subform: this._formBuilder.array([])
-    });
+    // this.testForm = this._formBuilder.group({
+    //   subform: this._formBuilder.array([])
+    // });
 
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       this.name = ship?.name
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      if (patrol) this.patrol = patrol!
-      this.zweckFormGroup.patchValue(patrol!)
+      if (patrol) {this.zweckFormGroup.patchValue(patrol!)}
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
-      this.id_ship = id_ship
+      this.id_schiff = id_ship
     })
 
     this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) this.id_streife = id_streife
+      if (id_streife) this.id = id_streife
     })
 
     this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
@@ -161,8 +167,25 @@ export class StreifeComponent implements OnInit {
     stepper.previous()
   }
 
+  erstellePatrol() {
+    const insert: Patrol = Object.assign({}, this.zweckFormGroup.value, { start: new Date().toISOString().slice(0, -1) })
+    this.store.dispatch(ShipAction.insertPatrol({ insert }))
+  }
+
+  updatePatrol() {
+    // let insert: Patrol = this.zweckFormGroup.value
+    const update: Patrol = Object.assign({}, this.zweckFormGroup.value, { ende: null })
+    console.log(update)
+    this.store.dispatch(ShipAction.updatePatrol({ update }))
+  }
+
+  deletePatrol() {
+    const id: string = this.zweckFormGroup.value.id
+    this.store.dispatch(ShipAction.deletePatrol({ id }))
+  }
+
   startPatrol() {
-    
+
   }
 
   logout() {
@@ -188,7 +211,7 @@ export class StreifeComponent implements OnInit {
       this.modalService.open(BesatzungComponent, {
         data: {
           title: 'Besatzungsmitglied hinzufügen',
-          besatzung: { id_streife: this.id_streife, persnr: '', funktion: '', an_bord: '', von_bord: ''}
+          besatzung: { id_streife: this.id, persnr: '', funktion: '', an_bord: '', von_bord: ''}
         }
       })
     }
@@ -219,7 +242,7 @@ export class StreifeComponent implements OnInit {
     this.modalServiceP.open(PruefvermerkComponent, {
       data: {
         title: 'Prüfvermerk erstellen',
-        id_ship: this.id_ship,
+        id_ship: this.id_schiff,
         date: new Date().toISOString()
       }
     })
@@ -232,7 +255,7 @@ export class StreifeComponent implements OnInit {
     this.modalServiceB.open(BetankungComponent, {
       data: {
         title: 'Betankung durchführen',
-        id_ship: this.id_ship,
+        id_ship: this.id_schiff,
         date: new Date().toISOString()
       }
     })

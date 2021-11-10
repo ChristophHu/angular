@@ -14,16 +14,28 @@ export class ShipEffects {
     loadShip$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadShip),
-            concatMap(action => this.appService.getSchiff(action.id_ship)),
-            map((ship: Ship) => ShipAction.shipLoaded({ ship }))
+            tap(action => console.log(action)),
+            switchMap(action => {
+                return this.appService.getSchiff(action.id_ship).pipe(
+                    map((ship: Ship) => ShipAction.shipLoaded({ ship }))
+                )
+            })
+            // concatMap(action => this.appService.getSchiff(action.id_ship)),
+            // map((ship: Ship) => ShipAction.shipLoaded({ ship }))
         )
     })
 
     loadPatrol$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadPatrol),
-            concatMap(action => this.appService.getStreifeVonSchiff(action.id_ship)),
-            map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
+            switchMap(action => {
+                return this.appService.getStreifeVonSchiff(action.id_ship).pipe(
+                    tap((patrol: Patrol) => console.log(patrol)),
+                    map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
+                )
+            })
+            // concatMap(action => this.appService.getStreifeVonSchiff(action.id_ship)),
+            // map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
         )
     })
     
@@ -31,7 +43,7 @@ export class ShipEffects {
         return this.actions$.pipe(
             ofType(ShipAction.insertPatrol),
             switchMap(action => {
-                return this.appService.insertStreife(action.patrol).pipe(
+                return this.appService.insertStreife(action.insert).pipe(
                     map(id => ShipAction.insertPatrolSuccess({ action, id }))
                 )
             })
@@ -41,16 +53,30 @@ export class ShipEffects {
         return this.actions$.pipe(
             ofType(ShipAction.updatePatrol),
             switchMap(action => {
-                return this.appService.updateStreife(action.patrol)
+                return this.appService.updateStreife(action.update)
             })
         )
     })
+    deletePatrol$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.deletePatrol),
+            switchMap(action => {
+                return this.appService.deleteStreife(action.id)
+            })
+        )
+    }, { dispatch: false })
 
     loadReparaturen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadReparaturen),
-            concatMap(action => this.appService.getReparaturen(action.id_ship)),
-            map((reparaturen: Reparatur[]) => ShipAction.reparaturenLoaded({ reparaturen }))
+            switchMap(action => {
+                return this.appService.getReparaturen(action.id_ship).pipe(
+                    tap((reparaturen: Reparatur[]) => console.log(reparaturen)),
+                    map((reparaturen: Reparatur[]) => ShipAction.reparaturenLoaded({ reparaturen }))
+                )
+            })
+            // concatMap(action => this.appService.getReparaturen(action.id_ship)),
+            // map((reparaturen: Reparatur[]) => ShipAction.reparaturenLoaded({ reparaturen }))
         )
     })
     insertReparatur$ = createEffect(() => {
@@ -67,8 +93,13 @@ export class ShipEffects {
     loadBetankungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadBetankungen),
-            concatMap(action => this.appService.getBetankungen(action.id_ship)),
-            map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
+            switchMap(action => {
+                return this.appService.getBetankungen(action.id_ship).pipe(
+                    map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
+                )
+            })
+            // concatMap(action => this.appService.getBetankungen(action.id_ship)),
+            // map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
         )
     })
     insertBetankung$ = createEffect(() => {

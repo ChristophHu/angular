@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { MobileComponent } from './mobile.component';
 import { MobileRoutingModule } from './mobile-routing.module';
-import { BordbuchAuswahlModule } from '../../components/bordbuch-auswahl/bordbuch-auswahl.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module';
+import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule,
     MobileRoutingModule,
-    BordbuchAuswahlModule
+    TopnavModule,
   ]
 })
 export class MobileModule { }

@@ -16,6 +16,8 @@ import { MarkdownModule } from 'ngx-markdown'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { KatModule } from 'src/app/store/kat-store/kat.module'
+import { SplashScreenComponent } from 'src/app/shared/components/splash-screen/splash-screen.component'
+import { IconLibraryModule } from 'projects/icon-library/src/lib/icon-library.module'
 
 @NgModule({
   imports: [
@@ -30,9 +32,11 @@ import { KatModule } from 'src/app/store/kat-store/kat.module'
     KatModule,
     MatInputModule,
     MatFormFieldModule,
+    IconLibraryModule
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SplashScreenComponent
   ],
   exports: [
     LoginComponent

@@ -8,8 +8,8 @@
     </button>
   </div>
   <div class="flex justify-between items-center space-x-3">
-    <p class="text-2xl leading-6 text-gray-800">RingO</p>
-    <icons class="w-8 h-8" name="logo-or"></icons>
+    <!-- <p class="text-2xl leading-6 text-gray-800">Bordbuch</p> -->
+    <icons class="h-8" name="bordbuch-boot"></icons>
   </div>
 </div>
 <div class="sidebar z-30" *ngIf="status" @slideInLeft @slideOutLeft>
@@ -17,20 +17,20 @@
     <!-- <button class="w-full py-1 pl-2 mb-6 flex items-center space-x-6 rounded text-gray-800 focus:outline-none" (click)="sidebarHandler()">
       <icons name="menu-off"></icons>
     </button> -->
-    <button class="btn" [routerLink]="['/mobile']">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+    <button class="btn" [routerLink]="['/mobile']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="resetStore()">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="refresh"></icons>
       <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn" [routerLink]="['/mobile', 'boot', 1]">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
       <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn" [routerLink]="['/mobile', 'boot', 1, 'map']">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot', id | async, 'map']" routerLinkActive="active-link">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
       <p class="text-base leading-4">Map</p>
     </button>
-    <button class="btn" [routerLink]="['/mobile', 'boot', 1, 'positions']">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="dashboard"></icons>
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async, 'positions']" routerLinkActive="active-link">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Positionen</p>
     </button>
   </div>

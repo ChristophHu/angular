@@ -19,10 +19,10 @@ import { ShipSelectionModule } from './ship-selection-store/ship-selection.modul
         strictStateImmutability: true
       }
     }),
-    StoreRouterConnectingModule.forRoot({ 
-      stateKey: 'router', 
-      routerState: RouterState.Minimal 
-    }),
+    // StoreRouterConnectingModule.forRoot({ 
+    //   stateKey: 'router', 
+    //   routerState: RouterState.Minimal 
+    // }),
     StoreDevtoolsModule.instrument({}),
     EffectsModule.forRoot([])
   ],

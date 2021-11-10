@@ -20,8 +20,9 @@
   <div class="flex w-full">
     <button class="p-2 px-8 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)">Zurück</button>
     <button class="p-2 px-8 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
-    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" *ngIf="!isPatrolActive$">Streife starten</button>
-    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" *ngIf="isPatrolActive$">Streife beenden</button>
+    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="erstellePatrol()">Streife erstellen</button>
+    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol()">Streife updaten</button>
+    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg">Streife beenden</button>
   </div>
 </tabbar>
   
@@ -36,7 +37,30 @@
             </div>
           </ng-template>
           <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
-            
+            <mat-form-field appearance="fill">
+              <mat-label>id</mat-label>
+              <input matInput type="text" formControlName="id" [(ngModel)]="id">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>id_ship</mat-label>
+              <input matInput type="text" formControlName="id_schiff" [(ngModel)]="id_schiff">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Start</mat-label>
+              <input matInput type="text" formControlName="start" [(ngModel)]="start">
+            </mat-form-field>
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Ende</mat-label>
+              <input matInput type="text" formControlName="ende" [(ngModel)]="ende">
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let stat of status" [value]="stat.bezeichnung">
+                  {{ stat.bezeichnung }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Kennung</mat-label>
               <mat-select formControlName="kennung">
@@ -223,7 +247,7 @@
       </headline-stepper>
     </form>
   </div>
-  <div *ngIf="checkFormGroup.value.check" class="absolute flex bottom-0 h-20 w-full rounded-t-xl bg-gray-100 drop-shadow-xl">
-    <button *ngIf="!isPatrolActive$" class="p-3 mt-3 mx-3 w-full h-12 bg-green-800 text-white rounded-md shadow-lg" mat-button>Streife starten</button>
-    <button *ngIf="isPatrolActive$" class="p-3 mt-3 mx-3 w-full h-12 bg-gray-600 text-white rounded-md shadow-lg" mat-button>Streife beenden</button>
-  </div>
+  <!-- <div *ngIf="checkFormGroup.value.check" class="absolute flex bottom-0 h-20 w-full rounded-t-xl bg-gray-100 drop-shadow-xl">
+    <button class="p-3 mt-3 mx-3 w-full h-12 bg-green-800 text-white rounded-md shadow-lg" mat-button>Streife starten</button>
+    <button class="p-3 mt-3 mx-3 w-full h-12 bg-gray-600 text-white rounded-md shadow-lg" mat-button>Streife beenden</button>
+  </div> -->

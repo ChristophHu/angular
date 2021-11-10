@@ -29,6 +29,7 @@ import { Animations } from 'src/app/shared/animations';
 export class LoginComponent {
 	opened: boolean = false
   	loginForm: FormGroup
+	hide = true
 
 	constructor( private _formBuilder: FormBuilder, private store: Store, private router: Router, private authService: AuthService) {
 		this.loginForm = this._formBuilder.group({

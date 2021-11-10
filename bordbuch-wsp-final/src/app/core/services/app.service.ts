@@ -45,13 +45,16 @@ export class AppService {
 
             // streife
             case 'insertStreife': {
-                param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
+                param = `id_schiff=${data.id_ship}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
                 break
             }
             case 'updateStreife': {
-                param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
+                param = `id=${data.id}&id_schiff=${data.id_ship}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
             }
+            case 'deleteStreife':
+                param = `id=${data.id}`
+                break
 
             // besatzung
             case 'insertBesatzung': {
@@ -131,6 +134,7 @@ export class AppService {
                 param = `?id=${data}`
                 break
 
+            case 'getReparaturenVonSchiff':
             case 'getStreifeVonSchiff':
             case 'getZaehlerstaende':
                 param = `?id_schiff=${data}`
@@ -173,10 +177,22 @@ export class AppService {
             // , (error: any) => observer.error(error)
         })
     }
+    deleteStreife(id: string) {
+        console.log(id)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteStreife', id)
+            source$.subscribe((status: any) => {
+                // observer.next(data)
+            })
+            // , (error: any) => observer.error(error)
+        })
+    }
 
     // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
+        // 1438ceac-2d80-4245-bf4e-de42b8a0cb7c Fehler
         return new Observable ((observer) => {
+            console.log(besatzung)
             const source$ = this.reducer('insertBesatzung', besatzung)
             source$.subscribe((data: any) => {
                 console.log(data.id)
@@ -286,6 +302,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiff', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data[0])
             }, (error: any) => observer.error(error))
         })
@@ -308,7 +325,7 @@ export class AppService {
     }
     getReparaturen(id : string): Observable<any> {
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getReparaturen', id)
+            const source$ = this.getReducer('getReparaturenVonSchiff', id)
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))

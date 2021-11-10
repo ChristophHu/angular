@@ -1,4 +1,3 @@
-import { createEffect } from "@ngrx/effects"
 import { Update } from "@ngrx/entity"
 import { createAction, props } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
@@ -6,7 +5,6 @@ import { Betankung } from "src/app/core/model/betankung"
 import { Patrol } from "src/app/core/model/patrol.model"
 import { Reparatur } from "src/app/core/model/reparatur"
 import { Ship } from "src/app/core/model/ship.model"
-import { Zaehlerstand } from "src/app/core/model/zaehlerstand"
 
 // load ship
 export const loadShip = createAction(
@@ -30,15 +28,19 @@ export const patrolLoaded = createAction(
 )
 export const insertPatrol = createAction(
 	"[Streife] Insert Patrol",
-	props<{ patrol: Patrol }>()
+	props<{ insert: Patrol }>()
 )
 export const insertPatrolSuccess = createAction(
 	"[Streife] Insert Patrol",
-	props<{ action: { patrol: Patrol }, id: string }>()
+	props<{ action: { insert: Patrol }, id: string }>()
 )
 export const updatePatrol = createAction(
 	"[Streife] Update Patrol",
-	props<{ patrol: Patrol }>()
+	props<{ update: Patrol }>()
+)
+export const deletePatrol = createAction(
+	"[Streife] Delete Patrol",
+	props<{ id: string }>()
 )
 
 // reparaturen
@@ -94,6 +96,10 @@ export const updatePatrolBesatzung = createAction(
 export const deletePatrolBesatzung = createAction(
 	"[Edit Besatzung Dialog] Besatzung Delete",
 	props<{ id: string }>()
+)
+
+export const resetStore = createAction(
+	"[Auswahl] Store reset"
 )
 
 

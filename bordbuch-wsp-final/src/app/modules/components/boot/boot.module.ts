@@ -11,7 +11,9 @@ import { StreifeComponent } from './streife/streife.component';
 import { StreifeModule } from './streife/streife.module';
 import { PositionsComponent } from './positions/positions.component';
 import { LastPositionModule } from 'src/app/store/lastposition-store/data.module';
-import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module';
+import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
+import { AppService } from 'src/app/core/services/app.service';
+import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'},
@@ -28,11 +30,9 @@ export const routes: Routes = [
     BootComponent,
     MapComponent,
     PositionsComponent
-
   ],
   imports: [
     SharedModule,
-    TopnavModule,
 
     // router
     StreifeModule,
@@ -41,11 +41,14 @@ export const routes: Routes = [
     // store
     DataModule,
     LastPositionModule,
+    ShipSelectionModule,
     ShipModule,
     ZaehlerstandModule
   ],
   providers: [
-    ShipResolver
+    ShipSelectionResolver,
+    ShipResolver,
+    AppService
   ]
 })
 export class BootModule { }

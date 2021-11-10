@@ -41,28 +41,6 @@ export class Effects {
             })
         ), { dispatch: false }
     )
-    // updateData$ = createEffect(
-    //     () => this.actions$.pipe(
-    //         ofType(dataUpdate),
-    //         switchMap(action => {
-    //             return this.appService.updateZaehlerstand(action.update.id, action.update.changes)
-    //         })
-    //     ), { dispatch: false }
-    // )
-
-    // saveData$ = createEffect(
-    //     () => this.actions$.pipe(
-    //         ofType(dataUpdate),
-    //         // tap(action => console.log(action)),
-    //         concatMap(action => {
-    //             return this.dataService.saveData(action.update.id, action.update.changes)
-    //         })
-    //         // map(action => this.dataService.saveData(
-    //         //     action.update.id,
-    //         //     action.update.changes
-    //         // ))
-    //     )
-    // )
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }
