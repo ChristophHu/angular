@@ -9,6 +9,7 @@ import { State } from "./ship.state"
 
 export const initialDataState: State = {
     ship: undefined,
+    patrol: undefined,
     // patrol: { id_ship: '', purpose: '', status: 'In Vorbereitung', crew: [], start: '', end: '', identifier: ''},
     isAllDataLoaded: false
 }
@@ -25,10 +26,15 @@ export const shipReducer = createReducer(
             ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
         }
     }),
+    on(ShipAction.initializePatrol, (state, action) => {
+        let patrol: Patrol = Object.assign({}, action.initialize)
+        return {
+            ...state,
+            patrol: patrol
+        }
+    }),
     on(ShipAction.insertPatrolSuccess, (state, action) => {
         let patrol: Patrol = Object.assign({}, action.action.insert, { id: action.id })
-        // let clearedPatrol: Patrol | undefined = patrol
-        // clearedPatrol = [...clearedPatrol!, ...[patrol]]
         return {
             ...state,
             patrol: patrol
@@ -41,7 +47,7 @@ export const shipReducer = createReducer(
             patrol: patrol
         }
     }),
-    on(ShipAction.deletePatrol, (state, action) => {
+    on(ShipAction.deletePatrolSuccess, (state, action) => {
         return {
             ...state,
             patrol: undefined
@@ -63,6 +69,7 @@ export const shipReducer = createReducer(
     on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {
         let besatzung: Besatzung = Object.assign({}, action.action.insert, { id: action.id })
         let clearedBesatzung: Besatzung[] | undefined = state.patrol?.besatzung
+        console.log('besatzung hinzufügen')
         console.log(clearedBesatzung)
         clearedBesatzung = [...clearedBesatzung!, ...[besatzung]]
         return {

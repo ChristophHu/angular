@@ -26,12 +26,16 @@ export const patrolLoaded = createAction(
 	"[Load Patrol Effect] Patrol Loaded",
 	props<{ patrol: Patrol }>()
 )
+export const initializePatrol = createAction(
+	"[Streife] Initialize Patrol",
+	props<{ initialize: Patrol }>()
+)
 export const insertPatrol = createAction(
 	"[Streife] Insert Patrol",
 	props<{ insert: Patrol }>()
 )
 export const insertPatrolSuccess = createAction(
-	"[Streife] Insert Patrol",
+	"[Streife] Insert Patrol Success",
 	props<{ action: { insert: Patrol }, id: string }>()
 )
 export const updatePatrol = createAction(
@@ -41,6 +45,10 @@ export const updatePatrol = createAction(
 export const deletePatrol = createAction(
 	"[Streife] Delete Patrol",
 	props<{ id: string }>()
+)
+export const deletePatrolSuccess = createAction(
+	"[Streife] Delete Patrol Success",
+	props<{ status: number }>()
 )
 
 // reparaturen

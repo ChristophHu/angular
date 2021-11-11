@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { EMPTY, NEVER, of } from 'rxjs'
-import { catchError, concatMap, map, switchMap, tap } from 'rxjs/operators'
+import { map, switchMap, tap } from 'rxjs/operators'
 import { Betankung } from 'src/app/core/model/betankung'
 import { Patrol } from 'src/app/core/model/patrol.model'
 import { Reparatur } from 'src/app/core/model/reparatur'
@@ -61,17 +60,18 @@ export class ShipEffects {
         return this.actions$.pipe(
             ofType(ShipAction.deletePatrol),
             switchMap(action => {
-                return this.appService.deleteStreife(action.id)
+                return this.appService.deleteStreife(action.id).pipe(
+                    map(status => ShipAction.deletePatrolSuccess({ status }))
+                )
             })
         )
-    }, { dispatch: false })
+    })
 
     loadReparaturen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadReparaturen),
             switchMap(action => {
                 return this.appService.getReparaturen(action.id_ship).pipe(
-                    tap((reparaturen: Reparatur[]) => console.log(reparaturen)),
                     map((reparaturen: Reparatur[]) => ShipAction.reparaturenLoaded({ reparaturen }))
                 )
             })

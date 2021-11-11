@@ -45,7 +45,6 @@ export class PruefvermerkComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalServiceP.getData().then((data) => {
-      console.log(data)
       this.title = data.data.title
       this.pruefvermerkForm.patchValue(data.data)
     })

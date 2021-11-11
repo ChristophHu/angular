@@ -4,8 +4,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { Animations } from 'src/app/shared/animations';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
-import { resetStore } from 'src/app/store/ship-store/ship.actions';
+import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 
 @Component({
   selector: 'topnav',
@@ -25,7 +24,7 @@ export class TopnavComponent {
   constructor(private store: Store<RootStoreState>) { }
 
   resetStore() {
-    this.store.dispatch(resetStore())
+    this.store.dispatch(ShipAction.resetStore())
   }
 
   logout() {
