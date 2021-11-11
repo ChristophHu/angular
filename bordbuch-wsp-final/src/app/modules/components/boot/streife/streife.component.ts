@@ -170,7 +170,8 @@ export class StreifeComponent implements OnInit {
   }
 
   next(stepper: CdkStepper) {
-    if (stepper.selectedIndex == 0) {
+    console.log(this.id)
+    if (stepper.selectedIndex == 0 && this.zweckFormGroup.valid) {
       if (this.id) this.updatePatrol()
       if (!this.id) this.erstellePatrol()
     }
@@ -188,6 +189,7 @@ export class StreifeComponent implements OnInit {
   }
 
   initializePatrol() {
+    console.log('init')
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'in Vorbereitung', zweck: ''  }
     console.log(initialize)
@@ -195,6 +197,7 @@ export class StreifeComponent implements OnInit {
   }
   erstellePatrol() {
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
+    console.log('erstellen')
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: new Date().toISOString().slice(0, -1) })
       this.store.dispatch(ShipAction.insertPatrol({ insert }))

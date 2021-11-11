@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Animations } from '../../animations';
 import { ModalService } from './modal.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
