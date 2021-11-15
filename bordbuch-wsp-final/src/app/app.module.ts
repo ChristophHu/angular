@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RootStoreModule } from './store/root-store.module'
 import { SharedModule } from './shared/shared.module'
 import { MarkdownModule } from 'ngx-markdown';
-import { BootAuswahlComponent } from './modules/components/boot-auswahl/boot-auswahl.component'
+
 
 @NgModule({
   declarations: [

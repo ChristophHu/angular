@@ -9,6 +9,7 @@ import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-sel
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
+import { ZXingScannerModule } from 'projects/zxing-scanner/src/lib/zxing-scanner.module';
 
 export const routes: Routes = [
   { path: '', component: BootAuswahlComponent, resolve: { data: ShipSelectionResolver } },
@@ -24,6 +25,7 @@ export const routes: Routes = [
 
     // npm pkg
     NgQrScannerModule,
+    ZXingScannerModule,
 
     // router
     RouterModule.forChild(routes),
