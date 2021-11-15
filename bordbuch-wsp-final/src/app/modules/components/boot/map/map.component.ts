@@ -145,11 +145,9 @@ export class MapComponent implements OnInit {
 
   toggleAllShips() {
     if (this.allPositionToggle) {
-      console.log('show')
       this.allPositionToggle = false
       this.allShippsGroup.addTo(this.map)
     } else {
-      console.log('hide')
       this.allPositionToggle = true
       this.allShippsGroup.remove()
     }

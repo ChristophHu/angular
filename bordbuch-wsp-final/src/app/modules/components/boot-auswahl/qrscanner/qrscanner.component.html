@@ -15,7 +15,7 @@
         [canvasHeight]="720"
         [stopAfterScan]="true" 
         [updateTime]="500"></qr-scanner> -->
-        <zxing-scanner></zxing-scanner>
+        <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
     </div>
     <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>

@@ -18,7 +18,7 @@
 
 <tabbar class="shadow-lg z-50" [tabs]="list" labelField="username" [active]="active" (onTabSelect)="changeTab($event)">
   <div class="flex w-full">
-    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)">Zurück</button>
+    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
     <!-- <button class="w-8 h-8 ml-4 cursor-pointer" *ngIf="!(isPatrolActive$ | async)" (click)="initializePatrol()">
       <icons class="w-8 h-8 stroke-1 stroke-current text-black" name="add"></icons>
@@ -26,9 +26,10 @@
     <!-- <button class="w-8 h-8 ml-4 cursor-pointer" (click)="deletePatrol()">
       <icons class="w-8 h-8 stroke-1 stroke-current text-black" name="trash"></icons>
     </button> -->
-    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='in Vorbereitung'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
-    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')" disabled>Streife beenden</button>
+    <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 tex-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
+    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')">Streife beenden</button>
   </div>
 </tabbar>
   
@@ -39,7 +40,7 @@
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Streife</h4>
-              <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p>
+              <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p> -->
             </div>
           </ng-template>
           <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg shadow-lg">
@@ -59,7 +60,7 @@
             <div class="p-4">
               <mat-form-field appearance="fill">
                 <mat-label>Kennung</mat-label>
-                <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
+                <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
                   <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
                     {{ kennung.bezeichnung }}
                   </mat-option>
@@ -67,7 +68,7 @@
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Fahrtzweck</mat-label>
-                <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
+                <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
                   <mat-option *ngFor="let zweck of zwecke" [value]="zweck.bezeichnung">
                     {{ zweck.bezeichnung }}
                   </mat-option>
@@ -80,7 +81,7 @@
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Besatzung</h4>
-              <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p>
+              <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p> -->
             </div>
           </ng-template>
           <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
@@ -136,7 +137,7 @@
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Zählerstände</h4>
-              <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Prüfvermerke</button></p>
+              <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Prüfvermerke</button></p> -->
             </div>
           </ng-template>
           <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
@@ -162,7 +163,7 @@
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Prüfvermerke</h4>
-              <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Betankung</button></p>
+              <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Betankung</button></p> -->
             </div>
           </ng-template>
           <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
@@ -206,7 +207,7 @@
             <ng-template cdkStepLabel>
               <div class="ml-5">
                 <h4 class="text-2xl text-blue-600">Betankung</h4>
-                <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p>
+                <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p> -->
               </div>
             </ng-template>
             <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">

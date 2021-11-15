@@ -22,7 +22,6 @@ export class ShipResolver implements Resolve<any> {
             tap(() => {
                 if (!this.loading) {
                     this.loading = true
-                    console.log(route.params[route.data.param])
                     this.store.dispatch(ShipAction.loadShip({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadPatrol({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadReparaturen({ id_ship: route.params[route.data.param] }))

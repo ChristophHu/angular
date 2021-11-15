@@ -13,7 +13,6 @@ export class ShipEffects {
     loadShip$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadShip),
-            tap(action => console.log(action)),
             switchMap(action => {
                 return this.appService.getSchiff(action.id_ship).pipe(
                     map((ship: Ship) => ShipAction.shipLoaded({ ship }))

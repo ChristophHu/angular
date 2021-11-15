@@ -33,7 +33,7 @@ export class StreifeComponent implements OnInit {
 
   // status
   status: any[] = [
-    { id: 1, bezeichnung: 'in Vorbereitung'},
+    { id: 1, bezeichnung: 'vorbereitend'},
     { id: 2, bezeichnung: 'aktiv' },
     { id: 3, bezeichnung: 'beendet' }
   ]
@@ -185,13 +185,17 @@ export class StreifeComponent implements OnInit {
     stepper.next()
   }
   previous(stepper: CdkStepper) {
+    console.log(stepper.selectedIndex)
     stepper.previous()
+  }
+  stepperIndex(stepper: CdkStepper): boolean {
+    return stepper.selectedIndex == 0 ? true : false
   }
 
   initializePatrol() {
     console.log('init')
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'in Vorbereitung', zweck: ''  }
+    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'vorbereitend', zweck: ''  }
     console.log(initialize)
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }

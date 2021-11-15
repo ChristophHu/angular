@@ -12,8 +12,7 @@ interface QRCodeJSON {
 @Component({
   selector: 'app-qrscanner',
   templateUrl: './qrscanner.component.html',
-  styleUrls: ['./qrscanner.component.sass'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./qrscanner.component.sass']
 })
 export class QrscannerComponent implements OnInit, AfterViewInit {
   // modal
@@ -63,6 +62,13 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
     this.modalService.getData().then((data) => {
       // this.id = data.data.id
     })
+  }
+
+  onCodeResult(result: string) {
+    let QRCode: QRCodeJSON = JSON.parse(result)
+    console.log(result)
+    this.modal?.close()
+    this.router.navigate(['/mobile', 'boot', QRCode.id])
   }
 
   cancel() {
