@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Betankung } from 'src/app/core/model/betankung';
@@ -10,13 +10,21 @@ import { ShipAction, ShipState } from 'src/app/store/ship-store';
 @Component({
   selector: 'app-betankung',
   templateUrl: './betankung.component.html',
-  styleUrls: ['./betankung.component.sass']
+  styleUrls: ['./betankung.component.sass'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BetankungComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<BetankungComponent> | undefined;
   title: string = ''
   betankungForm: FormGroup
   
+  // zweck
+  was: any[] = [
+    { id: 1, bezeichnung: "Diesel" },
+    { id: 2, bezeichnung: "Benzin" },
+    { id: 3, bezeichnung: "Motorenoel" }
+  ]
+
   constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BetankungComponent>, private appService: AppService) {
     this.betankungForm = this._formBuilder.group({
       id: [],

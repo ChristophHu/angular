@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { PositionComponent } from '../positions/position/position.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
+import { TimelineComponent } from 'src/app/shared/components/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
     ZaehlerstandComponent,
     PruefvermerkComponent,
     BetankungComponent,
-    PositionComponent
+    PositionComponent,
+    TimelineComponent
   ],
   imports: [
     SharedModule,

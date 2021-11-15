@@ -18,22 +18,23 @@
 
 <tabbar class="shadow-lg z-50" [tabs]="list" labelField="username" [active]="active" (onTabSelect)="changeTab($event)">
   <div class="flex w-full">
-    <button class="p-2 px-8 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)">Zurück</button>
-    <button class="p-2 px-8 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
-    <button class="w-8 h-8 ml-4 cursor-pointer" *ngIf="!(isPatrolActive$ | async)" (click)="initializePatrol()">
+    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)">Zurück</button>
+    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
+    <!-- <button class="w-8 h-8 ml-4 cursor-pointer" *ngIf="!(isPatrolActive$ | async)" (click)="initializePatrol()">
       <icons class="w-8 h-8 stroke-1 stroke-current text-black" name="add"></icons>
-    </button>
-    <button class="w-8 h-8 ml-4 cursor-pointer" (click)="deletePatrol()">
+    </button> -->
+    <!-- <button class="w-8 h-8 ml-4 cursor-pointer" (click)="deletePatrol()">
       <icons class="w-8 h-8 stroke-1 stroke-current text-black" name="trash"></icons>
-    </button>
+    </button> -->
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
     <button *ngIf="(patrolStatus$ | async)=='in Vorbereitung'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
-    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')">Streife beenden</button>
+    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-gray-400 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')" disabled>Streife beenden</button>
   </div>
 </tabbar>
   
   <div class="content">
     <form [formGroup]="zweckFormGroup">
-      <headline-stepper [linear]="isLinear" #headlineStepper>
+      <headline-stepper [linear]="isLinear" [status]="patrolStatus$ | async" #headlineStepper>
         <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="zweckFormGroup.get('kennung')!">
           <ng-template cdkStepLabel>
             <div class="ml-5">
@@ -41,48 +42,38 @@
               <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p>
             </div>
           </ng-template>
-          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
-            <p>{{ patrolStatus$ | async }}</p>
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>id</mat-label>
-              <input matInput type="text" formControlName="id" [(ngModel)]="id">
-            </mat-form-field> -->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>id_ship</mat-label>
-              <input matInput type="text" formControlName="id_schiff" [(ngModel)]="id_schiff">
-            </mat-form-field> -->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Start</mat-label>
-              <input matInput type="text" formControlName="start" [(ngModel)]="start">
-            </mat-form-field> -->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Ende</mat-label>
-              <input matInput type="text" formControlName="ende" [(ngModel)]="ende">
-            </mat-form-field> -->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Status</mat-label>
-              <mat-select formControlName="status">
-                <mat-option *ngFor="let stat of status" [value]="stat.bezeichnung">
-                  {{ stat.bezeichnung }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> -->
-            <mat-form-field appearance="fill">
-              <mat-label>Kennung</mat-label>
-              <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
-                <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
-                  {{ kennung.bezeichnung }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-              <mat-label>Fahrtzweck</mat-label>
-              <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
-                <mat-option *ngFor="let zweck of zwecke" [value]="zweck.bezeichnung">
-                  {{ zweck.bezeichnung }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg shadow-lg">
+            <div class="flex flex-row p-4 justify-between border-b">
+              <div>
+                <h2 class="text-2xl ">Streife</h2>
+                <p class="text-sm text-gray-500">
+                  Die Streife ist {{ patrolStatus$ | async }}.
+                </p>
+              </div>
+              <div>
+                <button class="w-8 h-8 m-2 cursor-pointer" (click)="deletePatrol()">
+                  <icons class="w-8 h-8 stroke-1 stroke-current text-gray-500" name="trash"></icons>
+                </button>
+              </div>
+            </div>
+            <div class="p-4">
+              <mat-form-field appearance="fill">
+                <mat-label>Kennung</mat-label>
+                <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
+                  <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
+                    {{ kennung.bezeichnung }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Fahrtzweck</mat-label>
+                <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='in Vorbereitung'">
+                  <mat-option *ngFor="let zweck of zwecke" [value]="zweck.bezeichnung">
+                    {{ zweck.bezeichnung }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
@@ -92,7 +83,7 @@
               <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p>
             </div>
           </ng-template>
-          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
             <div class="md:space-y-0 space-y-1 p-4">
               <div class="flex flex-wrap">
                 <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
@@ -148,7 +139,7 @@
               <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Prüfvermerke</button></p>
             </div>
           </ng-template>
-          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
             <p class="text-xl font-semibold text-gray-500">Zählerstände</p>
             <div class="line">
               <app-card class="lineelement w-80 h-40 mr-3" [flippable]="false" *ngFor="let zaehlerstand of zaehlerstaende$ | async; index as index" (click)=openZaehlerstandModal(zaehlerstand.id)>
@@ -174,7 +165,7 @@
               <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Betankung</button></p>
             </div>
           </ng-template>
-          <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
             <p class="text-xl font-semibold leading-tight text-gray-500">Gefertigte Prüfvermerke</p>
               <div class="line">
                 <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let reparatur of reparaturen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">
@@ -218,7 +209,7 @@
                 <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p>
               </div>
             </ng-template>
-            <div class="w-full mt-5 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+            <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
               <p class="text-xl font-semibold leading-tight text-gray-500">Letzter Tankzettel</p>
               <div class="line">
                 <app-card class="lineelement w-80 h-40 mr-3" [flippable]="true" [face]="'front'" #flippableCard="card" *ngFor="let betankung of betankungen$ | async; index as index" (click)="flippableCard.face = flippableCard.face === 'front' ? 'back' : 'front'">

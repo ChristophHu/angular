@@ -23,6 +23,13 @@ export class TopnavComponent {
 
   constructor(private store: Store<RootStoreState>) { }
 
+  auswahl() {
+    this.resetStore()
+    this.status = !this.status
+  }
+  boot() {
+    this.status = !this.status
+  }
   resetStore() {
     this.store.dispatch(ShipAction.resetStore())
   }

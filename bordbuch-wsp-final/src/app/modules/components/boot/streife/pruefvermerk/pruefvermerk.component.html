@@ -1,10 +1,57 @@
 <app-modal #modalComponent>
-  <header>
-    <h2 class="m-3 mb-5 text-xl">{{ title }}</h2>
+  <header class="h-16 p-8 flex items-center justify-between border-b">
+    <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+      {{ title }}
+    </p>
+    <button (click)="cancel()"
+      class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+      <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+    </button>
   </header>
   <div class="content">
     <form [formGroup]="pruefvermerkForm">
-      <div class="relative my-5" hidden>
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_ship</mat-label>
+          <input matInput type="text" formControlName="id_ship" readonly>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Kategorie</mat-label>
+        <mat-select (selectionChange)="selectKategorie($event.value)">
+          <mat-option *ngFor="let kategorie of kategorien$ | async" [value]="kategorie.bezeichnung">
+            {{ kategorie.bezeichnung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Bestandteil</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let pruefvermerk of pruefvermerke$ | async" [value]="pruefvermerk.id">
+            {{ pruefvermerk.item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Datum/Uhrzeit</mat-label>
+        <input matInput type="datetime-local" formControlName="date" value="{{pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput type="text" formControlName="status" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Beschreibung</mat-label>
+        <textarea  matInput type="text" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <!-- <div class="relative my-5" hidden>
         <input type="text" formControlName="id" required>
         <span class="bar"></span>
         <label class="text-black">Id</label>
@@ -13,14 +60,14 @@
         <input type="number" formControlName="id_ship" required>
         <span class="bar"></span>
         <label class="text-black">Id_ship</label>
-      </div>
-      <div class="relative my-5">
+      </div> -->
+      <!-- <div class="relative my-5">
         <input type="datetime-local" formControlName="date"
-          value="{{pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+2:00'}}" required>
+          value="{{pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}" required>
         <span class="bar"></span>
         <label class="text-black">Datum/Uhrzeit</label>
-      </div>
-      <div class="relative my-5" hidden>
+      </div> -->
+      <!-- <div class="relative my-5" hidden>
         <input type="text" formControlName="kategorie">
         <span class="bar"></span>
         <label class="text-black">Kategorie</label>
@@ -30,8 +77,8 @@
           groupBy="kategorie" formControlName="item" (change)="onChange($event)" required></ng-select>
         <span class="bar"></span>
         <label class="text-black">Bestandteil</label>
-      </div>
-      <div class="relative my-5">
+      </div> -->
+      <!-- <div class="relative my-5">
         <input type="text" formControlName="description" required>
         <span class="bar"></span>
         <label class="text-black">Beschreibung</label>
@@ -40,22 +87,16 @@
         <input type="text" formControlName="status" required>
         <span class="bar"></span>
         <label class="text-black">Status</label>
-      </div>
+      </div> -->
     </form>
   </div>
-  <footer>
+  <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
   </footer>
 </app-modal>
 
 <ng-template #toolbar>
-  <div class="py-3 flex justify-between">
-    <div>
-      <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-    </div>
-    <div>
-      <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button"
-        class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
-    </div>
-  </div>
+  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+  <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button"
+    class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
 </ng-template>

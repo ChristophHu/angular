@@ -25,7 +25,15 @@ export const selectDienststellen = createSelector(
     state => state.dienststellen
 )
 
+export const selectpruefvermerkkategorien = createSelector(
+    katState,
+    state => state.pruefvermerkKategorien
+)
 export const selectpruefvermerke = createSelector(
     katState,
     state => state.pruefvermerke
+)
+export const selectpruefvermerkeByKategorie = (kategorie: string) =>createSelector(
+    selectpruefvermerke,
+    pruefvermerk => pruefvermerk!.filter(el => el.kategorie == kategorie)
 )

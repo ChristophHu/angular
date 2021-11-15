@@ -13,7 +13,8 @@ import { IconLibraryModule } from 'projects/icon-library/src/public-api'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { MatSelectModule } from '@angular/material/select';
 import { HeadlineStepperComponent } from './components/headline-stepper/headline-stepper.component'
-import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module'
+import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module';
+import { TimelineComponent } from './components/timeline/timeline.component'
 
 @NgModule({
     imports: [
@@ -57,9 +58,6 @@ import { HeadlineStepperModule } from './components/headline-stepper/headline-st
         MatTableModule,
         MatStepperModule,
         MatSelectModule
-    ],
-    declarations: [
-
     ]
 })
 export class SharedModule {}

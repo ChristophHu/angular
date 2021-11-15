@@ -20,7 +20,7 @@ export class BesatzungComponent implements OnInit {
   besatzungForm: FormGroup
   edit: boolean = false
 
-  // zweck
+  // funktionen
   funktionen: any[] = [
     { id: 1, bezeichnung: "Streifenführer" },
     { id: 2, bezeichnung: "Streifenbegleiter" },

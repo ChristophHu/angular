@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map } from 'rxjs/operators'
 import { Dienststelle } from 'src/app/core/model/dienststelle.model'
+import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded } from './actions'
  
 @Injectable()
 export class Effects {
@@ -22,6 +23,13 @@ export class Effects {
             ofType(loadPruefvermerke),
             concatMap(action => this.appService.getPruefvermerke()),
             map((pruefvermerke: Pruefvermerk[]) => pruefvermerkeLoaded({ pruefvermerke }))
+        )
+    })
+    loadPruefvermerkKategorien$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadPruefvermerkKategorien),
+            concatMap(action => this.appService.getPruefvermerkKategorien()),
+            map((pruefvermerkKategorien: PruefvermerkKategorien[]) => pruefvermerkKategorienLoaded({ pruefvermerkKategorien }))
         )
     })
     loadZaehlerstandstypen$ = createEffect(() => {

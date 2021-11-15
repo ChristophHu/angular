@@ -25,6 +25,7 @@ export class ShipSelectionResolver implements Resolve<any> {
                     // kat
                     this.store.dispatch(KatAction.loadAllShip())
                     this.store.dispatch(KatAction.loadPruefvermerke())
+                    this.store.dispatch(KatAction.loadPruefvermerkKategorien())
                     this.store.dispatch(KatAction.loadZaehlerstandstypen())
                     this.store.dispatch(KatAction.loadDienststellen())
                 }

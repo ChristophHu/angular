@@ -2,8 +2,9 @@
   transform: rotate(-90deg)
 
 .progress__text
+  @apply stroke-current text-blue-600
   font-size: 1.5rem
-  stroke: #3978d6
+  // stroke: #3978d6
   stroke-width: 1px
 
 .progress__meter,
@@ -11,10 +12,12 @@
   fill: none
 
 .progress__meter
-  stroke: #9b9b9b
+  @apply stroke-current text-gray-400
+  // stroke: #9b9b9b
   stroke-width: 4px
 
 .progress__value
-  stroke: #3978d6
+  @apply stroke-current text-blue-600
+  // stroke: #3978d6
   stroke-width: 4px
   transition: stroke-dashoffset 0.5s linear

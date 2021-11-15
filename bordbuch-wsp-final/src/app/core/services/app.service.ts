@@ -123,6 +123,7 @@ export class AppService {
         switch (action) {
             case 'getDienststellen':
             case 'getPruefvermerke':
+            case 'getPruefvermerksKategorien':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getZaehlerstandstypen':
@@ -359,6 +360,14 @@ export class AppService {
     getPruefvermerke(): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getPruefvermerke', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getPruefvermerkKategorien(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPruefvermerksKategorien', {})
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))

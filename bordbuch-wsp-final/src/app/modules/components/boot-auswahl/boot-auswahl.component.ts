@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,7 +14,8 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 @Component({
   selector: 'app-boot-auswahl',
   templateUrl: './boot-auswahl.component.html',
-  styleUrls: ['./boot-auswahl.component.sass']
+  styleUrls: ['./boot-auswahl.component.sass'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BootAuswahlComponent {
 

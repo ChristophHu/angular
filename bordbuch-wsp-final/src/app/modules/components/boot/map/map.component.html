@@ -17,18 +17,19 @@
 </div> -->
 
 <div class="content">
-  <div class="z-10">
-      <div class="w-screen h-screen -mt-1 top-0 -ml-1 left-0">
-          <div class="map-container">
-              <div class="map-frame">
-                  <div id="map"></div>
-              </div>
+  <div class="absolute w-screen h-screen -m-px top-0 right-0 bottom-0 left-0">
+    <div id="map"></div>
+  </div>
+  <!-- <div class="w-screen h-screen -mt-1 top-0 left-0">
+      <div class="map-container">
+          <div class="map-frame">
+            <div id="map"></div>
           </div>
       </div>
-  </div>
+  </div> -->
 </div>
 
-<div class="absolute flex flex-col ml-2 bottom-0 left-0 z-20">
+<div class="absolute flex flex-col ml-2 bottom-0 left-0 z-40">
   <button class="flex items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleMarkergroup()">
     <a class="w-8 h-8 mr-2" *ngIf="positionToggle">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="eye"></icons>

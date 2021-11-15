@@ -3,6 +3,7 @@ import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model"
 import { ShipSelection } from "src/app/core/model/ship-selection.model"
 import { Zaehlerstandstyp } from "src/app/core/model/zaehlerstandstyp"
 import { Dienststelle } from "src/app/core/model/dienststelle.model"
+import { PruefvermerkKategorien } from "src/app/core/model/pruefvermerk-kategorie.model"
 
 // load data
 export const loadAllShip = createAction(
@@ -10,6 +11,9 @@ export const loadAllShip = createAction(
 )
 export const loadPruefvermerke = createAction(
 	"[Kat Resolver] Load Pruefvermerke"
+)
+export const loadPruefvermerkKategorien = createAction(
+	"[Kat Resolver] Load PruefvermerkKategorien"
 )
 export const loadZaehlerstandstypen = createAction(
 	"[Kat Resolver] Load Zaehlerstandstypen"
@@ -26,6 +30,10 @@ export const allShipLoaded = createAction(
 export const pruefvermerkeLoaded = createAction(
 	"[Load Kat Effect] Pruefvermerke Loaded",
 	props<{ pruefvermerke: Pruefvermerk[] }>()
+)
+export const pruefvermerkKategorienLoaded = createAction(
+	"[Load Kat Effect] PruefvermerkKategorien Loaded",
+	props<{ pruefvermerkKategorien: PruefvermerkKategorien[] }>()
 )
 export const zaehlerstandstypenLoaded = createAction(
 	"[Load Kat Effect] Zaehlerstandstypen Loaded",

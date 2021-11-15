@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { CdkStepper } from '@angular/cdk/stepper'
 
 @Component({
@@ -8,7 +8,7 @@ import { CdkStepper } from '@angular/cdk/stepper'
   providers: [{ provide: CdkStepper, useExisting: HeadlineStepperComponent }]
 })
 export class HeadlineStepperComponent extends CdkStepper implements OnInit  {
-
+  @Input() status: string | null | undefined
   ngOnInit(): void { }
 
   selectStepByIndex(index: number): void {

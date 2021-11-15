@@ -1,8 +1,7 @@
-<div class="example-container">
-  <header class="w-96">
+<div>
+  <header class="w-full mt-5">
     <div class="flex flex-row">
       <app-progress [value]="selectedIndex + 1" [maxvalue]="steps.length"></app-progress>
-
       <ng-container *ngFor="let step of steps; let i = index;">
         <div *ngIf="selectedIndex === i">
           <ng-container *ngIf="step.stepLabel; else showLabelText" [ngTemplateOutlet]="step.stepLabel.template">
@@ -12,6 +11,7 @@
           </ng-template>
         </div>
       </ng-container>
+      <status class="flex-grow" [value]="status"></status>
     </div>
   </header>
 

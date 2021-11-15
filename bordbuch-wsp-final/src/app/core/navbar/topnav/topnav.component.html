@@ -1,4 +1,4 @@
-<div class="rounded flex justify-between w-full p-6 items-center border-b border-gray-200 z-50">
+<div class="absolute w-full p-5 flex justify-between items-center bg-gray-200 bg-opacity-50 shadow-lg z-40">
   <div aria-label="toggler" class="flex justify-center items-center">
     <button id="open" [ngClass]="'text-gray-800 ' + (status ? 'hidden' : 'block')" aria-label="open" (click)="sidebarHandler()" class="w-8 h-8 focus:outline-none ">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
@@ -12,24 +12,24 @@
     <icons class="h-8" name="bordbuch-boot"></icons>
   </div>
 </div>
-<div class="sidebar z-30" *ngIf="status" @slideInLeft @slideOutLeft>
-  <div class="mt-6 flex flex-col justify-start items-center  px-4 w-full space-y-3 pb-5 ">
-    <!-- <button class="w-full py-1 pl-2 mb-6 flex items-center space-x-6 rounded text-gray-800 focus:outline-none" (click)="sidebarHandler()">
-      <icons name="menu-off"></icons>
-    </button> -->
-    <button class="btn" [routerLink]="['/mobile']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="resetStore()">
+<div class="sidebar z-50" *ngIf="status" @slideInLeft @slideOutLeft>
+  <div class="mt-5 flex flex-col justify-start items-center  px-4 w-full space-y-3 pb-5 ">
+    <button class="w-8 h-8 block focus:outline-none" (click)="sidebarHandler()">
+      <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
+    </button>
+    <button class="btn" [routerLink]="['/mobile']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="auswahl()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="refresh"></icons>
       <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
       <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot', id | async, 'map']" routerLinkActive="active-link">
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot', id | async, 'map']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
       <p class="text-base leading-4">Map</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async, 'positions']" routerLinkActive="active-link">
+    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async, 'positions']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Positionen</p>
     </button>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model';
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
 import { Status } from 'src/app/core/model/status';
@@ -22,7 +23,8 @@ export class PruefvermerkComponent implements OnInit {
 
   title: string = ''
 
-  pruefvermerke$!: Observable<Pruefvermerk[]>
+  pruefvermerke$!: Observable<Pruefvermerk[] | undefined>
+  kategorien$!: Observable<PruefvermerkKategorien[]>
 
   pruefvermerkForm: FormGroup
 
@@ -30,7 +32,9 @@ export class PruefvermerkComponent implements OnInit {
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
     private modalServiceP: ModalService<PruefvermerkComponent>, private appService: AppService) {
-    this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
+    // this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
+
+    this.kategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<PruefvermerkKategorien[]>
     
     this.pruefvermerkForm = this._formBuilder.group({
       id        : [''],
@@ -48,6 +52,10 @@ export class PruefvermerkComponent implements OnInit {
       this.title = data.data.title
       this.pruefvermerkForm.patchValue(data.data)
     })
+  }
+
+  selectKategorie(kategorie: string) {
+    this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerkeByKategorie(kategorie))) as Observable<Pruefvermerk[] | undefined>
   }
 
   onChange($event: Pruefvermerk) {
