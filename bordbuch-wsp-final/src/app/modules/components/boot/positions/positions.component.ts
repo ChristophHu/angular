@@ -30,7 +30,6 @@ export class PositionsComponent implements OnInit {
   public displayedColumns: string[] = ['Nr.', 'date', 'description', 'action'];
 
   public dataSource = new MatTableDataSource<PositionReport>()
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private store: Store<RootStoreState>, private locationService: LocationService, private modalService: ModalService<PositionComponent>) { }
 
@@ -40,21 +39,18 @@ export class PositionsComponent implements OnInit {
       this.name = ship?.name
     })
 
-
     this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) this.id_streife = id_streife
-    })
-    
-    this._positionSubscription
-    .add(
-      this.store.pipe(select(PositionSelectors.selectAllData)).subscribe((data: any) => {
-        this.dataSource = data
-      })
-    )
-  }
+      if (id_streife) {
+        this.id_streife = id_streife
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+        this._positionSubscription
+        .add(
+          this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).subscribe((data: any) => {
+            this.dataSource = data
+          })
+        )
+      }
+    })
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -7,11 +7,15 @@ import { take } from 'rxjs/operators';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
+import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
 import { Ship } from 'src/app/core/model/ship.model';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
+import { AppService } from 'src/app/core/services/app.service';
+import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
@@ -25,7 +29,7 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
   templateUrl: './streife.component.html',
   styleUrls: ['./streife.component.sass']
 })
-export class StreifeComponent implements OnInit {
+export class StreifeComponent implements OnInit, AfterViewInit {
 
   name!: string | undefined
   id_schiff!: string | undefined
@@ -83,10 +87,12 @@ export class StreifeComponent implements OnInit {
   constructor(
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
+    private appService: AppService,
     private modalService: ModalService<BesatzungComponent>,
     private modalServiceZ: ModalService<ZaehlerstandComponent>,
     private modalServiceP: ModalService<PruefvermerkComponent>,
-    private modalServiceB: ModalService<BetankungComponent>) 
+    private modalServiceB: ModalService<BetankungComponent>,
+    private locationService: LocationService) 
     {
       this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
       this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
@@ -106,14 +112,13 @@ export class StreifeComponent implements OnInit {
       })
     }
 
+  ngAfterViewInit(): void {
+    console.log(this.patrol.status)
+  }
+
   ngOnInit(): void {
     this.zweckFormGroup = this._formBuilder.group({  
-      // ende: [],
-      // id: [''],
-      // id_schiff: ['', Validators.required],
       kennung: ['', Validators.required],
-      // start: [],
-      // status: ['', Validators.required],
       zweck: ['', Validators.required],
     })
 
@@ -122,10 +127,15 @@ export class StreifeComponent implements OnInit {
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      console.log(patrol)
       if (patrol) {
         this.zweckFormGroup.patchValue(patrol!)
         this.patrol = patrol!
+      }
+      if (patrol?.status == 'aktiv') {
+        // auslagern und in den Store mit aufnehmen
+        this.appService.checkPositionStart()
+      } else {
+        this.appService.checkPositionStop()
       }
     })
 
@@ -140,25 +150,12 @@ export class StreifeComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
       this.zaehlerstaende = zaehlerstaende
     })
-
-    this.zweckFormGroup.valueChanges.subscribe(result => {
-      // autom. Erstellen der Patrol
-      // console.log(this.zweckFormGroup.valid)
-      // console.log(this.patrol)
-      // if ((!this.patrol.id || this.patrol.id == '') && this.patrol.status == 'in Vorbereitung' && this.zweckFormGroup.valid) {
-      //   this.erstellePatrol()
-      // }
-    })
   }
 
   // list of tabs
   list = [
     { id: 1, label: 'Next' },
     { id: 2, label: 'Prev' },
-    // { id: 1, label: 'Streife' },
-    // { id: 2, label: 'Besatzung' },
-    // { id: 3, label: 'Zählerstände' },
-    // { id: 4, label: 'Kontrolle' },
   ];
 
   // current Tab
@@ -170,22 +167,13 @@ export class StreifeComponent implements OnInit {
   }
 
   next(stepper: CdkStepper) {
-    console.log(this.id)
     if (stepper.selectedIndex == 0 && this.zweckFormGroup.valid) {
       if (this.id) this.updatePatrol()
       if (!this.id) this.erstellePatrol()
     }
-    // if ((!this.patrol.id || this.patrol.id == '') && this.patrol.status == 'in Vorbereitung' && this.zweckFormGroup.valid) {
-    //   this.erstellePatrol()
-    // }
-    // console.log(this.id)
-    // if (stepper.selectedIndex == 0 && this.id ) {
-    //   this.updatePatrol()
-    // }
     stepper.next()
   }
   previous(stepper: CdkStepper) {
-    console.log(stepper.selectedIndex)
     stepper.previous()
   }
   stepperIndex(stepper: CdkStepper): boolean {
@@ -193,7 +181,6 @@ export class StreifeComponent implements OnInit {
   }
 
   initializePatrol() {
-    console.log('init')
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'vorbereitend', zweck: ''  }
     console.log(initialize)
@@ -201,22 +188,29 @@ export class StreifeComponent implements OnInit {
   }
   erstellePatrol() {
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
-    console.log('erstellen')
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: new Date().toISOString().slice(0, -1) })
       this.store.dispatch(ShipAction.insertPatrol({ insert }))
     })
   }
   updatePatrol(status?: string) {
+    console.log(status)
     let update: Patrol
     // update zum eigentlichen Start oder beenden der Streife
     if (this.patrol.id == '' || this.patrol.id == undefined) {
       this.erstellePatrol()
     }
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+      console.log('update patrol')
       if (patrol?.id) {
         switch (status) {
           case 'aktiv':
+            // startposition setzen
+            this.locationService.getCurrentPosition().then(position => {
+              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `Start der Streife` }
+              this.store.dispatch(PositionActions.insertData({ positionReport }))
+            })
+
             update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: new Date().toISOString().slice(0, -1) })
             break
           case 'beendet':

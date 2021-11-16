@@ -1,15 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { BehaviorSubject, interval, Observable, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { PositionActions } from 'src/app/store/positionreport-store';
+import { ShipSelectors } from 'src/app/store/ship-store';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
 import { Patrol } from '../model/patrol.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
-import { Ship } from '../model/ship.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
+import { LocationService } from './location.service';
 
 
 @Injectable({
@@ -19,21 +21,21 @@ import { Zaehlerstand } from '../model/zaehlerstand';
 export class AppService {
 
     private token: string = ''
+    patrol!: Patrol
 
-    // private _schiffe = new BehaviorSubject<Ship[]>([])
-    // readonly schiffe = this._schiffe.asObservable()
+    private _positionSubscription = new Subscription
+    private i: Observable<number> = interval(3*60*1000)
 
-    // dataStore
-    // private dataStore: { 
-    //     schiffe: Ship[]
-        
-    // } = { 
-    //     schiffe: []
-    // }
-
-    constructor(private httpClient: HttpClient, private store: Store) {
+    constructor(
+        private httpClient: HttpClient,
+        private store: Store,
+        private locationService: LocationService
+        ) {
         this.store.pipe(select(selectToken)).subscribe(token => {
             this.token = token
+        })
+        this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+            this.patrol = patrol!
         })
     }
 
@@ -161,7 +163,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertStreife', patrol)
             source$.subscribe((data: any) => {
-                console.log(data.id)
                 observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
@@ -264,7 +265,9 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertPosition', position)
             source$.subscribe((data: any) => {
-                observer.next(data.id)
+                const pos : PositionReport = Object.assign({}, position, { id: data.id })
+                observer.next(pos)
+                // observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
         })
@@ -388,5 +391,23 @@ export class AppService {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
+    }
+
+    checkPositionStart() {
+        // console.log('checkPositionStart')
+        if (this._positionSubscription.closed) {
+            this._positionSubscription = this.i.subscribe((data: number) => {
+                this.locationService.getCurrentPosition().then(position => {
+                    const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
+                    this.store.dispatch(PositionActions.insertData({ positionReport }))
+                    // console.log(standort)
+                    // this.insertPosition(standort)
+                })
+            })
+        }
+    }
+    checkPositionStop() {
+        // console.log('checkPositionStop')
+        this._positionSubscription.unsubscribe()
     }
 }

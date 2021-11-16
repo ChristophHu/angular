@@ -28,7 +28,6 @@ export class ShipEffects {
             ofType(ShipAction.loadPatrol),
             switchMap(action => {
                 return this.appService.getStreifeVonSchiff(action.id_ship).pipe(
-                    tap((patrol: Patrol) => console.log(patrol)),
                     map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
                 )
             })

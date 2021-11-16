@@ -5,7 +5,6 @@ import { Observable } from "rxjs";
 import { filter, finalize, first, tap } from "rxjs/operators";
 import { PositionActions } from ".";
 import { RootStoreState } from "../root-store.state";
-import { isDataLoaded } from "./selectors";
 
 @Injectable()
 export class DataResolver implements Resolve<any> {
@@ -15,14 +14,12 @@ export class DataResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
-            select(isDataLoaded),
-            tap(dataLoaded => {
-                if (!this.loading && !dataLoaded) {
+            tap(() => {
+                if (!this.loading) {
                     this.loading = true
                     this.store.dispatch(PositionActions.loadAllData({ id_ship: route.params[route.data.param] }))
                 }
             }),
-            filter(dataLoaded => dataLoaded),
             first(),
             finalize(() => this.loading = false)
         )

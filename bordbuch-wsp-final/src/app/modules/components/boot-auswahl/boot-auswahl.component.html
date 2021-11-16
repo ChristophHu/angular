@@ -1,16 +1,16 @@
 <div class="content">
-    <div class="w-full bg-white rounded-lg shadow-md">
-      <div class="p-4 border-b">
-        <h2 class="text-2xl ">Auswahl des Bordbuches</h2>
-        <p class="text-sm text-gray-500">
-          Bitte wählen Sie hier das Bordbuch aus. Scannen Sie dafür den vorgesehenen QR-Code oder treffen Sie in der Liste
-          eine
-          Auswahl.
-        </p>
-      </div>
-      <div>
-        <form [formGroup]="bordbuchForm">
-          <!-- <div class="hover:bg-gray-50 space-y-1 p-4 border-b">
+  <div class="w-full bg-white rounded-lg shadow-md">
+    <div class="p-4 border-b">
+      <h2 class="text-2xl ">Auswahl des Bordbuches</h2>
+      <p class="text-sm text-gray-500">
+        Bitte wählen Sie hier das Bordbuch aus. Scannen Sie dafür den vorgesehenen QR-Code oder treffen Sie in der Liste
+        eine
+        Auswahl.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="bordbuchForm">
+        <!-- <div class="hover:bg-gray-50 space-y-1 p-4 border-b">
             <div class="relative my-5">
               <ng-select [dropdownPosition]="'bottom'" [items]="allShips$ | async" bindLabel="name" bindValue="id"
                 groupBy="dienststelle" formControlName="bordbuch" required></ng-select>
@@ -18,39 +18,39 @@
               <label class="text-black">Bordbuch</label>
             </div>
           </div> -->
-          <div class="hover:bg-gray-50 p-4 border-b grid md:grid-cols-2 gap-5">
-            <div>
-              <mat-form-field appearance="fill">
-                <mat-label>Dienststelle</mat-label>
-                <mat-select (selectionChange)="selectDienststelle($event.value)">
-                  <mat-option *ngFor="let dienststelle of dienststellen$ | async" [value]="dienststelle.bezeichnung">
-                    {{ dienststelle.bezeichnung }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field appearance="fill">
-                <mat-label>Schiff</mat-label>
-                <mat-select (selectionChange)="selectSchiff($event.value)">
-                  <mat-option *ngFor="let ship of ships$ | async" [value]="ship.id">
-                    {{ ship.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+        <div class="hover:bg-gray-50 p-4 border-b grid md:grid-cols-2 gap-5">
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Dienststelle</mat-label>
+              <mat-select (selectionChange)="selectDienststelle($event.value)">
+                <mat-option *ngFor="let dienststelle of dienststellen$ | async" [value]="dienststelle.bezeichnung">
+                  {{ dienststelle.bezeichnung }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <div class="h-8">
-            <a class="w-8 h-8 ml-4 cursor-pointer" (click)="showModal()">
-              <!-- <icons class="w-8 h-8 stroke-1 stroke-current" name="qrcode"></icons> -->
-              qr
-            </a>
-            <a class="w-8 h-8 ml-4 cursor-pointer" *ngIf="selectedIdShip" [routerLink]="['/mobile', 'boot', selectedIdShip]">
-              <!-- <icons class="w-8 h-8 stroke-1 stroke-current" name="chevron-right"></icons> -->
-              weiter
-            </a>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Schiff</mat-label>
+              <mat-select (selectionChange)="selectSchiff($event.value)">
+                <mat-option *ngFor="let ship of ships$ | async" [value]="ship.id">
+                  {{ ship.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+
+<tabbar class="shadow-lg z-50">
+  <div class="flex w-full justify-between">
+    <button class="w-10 h-10 ml-4 p-1 bg-gray-100 shadow-inner rounded-lg cursor-pointer" (click)="showModal()">
+      <icons class="w-8 h-8 stroke-1 stroke-current text-blue-500" name="qrcode"></icons>
+    </button>
+    <div></div>
+    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [routerLink]="['/mobile', 'boot', selectedIdShip]" [ngClass]="selectedIdShip == undefined ? 'text-gray-400' : 'text-blue-500'" [disabled]="selectedIdShip == undefined">Auswahl bestätigen</button>
+  </div>
+</tabbar>

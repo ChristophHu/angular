@@ -17,6 +17,10 @@ export const insertData = createAction(
 	"[Position Component] insert PositionReport",
 	props<{ positionReport: PositionReport }>()
 )
+export const insertDataSuccess = createAction(
+	"[Position Component] insert PositionReport Success",
+	props<{ positionReport: PositionReport }>()
+)
 export const updateData = createAction(
 	"[Position Component] update PositionReport",
 	props<{ update: Update<PositionReport> }>()

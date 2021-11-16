@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, switchMap, map, tap } from 'rxjs/operators';
+import { concatMap, switchMap, map } from 'rxjs/operators';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { allDataLoaded, dataUpdate, loadAllData } from './actions';
-import { DataService } from './data.service';
 import { AppService } from '../../core/services/app.service'
  
 @Injectable()

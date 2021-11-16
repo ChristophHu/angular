@@ -4,19 +4,18 @@ import { DataState, selectAll } from "./adapter";
 
 export const selectDataState = createFeatureSelector<DataState>(Features.Positionreport)
 
-export const isDataLoaded = createSelector(
-    selectDataState,
-    state => state.isAllDataLoaded
-)
+// export const isDataLoaded = createSelector(
+//     selectDataState,
+//     // state => state.isAllDataLoaded
+// )
 
 export const selectAllData = createSelector(
     selectDataState,
     selectAll
 )
-
-export const selectPositionOfStreife = createSelector(
+export const selectDataByPatrol = (id_streife: string) => createSelector(
     selectAllData,
-    data => data.filter(el => el.id_streife == '97fb0b3e-612a-4746-aeae-ef57ac893e5d')
+    data => data.filter(el => el.id_streife == id_streife)
 )
 
 export const selectDataById = (id: any) => createSelector(

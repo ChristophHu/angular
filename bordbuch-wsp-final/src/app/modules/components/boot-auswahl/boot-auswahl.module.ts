@@ -10,6 +10,7 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
 
 export const routes: Routes = [
   { path: '', component: BootAuswahlComponent, resolve: { data: ShipSelectionResolver } },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   ],
   imports: [
     SharedModule,
+    TabbarModule,
 
     // npm pkg
     NgQrScannerModule,

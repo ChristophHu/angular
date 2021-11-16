@@ -14,11 +14,9 @@ import { QrscannerComponent } from './qrscanner/qrscanner.component';
 @Component({
   selector: 'app-boot-auswahl',
   templateUrl: './boot-auswahl.component.html',
-  styleUrls: ['./boot-auswahl.component.sass'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./boot-auswahl.component.sass']
 })
 export class BootAuswahlComponent {
-
   allShips$!: Observable<ShipSelection[]>
   dienststellen$!: Observable<Dienststelle[]>
   ships$!: Observable<ShipSelection[] | undefined>

@@ -11,10 +11,10 @@ export const loadAllData = createAction(
 // store loaded data
 export const allDataLoaded = createAction(
 	"[Load Data Effect] All Zaehlerstaende Loaded",
-	props<{zaehlerstand: Zaehlerstand[]}>()
+	props<{ zaehlerstand: Zaehlerstand[] }>()
 )
 
 export const dataUpdate = createAction(
 	"[Edit Data Dialog] Zaehlerstand Updates",
-	props<{update: Update<Zaehlerstand>}>()
+	props<{ update: Update<Zaehlerstand> }>()
 )

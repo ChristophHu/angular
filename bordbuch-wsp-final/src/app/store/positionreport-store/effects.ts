@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, switchMap } from 'rxjs/operators';
+import { concatMap, map, switchMap, tap } from 'rxjs/operators';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { PositionActions } from '.';
-import { allDataLoaded, insertData, loadAllData } from './actions';
+import { allDataLoaded, loadAllData } from './actions';
  
 @Injectable()
 export class Effects {
@@ -17,14 +17,18 @@ export class Effects {
             map((positionReport: PositionReport[]) => allDataLoaded({ positionReport }))
         )
     )
-    insertDate$ = createEffect(
-        () => this.actions$.pipe(
+    insertDate$ = createEffect(() => {
+        return this.actions$.pipe(
             ofType(PositionActions.insertData),
             switchMap(action => {
-                return this.appService.insertPosition(action.positionReport)
+                return this.appService.insertPosition(action.positionReport).pipe(
+                    map(positionReport => 
+                        PositionActions.insertDataSuccess({ positionReport })
+                    )
+                )
             })
-        ), { dispatch: false }
-    )
+        )
+    })
     updateDate$ = createEffect(
         () => this.actions$.pipe(
             ofType(PositionActions.updateData),
