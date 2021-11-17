@@ -381,5 +381,34 @@ imports: [
 
 
 
+## QR-Code-Scanner
+
+Es existieren aktuell zwei gute Libraries zum scannen von QR-Codes:
+
+1. https://github.com/zxing-js/ngx-scanner
+2. https://www.npmjs.com/package/angular2-qrscanner-fixed
+
+Zweiterer bereitet in Android Probleme mit der rückseitigen Kamera. Ersteres funktioniert Problemfrei. Dieser soll im Folgenden betrachtet werden:
+
+```bash
+npm i @zxing/browser@latest --save
+npm i @zxing/library@latest --save
+npm i @zxing/ngx-scanner@latest --save
+```
+
+```html
+<zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+```
+
+Das Ergebnis des Scan-Vorgangs kann im Controller abgefangen werden:
+
+ ```typescript
+ onCodeResult(result: string) {
+     this.modal?.close()
+ }
+ ```
+
+
+
 ## Splash-Screen
 

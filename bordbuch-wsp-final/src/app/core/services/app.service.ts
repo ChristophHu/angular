@@ -419,20 +419,18 @@ export class AppService {
     }
 
     checkPositionStart() {
-        // console.log('checkPositionStart')
+        console.log('checkPositionStart')
         if (this._positionSubscription.closed) {
             this._positionSubscription = this.i.subscribe((data: number) => {
                 this.locationService.getCurrentPosition().then(position => {
                     const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
                     this.store.dispatch(PositionActions.insertData({ positionReport }))
-                    // console.log(standort)
-                    // this.insertPosition(standort)
                 })
             })
         }
     }
     checkPositionStop() {
-        // console.log('checkPositionStop')
+        console.log('checkPositionStop')
         this._positionSubscription.unsubscribe()
     }
 }

@@ -7,8 +7,10 @@
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
     </button>
   </div>
+  <div>
+    <h2 class="text-base">{{ name$ | async }}</h2>
+  </div>
   <div class="flex justify-between items-center space-x-3">
-    <!-- <p class="text-2xl leading-6 text-gray-800">Bordbuch</p> -->
     <icons class="h-8" name="bordbuch-boot"></icons>
   </div>
 </div>
@@ -21,15 +23,15 @@
       <icons class="w-8 h-8 stroke-1 stroke-current" name="refresh"></icons>
       <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot',  id$ | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
       <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot', id | async, 'map']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot', id$ | async, 'map']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
       <p class="text-base leading-4">Map</p>
     </button>
-    <button class="btn" *ngIf="id | async" [routerLink]="['/mobile', 'boot',  id | async, 'positions']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot',  id$ | async, 'positions']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Positionen</p>
     </button>

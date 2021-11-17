@@ -292,22 +292,21 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   async openBetankungModal() {
-    const pos: Position = await this.locationService.getCurrentPosition().then(position => {
-      // location = { latitude: position.latitude, longitude: position.longitude}
-      return position
-    })
-
     const { BetankungComponent } = await import(
       './betankung/betankung.component'
     )
 
-    this.modalServiceB.open(BetankungComponent, {
-      data: {
-        title: 'Betankung durchführen',
-        id_ship: this.id_schiff,
-        date: new Date().toISOString(),
-        location: pos
-      }
-    })
+    this.locationService.getCurrentPosition().then((data: any) => {
+      console.info(`currentPosition | latitude: ${data.latitude}, longitude: ${data.longitude}`)
+      const position: Position = { latitude: data.latitude, longitude: data.longitude }
+      this.modalServiceB.open(BetankungComponent, {
+        data: {
+          title: 'Betankung durchführen',
+          id_ship: this.id_schiff,
+          date: new Date().toISOString(),
+          location: position
+        }
+      })
+    }, error => console.error(error))
   }
 }

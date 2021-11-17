@@ -21,6 +21,10 @@ export const selectShipId = createSelector(
     selectedShip,
     ship => ship?.id
 )
+export const selectShipName = createSelector(
+    selectedShip,
+    ship => ship?.name
+)
 
 // patrol
 export const isPatrolActive = createSelector(

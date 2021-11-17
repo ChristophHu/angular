@@ -13,6 +13,10 @@ export const selectAllData = createSelector(
     selectDataState,
     selectAll
 )
+export const selectDataWithoutPatrol = (id_streife: string) => createSelector(
+    selectAllData,
+    data => data.filter(el => el.id_streife != id_streife)
+)
 
 // export const selectPicture = createSelector(
 //     selectAllData,

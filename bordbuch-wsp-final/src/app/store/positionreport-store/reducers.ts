@@ -1,5 +1,4 @@
 import { createReducer, on } from "@ngrx/store";
-import { tap } from "rxjs/operators";
 import { PositionActions } from ".";
 import { allDataLoaded } from "./actions";
 import { adapter, initialDataState } from "./adapter";
@@ -23,5 +22,8 @@ export const reducer = createReducer(
     ),
     on(PositionActions.deleteData, (state, action) => 
         adapter.removeOne(action.id, state)
+    ),
+    on(PositionActions.resetStore, (store, action) => 
+        adapter.getInitialState()
     )
 )

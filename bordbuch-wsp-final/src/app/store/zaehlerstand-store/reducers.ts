@@ -1,16 +1,19 @@
 import { createReducer, on } from "@ngrx/store";
-import { allDataLoaded, dataUpdate } from "./actions";
+import { ZaehlerstandAction } from ".";
 import { adapter, initialDataState } from "./adapter";
 
 export const reducer = createReducer(
     initialDataState,
-    on(allDataLoaded, 
+    on(ZaehlerstandAction.allDataLoaded, 
         (state, action) => adapter.addMany(
             action.zaehlerstand,
             {...state, isAllDataLoaded: true}
         )
     ),
-    on(dataUpdate, (state, action) => 
+    on(ZaehlerstandAction.dataUpdate, (state, action) => 
         adapter.updateOne(action.update, state)
+    ),
+    on(ZaehlerstandAction.resetStore, (store, action) => 
+        initialDataState
     )
 )

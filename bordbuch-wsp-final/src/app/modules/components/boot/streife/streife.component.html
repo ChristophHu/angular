@@ -60,7 +60,73 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg shadow-lg">
+            <div class="flex flex-row p-4 justify-between border-b">
+              <div>
+                <h2 class="text-2xl">Besatzung</h2>
+                <p class="text-sm text-gray-500">
+                  Der Status der Streife ist
+                </p>
+              </div>
+              <div>
+                <button class="w-10 h-10 m-2 bg-gray-100 tex-blue-500 shadow-inner rounded-full cursor-pointer">
+                  <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
+                </button>
+              </div>
+            </div>
+            <div class="p-4 border-b" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
+              <h2>{{ mitglied.funktion }}</h2>
+              <div class="flex flex-row justify-between">
+                <div class="flex-grow">
+                  <p class="w-12 text-gray-600 mr-2">Name:</p>
+                  <p class="">{{ mitglied.name }}</p>
+                </div>
+                <div>
+                  <p class="w-12 text-gray-600 mr-2">von:</p>
+                  <p class="w-12">{{ mitglied.an_bord | date:'HH:mm'}}</p>
+                </div>
+              </div>
+              <div class="flex flex-row justify-between">
+                <div class="flex-grow">
+                  <p class="w-12 text-gray-600 mr-2">Pers.-Nr.:</p>
+                  <p class="">{{ mitglied.persnr }}</p>
+                </div>
+                <div>
+                  <p class="w-12 text-gray-600 mr-2">bis:</p>
+                  <p class="w-12">{{ mitglied.von_bord | date:'HH:mm' }}</p>
+                </div>
+              </div>
+              <!-- <div class="grid grid-cols-4 auto-cols-min">
+                <p class="text-gray-600 mr-2">
+                  Name:
+                </p>
+                <p>
+                  {{ mitglied.name }}
+                </p>
+                <p class="w-12 text-gray-600 mr-2">
+                  von:
+                </p>
+                <p class="w-12">
+                  {{ mitglied.an_bord | date:'HH:mm'}}
+                </p>
+              
+                <p class="text-gray-600 mr-2">
+                  Pers.-Nr.:
+                </p>
+                <p>
+                  {{ mitglied.persnr }}
+                </p>
+                <p class="w-12 text-gray-600 mr-2">
+                  bis:
+                </p>
+                <p class="w-12">
+                  {{ mitglied.von_bord | date:'HH:mm' }}
+                </p>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg p-2 shadow-lg">
             <div class="md:space-y-0 space-y-1 p-4">
               <div class="flex flex-wrap">
                 <div class="box blue w-64 rounded-lg shadow-md" *ngFor="let mitglied of besatzung$ | async" (click)="openBesatzungModal(mitglied.id)">
@@ -107,7 +173,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>

@@ -18,3 +18,7 @@ export const dataUpdate = createAction(
 	"[Edit Data Dialog] Zaehlerstand Updates",
 	props<{ update: Update<Zaehlerstand> }>()
 )
+
+export const resetStore = createAction(
+	"[Topnav] Store Reset"
+)

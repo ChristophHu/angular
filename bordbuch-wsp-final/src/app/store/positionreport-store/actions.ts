@@ -29,3 +29,7 @@ export const deleteData = createAction(
 	"[Position Component] delete PositionReport",
 	props<{ id: string }>()
 )
+
+export const resetStore = createAction(
+	"[Topnav] Store Reset"
+)

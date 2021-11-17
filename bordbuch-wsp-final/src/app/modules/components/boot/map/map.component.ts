@@ -14,6 +14,7 @@ import { LastPositionSelectors } from 'src/app/store/lastposition-store';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positions/position/position.component';
 import { ShipSelectors } from 'src/app/store/ship-store';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-map',
@@ -62,7 +63,14 @@ export class MapComponent implements OnInit {
 
 
     this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) this.id_streife = id_streife
+      if (id_streife) {
+        this.id_streife = id_streife
+
+        this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!)))
+        this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectDataWithoutPatrol(this.id_streife!))).pipe(
+          tap(data => console.log(data))
+        )
+      }
     })
 
     this.positionSubscription
@@ -95,8 +103,10 @@ export class MapComponent implements OnInit {
       )
       .add(
         this.lastPositions$.subscribe((data: any) => {
+          console.log(data)
           this.allShips.length = 0
           data.forEach((ship: any) => {
+            console.log(ship)
             var svgIcon = L.divIcon({
               html: `
               <div class="relative">
@@ -115,7 +125,6 @@ export class MapComponent implements OnInit {
                 </svg>
                 <p class="absolute -left-5 p-1 text-center bg-gray-200 text-base bg-opacity-60 whitespace-nowrap">${ship.name}</p>
               </div>
-              
               `,
               className: "svg-icon",
               iconSize: [24, 40],
@@ -123,9 +132,11 @@ export class MapComponent implements OnInit {
               popupAnchor: [12, -40]
             });
             this.allShips.push(L.marker([ship.location.latitude, ship.location.longitude], { icon: svgIcon }).bindPopup(`Datum: ${ship.date}`))
+            console.log(this.allShips)
           })
           if (this.map && this.allShips.length > 0) {
             this.map.removeLayer(this.allShippsGroup)
+            
             this.allShippsGroup = L.layerGroup(this.allShips)
           }
         })
