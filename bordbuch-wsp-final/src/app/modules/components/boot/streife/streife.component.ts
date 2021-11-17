@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
@@ -101,7 +101,9 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))
       this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
 
-      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData)).pipe(
+        tap(data => console.log(data))
+      )
 
       this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
       this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
