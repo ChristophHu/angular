@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { Betankung } from 'src/app/core/model/betankung';
+import { Position } from 'src/app/core/model/position';
 import { AppService } from 'src/app/core/services/app.service';
+import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
@@ -17,6 +20,7 @@ export class BetankungComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<BetankungComponent> | undefined;
   title: string = ''
   betankungForm: FormGroup
+  location!: Position
   
   // zweck
   was: any[] = [
@@ -25,7 +29,12 @@ export class BetankungComponent implements OnInit {
     { id: 3, bezeichnung: "Motorenoel" }
   ]
 
-  constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BetankungComponent>, private appService: AppService) {
+  constructor(
+    private _formBuilder: FormBuilder, 
+    private store: Store<ShipState.State>, 
+    private modalService: ModalService<BetankungComponent>, 
+    private appService: AppService,
+    private locationService: LocationService) {
     this.betankungForm = this._formBuilder.group({
       id: [],
       id_ship: [],
@@ -55,13 +64,18 @@ export class BetankungComponent implements OnInit {
   }
 
   update() {
-    // this.appService.updateBetankung(this.betankungForm.value)
-    // this.modal?.close()
+    const update: Update<Betankung> = {
+      id: this.betankungForm.value.id_streife,
+      changes: this.betankungForm.value 
+    }
+    console.log(update)
+    this.store.dispatch(ShipAction.updateBetankung({ update }))
+    this.modal?.close()
   }
 
-  delete() {
-    // this.appService.deleteBetankung(this.betankungForm.value.id)
-    // this.modal?.close()
+  delete(id: string) {
+    this.store.dispatch(ShipAction.deleteBetankung({ id }))
+    this.modal?.close()
   }
 
   cancel() {

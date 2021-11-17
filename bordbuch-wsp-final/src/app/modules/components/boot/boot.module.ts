@@ -18,7 +18,7 @@ import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-sel
 export const routes: Routes = [
   { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'},
     children: [
-      { path: '', component: StreifeComponent},
+      { path: '', component: StreifeComponent },
       { path: 'map', component: MapComponent },
       { path: 'positions', component: PositionsComponent }
     ],
@@ -32,10 +32,10 @@ export const routes: Routes = [
     PositionsComponent
   ],
   imports: [
+    StreifeModule,
     SharedModule,
 
     // router
-    StreifeModule,
     RouterModule.forChild(routes),
 
     // store

@@ -86,9 +86,16 @@ export const insertBetankungSuccess = createAction(
 	"[Edit Betankungen Dialog] Betankungen Insert Success",
 	props<{ action: { insert: Betankung }, id: string }>()
 )
+export const updateBetankung = createAction(
+	"[Edit Betankungen Dialog] Betankungen Updates",
+	props<{ update: Update<Betankung> }>()
+)
+export const deleteBetankung = createAction(
+	"[Edit Betankungen Dialog] Betankungen Delete",
+	props<{ id: string }>()
+)
 
 // besatzung
-
 export const insertPatrolBesatzung = createAction(
 	"[Edit Besatzung Dialog] Besatzung Insert",
 	props<{ insert: Besatzung }>()

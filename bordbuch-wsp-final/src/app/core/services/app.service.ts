@@ -74,9 +74,17 @@ export class AppService {
 
             // betankung
             case 'insertBetankung': {
+                console.log(data)
                 param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
             }
+            case 'updateBetankung':
+                param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                break
+
+            case'deleteBetankung':
+                param = `id=${data}`
+                break
 
             case 'updateZaehlerstand': {
                 param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
@@ -192,7 +200,6 @@ export class AppService {
 
     // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
-        // 1438ceac-2d80-4245-bf4e-de42b8a0cb7c Fehler
         return new Observable ((observer) => {
             console.log(besatzung)
             const source$ = this.reducer('insertBesatzung', besatzung)
@@ -233,6 +240,24 @@ export class AppService {
                 observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
+        })
+    }
+    updateBetankung(changes: Partial<Betankung>): Observable<any> {
+        console.log(changes)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateBetankung', changes)
+            source$.subscribe((status: any) => {
+            })
+        })
+    }
+    deleteBetankung(id: string): Observable<any> {
+        console.log(id)
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteBetankung', id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            })
+            , (error: any) => observer.error(error)
         })
     }
 

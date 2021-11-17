@@ -18,8 +18,6 @@ export class ShipEffects {
                     map((ship: Ship) => ShipAction.shipLoaded({ ship }))
                 )
             })
-            // concatMap(action => this.appService.getSchiff(action.id_ship)),
-            // map((ship: Ship) => ShipAction.shipLoaded({ ship }))
         )
     })
 
@@ -31,8 +29,6 @@ export class ShipEffects {
                     map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
                 )
             })
-            // concatMap(action => this.appService.getStreifeVonSchiff(action.id_ship)),
-            // map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
         )
     })
     
@@ -96,8 +92,6 @@ export class ShipEffects {
                     map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
                 )
             })
-            // concatMap(action => this.appService.getBetankungen(action.id_ship)),
-            // map((betankungen: Betankung[]) => ShipAction.betankungenLoaded({ betankungen }))
         )
     })
     insertBetankung$ = createEffect(() => {
@@ -110,6 +104,22 @@ export class ShipEffects {
             })
         )
     })
+    updateBetankung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updateBetankung),
+            switchMap(action => {
+                return this.appService.updateBetankung(action.update.changes)
+            })
+        )
+    })
+    deleteBetankung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.deleteBetankung),
+            switchMap(action => {
+                return this.appService.deleteBetankung(action.id)
+            })
+        )
+    }, { dispatch: false })
 
     insertBesatzung$ = createEffect(() => {
         return this.actions$.pipe(
@@ -135,17 +145,6 @@ export class ShipEffects {
             switchMap(action => {
                 return this.appService.deleteBesatzung(action.id)
             })
-
-            // map((patrol: Patrol) => ShipAction.patrolLoaded({ patrol }))
-            // tap((action) => {
-            //     ShipAction.deletePatrolBesatzungSuccess(action)
-            //     console.log(action)
-                
-            // }),
-            // concatMap(action => this.appService.deleteBesatzung(action.id)),
-            // tap(action => console.log(action)),
-            // map(action => ShipAction.deletePatrolBesatzungSuccess({action}))
-
         )
     }, { dispatch: false })
     

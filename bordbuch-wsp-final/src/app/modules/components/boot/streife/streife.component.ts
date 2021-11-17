@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
+import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
 import { Ship } from 'src/app/core/model/ship.model';
@@ -291,14 +292,21 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   async openBetankungModal() {
+    const pos: Position = await this.locationService.getCurrentPosition().then(position => {
+      // location = { latitude: position.latitude, longitude: position.longitude}
+      return position
+    })
+
     const { BetankungComponent } = await import(
       './betankung/betankung.component'
     )
+
     this.modalServiceB.open(BetankungComponent, {
       data: {
         title: 'Betankung durchführen',
         id_ship: this.id_schiff,
-        date: new Date().toISOString()
+        date: new Date().toISOString(),
+        location: pos
       }
     })
   }
