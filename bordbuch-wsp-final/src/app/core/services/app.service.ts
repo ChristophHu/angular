@@ -74,7 +74,6 @@ export class AppService {
 
             // betankung
             case 'insertBetankung': {
-                console.log(data)
                 param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
             }
@@ -177,7 +176,6 @@ export class AppService {
         })
     }
     updateStreife(patrol: Patrol): Observable<any> {
-        console.log(patrol)
         return new Observable ((observer) => {
             const source$ = this.reducer('updateStreife', patrol)
             source$.subscribe((status: any) => {
@@ -188,10 +186,8 @@ export class AppService {
     }
     deleteStreife(id: string): Observable<any> {
         return new Observable ((observer) => {
-            console.log('löschen')
             const source$ = this.reducer('deleteStreife', id)
             source$.subscribe((status: any) => {
-                console.log(status)
                 observer.next(status)
             })
             , (error: any) => observer.error(error)
@@ -201,7 +197,6 @@ export class AppService {
     // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
         return new Observable ((observer) => {
-            console.log(besatzung)
             const source$ = this.reducer('insertBesatzung', besatzung)
             source$.subscribe((data: any) => {
                 console.log(data.id)
@@ -211,7 +206,6 @@ export class AppService {
         })
     }
     updateBesatzung(changes: Partial<Besatzung>): Observable<any> {
-        console.log(changes)
         return new Observable ((observer) => {
             const source$ = this.reducer('updateBesatzung', changes)
             source$.subscribe((status: any) => {
@@ -221,7 +215,6 @@ export class AppService {
         })
     }
     deleteBesatzung(id: string): Observable<any> {
-        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.reducer('deleteBesatzung', id)
             source$.subscribe((status: any) => {
@@ -233,7 +226,6 @@ export class AppService {
 
     // betankung
     insertBetankung(betankung: Betankung): Observable<any> {
-        console.log(betankung)
         return new Observable ((observer) => {
             const source$ = this.reducer('insertBetankung', betankung)
             source$.subscribe((data: any) => {
@@ -243,7 +235,6 @@ export class AppService {
         })
     }
     updateBetankung(changes: Partial<Betankung>): Observable<any> {
-        console.log(changes)
         return new Observable ((observer) => {
             const source$ = this.reducer('updateBetankung', changes)
             source$.subscribe((status: any) => {
@@ -251,7 +242,6 @@ export class AppService {
         })
     }
     deleteBetankung(id: string): Observable<any> {
-        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.reducer('deleteBetankung', id)
             source$.subscribe((status: any) => {
@@ -274,7 +264,6 @@ export class AppService {
 
     // pruefvermerk
     insertReparatur(reparatur: Reparatur): Observable<any> {
-        console.log(reparatur)
         return new Observable ((observer) => {
             const source$ = this.reducer('insertReparatur', reparatur)
             source$.subscribe((data: any) => {
@@ -286,7 +275,6 @@ export class AppService {
 
     // position
     insertPosition(position: PositionReport): Observable<any> {
-        console.log(position)
         return new Observable ((observer) => {
             const source$ = this.reducer('insertPosition', position)
             source$.subscribe((data: any) => {
@@ -298,7 +286,6 @@ export class AppService {
         })
     }
     updatePosition(position: PositionReport): Observable<any> {
-        console.log(position)
         return new Observable ((observer) => {
             const source$ = this.reducer('updatePosition', position)
             source$.subscribe((data: any) => {
@@ -308,7 +295,6 @@ export class AppService {
         })
     }
     deletePosition(id: string): Observable<any> {
-        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.reducer('deletePosition', id)
             source$.subscribe((data: any) => {

@@ -101,9 +101,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))
       this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
 
-      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData)).pipe(
-        tap(data => console.log(data))
-      )
+      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
 
       this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
       this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
@@ -179,12 +177,16 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   previous(stepper: CdkStepper) {
     stepper.previous()
   }
+  stepperReset(stepper: CdkStepper) {
+    stepper.reset()
+  }
   stepperIndex(stepper: CdkStepper): boolean {
     return stepper.selectedIndex == 0 ? true : false
   }
 
-  initializePatrol() {
+  initializePatrol(stepper: CdkStepper) {
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
+    this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'vorbereitend', zweck: ''  }
     console.log(initialize)
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))

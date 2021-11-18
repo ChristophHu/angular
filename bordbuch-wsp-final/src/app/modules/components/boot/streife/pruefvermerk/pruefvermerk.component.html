@@ -23,7 +23,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Kategorie</mat-label>
-        <mat-select (selectionChange)="selectKategorie($event.value)">
+        <mat-select (selectionChange)="selectKategorie($event.value)" formControlName="kategorie">
           <mat-option *ngFor="let kategorie of kategorien$ | async" [value]="kategorie.bezeichnung">
             {{ kategorie.bezeichnung }}
           </mat-option>
@@ -31,8 +31,8 @@
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Bestandteil</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let pruefvermerk of pruefvermerke$ | async" [value]="pruefvermerk.id">
+        <mat-select formControlName="item">
+          <mat-option *ngFor="let pruefvermerk of pruefvermerke$ | async" [value]="pruefvermerk.item">
             {{ pruefvermerk.item }}
           </mat-option>
         </mat-select>
@@ -40,7 +40,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Datum/Uhrzeit</mat-label>
-        <input matInput type="datetime-local" formControlName="date" value="{{pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        <input matInput type="datetime-local" formControlName="date" value="{{ pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00' }}">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>

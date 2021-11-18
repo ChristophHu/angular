@@ -2,14 +2,14 @@
   <div class="flex w-full">
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
-    <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 tex-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol()">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 tex-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
     <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
     <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')">Streife beenden</button>
   </div>
 </tabbar>
   
-  <div class="content">
+  <div class="content overflow-hidden">
     <form [formGroup]="zweckFormGroup">
       <headline-stepper [linear]="isLinear" [status]="patrolStatus$ | async" #headlineStepper>
         <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="zweckFormGroup.get('kennung')!">
@@ -19,7 +19,7 @@
               <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg shadow-lg">
+          <div class="w-full mt-10 bg-white hover:bg-gray-50 rounded-lg shadow-lg overflow-x-hidden">
             <div class="flex flex-row p-4 justify-between border-b">
               <div>
                 <h2 class="text-2xl ">Streife</h2>
@@ -60,7 +60,7 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-10 bg-white rounded-lg shadow-lg">
+          <div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
             <div class="flex flex-row p-4 justify-between border-b">
               <div>
                 <h2 class="text-2xl font-bold">Besatzung</h2>
@@ -106,7 +106,7 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Prüfvermerke</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-10 bg-white rounded-lg shadow-lg">
+          <div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
             <div class="flex flex-row p-4 justify-between border-b">
               <div>
                 <h2 class="text-2xl font-bold">Zählerstände</h2>
@@ -137,7 +137,7 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Betankung</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-10 bg-white rounded-lg shadow-lg">
+          <div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
             <div class="flex flex-row p-4 justify-between border-b">
               <div>
                 <h2 class="text-2xl font-bold">Gefertigte Prüfvermerke</h2>
@@ -180,7 +180,7 @@
                 <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p> -->
               </div>
             </ng-template>
-            <div class="w-full mt-10 bg-white rounded-lg shadow-lg">
+            <div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
               <div class="flex flex-row p-4 justify-between border-b">
                 <div>
                   <h2 class="text-2xl font-bold">Betankung</h2>
@@ -225,7 +225,8 @@
               </div>
             </div>
             <div class="p-4 border-b hover:bg-gray-50">
-              
+              <label for="">Kontrolle erfolgt: </label>
+              <input type="checkbox" name="kontrolle" id="">
             </div>
           </div>
         </cdk-step>

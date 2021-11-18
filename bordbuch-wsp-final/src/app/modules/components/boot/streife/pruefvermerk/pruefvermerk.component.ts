@@ -64,9 +64,7 @@ export class PruefvermerkComponent implements OnInit {
 
   create() {
     const insert: Reparatur = this.pruefvermerkForm.value
-    console.log(insert)
     this.store.dispatch(ShipAction.insertReparatur({ insert }))
-    // this.appService.insertPruefvermerk(this.pruefvermerkForm.value)
     this.modal?.close()
   }
 
