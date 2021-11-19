@@ -10,6 +10,8 @@ import { PositionComponent } from '../positions/position/position.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
 import { TimelineComponent } from 'src/app/shared/components/timeline/timeline.component';
+import { ChecklisteComponent } from './checkliste/checkliste.component';
+import { ChecklistItemsComponent } from './checkliste/checklist-items/checklist-items.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { TimelineComponent } from 'src/app/shared/components/timeline/timeline.c
     PruefvermerkComponent,
     BetankungComponent,
     PositionComponent,
-    TimelineComponent
+    TimelineComponent,
+    ChecklisteComponent,
+    ChecklistItemsComponent
   ],
   imports: [
     SharedModule,

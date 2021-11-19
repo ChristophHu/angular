@@ -1,0 +1,16 @@
+<mat-form-field appearance="fill">
+  <mat-label>Bestandteil</mat-label>
+  <mat-select formControlName="funktion">
+    <mat-option *ngFor="let item of items" [value]="item.bezeichnung">
+      {{ item.bezeichnung }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<ul>
+  <li>
+    <mat-form-field *ngFOr="let item of items" appearance="fill">
+      <mat-label>item.bezeichnung</mat-label>
+      <input type="checkbox" [value]="item.bezeichnung">
+    </mat-form-field>
+  </li>
+</ul>
