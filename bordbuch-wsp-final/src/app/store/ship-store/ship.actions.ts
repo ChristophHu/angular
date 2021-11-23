@@ -5,6 +5,7 @@ import { Betankung } from "src/app/core/model/betankung"
 import { Patrol } from "src/app/core/model/patrol.model"
 import { Reparatur } from "src/app/core/model/reparatur"
 import { Ship } from "src/app/core/model/ship.model"
+import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component"
 
 // load ship
 export const loadShip = createAction(
@@ -113,11 +114,19 @@ export const deletePatrolBesatzung = createAction(
 	props<{ id: string }>()
 )
 
+// peilung
+export const loadPeilung = createAction(
+	"[Ship Resolver] Load Peilung",
+	props<{ id_ship: string }>()
+)
+export const loadedPeilung = createAction(
+	"[Ship Resolver] Loaded Peilung",
+	props<{ peilungen: Peilung[] }>()
+)
+
 export const resetStore = createAction(
 	"[Auswahl] Store reset"
 )
-
-
 
 // entitystate test
 // export const selectBesatzung = createAction(

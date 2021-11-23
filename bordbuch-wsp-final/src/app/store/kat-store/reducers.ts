@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded } from "./actions"
+import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedChecklistItems } from "./actions"
 import { State } from "./state"
 
 export const initialDataState: State = {
@@ -8,6 +8,7 @@ export const initialDataState: State = {
     pruefvermerkKategorien: undefined,
     zaehlerstandstypen: undefined,
     dienststellen: undefined,
+    checklistitems: undefined,
     isAllDataLoaded: false
 }
 
@@ -15,27 +16,38 @@ export const reducer = createReducer(
     initialDataState,
     on(allShipLoaded, (state, action) => {
         return {
-            shipSelection: action.shipSelection, pruefvermerke: state.pruefvermerke, pruefvermerkKategorien: state.pruefvermerkKategorien, zaehlerstandstypen: state.zaehlerstandstypen, dienststellen: state.dienststellen, isAllDataLoaded: false
+            ...state,
+            shipSelection: action.shipSelection
         }
     }),
     on(pruefvermerkeLoaded, (state, action) => {
         return {
-            shipSelection: state.shipSelection, pruefvermerke: action.pruefvermerke, pruefvermerkKategorien: state.pruefvermerkKategorien, zaehlerstandstypen: state.zaehlerstandstypen, dienststellen: state.dienststellen, isAllDataLoaded: false
+            ...state,
+            pruefvermerke: action.pruefvermerke
         }
     }),
     on(pruefvermerkKategorienLoaded, (state, action) => {
         return {
-            shipSelection: state.shipSelection, pruefvermerke: state.pruefvermerke, pruefvermerkKategorien: action.pruefvermerkKategorien, zaehlerstandstypen: state.zaehlerstandstypen, dienststellen: state.dienststellen, isAllDataLoaded: false
+            ...state,
+            pruefvermerkKategorien: action.pruefvermerkKategorien
         }
     }),
     on(zaehlerstandstypenLoaded, (state, action) => {
         return {
-            shipSelection: state.shipSelection, pruefvermerke: state.pruefvermerke, pruefvermerkKategorien: state.pruefvermerkKategorien, zaehlerstandstypen: action.zaehlerstandstypen, dienststellen: state.dienststellen, isAllDataLoaded: false
+            ...state,
+            zaehlerstandstypen: action.zaehlerstandstypen
         }
     }),
     on(dienststellenLoaded, (state, action) => {
         return {
-            shipSelection: state.shipSelection, pruefvermerke: state.pruefvermerke, pruefvermerkKategorien: state.pruefvermerkKategorien, zaehlerstandstypen: state.zaehlerstandstypen, dienststellen: action.dienststellen, isAllDataLoaded: false
+            ...state,
+            dienststellen: action.dienststellen
+        }
+    }),
+    on(loadedChecklistItems, (state, action) => {
+        return {
+            ...state,
+            checklistitems: action.items
         }
     })
 )

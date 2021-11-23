@@ -77,3 +77,13 @@ export const selectBetankungen = createSelector(
     selectShipState,
     state => state.betankungen
 )
+
+// peilung
+export const selectPeilungen = createSelector(
+    selectShipState,
+    state => state.peilungen
+)
+export const selectPeilungenById = (id: string) => createSelector(
+    selectPeilungen,
+    peilungen => peilungen?.find(el => el.id == id)
+)

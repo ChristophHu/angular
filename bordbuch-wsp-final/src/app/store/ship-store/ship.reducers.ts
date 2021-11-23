@@ -1,4 +1,4 @@
-import { createReducer, on } from "@ngrx/store"
+import { createReducer, on, Store } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
 import { Patrol } from "src/app/core/model/patrol.model"
@@ -18,12 +18,14 @@ export const shipReducer = createReducer(
     initialDataState,
     on(ShipAction.shipLoaded, (state, action) => {
         return {
-            ship: action.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
+            ...state,
+            ship: action.ship
         }
     }),
     on(ShipAction.patrolLoaded, (state, action) => {
         return {
-            ship: state.ship, patrol: action.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
+            ...state,
+            patrol: action.patrol
         }
     }),
     on(ShipAction.initializePatrol, (state, action) => {
@@ -56,12 +58,14 @@ export const shipReducer = createReducer(
     
     on(ShipAction.reparaturenLoaded, (state, action) => {
         return {
-            ship: state.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: action.reparaturen, betankungen: state.betankungen, isAllDataLoaded: false
+            ...state,
+            reparaturen: action.reparaturen
         }
     }),
     on(ShipAction.betankungenLoaded, (state, action) => {
         return {
-            ship: state.ship, patrol: state.patrol, zaehlerstaende: state.zaehlerstaende, reparaturen: state.reparaturen, betankungen: action.betankungen, isAllDataLoaded: false
+            ...state,
+            betankungen: action.betankungen
         }
     }),
 
@@ -112,6 +116,13 @@ export const shipReducer = createReducer(
         return {
             ...state,
             reparaturen: clearedPruefvermerk
+        }
+    }),
+    //peilungen
+    on(ShipAction.loadedPeilung, (state, action) => {
+        return {
+            ...state,
+            peilungen: action.peilungen
         }
     }),
     on(ShipAction.resetStore, (state, action)  => {

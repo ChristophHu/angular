@@ -37,3 +37,15 @@ export const selectpruefvermerkeByKategorie = (kategorie: string) =>createSelect
     selectpruefvermerke,
     pruefvermerk => pruefvermerk!.filter(el => el.kategorie == kategorie)
 )
+export const selectAllChecklistItems = createSelector(
+    katState,
+    state => state.checklistitems
+)
+export const checkedChecklistItems = createSelector(
+    selectAllChecklistItems,
+    items => items!.filter(el => el.isChecked == true)
+)
+export const uncheckedChecklistItems = createSelector(
+    selectAllChecklistItems,
+    items => items!.filter(el => el.isChecked == false)
+)

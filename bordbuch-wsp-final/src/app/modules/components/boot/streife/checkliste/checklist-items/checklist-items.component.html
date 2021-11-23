@@ -1,16 +1,45 @@
-<mat-form-field appearance="fill">
-  <mat-label>Bestandteil</mat-label>
-  <mat-select formControlName="funktion">
-    <mat-option *ngFor="let item of items" [value]="item.bezeichnung">
-      {{ item.bezeichnung }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<ul>
-  <li>
-    <mat-form-field *ngFOr="let item of items" appearance="fill">
-      <mat-label>item.bezeichnung</mat-label>
-      <input type="checkbox" [value]="item.bezeichnung">
-    </mat-form-field>
-  </li>
-</ul>
+<app-modal #modalComponent>
+  <header class="h-16 p-8 flex items-center justify-between border-b">
+    <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+      {{ title }}
+    </p>
+    <button (click)="cancel()"
+      class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+      <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+    </button>
+  </header>
+  <div class="content">
+    <div class="ml-5">
+      <form [formGroup]="checklistForm">
+        <h2 class="mt-2 text-xl">Fehlende oder verbrauchte Gegenstände</h2>
+        <ul class="mb-5 border-b">
+          <li class="mb-2" *ngFor="let item of unchecked$ | async">
+            <input type="checkbox" [checked]="item.isChecked">
+            <mat-label> {{ item.bezeichnung }}</mat-label>
+          </li>
+        </ul>
+        <h2 class="mt-2 text-xl">Gegenstände</h2>
+        <ul>
+          <li class="mb-2" *ngFor="let item of checked$ | async">
+            <input type="checkbox" [checked]="item.isChecked">
+            <mat-label> {{ item.bezeichnung }}</mat-label>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+  <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+      <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+  </footer>
+</app-modal>
+
+<ng-template #toolbar>
+<div>
+  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+  <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+</div>
+<div>
+  <!-- <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+  <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+</div>
+</ng-template>

@@ -12,6 +12,8 @@ import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
 import { TimelineComponent } from 'src/app/shared/components/timeline/timeline.component';
 import { ChecklisteComponent } from './checkliste/checkliste.component';
 import { ChecklistItemsComponent } from './checkliste/checklist-items/checklist-items.component';
+import { PeilungComponent } from './peilung/peilung.component';
+import { PeilungModalComponent } from './peilung/peilung-modal/peilung-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ChecklistItemsComponent } from './checkliste/checklist-items/checklist-
     PositionComponent,
     TimelineComponent,
     ChecklisteComponent,
-    ChecklistItemsComponent
+    ChecklistItemsComponent,
+    PeilungComponent,
+    PeilungModalComponent
   ],
   imports: [
     SharedModule,

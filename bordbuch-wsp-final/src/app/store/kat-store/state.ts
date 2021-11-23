@@ -1,3 +1,4 @@
+import { Checklistitem } from "src/app/core/model/checklistitem.model";
 import { Dienststelle } from "src/app/core/model/dienststelle.model";
 import { PruefvermerkKategorien } from "src/app/core/model/pruefvermerk-kategorie.model";
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model";
@@ -10,5 +11,6 @@ export interface State {
     pruefvermerkKategorien: PruefvermerkKategorien[] | undefined
     zaehlerstandstypen: Zaehlerstandstyp[] | undefined
     dienststellen: Dienststelle[] | undefined
+    checklistitems: Checklistitem[] | undefined
     isAllDataLoaded: boolean
 }

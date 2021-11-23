@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { interval, Observable, Subscription } from 'rxjs';
+import { from, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { ShipSelectors } from 'src/app/store/ship-store';
@@ -399,6 +399,31 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getDienststellen', {})
             source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getChecklistItems(id: string = '1'): Observable<any> {
+        return new Observable ((observer) => {
+            from([
+                [
+                    { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
+                    { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
+                    { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
+                ]
+            ]).subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getPeilung(id: string = '1'): Observable<any> {
+        return new Observable ((observer) => {
+            from([
+                [
+                    { id: '1', id_schiff: '1',  tank: 'Haupttank', menge: 123, date: new Date() },
+                    { id: '2', id_schiff: '1',  tank: 'Generatortank', menge: 50, date: new Date() }
+                ]
+            ]).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

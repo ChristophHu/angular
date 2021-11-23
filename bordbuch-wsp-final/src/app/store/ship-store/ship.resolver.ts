@@ -26,6 +26,7 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(ShipAction.loadPatrol({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadReparaturen({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadBetankungen({ id_ship: route.params[route.data.param] }))
+                    this.store.dispatch(ShipAction.loadPeilung({ id_ship: route.params[route.data.param] }))
 
                     // positions
                     this.store.dispatch(PositionActions.loadAllData({ id_ship: route.params[route.data.param] }))
@@ -34,7 +35,7 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(ZaehlerstandAction.loadAllData({ id_ship: route.params[route.data.param] }))
 
                     // lastPositions
-                    this.store.dispatch(LastPositionActions.loadData())
+                    this.store.dispatch(LastPositionActions.loadData())                   
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

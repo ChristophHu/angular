@@ -6,6 +6,7 @@ import { Patrol } from 'src/app/core/model/patrol.model'
 import { Reparatur } from 'src/app/core/model/reparatur'
 import { Ship } from 'src/app/core/model/ship.model'
 import { AppService } from 'src/app/core/services/app.service'
+import { Peilung } from 'src/app/modules/components/boot/streife/peilung/peilung.component'
 import { ShipAction } from '.'
  
 @Injectable()
@@ -147,6 +148,18 @@ export class ShipEffects {
             })
         )
     }, { dispatch: false })
+
+    // peilung
+    loadPeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.loadPeilung),
+            switchMap(action => {
+                return this.appService.getPeilung(action.id_ship).pipe(
+                    map((peilungen: Peilung[]) => ShipAction.loadedPeilung({ peilungen }))
+                )
+            })
+        )
+    })
     
 
     constructor(private actions$: Actions, private appService: AppService ) {}

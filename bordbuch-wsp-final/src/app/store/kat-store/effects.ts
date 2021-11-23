@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map } from 'rxjs/operators'
+import { Checklistitem } from 'src/app/core/model/checklistitem.model'
 import { Dienststelle } from 'src/app/core/model/dienststelle.model'
 import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems } from './actions'
  
 @Injectable()
 export class Effects {
@@ -44,6 +45,13 @@ export class Effects {
             ofType(loadDienststellen),
             concatMap(action => this.appService.getDienststellen()),
             map((dienststellen: Dienststelle[]) => dienststellenLoaded({ dienststellen }))
+        )
+    })
+    loadChecklistItems$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadChecklistItems),
+            concatMap(action => this.appService.getChecklistItems('1')),
+            map((items: Checklistitem[]) => loadedChecklistItems({ items }))
         )
     })
 

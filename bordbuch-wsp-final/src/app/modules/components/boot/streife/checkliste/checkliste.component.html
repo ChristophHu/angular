@@ -3,18 +3,17 @@
     <div>
       <h2 class="text-2xl font-bold">Checkliste</h2>
       <p class="text-sm text-gray-500">
-        Durch die Zuhilfenahme der Checkliste konnen fehlende oder abhanden gekommene Ausstattungsgegenstände erkannt
+        Durch die Zuhilfenahme der Checkliste konnen verbrauchte oder abhanden gekommene Ausstattungsgegenstände erkannt
         werden.
       </p>
     </div>
     <div>
-      <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer"
-        (click)="openChecklisteModal()">
+      <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer" (click)="openChecklisteModal()">
         <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
       </button>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50">
-    Test
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let item of fehlendeItems$ | async">
+    {{ item.bezeichnung }}
   </div>
 </div>
