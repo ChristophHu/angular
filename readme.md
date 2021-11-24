@@ -345,6 +345,55 @@ https://rodrigokamada.medium.com/adding-the-map-leaflet-component-to-an-angular-
 
 https://medium.com/@ZombieCodeKill/angular-ngrx-getting-started-f0202e0eba47
 
+## NgRx-Facades
+
+![https://miro.medium.com/max/1346/1*fjwlk2CVF4Y0MS_sADwqmA.jpeg](https://miro.medium.com/max/1346/1*fjwlk2CVF4Y0MS_sADwqmA.jpeg)
+
+![https://miro.medium.com/max/1354/1*-vkURnukSMKCErX2iktn1w.jpeg](https://miro.medium.com/max/1354/1*-vkURnukSMKCErX2iktn1w.jpeg)
+
+### Vorbereitung
+
+Unter `src/app/` wird eine neue Komponente `Cars` erstellt. Dazu werden die Ordner `store` und `service` hinzugefügt.
+
+Angular CLI und Core solte aktualisiert werden!
+
+```bash
+ng add @ngrx/store@latest
+ng add @ngrx/store-devtools@latest
+ng add @ngrx/router-store@latest
+```
+
+In die `app-module.ts`:
+
+```typescript
+import { StoreModule } from '@ngrx/store'
+...
+StoreModule.forRoot({})
+```
+
+Diese kann auch in eine separate Datei `root-store.module.ts` ausgelagert werden:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({}),
+    StoreRouterConnectingModule.forRoot()
+  ]
+})
+export class RootStoreModule { }
+```
+
+
+
 
 
 ## Markdown
