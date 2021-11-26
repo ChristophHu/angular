@@ -22,15 +22,3 @@ export interface BesatzungState extends EntityState<Besatzung> {
     selectedId: string | null;
 }
 export const adapter: EntityAdapter<Besatzung> = createEntityAdapter<Besatzung>()
-
-
-// export const adapter = createEntityAdapter<any>({
-//     // sortComparer: compareData,
-//     // selectIds: data => data.id    
-// });
-
-// export const initialDataState = adapter.getInitialState({
-//     isAllDataLoaded: false
-// })
-
-// export const { selectAll } = adapter.getSelectors()

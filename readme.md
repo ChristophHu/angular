@@ -119,7 +119,7 @@ https://balramchavan.medium.com/best-practices-building-angular-services-using-f
 >
 > <p style="color: gray;">Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides: Entwurfsmuster. 5. Auflage. Addison-Wesley, 1996, S. 212
 
-Angular Services stellen Anwendungsdaten und Geschäftslogik bereit. Komponenten sollen diese Daten übernehmen und als Bindeglied zwischen View und DIenst fungieren.
+Angular Services stellen Anwendungsdaten und Geschäftslogik bereit. Komponenten sollen diese Daten übernehmen und als Bindeglied zwischen View und Dienst fungieren.
 
 Um alle Dienst anzubinden, werden diese entweder in einem einzigen Service implementiert oder es müssen alle verteilten Services angebunden werden.
 
@@ -361,6 +361,8 @@ Angular CLI und Core solte aktualisiert werden!
 ng add @ngrx/store@latest
 ng add @ngrx/store-devtools@latest
 ng add @ngrx/router-store@latest
+ng add @ngrx/effects@latest
+ng add @ngrx/entity@latest
 ```
 
 In die `app-module.ts`:
