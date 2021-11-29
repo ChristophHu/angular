@@ -13,14 +13,14 @@
       <form [formGroup]="checklistForm">
         <h2 class="mt-2 text-xl">Fehlende oder verbrauchte Gegenstände</h2>
         <ul class="mb-5 border-b">
-          <li class="mb-2" *ngFor="let item of unchecked$ | async">
+          <li class="mb-2" *ngFor="let item of unchecked$ | async" (click)="toggleitem(item)">
             <input type="checkbox" [checked]="item.isChecked">
             <mat-label> {{ item.bezeichnung }}</mat-label>
           </li>
         </ul>
         <h2 class="mt-2 text-xl">Gegenstände</h2>
         <ul>
-          <li class="mb-2" *ngFor="let item of checked$ | async">
+          <li class="mb-2" *ngFor="let item of checked$ | async" (click)="toggleitem(item)">
             <input type="checkbox" [checked]="item.isChecked">
             <mat-label> {{ item.bezeichnung }}</mat-label>
           </li>

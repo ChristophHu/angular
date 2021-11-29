@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
+import { Checklistitem } from 'src/app/core/model/checklistitem.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
+import { RootStoreState } from 'src/app/store/root-store.state';
 import { ChecklistItemsComponent } from './checklist-items/checklist-items.component';
 
-export interface ChecklistItem {
-  id: string
-  bezeichnung: string
-}
 
 @Component({
   selector: 'app-checkliste',
@@ -15,13 +15,11 @@ export interface ChecklistItem {
 })
 export class ChecklisteComponent implements OnInit {
 
-  fehlendeItems$: Observable<ChecklistItem[]> = from([
-    [
-      { id: '1', bezeichnung: 'Horn' }
-    ]
-  ])
+  fehlendeItems$: Observable<Checklistitem[]>
 
-  constructor(private modalService: ModalService<ChecklistItemsComponent>) { }
+  constructor(private store: Store<RootStoreState>, private modalService: ModalService<ChecklistItemsComponent>) {
+    this.fehlendeItems$ = this.store.pipe(select(KatSelectors.uncheckedChecklistItems)) as Observable<Checklistitem[]>
+  }
 
   ngOnInit(): void {
   }

@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
 import { from, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { Peilung } from 'src/app/modules/components/boot/streife/peilung/peilung.component';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { ShipSelectors } from 'src/app/store/ship-store';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
+import { Checklistitem } from '../model/checklistitem.model';
 import { Patrol } from '../model/patrol.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
@@ -25,6 +28,17 @@ export class AppService {
 
     private _positionSubscription = new Subscription
     private i: Observable<number> = interval(3*60*1000)
+
+    peilung = [
+        { id: '1', id_schiff: '1',  tank: 'Haupttank', menge: 123, date: new Date() },
+        { id: '2', id_schiff: '1',  tank: 'Generatortank', menge: 50, date: new Date() }
+    ]
+
+    items: Checklistitem[] = [
+        { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
+        { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
+        { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
+    ]
 
     constructor(
         private httpClient: HttpClient,
@@ -405,27 +419,37 @@ export class AppService {
     }
     getChecklistItems(id: string = '1'): Observable<any> {
         return new Observable ((observer) => {
-            from([
-                [
-                    { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
-                    { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
-                    { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
-                ]
-            ]).subscribe((data: any) => {
+            from([this.items]).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }
+    updateChecklistItem(item: Checklistitem): Observable<any> {
+        return new Observable ((observer) => {
+    	    this.items = this.items.filter(el => el.id != item.id)
+            this.items.push(item)
+            console.log(this.items)
+        })
+    }
+    
     getPeilung(id: string = '1'): Observable<any> {
         return new Observable ((observer) => {
-            from([
-                [
-                    { id: '1', id_schiff: '1',  tank: 'Haupttank', menge: 123, date: new Date() },
-                    { id: '2', id_schiff: '1',  tank: 'Generatortank', menge: 50, date: new Date() }
-                ]
-            ]).subscribe((data: any) => {
+            from([this.peilung]).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
+        })
+    }
+    updatePeilung(peil: Peilung): Observable<any> {
+        return new Observable ((observer) => {
+            this.peilung = this.peilung.filter(el => el.id != peil.id)
+            this.peilung.push(peil)
+            console.log(this.peilung)
+
+            // const source$ = this.reducer('updatePosition', position)
+            // source$.subscribe((data: any) => {
+        //     observer.next(peil)
+        //     })
+        //     , (error: any) => observer.error(error)
         })
     }
 

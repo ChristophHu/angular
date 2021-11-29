@@ -160,6 +160,15 @@ export class ShipEffects {
             })
         )
     })
+    updatePeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updatePeilung),
+            tap(val => console.log(val)),
+            switchMap(action => {
+                return this.appService.updatePeilung(action.peilung)
+            })
+        )
+    })
     
 
     constructor(private actions$: Actions, private appService: AppService ) {}

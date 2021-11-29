@@ -52,3 +52,8 @@ export const loadedChecklistItems = createAction(
 	props<{ items: Checklistitem[] }>()
 )
 
+export const updateChecklistItem = createAction(
+	"[Modal Checklistitems] Update Checklistitems",
+	props<{ item: Checklistitem }>()
+)
+

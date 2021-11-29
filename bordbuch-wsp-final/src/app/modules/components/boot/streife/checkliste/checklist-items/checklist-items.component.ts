@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Checklistitem } from 'src/app/core/model/checklistitem.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { KatSelectors } from 'src/app/store/kat-store';
+import { KatAction, KatSelectors } from 'src/app/store/kat-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 
 @Component({
@@ -35,6 +35,11 @@ export class ChecklistItemsComponent implements OnInit {
       this.title = data.data.title      
       // this.besatzungForm.patchValue(data.data.besatzung)
     })
+  }
+
+  toggleitem(item: Checklistitem) {
+    item = Object.assign({}, item, { isChecked: !item.isChecked })
+    this.store.dispatch(KatAction.updateChecklistItem({ item }))
   }
 
   cancel() {

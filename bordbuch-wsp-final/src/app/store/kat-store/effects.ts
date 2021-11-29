@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map } from 'rxjs/operators'
+import { concatMap, map, switchMap } from 'rxjs/operators'
 import { Checklistitem } from 'src/app/core/model/checklistitem.model'
 import { Dienststelle } from 'src/app/core/model/dienststelle.model'
 import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
@@ -8,7 +8,7 @@ import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems, updateChecklistItem } from './actions'
  
 @Injectable()
 export class Effects {
@@ -54,6 +54,15 @@ export class Effects {
             map((items: Checklistitem[]) => loadedChecklistItems({ items }))
         )
     })
+
+    updateChecklistItem$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateChecklistItem),
+            // switchMap(action => {
+            //     return this.appService.updateChecklistItem(action.item)
+            // })
+        )
+    }, { dispatch: false })
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }

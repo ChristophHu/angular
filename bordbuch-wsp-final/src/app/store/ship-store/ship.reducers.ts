@@ -3,6 +3,7 @@ import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
 import { Patrol } from "src/app/core/model/patrol.model"
 import { Reparatur } from "src/app/core/model/reparatur"
+import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component"
 import { ShipAction } from "."
 import { State } from "./ship.state"
 
@@ -123,6 +124,16 @@ export const shipReducer = createReducer(
         return {
             ...state,
             peilungen: action.peilungen
+        }
+    }),
+    on(ShipAction.updatePeilung, (state, action) => {
+        let clearedPeilungen = [...state.peilungen!]
+        clearedPeilungen = clearedPeilungen.filter(el => el.id != action.peilung.id)
+        clearedPeilungen.push(action.peilung)
+
+        return {
+            ...state,
+            peilungen: clearedPeilungen
         }
     }),
     on(ShipAction.resetStore, (state, action)  => {

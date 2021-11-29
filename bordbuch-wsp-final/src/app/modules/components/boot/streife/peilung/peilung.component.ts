@@ -31,7 +31,7 @@ export class PeilungComponent implements OnInit {
     this.peilungen$ = this.store.pipe(select(ShipSelectors.selectPeilungen)) as Observable<Peilung[]>
   }
 
-  async openPeilungModal(id: string) {
+  async openPeilungModal(id: string): Promise<void> {
     const { PeilungModalComponent } = await import(
       './peilung-modal/peilung-modal.component'
     )
@@ -44,7 +44,5 @@ export class PeilungComponent implements OnInit {
         }
       })
     })
-
   }
-
 }

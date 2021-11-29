@@ -123,6 +123,10 @@ export const loadedPeilung = createAction(
 	"[Ship Resolver] Loaded Peilung",
 	props<{ peilungen: Peilung[] }>()
 )
+export const updatePeilung = createAction(
+	"[Modal Peilung] Update Peilung",
+	props<{ peilung: Peilung }>()
+)
 
 export const resetStore = createAction(
 	"[Auswahl] Store reset"
