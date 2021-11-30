@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Patrol } from 'src/app/core/model/patrol.model';
@@ -51,7 +51,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   ]
 
   kennungen: any[] = [
-    // { id: 0, bezeichnung: "" },
+    { id: 0, bezeichnung: "" },
     { id: 1, bezeichnung: "Nixe 1" },
     { id: 2, bezeichnung: "Nixe 2" },
     { id: 3, bezeichnung: "Nixe 3" },
