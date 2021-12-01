@@ -14,6 +14,7 @@ import { ChecklisteComponent } from './checkliste/checkliste.component';
 import { ChecklistItemsComponent } from './checkliste/checklist-items/checklist-items.component';
 import { PeilungComponent } from './peilung/peilung.component';
 import { PeilungModalComponent } from './peilung/peilung-modal/peilung-modal.component';
+import { WartungComponent } from './wartung/wartung.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PeilungModalComponent } from './peilung/peilung-modal/peilung-modal.com
     ChecklisteComponent,
     ChecklistItemsComponent,
     PeilungComponent,
-    PeilungModalComponent
+    PeilungModalComponent,
+    WartungComponent
   ],
   imports: [
     SharedModule,

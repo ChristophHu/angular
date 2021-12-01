@@ -210,9 +210,22 @@
             </div>
             <peilung></peilung>
         </cdk-step>
-      <cdk-step>
-        <app-checkliste></app-checkliste>
-      </cdk-step>
+        <cdk-step>
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Checkliste</h4>
+            </div>
+          </ng-template>
+          <app-checkliste></app-checkliste>
+        </cdk-step>
+        <cdk-step>
+          <ng-template cdkStepLabel>
+            <div class="ml-5">
+              <h4 class="text-2xl text-blue-600">Wartung</h4>
+            </div>
+          </ng-template>
+          <wartung></wartung>
+        </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>
             <div class="ml-5">

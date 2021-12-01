@@ -1,0 +1,47 @@
+<div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
+    <div class="flex flex-row p-4 justify-between border-b">
+      <div>
+        <h2 class="text-2xl font-bold">Wartung</h2>
+        <p class="text-sm text-gray-500">
+          Anzeige der Betriebstunden und Tage bis zum nächsten Durchsicht bei der Bootswerkstatt.
+        </p>
+      </div>
+      <!-- <div>
+        <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer">
+          <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
+        </button>
+      </div> -->
+    </div>
+    <div class="p-4 border-b hover:bg-gray-50" *ngFor="let schif of schiff">
+      <h2 class="mb-2 text-xl">Schiff</h2>
+      <div class="flex flex-row justify-between">
+        <!-- <div class="flex flex-row flex-grow">
+          <p class="w-18 text-gray-600 mr-2">Betriebsstunden:</p>
+          <p class="">{{ schif.betriebstunden }}</p>
+        </div> -->
+        <div class="flex flex-row justify-between">
+            <div class="flex flex-row flex-grow">
+                <p class="w-24 text-gray-600 mr-2">Vorführdatum: </p>
+                <p class="w-32">{{ schif.date }}</p>
+            </div>
+            <div class="flex flex-row">
+                <p class="w-24 text-gray-600 mr-2">Tage bis zur Wartung: </p>
+                <p class="w-32">15</p>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 border-b hover:bg-gray-50" *ngFor="let moto of motor">
+        <h2 class="mb-2 text-xl">{{ moto.bezeichnung }}</h2>
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-row flex-grow">
+            <p class="w-18 text-gray-600 mr-2">Betriebsstunden: </p>
+            <p class="">{{ moto.betriebsstunden }}</p>
+          </div>
+          <div class="flex flex-row">
+            <p class="w-24 text-gray-600 mr-2">Offene Betriebsstunden:</p>
+            <p class="w-32">25:00</p>
+          </div>
+        </div>
+      </div>
+  </div>
