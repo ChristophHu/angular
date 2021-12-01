@@ -5,6 +5,10 @@ import { Zaehlerstandstyp } from "src/app/core/model/zaehlerstandstyp"
 import { Dienststelle } from "src/app/core/model/dienststelle.model"
 import { PruefvermerkKategorien } from "src/app/core/model/pruefvermerk-kategorie.model"
 import { Checklistitem } from "src/app/core/model/checklistitem.model"
+import { Zweck } from "src/app/core/model/zwecke.model"
+import { Kennung } from "src/app/core/model/kennung.model"
+import { Betriebsstoff } from "src/app/core/model/Betriebsstoff.model"
+import { Funktion } from "src/app/core/model/funktion.model"
 
 // load data
 export const loadAllShip = createAction(
@@ -24,6 +28,18 @@ export const loadDienststellen = createAction(
 )
 export const loadChecklistItems = createAction(
 	"[Kat Resolver] Load Checklistitems"
+)
+export const loadBetriebsstoffe = createAction(
+	"[Kat Resolver] Load Betriebsstoffe"
+)
+export const loadFunktionen = createAction(
+	"[Kat Resolver] Load Funktionen"
+)
+export const loadKennungen = createAction(
+	"[Kat Resolver] Load Kennungen"
+)
+export const loadZwecke = createAction(
+	"[Kat Resolver] Load Zwecke"
 )
 
 // store loaded data
@@ -50,6 +66,22 @@ export const dienststellenLoaded = createAction(
 export const loadedChecklistItems = createAction(
 	"[Load Kat Effect] Checklistitems Loaded",
 	props<{ items: Checklistitem[] }>()
+)
+export const loadedBetriebsstoffe = createAction(
+	"[Load Kat Effect] Loaded Betriebsstoffe",
+	props<{ betriebsstoffe: Betriebsstoff[] }>()
+)
+export const loadedFunktionen = createAction(
+	"[Load Kat Effect] Loaded Funktionen",
+	props<{ funktionen: Funktion[] }>()
+)
+export const loadedKennungen = createAction(
+	"[Load Kat Effect] Loaded Kennungen",
+	props<{ kennungen: Kennung[] }>()
+)
+export const loadedZwecke = createAction(
+	"[Load Kat Effect] Loaded Zwecke",
+	props<{ zwecke: Zweck[] }>()
 )
 
 export const updateChecklistItem = createAction(

@@ -1,9 +1,13 @@
+import { Betriebsstoff } from "src/app/core/model/Betriebsstoff.model";
 import { Checklistitem } from "src/app/core/model/checklistitem.model";
 import { Dienststelle } from "src/app/core/model/dienststelle.model";
+import { Funktion } from "src/app/core/model/funktion.model";
+import { Kennung } from "src/app/core/model/kennung.model";
 import { PruefvermerkKategorien } from "src/app/core/model/pruefvermerk-kategorie.model";
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model";
 import { ShipSelection } from "src/app/core/model/ship-selection.model";
 import { Zaehlerstandstyp } from "src/app/core/model/zaehlerstandstyp";
+import { Zweck } from "src/app/core/model/zwecke.model";
 
 export interface State {
     shipSelection: ShipSelection[] | undefined
@@ -12,5 +16,9 @@ export interface State {
     zaehlerstandstypen: Zaehlerstandstyp[] | undefined
     dienststellen: Dienststelle[] | undefined
     checklistitems: Checklistitem[] | undefined
+    betriebsstoffe: Betriebsstoff[] | undefined
+    funktionen: Funktion[] | undefined
+    zwecke: Zweck[] | undefined
+    kennungen: Kennung[] | undefined
     isAllDataLoaded: boolean
 }

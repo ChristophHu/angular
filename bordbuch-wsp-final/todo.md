@@ -13,8 +13,3 @@
 ### Rest
 
 [] - clustern von Schiffen und Positionen mit Anzahl dort hinterlegter Punkte
-
-
-## DB
-
-Hey, wir brauchen ein paar neue Tabellen... 

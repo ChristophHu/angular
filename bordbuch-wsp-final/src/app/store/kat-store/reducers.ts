@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
 import { Checklistitem } from "src/app/core/model/checklistitem.model"
-import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedChecklistItems, updateChecklistItem } from "./actions"
+import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedChecklistItems, updateChecklistItem, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen } from "./actions"
 import { State } from "./state"
 
 export const initialDataState: State = {
@@ -10,6 +10,10 @@ export const initialDataState: State = {
     zaehlerstandstypen: undefined,
     dienststellen: undefined,
     checklistitems: undefined,
+    betriebsstoffe: undefined,
+    funktionen: undefined,
+    kennungen: undefined,
+    zwecke: undefined,
     isAllDataLoaded: false
 }
 
@@ -43,6 +47,30 @@ export const reducer = createReducer(
         return {
             ...state,
             dienststellen: action.dienststellen
+        }
+    }),
+    on(loadedBetriebsstoffe, (state, action) => {
+        return {
+            ...state,
+            betriebsstoffe: action.betriebsstoffe
+        }
+    }),
+    on(loadedFunktionen, (state, action) => {
+        return {
+            ...state,
+            funktionen: action.funktionen
+        }
+    }),
+    on(loadedKennungen, (state, action) => {
+        return {
+            ...state,
+            kennungen: action.kennungen
+        }
+    }),
+    on(loadedZwecke, (state, action) => {
+        return {
+            ...state,
+            zwecke: action.zwecke
         }
     }),
     on(loadedChecklistItems, (state, action) => {

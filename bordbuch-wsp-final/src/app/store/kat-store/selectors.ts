@@ -55,3 +55,27 @@ export const selectChecklistItemsById = (id: string) => createSelector(
     selectAllChecklistItems,
     items => items!.find(el => el.id == id)
 )
+
+// betriebsstoffe
+export const selectAllBetriebsstoffe = createSelector(
+    katState,
+    state => state.betriebsstoffe
+)
+
+// funktionen
+export const selectAllFunktionen = createSelector(
+    katState,
+    state => state.funktionen
+)
+
+// kennungen
+export const selectAllKennungen = createSelector(
+    katState,
+    state => state.kennungen
+)
+
+// zwecke
+export const selectAllZwecke = createSelector(
+    katState,
+    state => state.zwecke
+)

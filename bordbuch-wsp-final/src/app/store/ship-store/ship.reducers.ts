@@ -69,6 +69,12 @@ export const shipReducer = createReducer(
             betankungen: action.betankungen
         }
     }),
+    on(ShipAction.loadedTank, (state, action) => {
+        return {
+            ...state,
+            tanks: action.tanks
+        }
+    }),
 
     // besatzung
     on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {

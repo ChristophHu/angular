@@ -31,7 +31,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Funktion</mat-label>
               <mat-select formControlName="funktion">
-                <mat-option *ngFor="let funktion of funktionen" [value]="funktion.bezeichnung">
+                <mat-option *ngFor="let funktion of (funktionen$ | async)" [value]="funktion.bezeichnung">
                   {{ funktion.bezeichnung }}
                 </mat-option>
               </mat-select>

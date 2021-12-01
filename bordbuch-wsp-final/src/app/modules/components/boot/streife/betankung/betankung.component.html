@@ -46,8 +46,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Was wurde getankt</mat-label>
         <mat-select formControlName="fuel">
-          <mat-option *ngFor="let w of was" [value]="w.bezeichnung">
-            {{ w.bezeichnung }}
+          <mat-option *ngFor="let betriebsstoff of (betriebsstoffe$ | async)" [value]="betriebsstoff.bezeichnung">
+            {{ betriebsstoff.bezeichnung }}
           </mat-option>
         </mat-select>
       </mat-form-field>

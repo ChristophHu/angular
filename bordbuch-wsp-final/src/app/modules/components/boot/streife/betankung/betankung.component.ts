@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Update } from '@ngrx/entity';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Betankung } from 'src/app/core/model/betankung';
+import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model';
 import { Position } from 'src/app/core/model/position';
 import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
 @Component({
@@ -22,12 +25,7 @@ export class BetankungComponent implements OnInit {
   betankungForm: FormGroup
   location!: Position
   
-  // zweck
-  was: any[] = [
-    { id: 1, bezeichnung: "Diesel" },
-    { id: 2, bezeichnung: "Benzin" },
-    { id: 3, bezeichnung: "Motorenoel" }
-  ]
+  betriebsstoffe$: Observable<Betriebsstoff[]>
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -35,18 +33,20 @@ export class BetankungComponent implements OnInit {
     private modalService: ModalService<BetankungComponent>, 
     private appService: AppService,
     private locationService: LocationService) {
-    this.betankungForm = this._formBuilder.group({
-      id: [],
-      id_ship: [],
-      date: [],
-      location: this._formBuilder.group({
-        latitude: [],
-        longitude: []
-      }),
-      ort: [],
-      fuel: [],
-      fuelfillingquantity: []
-    })
+      this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
+      this.betankungForm = this._formBuilder.group({
+        id: [],
+        id_ship: [],
+        date: [],
+        location: this._formBuilder.group({
+          latitude: [],
+          longitude: []
+        }),
+        ort: [],
+        fuel: [],
+        fuelfillingquantity: []
+      }
+    )
   }
 
   ngOnInit(): void {

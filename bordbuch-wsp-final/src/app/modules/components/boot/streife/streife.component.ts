@@ -6,16 +6,19 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Betankung } from 'src/app/core/model/betankung';
+import { Kennung } from 'src/app/core/model/kennung.model';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
 import { Ship } from 'src/app/core/model/ship.model';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
+import { Zweck } from 'src/app/core/model/zwecke.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
@@ -43,21 +46,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     { id: 3, bezeichnung: 'beendet' }
   ]
 
-  // zweck
-  zwecke: any[] = [
-    { id: 1, bezeichnung: "Streifenfahrt" },
-    { id: 2, bezeichnung: "Überführungsfahrt" },
-    { id: 3, bezeichnung: "Probefahrt" }
-  ]
-
-  kennungen: any[] = [
-    { id: 0, bezeichnung: "" },
-    { id: 1, bezeichnung: "Nixe 1" },
-    { id: 2, bezeichnung: "Nixe 2" },
-    { id: 3, bezeichnung: "Nixe 3" },
-    { id: 4, bezeichnung: "Nixe 11" }
-  ]
-
   // stepper
   isLinear: boolean = true
   isEditable: boolean = true
@@ -83,6 +71,9 @@ export class StreifeComponent implements OnInit, AfterViewInit {
 
   kennung = ''
   zweck = ''
+
+  kennungen$: Observable<Kennung[]>
+  zwecke$: Observable<Zweck[]>
   // start = ''
 
   constructor(
@@ -95,6 +86,8 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     private modalServiceB: ModalService<BetankungComponent>,
     private locationService: LocationService) 
     {
+      this.kennungen$ = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kennung[]>
+      this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
       this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
       this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
       this.isPatrolBeendet$ = this.store.pipe(select(ShipSelectors.isPatrolBeendet))

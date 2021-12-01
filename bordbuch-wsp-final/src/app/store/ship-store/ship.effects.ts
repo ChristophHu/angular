@@ -5,6 +5,7 @@ import { Betankung } from 'src/app/core/model/betankung'
 import { Patrol } from 'src/app/core/model/patrol.model'
 import { Reparatur } from 'src/app/core/model/reparatur'
 import { Ship } from 'src/app/core/model/ship.model'
+import { Tank } from 'src/app/core/model/tank.model'
 import { AppService } from 'src/app/core/services/app.service'
 import { Peilung } from 'src/app/modules/components/boot/streife/peilung/peilung.component'
 import { ShipAction } from '.'
@@ -85,6 +86,7 @@ export class ShipEffects {
         )
     })
 
+    // betankung
     loadBetankungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadBetankungen),
@@ -122,6 +124,17 @@ export class ShipEffects {
         )
     }, { dispatch: false })
 
+    // tank
+    loadTank$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.loadTank),
+            switchMap(action => {
+                return this.appService.getTanksVonSchiff(action.id_ship).pipe(
+                    map((tanks: Tank[]) => ShipAction.loadedTank({ tanks }))
+                )
+            })
+        )
+    })
     insertBesatzung$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.insertPatrolBesatzung),

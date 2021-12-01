@@ -147,9 +147,13 @@ export class AppService {
             case 'getDienststellen':
             case 'getPruefvermerke':
             case 'getPruefvermerksKategorien':
+            case 'getKatBetriebsstoffe':
+            case 'getKatFunktionen':
+            case 'getKatKennungen':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getZaehlerstandstypen':
+            case 'getKatZwecke':
                 param = ``
                 break
 
@@ -159,6 +163,7 @@ export class AppService {
 
             case 'getReparaturenVonSchiff':
             case 'getStreifeVonSchiff':
+            case 'getTanksVonSchiff':
             case 'getZaehlerstaende':
                 param = `?id_schiff=${data}`
                 break
@@ -367,6 +372,14 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
+    getTanksVonSchiff(id : string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getTanksVonSchiff', id)
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
     getPosition(id : string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getPosition', id)
@@ -412,6 +425,38 @@ export class AppService {
     getDienststellen(): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getDienststellen', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getBetriebsstoffe(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatBetriebsstoffe', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getFunktionen(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatFunktionen', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getKennungen(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatKennungen', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getZwecke(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatZwecke', {})
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))

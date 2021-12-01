@@ -37,7 +37,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Kennung</mat-label>
                 <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
-                  <mat-option *ngFor="let kennung of kennungen" [value]="kennung.bezeichnung">
+                  <mat-option *ngFor="let kennung of (kennungen$ | async)" [value]="kennung.bezeichnung">
                     {{ kennung.bezeichnung }}
                   </mat-option>
                 </mat-select>
@@ -45,7 +45,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Fahrtzweck</mat-label>
                 <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
-                  <mat-option *ngFor="let zweck of zwecke" [value]="zweck.bezeichnung">
+                  <mat-option *ngFor="let zweck of (zwecke$ | async)" [value]="zweck.bezeichnung">
                     {{ zweck.bezeichnung }}
                   </mat-option>
                 </mat-select>

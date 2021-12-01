@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Update } from '@ngrx/entity';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
+import { Funktion } from 'src/app/core/model/funktion.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
 @Component({
@@ -19,15 +22,11 @@ export class BesatzungComponent implements OnInit {
   title: string = ''
   besatzungForm: FormGroup
   edit: boolean = false
-
-  // funktionen
-  funktionen: any[] = [
-    { id: 1, bezeichnung: "Streifenführer" },
-    { id: 2, bezeichnung: "Streifenbegleiter" },
-    { id: 3, bezeichnung: "Gast" }
-  ]
+  
+  funktionen$: Observable<Funktion[]>
 
   constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BesatzungComponent>, private appService: AppService) {
+    this.funktionen$ = this.store.pipe(select(KatSelectors.selectAllFunktionen)) as Observable<Funktion[]>
     this.besatzungForm = this._formBuilder.group({
       id: [],
       id_streife: [],

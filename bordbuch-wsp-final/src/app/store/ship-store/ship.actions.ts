@@ -5,6 +5,7 @@ import { Betankung } from "src/app/core/model/betankung"
 import { Patrol } from "src/app/core/model/patrol.model"
 import { Reparatur } from "src/app/core/model/reparatur"
 import { Ship } from "src/app/core/model/ship.model"
+import { Tank } from "src/app/core/model/tank.model"
 import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component"
 
 // load ship
@@ -94,6 +95,16 @@ export const updateBetankung = createAction(
 export const deleteBetankung = createAction(
 	"[Edit Betankungen Dialog] Betankungen Delete",
 	props<{ id: string }>()
+)
+
+// tank
+export const loadTank = createAction(
+	"[Ship Resolver] Load Tank",
+	props<{ id_ship: string }>()
+)
+export const loadedTank = createAction(
+	"[Load Ship Effect] Loaded Tank",
+	props<{ tanks: Tank[] }>()
 )
 
 // besatzung

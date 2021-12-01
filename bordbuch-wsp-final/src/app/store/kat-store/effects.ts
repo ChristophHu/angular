@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap } from 'rxjs/operators'
+import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model'
 import { Checklistitem } from 'src/app/core/model/checklistitem.model'
 import { Dienststelle } from 'src/app/core/model/dienststelle.model'
+import { Funktion } from 'src/app/core/model/funktion.model'
+import { Kennung } from 'src/app/core/model/kennung.model'
 import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
+import { Zweck } from 'src/app/core/model/zwecke.model'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems, updateChecklistItem } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems, updateChecklistItem, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen } from './actions'
  
 @Injectable()
 export class Effects {
@@ -52,6 +56,34 @@ export class Effects {
             ofType(loadChecklistItems),
             concatMap(action => this.appService.getChecklistItems('1')),
             map((items: Checklistitem[]) => loadedChecklistItems({ items }))
+        )
+    })
+    loadBetriebsstoffe$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadBetriebsstoffe),
+            concatMap(action => this.appService.getBetriebsstoffe()),
+            map((betriebsstoffe: Betriebsstoff[]) => loadedBetriebsstoffe({ betriebsstoffe }))
+        )
+    })
+    loadFunktionen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadFunktionen),
+            concatMap(action => this.appService.getFunktionen()),
+            map((funktionen: Funktion[]) => loadedFunktionen({ funktionen }))
+        )
+    })
+    loadKennungen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadKennungen),
+            concatMap(action => this.appService.getKennungen()),
+            map((kennungen: Kennung[]) => loadedKennungen({ kennungen }))
+        )
+    })
+    loadZwecke$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadZwecke),
+            concatMap(action => this.appService.getZwecke()),
+            map((zwecke: Zweck[]) => loadedZwecke({ zwecke }))
         )
     })
 

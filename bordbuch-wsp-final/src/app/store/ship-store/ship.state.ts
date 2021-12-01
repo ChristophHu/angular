@@ -4,6 +4,7 @@ import { Betankung } from "src/app/core/model/betankung";
 import { Patrol } from "src/app/core/model/patrol.model";
 import { Reparatur } from "src/app/core/model/reparatur";
 import { Ship } from "src/app/core/model/ship.model";
+import { Tank } from "src/app/core/model/tank.model";
 import { Zaehlerstand } from "src/app/core/model/zaehlerstand";
 import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component";
 
@@ -13,6 +14,7 @@ export interface State { //extends EntityState<any>
     zaehlerstaende?: Zaehlerstand[]
     reparaturen?: Reparatur[]
     betankungen?: Betankung[]
+    tank?: Tank[]
     peilungen?: Peilung[] 
     isAllDataLoaded: boolean
 }
