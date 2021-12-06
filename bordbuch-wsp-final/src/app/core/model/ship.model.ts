@@ -5,5 +5,5 @@ export interface Ship {
   typ           : string
   identifikationsnummer: string
   dienststelle  : string
-  // zaehlerstaende: any[]
+  durchsicht    : string
 }

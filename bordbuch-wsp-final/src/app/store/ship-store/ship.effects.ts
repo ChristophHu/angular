@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { map, switchMap, tap } from 'rxjs/operators'
 import { Betankung } from 'src/app/core/model/betankung'
+import { Checklist } from 'src/app/core/model/checklist.model'
+import { Geraetebuch } from 'src/app/core/model/geraetebuch.model'
 import { Patrol } from 'src/app/core/model/patrol.model'
+import { Peilung } from 'src/app/core/model/peilung.model'
 import { Reparatur } from 'src/app/core/model/reparatur'
 import { Ship } from 'src/app/core/model/ship.model'
 import { Tank } from 'src/app/core/model/tank.model'
 import { AppService } from 'src/app/core/services/app.service'
-import { Peilung } from 'src/app/modules/components/boot/streife/peilung/peilung.component'
+
 import { ShipAction } from '.'
  
 @Injectable()
@@ -135,6 +138,8 @@ export class ShipEffects {
             })
         )
     })
+
+    // besatzung
     insertBesatzung$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.insertPatrolBesatzung),
@@ -173,15 +178,43 @@ export class ShipEffects {
             })
         )
     })
+    insertPeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertPeilung),
+            switchMap(action => {
+                return this.appService.insertPeilung(action.insert).pipe(
+                    map(id => ShipAction.insertPeilungSuccess({ action, id }))
+                )
+            })
+        )
+    })
     updatePeilung$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.updatePeilung),
             tap(val => console.log(val)),
+            // switchMap(action => {
+            //     return this.appService.updatePeilung(action.peilung)
+            // })
+        )
+    })
+    loadChecklist$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.loadChecklist),
             switchMap(action => {
-                return this.appService.updatePeilung(action.peilung)
+                return this.appService.getChecklist(action.id_ship).pipe(
+                    map((gbook: Geraetebuch) => ShipAction.loadedChecklist({ gbook }))
+                )
             })
         )
     })
+    insertChecklist$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.insertChecklist),
+            switchMap(action => {
+                return this.appService.insertCheckliste(action.geraetebuch)
+            })
+        )
+    }) 
     
 
     constructor(private actions$: Actions, private appService: AppService ) {}

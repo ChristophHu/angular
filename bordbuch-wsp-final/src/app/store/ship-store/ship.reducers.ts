@@ -1,9 +1,14 @@
+import { state } from "@angular/animations"
 import { createReducer, on, Store } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
+import { Checklist } from "src/app/core/model/checklist.model"
+import { Einsatzmittel } from "src/app/core/model/einsatzmittel.model"
+import { Geraetebuch } from "src/app/core/model/geraetebuch.model"
 import { Patrol } from "src/app/core/model/patrol.model"
+import { Peilung } from "src/app/core/model/peilung.model"
 import { Reparatur } from "src/app/core/model/reparatur"
-import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component"
+
 import { ShipAction } from "."
 import { State } from "./ship.state"
 
@@ -18,6 +23,7 @@ export const initialDataState: State = {
 export const shipReducer = createReducer(
     initialDataState,
     on(ShipAction.shipLoaded, (state, action) => {
+        console.log(action.ship)
         return {
             ...state,
             ship: action.ship
@@ -80,8 +86,6 @@ export const shipReducer = createReducer(
     on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {
         let besatzung: Besatzung = Object.assign({}, action.action.insert, { id: action.id })
         let clearedBesatzung: Besatzung[] | undefined = state.patrol?.besatzung
-        console.log('besatzung hinzufügen')
-        console.log(clearedBesatzung)
         clearedBesatzung = [...clearedBesatzung!, ...[besatzung]]
         return {
             ...state,
@@ -132,6 +136,16 @@ export const shipReducer = createReducer(
             peilungen: action.peilungen
         }
     }),
+    on(ShipAction.insertPeilungSuccess, (state, action) => {
+        let peilung: Peilung = Object.assign({}, action.action.insert, { id: action.id })
+        let clearedPeilung: Peilung[] | undefined = state.peilungen
+        clearedPeilung = clearedPeilung?.filter(el => el.bezeichnung != action.action.insert.bezeichnung)
+        clearedPeilung = [...clearedPeilung!, ...[peilung]]
+        return {
+            ...state,
+            peilungen: clearedPeilung
+        }
+    }),
     on(ShipAction.updatePeilung, (state, action) => {
         let clearedPeilungen = [...state.peilungen!]
         clearedPeilungen = clearedPeilungen.filter(el => el.id != action.peilung.id)
@@ -142,6 +156,23 @@ export const shipReducer = createReducer(
             peilungen: clearedPeilungen
         }
     }),
+    // checklist
+    on(ShipAction.loadedChecklist, (state, action) => {
+        return {
+            ...state,
+            checklist: action.gbook
+        }
+    }),
+    on(ShipAction.updateChecklistItem, (state, action) => {
+        let einsatzmittel = state.checklist?.einsatzmittel.filter(el => el.id != action.einsatzmittel.id)
+        einsatzmittel?.push(action.einsatzmittel)
+
+        return {
+            ...state,
+            checklist: Object.assign({}, state.checklist, { einsatzmittel: einsatzmittel })
+        }
+    }),
+
     on(ShipAction.resetStore, (state, action)  => {
         // return {
         //     ship: undefined,

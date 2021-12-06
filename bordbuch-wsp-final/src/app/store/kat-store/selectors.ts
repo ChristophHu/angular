@@ -38,24 +38,6 @@ export const selectpruefvermerkeByKategorie = (kategorie: string) => createSelec
     pruefvermerk => pruefvermerk!.filter(el => el.kategorie == kategorie)
 )
 
-// checklist
-export const selectAllChecklistItems = createSelector(
-    katState,
-    state => state.checklistitems
-)
-export const checkedChecklistItems = createSelector(
-    selectAllChecklistItems,
-    items => items!.filter(el => el.isChecked == true)
-)
-export const uncheckedChecklistItems = createSelector(
-    selectAllChecklistItems,
-    items => items!.filter(el => el.isChecked == false)
-)
-export const selectChecklistItemsById = (id: string) => createSelector(
-    selectAllChecklistItems,
-    items => items!.find(el => el.id == id)
-)
-
 // betriebsstoffe
 export const selectAllBetriebsstoffe = createSelector(
     katState,

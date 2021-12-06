@@ -1,42 +1,57 @@
 <app-modal #modalComponent>
-    <header class="h-16 p-8 flex items-center justify-between border-b">
-      <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
-        {{ title }}
-      </p>
-      <button (click)="cancel()"
-        class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
-        <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
-      </button>
-    </header>
-    <div class="content">
-        <form [formGroup]="peilungForm">
-          <div class="hidden">
-            <mat-form-field appearance="fill">
-              <mat-label>id</mat-label>
-              <input matInput type="text" formControlName="id" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-              <mat-label>id_schiff</mat-label>
-              <input matInput type="text" formControlName="id_schiff" readonly>
-            </mat-form-field>
-          </div>
-          <mat-form-field appearance="fill">
-            <mat-label>Bezeichnung</mat-label>
-            <input matInput type="text" formControlName="tank">
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Datum/Uhrzeit</mat-label>
-            <input matInput type="datetime-local" formControlName="date" value="{{peilungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Menge (in Liter)</mat-label>
-            <input matInput type="number" formControlName="menge">
-          </mat-form-field>
-        </form>
-    </div>
-    <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
-        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
-    </footer>
+  <header class="h-16 p-8 flex items-center justify-between border-b">
+    <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+      {{ title }}
+    </p>
+    <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+      <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+    </button>
+  </header>
+  <div class="content">
+    <form [formGroup]="peilungForm">
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_schiff</mat-label>
+          <input matInput type="text" formControlName="id_schiff" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Bezeichnung</mat-label>
+          <input matInput type="text" formControlName="bezeichnung">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Bezeichnung</mat-label>
+        <mat-select (selectionChange)="selectTank($event.value)" formControlName="id_tank">
+          <mat-option *ngFor="let tank of (tanks$ | async)" [value]="tank.id" required>
+            {{ tank.bezeichnung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!-- <div *ngIf="peilungForm.value."> -->
+        <mat-form-field appearance="fill">
+          <mat-label>Datum/Uhrzeit</mat-label>
+          <input matInput type="datetime-local" formControlName="date" value="{{peilungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Maximalmenge (in L)</mat-label>
+          <input matInput type="number" formControlName="max_vol" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Menge (in Liter)</mat-label>
+          <input matInput type="number" formControlName="vol" required>
+        </mat-form-field>
+      <!-- </div> -->
+    </form>
+  </div>
+  <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+    <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+  </footer>
 </app-modal>
 
 <ng-template #toolbar>
@@ -45,7 +60,8 @@
     <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
   </div>
   <div>
-      <button *ngIf="!peilungForm.pristine && peilungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-      <!-- <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+    <!-- <button *ngIf="!peilungForm.pristine && peilungForm.value.id" (click)="update()" type="button"
+      class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
+    <button *ngIf="!peilungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
   </div>
 </ng-template>

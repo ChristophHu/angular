@@ -12,36 +12,32 @@
         </button>
       </div> -->
     </div>
-    <div class="p-4 border-b hover:bg-gray-50" *ngFor="let schif of schiff">
-      <h2 class="mb-2 text-xl">Schiff</h2>
+    <div class="p-4 border-b hover:bg-gray-50" *ngIf="(ship$ | async) as ship">
+      <h2 class="mb-2 text-xl">{{ ship.name }} - {{ ship.identifikationsnummer }}</h2>
       <div class="flex flex-row justify-between">
-        <!-- <div class="flex flex-row flex-grow">
-          <p class="w-18 text-gray-600 mr-2">Betriebsstunden:</p>
-          <p class="">{{ schif.betriebstunden }}</p>
-        </div> -->
         <div class="flex flex-row justify-between">
-            <div class="flex flex-row flex-grow">
-                <p class="w-24 text-gray-600 mr-2">Vorführdatum: </p>
-                <p class="w-32">{{ schif.date }}</p>
-            </div>
-            <div class="flex flex-row">
-                <p class="w-24 text-gray-600 mr-2">Tage bis zur Wartung: </p>
-                <p class="w-32">15</p>
-            </div>
+          <div class="flex flex-row flex-grow">
+              <p class="w-24 text-gray-600 mr-2">Vorführdatum: </p>
+              <p class="w-32">{{ ship.durchsicht }}</p>
+          </div>
+          <div class="flex flex-row">
+              <p class="w-24 text-gray-600 mr-2">Tage bis zur Wartung: </p>
+              <p class="w-32">{{ ship.durchsicht }}</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="p-4 border-b hover:bg-gray-50" *ngFor="let moto of motor">
-        <h2 class="mb-2 text-xl">{{ moto.bezeichnung }}</h2>
-        <div class="flex flex-row justify-between">
-          <div class="flex flex-row flex-grow">
-            <p class="w-18 text-gray-600 mr-2">Betriebsstunden: </p>
-            <p class="">{{ moto.betriebsstunden }}</p>
-          </div>
-          <div class="flex flex-row">
-            <p class="w-24 text-gray-600 mr-2">Offene Betriebsstunden:</p>
-            <p class="w-32">25:00</p>
-          </div>
+    <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
+      <h2 class="mb-2 text-xl" *ngIf="zaehlerstand.zaehlerstandstyp!='EINSATZZEIT'">{{ zaehlerstand.zaehlerstandstyp }}</h2>
+      <div class="flex flex-row justify-between" *ngIf="zaehlerstand.zaehlerstandstyp!='EINSATZZEIT'">
+        <div class="flex flex-row flex-grow">
+          <p class="w-18 text-gray-600 mr-2">Betriebsstunden: </p>
+          <p class="">{{ zaehlerstand.value }}</p>
+        </div>
+        <div class="flex flex-row">
+          <p class="w-24 text-gray-600 mr-2">Offene Betriebsstunden:</p>
+          <p class="w-32">{{ zaehlerstand.betriebsstunden - zaehlerstand.value }}</p>
         </div>
       </div>
+    </div>
   </div>

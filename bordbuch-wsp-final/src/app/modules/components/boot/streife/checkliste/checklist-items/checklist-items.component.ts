@@ -2,11 +2,15 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Checklist } from 'src/app/core/model/checklist.model';
 import { Checklistitem } from 'src/app/core/model/checklistitem.model';
+import { Einsatzmittel } from 'src/app/core/model/einsatzmittel.model';
+import { Geraetebuch } from 'src/app/core/model/geraetebuch.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatAction, KatSelectors } from 'src/app/store/kat-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
+import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 
 @Component({
   selector: 'app-checklist-items',
@@ -18,31 +22,42 @@ import { RootStoreState } from 'src/app/store/root-store.state';
 export class ChecklistItemsComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<ChecklistItemsComponent> | undefined;
   title: string = ''
-  checklistForm!: FormGroup
+  geraetebuch!: Geraetebuch
+  // checklistForm!: FormGroup
 
   items$!: Observable<Checklistitem[]>
-  checked$!: Observable<Checklistitem[]>
-  unchecked$!: Observable<Checklistitem[]>
+  checked$!: Observable<Einsatzmittel[]>
+  unchecked$!: Observable<Einsatzmittel[]>
 
   constructor(private store: Store<RootStoreState>, private modalService: ModalService<ChecklistItemsComponent>) { }
 
   ngOnInit(): void {
-    this.items$ = this.store.pipe(select(KatSelectors.selectAllChecklistItems)) as Observable<Checklistitem[]>
-    this.checked$ = this.store.pipe(select(KatSelectors.checkedChecklistItems)) as Observable<Checklistitem[]>
-    this.unchecked$ = this.store.pipe(select(KatSelectors.uncheckedChecklistItems)) as Observable<Checklistitem[]>
+    this.checked$ = this.store.pipe(select(ShipSelectors.selectCheckedChecklistItems)) as Observable<Einsatzmittel[]>
+    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Einsatzmittel[]>
 
     this.modalService.getData().then((data) => {
       this.title = data.data.title      
-      // this.besatzungForm.patchValue(data.data.besatzung)
+    })
+
+    this.store.pipe(select(ShipSelectors.selectChecklist)).subscribe((geraetebuch: any) => {
+      this.geraetebuch = geraetebuch
     })
   }
 
-  toggleitem(item: Checklistitem) {
-    item = Object.assign({}, item, { isChecked: !item.isChecked })
-    this.store.dispatch(KatAction.updateChecklistItem({ item }))
+  toggleitem(item: Einsatzmittel) {
+    let sonstiges: string
+    if (item.sonstiges == 'true') { 
+      sonstiges = 'false'
+    } else {
+      sonstiges = 'true'
+    }
+    const einsatzmittel = Object.assign({}, item, { sonstiges })
+
+    this.store.dispatch(ShipAction.updateChecklistItem({ einsatzmittel }))
   }
 
   cancel() {
-    this.modal?.close()
+    this.store.dispatch(ShipAction.insertChecklist({ geraetebuch: this.geraetebuch }))
+    this.modal?.close()  
   }
 }

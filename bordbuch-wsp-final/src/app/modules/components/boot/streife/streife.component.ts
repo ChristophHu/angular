@@ -181,7 +181,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'vorbereitend', zweck: ''  }
-    console.log(initialize)
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
@@ -260,7 +259,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   async openZaehlerstandModal(id: string | undefined) {
     let zaehlerstand: Zaehlerstand | undefined
   
-    this.store.pipe(select(ZaehlerstandSelectors.selectDatyById(id))).subscribe(data => {
+    this.store.pipe(select(ZaehlerstandSelectors.selectDataById(id))).subscribe(data => {
       zaehlerstand = data
     })
     const { ZaehlerstandComponent } = await import(

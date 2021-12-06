@@ -10,22 +10,22 @@
   </header>
   <div class="content">
     <div class="ml-5">
-      <form [formGroup]="checklistForm">
+      <!-- <form [formGroup]="checklistForm"> -->
         <h2 class="mt-2 text-xl">Fehlende oder verbrauchte Gegenstände</h2>
         <ul class="mb-5 border-b">
-          <li class="mb-2" *ngFor="let item of unchecked$ | async" (click)="toggleitem(item)">
-            <input type="checkbox" [checked]="item.isChecked">
-            <mat-label> {{ item.bezeichnung }}</mat-label>
+          <li class="mb-2" *ngFor="let item of (unchecked$ | async)" (click)="toggleitem(item)">
+            <input type="checkbox" [checked]="item.sonstiges=='false' ? false : true">
+            <mat-label> {{ item.name }}</mat-label>
           </li>
         </ul>
         <h2 class="mt-2 text-xl">Gegenstände</h2>
         <ul>
-          <li class="mb-2" *ngFor="let item of checked$ | async" (click)="toggleitem(item)">
-            <input type="checkbox" [checked]="item.isChecked">
-            <mat-label> {{ item.bezeichnung }}</mat-label>
+          <li class="mb-2" *ngFor="let item of (checked$ | async)" (click)="toggleitem(item)">
+            <input type="checkbox" [checked]="item.sonstiges=='false' ? false : true">
+            <mat-label> {{ item.name }}</mat-label>
           </li>
         </ul>
-      </form>
+      <!-- </form> -->
     </div>
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
@@ -35,11 +35,11 @@
 
 <ng-template #toolbar>
 <div>
-  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Schließen</button>
   <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
 </div>
 <div>
-  <!-- <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-  <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+  <!-- <button (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
+  <!-- <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
 </div>
 </ng-template>

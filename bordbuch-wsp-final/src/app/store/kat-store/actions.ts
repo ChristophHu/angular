@@ -26,9 +26,6 @@ export const loadZaehlerstandstypen = createAction(
 export const loadDienststellen = createAction(
 	"[Kat Resolver] Load Dienststellen"
 )
-export const loadChecklistItems = createAction(
-	"[Kat Resolver] Load Checklistitems"
-)
 export const loadBetriebsstoffe = createAction(
 	"[Kat Resolver] Load Betriebsstoffe"
 )
@@ -63,10 +60,6 @@ export const dienststellenLoaded = createAction(
 	"[Load Kat Effect] Dienststellen Loaded",
 	props<{ dienststellen: Dienststelle[] }>()
 )
-export const loadedChecklistItems = createAction(
-	"[Load Kat Effect] Checklistitems Loaded",
-	props<{ items: Checklistitem[] }>()
-)
 export const loadedBetriebsstoffe = createAction(
 	"[Load Kat Effect] Loaded Betriebsstoffe",
 	props<{ betriebsstoffe: Betriebsstoff[] }>()
@@ -82,10 +75,5 @@ export const loadedKennungen = createAction(
 export const loadedZwecke = createAction(
 	"[Load Kat Effect] Loaded Zwecke",
 	props<{ zwecke: Zweck[] }>()
-)
-
-export const updateChecklistItem = createAction(
-	"[Modal Checklistitems] Update Checklistitems",
-	props<{ item: Checklistitem }>()
 )
 

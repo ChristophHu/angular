@@ -14,30 +14,7 @@ export const selectAllData = createSelector(
     selectAll
 )
 
-export const selectDatyById = (id: any) => createSelector(
+export const selectDataById = (id: any) => createSelector(
     selectAllData,
     data => data.find(el => el.id == id)
 )
-
-// export const selectDataByID = (props: {id: any}) => createSelector(
-//     selectAllData,
-//     entities => {
-//         return entities[props.id];
-//     }
-// )
-
-
-// export const selectPicture = createSelector(
-//     selectAllData,
-//     data => data.filter(el => el.type == 'picture')
-// )
-
-// export const selectData = createSelector(
-//     selectAllData,
-//     data => data.filter(el => el.type == 'data')
-// )
-
-// export const selectDataCount = createSelector(
-//     selectData,
-//     data => data.length
-// )

@@ -485,7 +485,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getLastChecklist', id)
             source$.subscribe((data: any) => {
-                const gbook = JSON.parse(data[0].gbookdaten)
+                const gbook: Geraetebuch = JSON.parse(data[0].gbookdaten)
                 observer.next(gbook)
                 // this.updateChecklist(data)
             }, (error: any) => observer.error(error))
@@ -496,24 +496,26 @@ export class AppService {
         //     }, (error: any) => observer.error(error))
         // })
     }
-    updateChecklist(data: Checklist[]) {
-        console.log(data)
-        let gbook = JSON.parse(data[0].gbookdaten)
-        console.log(gbook)
-        gbook.name = 'Ursula'
-        console.log(gbook)
-        const checkliste: Checklist = { id_schiff: '1', datum: new Date().toISOString(), streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', gbookdaten: JSON.stringify(gbook)}
-        this.insertCheckliste(checkliste)
-    }
-    insertCheckliste(checklist: Checklist) {
-        // return new Observable ((observer) => {
-            console.log(checklist)
+
+    // updateChecklist(gbook: any) {
+    //     // console.log(data)
+    //     // let gbook = JSON.parse(data[0].gbookdaten)
+    //     // console.log(gbook)
+    //     gbook = {"id_schiff":"1","einsatzmittel":[{"id":"75764649-769b-4935-848c-25ccb213cf56","name":"Anhaltestab","anzahl":"3","seriennummern":"","sonstiges":"false"},{"id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef","name":"Alkomat","anzahl":"1","seriennummern":"SN-1234","sonstiges":"false"},{"id":"bd34d03c-3728-4df3-9ba7-7ead0d575532","name":"Anker","anzahl":"2","seriennummern":"","sonstiges":""},{"id":"c6aac15c-4fea-49ce-943b-21070169f361","name":"Rettungsring","anzahl":"1","seriennummern":"","sonstiges":""}]}
+    //     console.log(gbook)
+    //     const checkliste: Checklist = { id_schiff: '1', datum: new Date().toISOString(), streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', gbookdaten: JSON.stringify(gbook)}
+    //     this.insertCheckliste(checkliste)
+    // }
+
+    insertCheckliste(gbook: Geraetebuch): Observable<any> {
+        return new Observable ((observer) => {
+            const checklist: Checklist = { id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
             const source$ = this.reducer('insertCheckliste', checklist)
             source$.subscribe((status) => {
-                console.log(status)
+
             })
             // , (error: any) => observer.error(error)
-        // })
+        })
     }
     
     getChecklistItems(id: string = '1'): Observable<any> {

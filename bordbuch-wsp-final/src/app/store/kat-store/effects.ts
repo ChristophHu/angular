@@ -12,7 +12,7 @@ import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { Zweck } from 'src/app/core/model/zwecke.model'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadChecklistItems, loadedChecklistItems, updateChecklistItem, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen } from './actions'
  
 @Injectable()
 export class Effects {
@@ -51,13 +51,6 @@ export class Effects {
             map((dienststellen: Dienststelle[]) => dienststellenLoaded({ dienststellen }))
         )
     })
-    loadChecklistItems$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(loadChecklistItems),
-            concatMap(action => this.appService.getChecklistItems('1')),
-            map((items: Checklistitem[]) => loadedChecklistItems({ items }))
-        )
-    })
     loadBetriebsstoffe$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadBetriebsstoffe),
@@ -86,15 +79,6 @@ export class Effects {
             map((zwecke: Zweck[]) => loadedZwecke({ zwecke }))
         )
     })
-
-    updateChecklistItem$ = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(updateChecklistItem),
-            // switchMap(action => {
-            //     return this.appService.updateChecklistItem(action.item)
-            // })
-        )
-    }, { dispatch: false })
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }

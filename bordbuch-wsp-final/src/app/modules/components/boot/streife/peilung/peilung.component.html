@@ -6,18 +6,18 @@
         Jede Betankung zum Schiff kann hier hinterlegt werden.
       </p>
     </div>
-    <!-- <div>
-      <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer">
+    <div>
+      <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer" (click)="openPeilungModal()">
         <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
       </button>
-    </div> -->
+    </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let peilung of peilungen$ | async" (click)="openPeilungModal(peilung.id)">
-    <h2 class="mb-2 text-xl">{{ peilung.tank }}</h2>
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let peilung of (peilungen$ | async)">
+    <h2 class="mb-2 text-xl">{{ peilung.bezeichnung }}</h2>
     <div class="flex flex-row justify-between">
       <div class="flex flex-row flex-grow">
         <p class="w-18 text-gray-600 mr-2">Menge (in L):</p>
-        <p class="">{{ peilung.menge }}</p>
+        <p class="">{{ peilung.vol }}</p>
       </div>
       <div class="flex flex-row">
         <p class="w-24 text-gray-600 mr-2">Aktualisiert:</p>

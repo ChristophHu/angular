@@ -2,11 +2,15 @@ import { Update } from "@ngrx/entity"
 import { createAction, props } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
+import { Checklist } from "src/app/core/model/checklist.model"
+import { Einsatzmittel } from "src/app/core/model/einsatzmittel.model"
+import { Geraetebuch } from "src/app/core/model/geraetebuch.model"
 import { Patrol } from "src/app/core/model/patrol.model"
+import { Peilung } from "src/app/core/model/peilung.model"
 import { Reparatur } from "src/app/core/model/reparatur"
 import { Ship } from "src/app/core/model/ship.model"
 import { Tank } from "src/app/core/model/tank.model"
-import { Peilung } from "src/app/modules/components/boot/streife/peilung/peilung.component"
+
 
 // load ship
 export const loadShip = createAction(
@@ -134,6 +138,14 @@ export const loadedPeilung = createAction(
 	"[Ship Resolver] Loaded Peilung",
 	props<{ peilungen: Peilung[] }>()
 )
+export const insertPeilung = createAction(
+	"[Edit Peilung Dialog] Insert Peilung",
+	props<{ insert: Peilung }>()
+)
+export const insertPeilungSuccess = createAction(
+	"[Edit Peilung Dialog] Insert Peilung Success",
+	props<{ action: { insert: Peilung }, id: string }>()
+)
 export const updatePeilung = createAction(
 	"[Modal Peilung] Update Peilung",
 	props<{ peilung: Peilung }>()
@@ -143,12 +155,20 @@ export const resetStore = createAction(
 	"[Auswahl] Store reset"
 )
 
-// entitystate test
-// export const selectBesatzung = createAction(
-// 	'[Besatzung Modal] Select Besatzung',
-// 	props<{ besatzungId: string }>()
-// )
-// export const loadBesatzung = createAction(
-// 	'[User/API] Load Users',
-// 	props<{ besatzung: Besatzung[] }>()
-// )
+// checklist
+export const loadChecklist = createAction(
+	"[Ship Resolver] Load Checklist",
+	props<{ id_ship: string }>()
+)
+export const loadedChecklist = createAction(
+	"[Load Ship Effect] Loaded Checklist",
+	props<{ gbook: Geraetebuch }>()
+)
+export const updateChecklistItem = createAction(
+	"[Load Ship Effect] Update Checklist",
+	props<{ einsatzmittel: Einsatzmittel }>()
+)
+export const insertChecklist = createAction(
+	"[Load Ship Effect] Insert Checklist",
+	props<{ geraetebuch: Geraetebuch }>()
+)

@@ -16,7 +16,10 @@ export const selectedShip = createSelector(
     selectShipState,
     state => state.ship
 )
-
+export const selectShip = createSelector(
+    selectedShip,
+    ship => ship
+)
 export const selectShipId = createSelector(
     selectedShip,
     ship => ship?.id
@@ -78,6 +81,16 @@ export const selectBetankungen = createSelector(
     state => state.betankungen
 )
 
+// tanks
+export const selectTanks = createSelector(
+    selectShipState,
+    state => state.tanks
+)
+export const selectTankById = (id: string) => createSelector(
+    selectTanks,
+    tanks => tanks?.find(el => el.id == id)
+)
+
 // peilung
 export const selectPeilungen = createSelector(
     selectShipState,
@@ -86,4 +99,18 @@ export const selectPeilungen = createSelector(
 export const selectPeilungenById = (id: string) => createSelector(
     selectPeilungen,
     peilungen => peilungen?.find(el => el.id == id)
+)
+
+// checklist
+export const selectChecklist = createSelector(
+    selectShipState,
+    state => state.checklist
+)
+export const selectCheckedChecklistItems = createSelector(
+    selectChecklist,
+    checklist => checklist?.einsatzmittel.filter(el => el.sonstiges == 'true' || el.sonstiges == '')
+)
+export const selectUncheckedChecklistItems = createSelector(
+    selectChecklist,
+    checklist => checklist?.einsatzmittel.filter(el => el.sonstiges == 'false')
 )
