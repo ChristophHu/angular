@@ -180,6 +180,7 @@
                 <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Kontrolle der Eingaben</button></p> -->
               </div>
             </ng-template>
+            <peilung></peilung>
             <div class="w-full mt-10 mb-3 bg-white rounded-lg shadow-lg">
               <div class="flex flex-row p-4 justify-between border-b">
                 <div>
@@ -196,19 +197,20 @@
               </div>
               <div class="p-4 border-b hover:bg-gray-50" *ngFor="let betankung of betankungen$ | async; index as index">
                 <h2 class="mb-2 text-xl">{{ betankung.fuel }}</h2>
-                <div class="flex flex-row justify-between">
+                <!-- <div class="flex flex-row justify-between"> -->
+                <div class="mb-3 grid overflow-hidden grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 gap-2">
                   <div class="flex flex-row flex-grow">
-                    <p class="w-18 text-gray-600 mr-2">Menge (in L):</p>
-                    <p class="">{{ betankung.fuelfillingquantity }}</p>
+                    <p class="w-32 text-gray-600 mr-2">Menge (in L):</p>
+                    <p class="w-32">{{ betankung.fuelfillingquantity }}</p>
                   </div>
-                  <div class="flex flex-row">
-                    <p class="w-24 text-gray-600 mr-2">Aktualisiert:</p>
+                  <div class="flex flex-row flex-grow">
+                    <p class="w-32 text-gray-600 mr-2">Aktualisiert:</p>
                     <p class="w-32">{{ betankung.date | date:'dd.MM.YYYY HH:mm'}}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <peilung></peilung>
+            
         </cdk-step>
         <cdk-step>
           <ng-template cdkStepLabel>

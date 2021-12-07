@@ -14,14 +14,15 @@
     </div>
     <div class="p-4 border-b hover:bg-gray-50" *ngIf="(ship$ | async) as ship">
       <h2 class="mb-2 text-xl">{{ ship.name }} - {{ ship.identifikationsnummer }}</h2>
-      <div class="flex flex-row justify-between">
+      <!-- <div class="flex flex-row justify-between"> -->
+      <div class="grid overflow-hidden grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 gap-2">
         <div class="flex flex-row justify-between">
           <div class="flex flex-row flex-grow">
-              <p class="w-24 text-gray-600 mr-2">Vorführdatum: </p>
+              <p class="w-32 text-gray-600 mr-2">Vorführdatum: </p>
               <p class="w-32">{{ ship.durchsicht }}</p>
           </div>
-          <div class="flex flex-row">
-              <p class="w-24 text-gray-600 mr-2">Tage bis zur Wartung: </p>
+          <div class="flex flex-row flex-grow">
+              <p class="w-32 text-gray-600 mr-2">Tage bis zur Wartung: </p>
               <p class="w-32">{{ ship.durchsicht }}</p>
           </div>
         </div>
@@ -30,13 +31,14 @@
     </div>
     <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
       <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
-      <div class="mb-3 flex flex-row justify-between">
+      <!-- <div class="mb-3 flex flex-row justify-between"> -->
+      <div class="mb-3 grid overflow-hidden grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 gap-2">
         <div class="flex flex-row flex-grow">
-          <p class="w-18 text-gray-600 mr-2">Betriebsstunden: </p>
-          <p class="">{{ zaehlerstand.value }}</p>
+          <p class="w-32 text-gray-600 mr-2">Betriebsstunden: </p>
+          <p class="w-32">{{ zaehlerstand.value }}</p>
         </div>
-        <div class="flex flex-row">
-          <p class="w-24 text-gray-600 mr-2">Durchsicht bei:</p>
+        <div class="flex flex-row flex-grow">
+          <p class="w-32 text-gray-600 mr-2">Durchsicht bei:</p>
           <p class="w-32">{{ zaehlerstand.betriebsstunden - zaehlerstand.value + 300 }}</p>
         </div>
       </div>

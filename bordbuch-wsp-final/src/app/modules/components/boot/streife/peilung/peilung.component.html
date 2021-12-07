@@ -14,13 +14,14 @@
   </div>
   <div class="p-4 border-b hover:bg-gray-50" *ngFor="let peilung of (peilungen$ | async)">
     <h2 class="mb-2 text-xl">{{ peilung.bezeichnung }}</h2>
-    <div class="mb-3 flex flex-row justify-between">
+    <!-- <div class="mb-3 flex flex-row justify-between"> -->
+    <div class="mb-3 grid overflow-hidden grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 gap-2">
       <div class="flex flex-row flex-grow">
-        <p class="w-18 text-gray-600 mr-2">Menge (in L):</p>
-        <p class="">{{ peilung.vol }}</p>
+        <p class="w-32 text-gray-600 mr-2">Menge (in L):</p>
+        <p class="w-32">{{ peilung.vol }}</p>
       </div>
       <div class="flex flex-row">
-        <p class="w-24 text-gray-600 mr-2">Aktualisiert:</p>
+        <p class="w-32 text-gray-600 mr-2">Aktualisiert:</p>
         <p class="w-32">{{ peilung.date | date:'dd.MM.YYYY HH:mm'}}</p>
       </div>
     </div>
