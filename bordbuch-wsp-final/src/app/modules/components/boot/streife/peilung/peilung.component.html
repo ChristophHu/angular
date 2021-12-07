@@ -3,7 +3,7 @@
     <div>
       <h2 class="text-2xl font-bold">Peilung</h2>
       <p class="text-sm text-gray-500">
-        Jede Betankung zum Schiff kann hier hinterlegt werden.
+        Vor jeder Betankung ist eine Peilung zur Bestimmung der Restmenge im Tank durchzuführen.
       </p>
     </div>
     <div>
@@ -14,7 +14,7 @@
   </div>
   <div class="p-4 border-b hover:bg-gray-50" *ngFor="let peilung of (peilungen$ | async)">
     <h2 class="mb-2 text-xl">{{ peilung.bezeichnung }}</h2>
-    <div class="flex flex-row justify-between">
+    <div class="mb-3 flex flex-row justify-between">
       <div class="flex flex-row flex-grow">
         <p class="w-18 text-gray-600 mr-2">Menge (in L):</p>
         <p class="">{{ peilung.vol }}</p>
@@ -24,5 +24,6 @@
         <p class="w-32">{{ peilung.date | date:'dd.MM.YYYY HH:mm'}}</p>
       </div>
     </div>
+    <progress-bar [value]="peilung.vol" [maxvalue]="peilung.max_vol"></progress-bar>
   </div>
 </div>

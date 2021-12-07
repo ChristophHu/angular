@@ -23,7 +23,6 @@ export const initialDataState: State = {
 export const shipReducer = createReducer(
     initialDataState,
     on(ShipAction.shipLoaded, (state, action) => {
-        console.log(action.ship)
         return {
             ...state,
             ship: action.ship

@@ -14,7 +14,10 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { MatSelectModule } from '@angular/material/select';
 import { HeadlineStepperComponent } from './components/headline-stepper/headline-stepper.component'
 import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module';
-import { TimelineComponent } from './components/timeline/timeline.component'
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { Number2stringPipe } from './pipes/number2string/number2string.pipe';
+import { String2numberPipe } from './pipes/string2number/string2number.pipe'
 
 @NgModule({
     imports: [
@@ -57,7 +60,15 @@ import { TimelineComponent } from './components/timeline/timeline.component'
         MatFormFieldModule,
         MatTableModule,
         MatStepperModule,
-        MatSelectModule
+        MatSelectModule,
+
+        ProgressBarComponent,
+        String2numberPipe
+    ],
+    declarations: [
+        ProgressBarComponent,
+        Number2stringPipe,
+        String2numberPipe
     ]
 })
 export class SharedModule {}

@@ -1,3 +1,14 @@
+## <u>0.8x004</u>
+<ul>
+    <li>Checkliste hinzugefügt,</li>
+    <li>Peilung hinzugefügt,</li>
+    <li>Wartung hinzugefügt,</li>
+    <li>Arbeit an der DB zu zuvor genannten Punkten,</li>
+    <li>visuelle Darstellung von Peilung und Wartung mittels Progress-Bar,</li>
+</ul>
+
+&nbsp;
+
 ## <u>0.8x003</u>
 <ul>
     <li>hinzufügen des QR-Code-Button zum unteren Menüband,</li>
