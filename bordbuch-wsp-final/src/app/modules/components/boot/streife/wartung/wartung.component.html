@@ -16,7 +16,7 @@
       <h2 class="mb-2 text-xl">{{ ship.name }} - {{ ship.identifikationsnummer }}</h2>
       <!-- <div class="flex flex-row justify-between"> -->
       <div class="grid overflow-hidden grid-cols-1 md:grid-cols-2 grid-rows-2 md:grid-rows-1 gap-2">
-        <div class="flex flex-row justify-between">
+        <!-- <div class="flex flex-row justify-between"> -->
           <div class="flex flex-row flex-grow">
               <p class="w-32 text-gray-600 mr-2">Vorführdatum: </p>
               <p class="w-32">{{ ship.durchsicht }}</p>
@@ -25,7 +25,7 @@
               <p class="w-32 text-gray-600 mr-2">Tage bis zur Wartung: </p>
               <p class="w-32">{{ ship.durchsicht }}</p>
           </div>
-        </div>
+        <!-- </div> -->
       </div>
       <!-- <progress-bar [value]="yesterday | date:'d' | string2number" [maxvalue]=20></progress-bar> -->
     </div>
