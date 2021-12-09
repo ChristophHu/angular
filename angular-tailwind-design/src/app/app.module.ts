@@ -22,7 +22,7 @@ import { PruefvermerkComponent } from './modules/components/verwaltung/verwaltun
 import { AdminModule } from './modules/layouts/admin/admin.module'
 import { ServiceModule } from './modules/layouts/service/service.module'
 import { LeitungModule } from './modules/layouts/leitung/leitung.module'
-import { ModalComponent } from './shared/components/modal/modal.component'
+// import { ModalComponent } from './shared/components/modal/modal.component'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { LoginComponent } from './modules/components/login/login.component';
 import { PruefvermerkskategorieComponent } from './modules/components/verwaltung/verwaltung-von-pruefvermerk-kat/pruefvermerkskategorie/pruefvermerkskategorie.component';
@@ -34,14 +34,17 @@ import { ZaehlerstaendeComponent } from './modules/components/zaehlerstaende/zae
 import { ZaehlerstandComponent } from './modules/components/zaehlerstaende/zaehlerstand/zaehlerstand.component';
 import { StreifeComponent } from './modules/components/streifen/streife/streife.component'
 import { PositionComponent } from './modules/components/map/leaflet-map/position/position.component'
-import { SplashScreenComponent } from './shared/components/modal/splash-screen/splash-screen.component';
+import { SplashScreenComponent } from './shared/components/splash-screen/splash-screen.component';
 import { KontaktComponent } from './modules/components/kontakt/kontakt.component'
+import { ModalModule } from './shared/components/modal/modal.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { SharedModule } from './shared/shared.module'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ModalComponent,
+    // ModalComponent,
     ReparaturenServiceComponent,
     ReparaturComponent,
     BetankungenComponent,
@@ -77,7 +80,10 @@ import { KontaktComponent } from './modules/components/kontakt/kontakt.component
     LeafletMapModule,
     MarkdownModule.forRoot(),
     NgSelectModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    ModalModule,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -22,11 +22,82 @@
     padding: 0
     // border: 1px solid red
 
-// jquery.dataTables.css
-// .dataTables_wrapper .dataTables_length select
-//   border: 1px solid #aaa
-//   border-radius: 3px
-//   padding: 5px
-//   background-color: transparent
-//   padding: 4px
-//   width: 60px
+// 4 mobile use
+// *
+//     -webkit-user-select: none
+//     -khtml-user-select: none
+//     -moz-user-select: none
+//     -ms-user-select: none
+//     user-select: none
+
+// body
+//     @apply bg-gray-200 overflow-hidden
+
+// input
+//     -webkit-user-select: auto !important
+//     -khtml-user-select: auto !important
+//     -moz-user-select: auto !important
+//     -ms-user-select: auto !important
+//     user-select: auto !important
+
+// .ng-dropdown-panel
+//     @apply -ml-1.5 p-2 bg-white opacity-30 rounded-b-lg shadow-lg border-t-0 border-solid border border-gray-300
+
+// .scrollbar-hide
+//     -ms-overflow-style: none
+//     scrollbar-width: none
+//     overflow-y: scroll
+
+//     &::-webkit-scrollbar
+//         display: none
+//         width: 0
+//         height: 0
+
+// input
+//     &[type='text']:focus, &[type='email']:focus, &[type='password']:focus, &[type='number']:focus, &[type='date']:focus, &[type='datetime-local']:focus, &textarea:focus, &select:focus
+//         @apply ring-0 ring-offset-0 outline-none
+
+// label
+//     .mat-form-field-label
+//         font-size: large !important
+
+// mat-label
+//     font-size: medium
+        
+.mat-form-field-appearance-fill .mat-form-field-flex
+    @apply bg-transparent
+    background-color: rgba(0, 0, 0, 0) !important
+
+.mat-input-element,
+.mat-select-value
+    // @apply text-4xl
+    font-size: large !important
+
+mat-form-field
+    @apply w-full 
+
+.mat-form-field-wrapper
+    @apply bg-none
+
+/* content */
+// .content
+//   @apply absolute top-24 right-5 bottom-16 left-5 overflow-auto
+//   -webkit-overflow-scrolling: touch
+//   -ms-overflow-style: -ms-autohiding-scrollbar
+
+//   &::-webkit-scrollbar
+//     display: none
+
+/* modal dark-theme*/
+.dark .mat-form-field-ripple
+  background-color: rgba(255, 255, 255, 0.4) !important
+
+.dark .mat-form-field-underline
+  &:before
+    background-color: rgba(255, 255, 255, 0.4) !important
+
+.dark mat-label
+  color: lightgray !important
+
+.dark .mat-select-value
+  color: lightgray !important

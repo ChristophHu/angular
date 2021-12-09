@@ -16,15 +16,16 @@ export class SchiffComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<SchiffComponent> | undefined;
   id: string = ''
   title: string = ''
-  selectedDstId: string = ''
+  // selectedDstId: string = ''
   schiff!: Schiff
   schiffForm: FormGroup
 
   // data
-  dienststellen!: Observable<Dienststelle[]>
+  // dienststellen!: Observable<Dienststelle[]>
+  dienststellen$: Observable<Dienststelle[]>
   
   constructor(private formBuilder: FormBuilder, private modalService: ModalService<SchiffComponent>, private verwaltungService: VerwaltungService) {
-    this.dienststellen = this.verwaltungService.dienststellen
+    this.dienststellen$ = this.verwaltungService.dienststellen
 
     this.schiffForm = this.formBuilder.group({
       id: [],
@@ -40,13 +41,14 @@ export class SchiffComponent implements OnInit {
     this.verwaltungService.getDienststellen()
     
     this.modalService.getData().then((data) => {
+      console.log(data)
       this.title = data.data.title
       this.schiffForm.patchValue(data.data.schiff)
       if (data.data.schiff) {
         this.verwaltungService.dienststellen.subscribe((dst: Dienststelle[]) => {
           dst.find((dst: any) => {
             if(dst.bezeichnung == data.data.schiff.dienststelle) {
-              this.selectedDstId = dst.id
+              this.schiffForm.patchValue({ dienststelle: dst.id })
             }
           })
         })

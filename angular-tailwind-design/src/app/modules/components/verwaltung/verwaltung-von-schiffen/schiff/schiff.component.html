@@ -1,55 +1,59 @@
 <app-modal #modalComponent>
-    <header>
-        <h2 class="m-3 mb-5 text-xl">{{title}}</h2>
-    </header>
-    <div class="content">
-        <form [formGroup]="schiffForm">
-            <div class="relative my-5">
-                <input type="text" formControlName="id" required>
-                <span class="bar"></span>
-                <label class="text-black">Id</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="name" required>
-                <span class="bar"></span>
-                <label class="text-black">Name</label>
-            </div>
-            <div class="relative my-5">
-                <ng-select [dropdownPosition]="'bottom'" [items]="dienststellen | async" bindLabel="bezeichnung" bindValue="id" formControlName="dienststelle" [(ngModel)]="selectedDstId" required></ng-select>
-                <span class="bar"></span>
-                <label class="text-black">Dienststelle</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="marke" required>
-                <span class="bar"></span>
-                <label class="text-black">Marke</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="typ" required>
-                <span class="bar"></span>
-                <label class="text-black">Typ</label>
-            </div>
-            <div class="relative my-5">
-                <input type="text" formControlName="identifikationsnummer" required>
-                <span class="bar"></span>
-                <label class="text-black">Identifikationsnummer</label>
-            </div>
-        </form>
-    </div>
-    <footer>
-        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
-    </footer>
+  <header class="h-16 p-8 flex items-center justify-between border-b">
+    <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+      {{ title }}
+    </p>
+    <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+      <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+    </button>
+  </header>
+  <div class="content">
+    <form [formGroup]="schiffForm">
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Dienststelle</mat-label>
+        <mat-select formControlName="dienststelle">
+          <mat-option *ngFor="let dienststelle of (dienststellen$ | async)" [value]="dienststelle.id" required>
+            {{ dienststelle.bezeichnung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Marke</mat-label>
+        <input matInput type="text" formControlName="marke">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Typ</mat-label>
+        <input matInput type="text" formControlName="typ">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Identifikationsnummer</mat-label>
+        <input matInput type="text" formControlName="identifikationsnummer">
+      </mat-form-field>
+    </form>
+  </div>
+  <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+    <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+  </footer>
 </app-modal>
 
 
 <ng-template #toolbar>
-    <div class="py-3 flex justify-between">
-        <button *ngIf="id" (click)="delete()" type="button" class="p-2 bg-red-400 text-black rounded">löschen</button>
-        <button *ngIf="!id" (click)="clear()" type="button" class="p-2 bg-red-400 text-black rounded">leeren</button>
-        <div>
-            <button *ngIf="!id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Schiff erstellen</button>
-            <button *ngIf="id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Bearbeitung speichern</button>
-            <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
-        </div>
-    </div>
+  <div>
+    <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    <button *ngIf="schiffForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
+  </div>
+  <div>
+    <button *ngIf="!schiffForm.pristine && schiffForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+    <button *ngIf="!schiffForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+  </div>
 </ng-template>
