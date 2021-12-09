@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DropdownDirective } from './directives/dropdown.directive';
 
 import { MatInputModule } from '@angular/material/input'
-import {MatCheckboxModule} from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatTableModule } from '@angular/material/table'
 import { MatStepperModule } from '@angular/material/stepper'
