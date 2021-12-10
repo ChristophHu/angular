@@ -1,0 +1,75 @@
+<app-modal #modalComponent>
+    <header class="h-16 p-8 flex items-center justify-between border-b">
+      <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+        {{ title }}
+      </p>
+      <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+        <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+      </button>
+    </header>
+    <div class="content">
+        <form [formGroup]="betankungForm">
+            <div class="hidden">
+              <mat-form-field appearance="fill">
+                <mat-label>id</mat-label>
+                <input matInput type="text" formControlName="id" readonly>
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>id_ship</mat-label>
+                <input matInput type="text" formControlName="id_ship" readonly>
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Datum/Uhrzeit</mat-label>
+              <input matInput type="datetime-local" formControlName="date" value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+            </mat-form-field>
+            <div class="flex flex-row items-center">
+              <div class="grid grid-cols-2 gap-3" formGroupName="location">
+                  <mat-form-field appearance="fill">
+                      <mat-label>Latitude</mat-label>
+                      <input matInput type="text" formControlName="latitude" value="{{betankungForm.value.location.latitude | number: '2.2-6'}}">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                      <mat-label>Longitude</mat-label>
+                      <input matInput type="text" formControlName="longitude" value="{{betankungForm.value.location.longitude | number: '2.2-6'}}">
+                  </mat-form-field>
+              </div>
+              <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer">
+                  <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="map"></icons>
+              </button>
+            </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Ortsbezeichnung</mat-label>
+              <input matInput type="text" formControlName="ort">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Was wurde getankt</mat-label>
+              <mat-select formControlName="fuel">
+                <!-- <mat-option *ngFor="let betriebsstoff of (betriebsstoffe$ | async)" [value]="betriebsstoff.bezeichnung">
+                  {{ betriebsstoff.bezeichnung }}
+                </mat-option> -->
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Menge (in Liter)</mat-label>
+              <input matInput type="number" formControlName="fuelfillingquantity">
+            </mat-form-field>
+          </form>
+    </div>
+    <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+      <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+  </app-modal>
+  
+  <ng-template #toolbar>
+    <div>
+      <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+      <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+    </div>
+    <div>
+      <!-- <button *ngIf="!peilungForm.pristine && peilungForm.value.id" (click)="update()" type="button"
+        class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
+      <!-- <button *ngIf="!peilungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+    </div>
+  </ng-template>
+  
