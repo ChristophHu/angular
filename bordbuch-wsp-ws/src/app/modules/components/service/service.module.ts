@@ -8,7 +8,6 @@ import { WartungenComponent } from './wartungen/wartungen.component';
 import { ChecklistenComponent } from './checklisten/checklisten.component';
 import { ReparaturenComponent } from './reparaturen/reparaturen.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DataTablesModule } from 'angular-datatables';
 import { BetankungModalComponent } from './betankungen/betankung-modal/betankung-modal.component'
 
 const routes: Routes = [
@@ -35,9 +34,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     
-    SharedModule,
-
-    DataTablesModule
+    SharedModule
   ]
 })
 export class ServiceModule { }

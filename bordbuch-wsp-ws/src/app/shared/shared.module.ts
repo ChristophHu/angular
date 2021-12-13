@@ -11,10 +11,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { DropdownDirective } from './directives/dropdown/dropdown.directive';
 import { ModalModule } from './components/modal/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClickOutsideDirective } from './directives/click-outside/click-outside.directive';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
-    DropdownDirective
+    DropdownDirective,
+    ClickOutsideDirective
   ],
   imports: [
     CommonModule,
@@ -33,10 +36,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
 
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    DataTablesModule
   ],
   exports: [
     DropdownDirective,
+    ClickOutsideDirective,
     
     CommonModule,
 
@@ -54,7 +60,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
 
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    DataTablesModule
   ]
 })
 export class SharedModule { }

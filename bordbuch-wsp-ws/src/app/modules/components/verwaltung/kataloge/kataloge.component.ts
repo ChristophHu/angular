@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KatalogeComponent implements OnInit {
 
+  kat: string = 'checkliste'
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggle(value: string) {
+    this.kat = value
+  }
 }

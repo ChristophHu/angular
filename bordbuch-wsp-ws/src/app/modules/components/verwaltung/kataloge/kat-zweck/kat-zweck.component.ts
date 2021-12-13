@@ -1,25 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Betankung } from 'src/app/core/models/betankung';
-import { BetankungService } from 'src/app/core/services/betankung.service';
+import { Subject } from 'rxjs';
+import { Zweck } from 'src/app/core/models/zweck.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { BetankungModalComponent } from './betankung-modal/betankung-modal.component';
+import { KatZweckModalComponent } from './kat-zweck-modal/kat-zweck-modal.component';
 
 @Component({
-  selector: 'app-betankungen',
-  templateUrl: './betankungen.component.html',
-  styleUrls: ['./betankungen.component.sass']
+  selector: 'app-kat-zweck',
+  templateUrl: './kat-zweck.component.html',
+  styleUrls: ['./kat-zweck.component.sass']
 })
-export class BetankungenComponent implements OnInit {
+export class KatZweckComponent implements OnInit {
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
+  
+  zweck: Zweck[] = [
+    {
+       "id":"22868a48-e930-426e-a8cc-89a7d2b0c651",
+       "bezeichnung":"Raumschutz"
+    },
+    {
+       "id":"a40c5ee7-2c07-45aa-a045-6acbf36562a6",
+       "bezeichnung":"Sonstiges"
+    },
+    {
+       "id":"b165963d-ec6d-49cf-a9a4-32cf5f9fc4d4",
+       "bezeichnung":"Pause"
+    },
+    {
+       "id":"fded9094-8d5c-48f7-be6e-f1b4cc5288ad",
+       "bezeichnung":"Betankung"
+    }
+ ]
 
-  betankungen$!: Observable<Betankung[]>
-
-  constructor(private _betankungService: BetankungService, private _modalService: ModalService<BetankungModalComponent>) {
-    this.betankungen$ = this._betankungService.betankungen
-  }
+  constructor(private _modalService: ModalService<KatZweckModalComponent>) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -57,28 +71,28 @@ export class BetankungenComponent implements OnInit {
     }
     // this._betankungService.getBetankungen()
   }
-
+  
   async showModal(id?: string): Promise<void> {
     console.log(id)
-    let betankung: Betankung | undefined
-    const { BetankungModalComponent } = await import(
-      './betankung-modal/betankung-modal.component'
+    let zweck: Zweck | undefined
+    const { KatZweckModalComponent } = await import(
+      './kat-zweck-modal/kat-zweck-modal.component'
     )
     if (id) {
       // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      console.log(betankung)
-      this._modalService.open(BetankungModalComponent, {
+      // console.log(betankung)
+      this._modalService.open(KatZweckModalComponent, {
         data: {
-          title: 'Betankung bearbeiten'
+          title: 'Zweck bearbeiten'
         }
       })
     } else {
-      this._modalService.open(BetankungModalComponent, {
+      this._modalService.open(KatZweckModalComponent, {
         data: {
-          title: 'Betankung hinzufügen',
-          date: new Date()
+          title: 'Zweck hinzufügen'
         }
       })
     }
   }
+
 }

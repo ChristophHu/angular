@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th>Bezeichnung</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let zweckItem of zweck">
+                <td hidden>{{ zweckItem.id }}</td>
+                <td>{{ zweckItem.bezeichnung }}</td>
+                <td class="flex flex-row justify-start text-gray-500">
+                    <button class="dropdown w-6 h-6" appDropdown>
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    </button>
+                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal()">
+                            <p>Bearbeiten</p>
+                        </div>
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                            <p>Löschen</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

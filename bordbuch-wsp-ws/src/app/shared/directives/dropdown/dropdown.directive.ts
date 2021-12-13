@@ -8,6 +8,7 @@ export class DropdownDirective {
   @HostBinding('class.open') isOpen = false
 
   @HostListener('click') toggleOpen() {
+    document.querySelectorAll('.open').forEach(el => el.classList.remove('open'))
     this.isOpen = !this.isOpen
   }
 }
