@@ -1,0 +1,40 @@
+<div class="container mx-auto px-4">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th>Bezeichnung</th>
+                <th>Straße</th>
+                <th>Hausnummer</th>
+                <th>PLZ</th>
+                <th>Ort</th>
+                <th>Mailadresse</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dienststelle of dienststellen">
+                <td hidden>{{ dienststelle.id }}</td>
+                <td>{{ dienststelle.bezeichnung }}</td>
+                <td>{{ dienststelle.strasse }}</td>
+                <td>{{ dienststelle.hausnummer }}</td>
+                <td>{{ dienststelle.postleitzahl }}</td>
+                <td>{{ dienststelle.ort }}</td>
+                <td>{{ dienststelle.mailadresse }}</td>
+                <td class="flex flex-row justify-start text-gray-500">
+                    <button class="dropdown w-6 h-6" appDropdown>
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    </button>
+                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(dienststelle.id)">
+                            <p>Bearbeiten</p>
+                        </div>
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                            <p>Löschen</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
