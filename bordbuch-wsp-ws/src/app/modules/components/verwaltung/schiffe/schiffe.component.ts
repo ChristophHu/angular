@@ -92,7 +92,6 @@ ngOnInit(): void {
 }
 
 async showModal(id?: string): Promise<void> {
-  console.log(id)
   // let zweck: Kat | undefined
   const { ChecklisteModalComponent } = await import(
     './checkliste-modal/checkliste-modal.component'
