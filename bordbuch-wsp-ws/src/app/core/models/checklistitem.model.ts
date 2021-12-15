@@ -3,5 +3,7 @@ export interface Checklistitem {
     name: string
     anzahl: string
     seriennummern: string
-    sonstiges: string
+    checked: boolean
+    relevant: boolean
+    benachrichtigen: string
 }

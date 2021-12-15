@@ -22,6 +22,8 @@ import { KatPruefvermerkkategorienComponent } from './kataloge/kat-pruefvermerkk
 import { KatPruefvermerkkategorieModalComponent } from './kataloge/kat-pruefvermerkkategorien/kat-pruefvermerkkategorie-modal/kat-pruefvermerkkategorie-modal.component';
 import { KatDienststellenComponent } from './kataloge/kat-dienststellen/kat-dienststellen.component';
 import { KatDienststelleModalComponent } from './kataloge/kat-dienststellen/kat-dienststelle-modal/kat-dienststelle-modal.component';
+import { SchiffModalComponent } from './schiffe/schiff-modal/schiff-modal.component';
+import { PruefvermerkModalComponent } from './pruefvermerke/pruefvermerk-modal/pruefvermerk-modal.component';
 
 const routes: Routes = [
   { path: '', component: VerwaltungComponent,
@@ -55,7 +57,9 @@ const routes: Routes = [
     KatPruefvermerkkategorienComponent,
     KatPruefvermerkkategorieModalComponent,
     KatDienststellenComponent,
-    KatDienststelleModalComponent
+    KatDienststelleModalComponent,
+    SchiffModalComponent,
+    PruefvermerkModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),

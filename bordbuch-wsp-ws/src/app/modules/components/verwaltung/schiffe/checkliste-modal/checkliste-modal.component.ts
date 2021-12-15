@@ -4,6 +4,7 @@ import { Checklistitem } from 'src/app/core/models/checklistitem.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { Animations } from 'src/app/shared/animations'
+import { Checklist } from 'src/app/core/models/checklist.model';
 
 @Component({
   selector: 'app-checkliste-modal',
@@ -17,7 +18,15 @@ export class ChecklisteModalComponent implements OnInit {
 
   show: boolean = false
   checklistitemForm: FormGroup
-  item: Checklistitem = { id: '', name: '', anzahl: '', seriennummern: '', sonstiges: '' }
+  item: Checklistitem = { id: '', name: '', anzahl: '', seriennummern: '', checked: false, relevant: false, benachrichtigen: '' }
+
+  // id: string
+  // name: string
+  // anzahl: string
+  // seriennummern: string
+  // checked: boolean
+  // relevant: boolean
+  // benachrichtigen: string
 
   // getFEM()
   kat: Checklistitem[] = [
@@ -36,28 +45,37 @@ export class ChecklisteModalComponent implements OnInit {
        "name":"Anhaltestab",
        "anzahl":"3",
        "seriennummern":"",
-       "sonstiges":""
+       "sonstiges":"",
+       "checked": false,
+       "relevant": false, 
+       "benachrichtigen": ""
     },
     {
        "id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef",
        "name":"Alkomat",
        "anzahl":"1",
        "seriennummern":"SN-1234",
-       "sonstiges":"Pusteröhrchen (10 Stück)"
+       "checked": false,
+       "relevant": false, 
+       "benachrichtigen": ""
     },
     {
        "id":"bd34d03c-3728-4df3-9ba7-7ead0d575532",
        "name":"Anker",
        "anzahl":"2",
        "seriennummern":"",
-       "sonstiges":"Vorn und Hinten"
+       "checked": false,
+       "relevant": false, 
+       "benachrichtigen": ""
     },
     {
        "id":"c6aac15c-4fea-49ce-943b-21070169f361",
        "name":"Rettungsring",
        "anzahl":"1",
        "seriennummern":"",
-       "sonstiges":""
+       "checked": false,
+       "relevant": false, 
+       "benachrichtigen": ""
     }
  ]
 // getGeraetebuch(id_Schiff)
@@ -66,44 +84,53 @@ export class ChecklisteModalComponent implements OnInit {
       "id_schiff":"1",
       "einsatzmittel":[
         {
-            "id":"75764649-769b-4935-848c-25ccb213cf56",
-            "name":"Anhaltestab",
-            "anzahl":"3",
-            "seriennummern":"",
-            "sonstiges":""
-        },
-        {
-            "id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef",
-            "name":"Alkomat",
-            "anzahl":"1",
-            "seriennummern":"SN-1234",
-            "sonstiges":"Pusteröhrchen (10 Stück)"
-        },
-        {
-            "id":"bd34d03c-3728-4df3-9ba7-7ead0d575532",
-            "name":"Anker",
-            "anzahl":"2",
-            "seriennummern":"",
-            "sonstiges":"Vorn und Hinten"
-        },
-        {
-            "id":"c6aac15c-4fea-49ce-943b-21070169f361",
-            "name":"Rettungsring",
-            "anzahl":"1",
-            "seriennummern":"",
-            "sonstiges":""
-        }
+          "id":"75764649-769b-4935-848c-25ccb213cf56",
+          "name":"Anhaltestab",
+          "anzahl":"3",
+          "seriennummern":"",
+          "checked": false,
+          "relevant": false, 
+          "benachrichtigen": ""
+       },
+       {
+          "id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef",
+          "name":"Alkomat",
+          "anzahl":"1",
+          "seriennummern":"SN-1234",
+          "checked": false,
+          "relevant": false, 
+          "benachrichtigen": ""
+       },
+       {
+          "id":"bd34d03c-3728-4df3-9ba7-7ead0d575532",
+          "name":"Anker",
+          "anzahl":"2",
+          "seriennummern":"",
+          "checked": false,
+          "relevant": false, 
+          "benachrichtigen": ""
+       },
+       {
+          "id":"c6aac15c-4fea-49ce-943b-21070169f361",
+          "name":"Rettungsring",
+          "anzahl":"1",
+          "seriennummern":"",
+          "checked": false,
+          "relevant": false, 
+          "benachrichtigen": ""
+       }
       ]
   }
  ]
 
  // getLastChecklist(id_schiff)
- lastChecklist: any[] = [
+ lastChecklist: Checklist[] = [
   {
      "id_schiff":"1",
      "streife":"3f7bc091-9f3d-428b-bf57-429f7dba25da",
      "datum":"2021-12-08 09:57:23.000",
-     "gbookdaten":"{\"id_schiff\":\"1\",\"einsatzmittel\":[{\"id\":\"c6aac15c-4fea-49ce-943b-21070169f361\",\"name\":\"Rettungsring\",\"anzahl\":\"1\",\"seriennummern\":\"\",\"sonstiges\":\"true\"},{\"id\":\"a6a9a323-89b8-45a5-96d8-61866c4a0cef\",\"name\":\"Alkomat\",\"anzahl\":\"1\",\"seriennummern\":\"SN-1234\",\"sonstiges\":\"true\"},{\"id\":\"75764649-769b-4935-848c-25ccb213cf56\",\"name\":\"Anhaltestab\",\"anzahl\":\"3\",\"seriennummern\":\"\",\"sonstiges\":\"true\"},{\"id\":\"bd34d03c-3728-4df3-9ba7-7ead0d575532\",\"name\":\"Anker\",\"anzahl\":\"2\",\"seriennummern\":\"123\",\"sonstiges\":\"true\"}]}"
+    //  "gbookdaten":"{\"id_schiff\":\"1\",\"einsatzmittel\":[{\"id\":\"c6aac15c-4fea-49ce-943b-21070169f361\",\"name\":\"Rettungsring\",\"anzahl\":\"1\",\"seriennummern\":\"\",\"sonstiges\":\"true\"},{\"id\":\"a6a9a323-89b8-45a5-96d8-61866c4a0cef\",\"name\":\"Alkomat\",\"anzahl\":\"1\",\"seriennummern\":\"SN-1234\",\"sonstiges\":\"true\"},{\"id\":\"75764649-769b-4935-848c-25ccb213cf56\",\"name\":\"Anhaltestab\",\"anzahl\":\"3\",\"seriennummern\":\"\",\"sonstiges\":\"true\"},{\"id\":\"bd34d03c-3728-4df3-9ba7-7ead0d575532\",\"name\":\"Anker\",\"anzahl\":\"2\",\"seriennummern\":\"123\",\"sonstiges\":\"true\"}]}",
+     "gbookdaten":"{\"id_schiff\":\"1\",\"einsatzmittel\":[{\"id\":\"75764649-769b-4935-848c-25ccb213cf56\",\"name\":\"Anhaltestab\",\"anzahl\":\"3\",\"seriennummern\":\"\",\"checked\":true,\"relevant\":true,\"benachrichtigen\":\"\"},{\"id\":\"a6a9a323-89b8-45a5-96d8-61866c4a0cef\",\"name\":\"Alkomat\",\"anzahl\":\"1\",\"seriennummern\":\"SN-1234\",\"checked\":false,\"relevant\":false,\"benachrichtigen\":\"\"},{\"id\":\"bd34d03c-3728-4df3-9ba7-7ead0d575532\",\"name\":\"Anker\",\"anzahl\":\"2\",\"seriennummern\":\"\",\"checked\":false,\"relevant\":false,\"benachrichtigen\":\"\"},{\"id\":\"c6aac15c-4fea-49ce-943b-21070169f361\",\"name\":\"Rettungsring\",\"anzahl\":\"1\",\"seriennummern\":\"\",\"checked\":false,\"relevant\":true,\"benachrichtigen\":\"\"}]}"
   }
 ]
   
@@ -113,7 +140,9 @@ export class ChecklisteModalComponent implements OnInit {
       name: [],
       anzahl: [],
       seriennummern: [],
-      sonstiges: []
+      checked: [],
+      relevant: [],
+      benachrichtigen: []
     })
   }
 
@@ -140,10 +169,9 @@ export class ChecklisteModalComponent implements OnInit {
 
   array2obj(arr: any) {
     arr.forEach((el: any) => {
-      this.kat.push({ id: el[0], name: el[1], anzahl: '', seriennummern: '', sonstiges: 'false' })
+      this.kat.push({ id: el[0], name: el[1], anzahl: '', seriennummern: '', checked: false, relevant: false, benachrichtigen: '' })
     });
   }
-
 
   loadItem(id: string) {
     const item = this.kat.find(el => el.id == id)!
@@ -158,7 +186,9 @@ export class ChecklisteModalComponent implements OnInit {
   }
 
   create() {
-
+    const gbook: string = JSON.stringify(this.kat.filter(el => el.checked == true))
+    const newChecklist: Checklist = { id_schiff: this.checklistitemForm.value.id, streife: this.checklistitemForm.value.streife, datum: new Date().toISOString(), gbookdaten: gbook }
+    console.log(newChecklist)
   }
 
   update() {

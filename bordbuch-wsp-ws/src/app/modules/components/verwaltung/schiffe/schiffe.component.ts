@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { ChecklisteModalComponent } from './checkliste-modal/checkliste-modal.component';
+import { SchiffModalComponent } from './schiff-modal/schiff-modal.component';
 
 @Component({
   selector: 'app-schiffe',
@@ -52,7 +53,9 @@ schiffe: any[] = [
   }
 ]
 
-constructor(private _modalService: ModalService<ChecklisteModalComponent>) { }
+constructor(
+  private _modalService: ModalService<SchiffModalComponent>,
+  private _modalServiceChecklist: ModalService<ChecklisteModalComponent>) { }
 
 ngOnInit(): void {
   this.dtOptions = {
@@ -90,26 +93,47 @@ ngOnInit(): void {
   }
   // this._betankungService.getBetankungen()
 }
-
-async showModal(id?: string): Promise<void> {
-  // let zweck: Kat | undefined
-  const { ChecklisteModalComponent } = await import(
-    './checkliste-modal/checkliste-modal.component'
-  )
-  if (id) {
-    // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-    // console.log(betankung)
-    this._modalService.open(ChecklisteModalComponent, {
-      data: {
-        title: 'Checkliste bearbeiten'
-      }
-    })
-  } else {
-    this._modalService.open(ChecklisteModalComponent, {
-      data: {
-        title: 'Checkliste hinzufügen'
-      }
-    })
+  async showModal(id?: string): Promise<void> {
+    // let zweck: Kat | undefined
+    const { SchiffModalComponent } = await import(
+      './schiff-modal/schiff-modal.component'
+    )
+    if (id) {
+      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
+      // console.log(betankung)
+      this._modalService.open(SchiffModalComponent, {
+        data: {
+          title: 'Schiff bearbeiten'
+        }
+      })
+    } else {
+      this._modalService.open(SchiffModalComponent, {
+        data: {
+          title: 'Schiff hinzufügen'
+        }
+      })
+    }
   }
-}
+
+  async showChecklistModal(id?: string): Promise<void> {
+    // let zweck: Kat | undefined
+    const { ChecklisteModalComponent } = await import(
+      './checkliste-modal/checkliste-modal.component'
+    )
+    if (id) {
+      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
+      // console.log(betankung)
+      this._modalServiceChecklist.open(ChecklisteModalComponent, {
+        data: {
+          title: 'Checkliste bearbeiten'
+        }
+      })
+    } else {
+      this._modalServiceChecklist.open(ChecklisteModalComponent, {
+        data: {
+          title: 'Checkliste hinzufügen'
+        }
+      })
+    }
+  }
 }

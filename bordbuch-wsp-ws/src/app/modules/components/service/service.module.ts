@@ -8,7 +8,8 @@ import { WartungenComponent } from './wartungen/wartungen.component';
 import { ChecklistenComponent } from './checklisten/checklisten.component';
 import { ReparaturenComponent } from './reparaturen/reparaturen.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { BetankungModalComponent } from './betankungen/betankung-modal/betankung-modal.component'
+import { BetankungModalComponent } from './betankungen/betankung-modal/betankung-modal.component';
+import { ZaehlerstandModalComponent } from './zaehlerstaende/zaehlerstand-modal/zaehlerstand-modal.component'
 
 const routes: Routes = [
   { path: '', component: ServiceComponent,
@@ -29,7 +30,8 @@ const routes: Routes = [
     ZaehlerstaendeComponent,
     WartungenComponent,
     ReparaturenComponent,
-    BetankungModalComponent
+    BetankungModalComponent,
+    ZaehlerstandModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),
