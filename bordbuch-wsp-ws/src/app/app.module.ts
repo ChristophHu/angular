@@ -5,6 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StreifenComponent } from './modules/components/streifen/streifen.component';
+import { AktuellePositionenComponent } from './modules/components/streifen/aktuelle-positionen/aktuelle-positionen.component';
+import { AuthModule } from './modules/auth/auth.module';
+import { MarkdownModule } from 'ngx-markdown';
+import { RootStoreModule } from './store/root-store.module';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -13,7 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    AuthModule.forRoot(),
+    BrowserAnimationsModule,
+    RootStoreModule,
+    MarkdownModule.forRoot(),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

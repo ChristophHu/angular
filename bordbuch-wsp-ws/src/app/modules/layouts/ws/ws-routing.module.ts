@@ -9,6 +9,7 @@ const routes: Routes = [
     children: [
       { path: '', component: UebersichtComponent },
       { path: 'controlling', component: ControllingComponent },
+      { path: 'streifen', loadChildren: () => import('../../components/streifen/streifen.module').then( m => m.StreifenModule ) },
       { path: 'service', loadChildren: () => import('../../components/service/service.module').then( m => m.ServiceModule ) },
       { path: 'verwaltung', loadChildren: () => import('../../components/verwaltung/verwaltung.module').then( m => m.VerwaltungModule ) }
     ]

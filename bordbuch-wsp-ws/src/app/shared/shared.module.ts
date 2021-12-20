@@ -59,9 +59,11 @@ import { DataTablesModule } from 'angular-datatables';
     MatStepperModule,
     MatSelectModule,
 
+    // forms
     FormsModule,
     ReactiveFormsModule,
 
+    // datatables
     DataTablesModule
   ]
 })

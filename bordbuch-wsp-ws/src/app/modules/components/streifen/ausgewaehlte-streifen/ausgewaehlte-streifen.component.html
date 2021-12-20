@@ -1,0 +1,47 @@
+<div class="container mx-auto p-4 mb-8">
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'alle-streifen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('alle-streifen')">Alle Streifen</button>
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'durchgefuehrte-streifen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('durchgefuehrte-streifen')">Durchgeführte Streifen</button>
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'aktuelle-streifen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('aktuelle-streifen')">Aktuelle Streifen</button>
+</div>
+
+<div class="container mx-auto px-4">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th hidden>ID-Schiff</th>
+                <th>Name</th>
+                <th>Kennung</th>
+                <th>Zweck</th>
+                <th>Status</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let streife of streifen">
+                <td hidden>{{ streife.id }}</td>
+                <td hidden>{{ streife.id_schiff }}</td>
+                <td>{{ streife.schiffsname }}</td>
+                <td>{{ streife.kennung }}</td>
+                <td>{{ streife.zweck }}</td>
+                <td>{{ streife.status }}</td>
+                <td class="flex flex-row justify-start text-gray-500">
+                    <button class="dropdown w-6 h-6" [routerLink]="['/streifen', streife.id]">
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="location-marker"></icons>
+                    </button>
+                    <button class="dropdown w-6 h-6" appDropdown>
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    </button>
+                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(streife.id)">
+                            <p>Bearbeiten</p>
+                        </div>
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                            <p>Löschen</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

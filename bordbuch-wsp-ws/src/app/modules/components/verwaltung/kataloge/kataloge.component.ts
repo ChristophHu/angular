@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KatalogeComponent implements OnInit {
 
-  kat: string = 'betriebsstoffe'
+  kat: string = 'checkliste'
   constructor() { }
 
   ngOnInit(): void {
