@@ -56,7 +56,7 @@ export const selectAllKennungen = createSelector(
 )
 
 // zwecke
-// export const selectAllZwecke = createSelector(
-//     katState,
-//     state => state.zwecke
-// )
+export const selectAllZwecke = createSelector(
+    katState,
+    state => state.zweck
+)

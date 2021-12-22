@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { Kat } from 'src/app/core/models/kat.model';
 import { Zweck } from 'src/app/core/models/zweck.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatZweckModalComponent } from './kat-zweck-modal/kat-zweck-modal.component';
 
 @Component({
@@ -14,26 +16,30 @@ export class KatZweckComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-  zweck: Zweck[] = [
-    {
-       "id":"22868a48-e930-426e-a8cc-89a7d2b0c651",
-       "bezeichnung":"Raumschutz"
-    },
-    {
-       "id":"a40c5ee7-2c07-45aa-a045-6acbf36562a6",
-       "bezeichnung":"Sonstiges"
-    },
-    {
-       "id":"b165963d-ec6d-49cf-a9a4-32cf5f9fc4d4",
-       "bezeichnung":"Pause"
-    },
-    {
-       "id":"fded9094-8d5c-48f7-be6e-f1b4cc5288ad",
-       "bezeichnung":"Betankung"
-    }
- ]
+//   zweck: Zweck[] = [
+//     {
+//        "id":"22868a48-e930-426e-a8cc-89a7d2b0c651",
+//        "bezeichnung":"Raumschutz"
+//     },
+//     {
+//        "id":"a40c5ee7-2c07-45aa-a045-6acbf36562a6",
+//        "bezeichnung":"Sonstiges"
+//     },
+//     {
+//        "id":"b165963d-ec6d-49cf-a9a4-32cf5f9fc4d4",
+//        "bezeichnung":"Pause"
+//     },
+//     {
+//        "id":"fded9094-8d5c-48f7-be6e-f1b4cc5288ad",
+//        "bezeichnung":"Betankung"
+//     }
+//  ]
 
-  constructor(private _modalService: ModalService<KatZweckModalComponent>) { }
+  zweck$: Observable<Kat[]>
+
+  constructor(private _modalService: ModalService<KatZweckModalComponent>, private _katFacade: KatFacade) {
+    this.zweck$ = _katFacade.zweck$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -72,18 +78,17 @@ export class KatZweckComponent implements OnInit {
     // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    let zweck: Zweck | undefined
+  async showModal(kat?: Kat): Promise<void> {
     const { KatZweckModalComponent } = await import(
       './kat-zweck-modal/kat-zweck-modal.component'
     )
-    if (id) {
+    if (kat) {
       // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
       // console.log(betankung)
       this._modalService.open(KatZweckModalComponent, {
         data: {
-          title: 'Zweck bearbeiten'
+          title: 'Zweck bearbeiten',
+          kat
         }
       })
     } else {
@@ -95,4 +100,7 @@ export class KatZweckComponent implements OnInit {
     }
   }
 
+  delete(id: string) {
+    this._katFacade.deleteZweck(id)
+  }
 }

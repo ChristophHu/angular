@@ -21,6 +21,7 @@ export class Resolver implements Resolve<any> {
                 if (!this.loading) {
                     this.loading = true
                     this.katFacade.loadKennungen()
+                    this.katFacade.loadZweck()
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Kennung } from 'src/app/core/models/kennung.model';
+import { Kat } from 'src/app/core/models/kat.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatKennungModalComponent } from './kat-kennung-modal/kat-kennung-modal.component';
@@ -15,7 +15,7 @@ export class KatKennungenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  kennungen$: Observable<Kennung[]>
+  kennungen$: Observable<Kat[]>
 
   constructor(private _modalService: ModalService<KatKennungModalComponent>, private _katFacade: KatFacade) { 
     this.kennungen$ = _katFacade.kennungen$
@@ -58,15 +58,15 @@ export class KatKennungenComponent implements OnInit {
     // this._betankungService.getBetankungen()
   }
   
-  async showModal(kennung?: Kennung): Promise<void> {
+  async showModal(kat?: Kat): Promise<void> {
     const { KatKennungModalComponent } = await import(
       './kat-kennung-modal/kat-kennung-modal.component'
     )
-    if (kennung) {
+    if (kat) {
       this._modalService.open(KatKennungModalComponent, {
         data: {
           title: 'Kennung bearbeiten',
-          kennung
+          kat
         }
       })
     } else {

@@ -2,15 +2,15 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Bezeichnung</th>
+                <th>ID</th>
                 <th class="w-12"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let kennung of (kennungen$ | async)">
-                <td>{{ kennung.id }}</td>
                 <td>{{ kennung.bezeichnung }}</td>
+                <td>{{ kennung.id }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" appDropdown>
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>

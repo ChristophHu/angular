@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap, tap } from 'rxjs/operators'
-import { Kennung } from 'src/app/core/models/kennung.model'
+import { Kat } from 'src/app/core/models/kat.model'
 import { AppService } from 'src/app/core/services/app.service'
 // import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model'
 // import { Checklistitem } from 'src/app/core/model/checklistitem.model'
@@ -14,7 +14,10 @@ import { AppService } from 'src/app/core/services/app.service'
 // import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 // import { Zweck } from 'src/app/core/model/zwecke.model'
 // import { AppService } from 'src/app/core/services/app.service'
-import { loadKennungen, loadedKennungen, insertKennung, insertKennungSuccess, deleteKennung, deleteKennungSuccess, updateKennung, updateKennungSuccess } from './actions'
+import { 
+    loadKennungen, loadedKennungen, insertKennung, insertKennungSuccess, deleteKennung, deleteKennungSuccess, updateKennung, updateKennungSuccess, 
+    loadZweck, insertZweck, updateZweck, deleteZweck, loadedZweck, insertZweckSuccess, updateZweckSuccess, deleteZweckSuccess 
+} from './actions'
 // loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen 
  
 @Injectable()
@@ -68,11 +71,13 @@ export class Effects {
     //         map((funktionen: Funktion[]) => loadedFunktionen({ funktionen }))
     //     )
     // })
+
+    // kennungen
     loadKennungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadKennungen),
             concatMap(action => this.appService.getKennungen()),
-            map((kennungen: Kennung[]) => loadedKennungen({ kennungen }))
+            map((kat: Kat[]) => loadedKennungen({ kat }))
         )
     })
     insertKennungen$ = createEffect(() => {
@@ -105,13 +110,45 @@ export class Effects {
             })
         )
     })
-    // loadZwecke$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadZwecke),
-    //         concatMap(action => this.appService.getZwecke()),
-    //         map((zwecke: Zweck[]) => loadedZwecke({ zwecke }))
-    //     )
-    // })
+
+    // zweck
+    loadZweck$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadZweck),
+            concatMap(action => this.appService.getZweck()),
+            map((kat: Kat[]) => loadedZweck({ kat }))
+        )
+    })
+    insertZweck$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertZweck),
+            switchMap(action => {
+                return this.appService.insertZweck(action.insert).pipe(
+                    map((id: string) => insertZweckSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateZweck$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateZweck),
+            switchMap(action => {
+                return this.appService.updateZweck(action.update).pipe(
+                    map(() => updateZweckSuccess(action))
+                )
+            })
+        )
+    })
+    deleteZweck$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteZweck),
+            switchMap(action => {
+                return this.appService.deleteZweck(action.id).pipe(
+                    map(() => deleteZweckSuccess(action))
+                )
+            })
+        )
+    })
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }

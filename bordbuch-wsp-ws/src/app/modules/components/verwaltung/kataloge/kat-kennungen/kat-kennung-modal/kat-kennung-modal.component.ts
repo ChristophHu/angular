@@ -25,7 +25,7 @@ export class KatKennungModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.kennungForm.patchValue(data.data.kennung)
+      this.kennungForm.patchValue(data.data.kat)
     })
   }
 

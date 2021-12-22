@@ -69,7 +69,6 @@ array2obj(arr: any) {
 }
 
 async showModal(id?: string): Promise<void> {
-  console.log(id)
   // let zweck: Kat | undefined
   const { KatChecklisteModalComponent } = await import(
     './kat-checkliste-modal/kat-checkliste-modal.component'

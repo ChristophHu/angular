@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
 import { from, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
-import { Kennung } from '../models/kennung.model';
+import { Kat } from '../models/kat.model';
 
 // import { PositionActions } from 'src/app/store/positionreport-store';
 // import { ShipSelectors } from 'src/app/store/ship-store';
@@ -109,19 +109,54 @@ export class AppService {
                 break
             }
 
-            // kennung
-            case 'insertKatKennung': {
+            // betriebsstoffe, dienststellen, kennung, pruefvermerkkategorie, zaehlerstandstypen, zweck
+            case 'inserteinsatzmittel':
+            case 'insertKatBetriebsstoff':
+            case 'insertKatKennung':
+            case 'insertKatZweck':
                 param = `bezeichnung=${data.bezeichnung}`
                 break
-            }
-            case 'updateKatKennung': {
+
+            case 'updateeinsatzmittel':
+            case 'updateKatBetriebsstoff':
+            case 'updateKatKennung':
+            case 'updateKatZwecke':
                 param = `id=${data.id}&bezeichnung=${data.bezeichnung}`
                 break
-            }
-            case 'deleteKatKennung': {
+
+            case 'deleteeinsatzmittel':
+            case 'deleteKatBetriebsstoff':
+            case 'deleteDienststelle':
+            case 'deleteKatKennung':
+            case 'deleteKatZwecke':
+            case 'deletePruefvermerkKat':
+            case 'deleteZaehlerstandsTyp':
                 param = `id=${data}`
                 break
-            }
+
+            case 'insertDienststelle':
+                param = `id=${data.id}&bezeichnung=${data.bezeichnung}&latitude=${data.latitude}&longitude=${data.longitude}&strasse=${data.strasse}&hausnummer=${data.hausnummer}&postleitzahl=${data.postleitzahl}&ort=${data.ort}&mailadresse=${data.mailadresse}`
+                break
+
+            case 'updateDienststelle':
+                param = `id=${data.id}&bezeichnung=${data.bezeichnung}&latitude=${data.latitude}&longitude=${data.longitude}&strasse=${data.strasse}&hausnummer=${data.hausnummer}&postleitzahl=${data.postleitzahl}&ort=${data.ort}&mailadresse=${data.mailadresse}`
+                break
+
+            case 'insertKatPruefvermerk':
+                param = `kategorie=${data.bezeichnung}`
+                break
+
+            case 'updateKatPruefvermerk':
+                param = `kategorie=${data.bezeichnung}`
+                break
+
+            case 'insertKatZaehlerstand':
+                param = `zaehlerstandstyp=${data.bezeichnung}`
+                break
+
+            case 'updateKatZaehlerstand':
+                param = `id=${data.id}&zaehlerstandstyp=${data.bezeichnung}`
+                break
 
             // checkliste
             case 'insertCheckliste': {
@@ -435,14 +470,7 @@ export class AppService {
     //         }, (error: any) => observer.error(error))
     //     })
     // }
-    // getPruefvermerkKategorien(): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getPruefvermerksKategorien', {})
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    // }
+
     // getZaehlerstandstypen(): Observable<any> {
     //     return new Observable ((observer) => {
     //         const source$ = this.getReducer('getZaehlerstandstypen', {})
@@ -475,6 +503,99 @@ export class AppService {
     //         }, (error: any) => observer.error(error))
     //     })
     // }
+
+    // allg
+    get(reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer(reducer_func, {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insert(kat: any, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, kat)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            }), (error: any) => observer.error(error)
+        })
+    }
+    update(kat: any, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, kat)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }),
+            (error: any) => observer.error(error)
+        })
+    }
+    delete(id: string, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
+    }
+
+    // betriebsstoffe
+    getBetriebsstoffe(): Observable<any> {
+        return this.get('getKatBetriebsstoffe')
+    }
+    insertBetriebsstoff(kat: Kat): Observable<any> {
+        return this.insert(kat, 'insertKatBetriebsstoff')
+    }
+    updateBetriebsstoff(kat: Kat): Observable<any> {
+        return this.update(kat, 'updateKatBetriebsstoff')
+    }
+    deleteBetriebsstoff(id: string): Observable<any> {
+        return this.delete(id, 'deleteKatBetriebsstoff')
+    }
+
+    // checkliste
+    getCheckliste(): Observable<any> {
+        return this.get('getFEM')
+    }
+    insertCheckliste(kat: Kat): Observable<any> {
+        return this.insert(kat, 'inserteinsatzmittel')
+    }
+    updateCheckliste(kat: Kat): Observable<any> {
+        return this.update(kat, 'updateeinsatzmittel')
+    }
+    deleteCheckliste(id: string): Observable<any> {
+        return this.delete(id, 'deleteeinsatzmittel')
+    }
+
+    // dienststellen
+    getDienststellen(): Observable<any> {
+        return this.get('getDienststellen')
+    }
+    insertDienststelle(kat: Kat): Observable<any> {
+        return this.insert(kat, 'insertDienststelle')
+    }
+    updateDienststelle(kat: Kat): Observable<any> {
+        return this.update(kat, 'updateDienststelle')
+    }
+    deleteDienststelle(id: string): Observable<any> {
+        return this.delete(id, 'deleteDienststelle')
+    }
+
+    // funktionen
+    getFunktionen(): Observable<any> {
+        return this.get('getFunktionen')
+    }
+    insertFunktion(dienststelle: any): Observable<any> {
+        return this.insert(dienststelle, 'insertKatFunktion')
+    }
+    updateFunktion(dienststelle: any): Observable<any> {
+        return this.update(dienststelle, 'updateKatFunktion')
+    }
+    deleteFunktion(id: string): Observable<any> {
+        return this.delete(id, 'deleteKatFunktion')
+    }
+
+    // kennungen
     getKennungen(): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getKatKennungen', {})
@@ -483,17 +604,15 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
-    insertKennung(kennung: Kennung): Observable<any> {
+    insertKennung(kennung: Kat): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertKatKennung', kennung)
             source$.subscribe((data: any) => {
-                // const newKennung : Kennung = Object.assign({}, kennung, { id: data.id }) das ist alles
                 observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
+            }), (error: any) => observer.error(error)
         })
     }
-    updateKennung(kennung: Kennung): Observable<any> {
+    updateKennung(kennung: Kat): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.reducer('updateKatKennung', kennung)
             source$.subscribe((status: any) => {
@@ -507,18 +626,115 @@ export class AppService {
             const source$ = this.reducer('deleteKatKennung', id)
             source$.subscribe((status: any) => {
                 observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
+    }
+
+    // pruefvermerkkategorien
+    getPruefvermerkkategorien(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPruefvermerksKategorien', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertPruefvermerkkategorie(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertKatPruefvermerk', zweck)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            }), (error: any) => observer.error(error)
+        })
+    }
+    updatePruefvermerkkategorie(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateKatPruefvermerk', zweck)
+            source$.subscribe((status: any) => {
+                observer.next(status)
             }),
             (error: any) => observer.error(error)
         })
     }
-    // getZwecke(): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getKatZwecke', {})
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    // }
+    deletePruefvermerkkategorie(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deletePruefvermerkKat', id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
+    }
+
+    // zaehlerstandstypen
+    getZaehlerstandstypen(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatZaehlerstand', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertZaehlerstandstyp(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertKatZaehlerstand', zweck)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            }), (error: any) => observer.error(error)
+        })
+    }
+    updateZaehlerstandstyp(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateKatZaehlerstand', zweck)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }),
+            (error: any) => observer.error(error)
+        })
+    }
+    deleteZaehlerstandstyp(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteZaehlerstandsTyp', id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
+    }
+
+    // zweck
+    getZweck(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKatZwecke', {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertZweck(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('insertKatZweck', zweck)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            }), (error: any) => observer.error(error)
+        })
+    }
+    updateZweck(zweck: Kat): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('updateKatZwecke', zweck)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }),
+            (error: any) => observer.error(error)
+        })
+    }
+    deleteZweck(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteKatZwecke', id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
+    }
+
     // getChecklist(id: string = '1'): Observable<any> {
     //     return new Observable ((observer) => {
     //         const source$ = this.getReducer('getLastChecklist', id)
