@@ -13,16 +13,20 @@ import { ModalModule } from './components/modal/modal.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from './directives/click-outside/click-outside.directive';
 import { DataTablesModule } from 'angular-datatables';
+import { PageHeaderModule } from './components/page-header/page-header.module';
+import { TitlecasePipe } from './pipes/titlecase/titlecase.pipe';
 
 @NgModule({
   declarations: [
     DropdownDirective,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    TitlecasePipe
   ],
   imports: [
     CommonModule,
 
     ModalModule,
+    PageHeaderModule,
 
     // icon lib
     IconLibraryModule,
@@ -41,12 +45,15 @@ import { DataTablesModule } from 'angular-datatables';
     DataTablesModule
   ],
   exports: [
+    // directives
     DropdownDirective,
     ClickOutsideDirective,
+    
     
     CommonModule,
 
     ModalModule,
+    PageHeaderModule,
     
     // icon lib
     IconLibraryModule,
@@ -64,7 +71,10 @@ import { DataTablesModule } from 'angular-datatables';
     ReactiveFormsModule,
 
     // datatables
-    DataTablesModule
+    DataTablesModule,
+
+    // pipes
+    TitlecasePipe
   ]
 })
 export class SharedModule { }

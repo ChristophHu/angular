@@ -1,0 +1,15 @@
+/* content */
+.content
+  @apply absolute w-full p-4 overflow-auto
+  -webkit-overflow-scrolling: touch
+  -ms-overflow-style: -ms-autohiding-scrollbar
+
+  &::-webkit-scrollbar
+    display: none
+    
+tbody
+  tr:nth-child(odd)
+    @apply bg-gray-50
+
+  tr:nth-child(even)
+    @apply bg-white

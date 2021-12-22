@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Kennung } from 'src/app/core/models/kennung.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatKennungModalComponent } from './kat-kennung-modal/kat-kennung-modal.component';
 
 @Component({
@@ -14,22 +15,11 @@ export class KatKennungenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  kennungen: Kennung[] = [
-    {
-       "id":"b6d0cc49-fe33-4a68-a705-c4551c2f7377",
-       "bezeichnung":"Nixe 300"
-    },
-    {
-       "id":"e324af40-9661-4b9f-862a-dd0106170fd9",
-       "bezeichnung":"Nixe 200"
-    },
-    {
-       "id":"ee6022f8-c39e-4d05-a5f9-2df73c5798e3",
-       "bezeichnung":"Nixe 100"
-    }
- ]
+  kennungen$: Observable<Kennung[]>
 
-  constructor(private _modalService: ModalService<KatKennungModalComponent>) { }
+  constructor(private _modalService: ModalService<KatKennungModalComponent>, private _katFacade: KatFacade) { 
+    this.kennungen$ = _katFacade.kennungen$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -68,18 +58,15 @@ export class KatKennungenComponent implements OnInit {
     // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    let zweck: Kennung | undefined
+  async showModal(kennung?: Kennung): Promise<void> {
     const { KatKennungModalComponent } = await import(
       './kat-kennung-modal/kat-kennung-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (kennung) {
       this._modalService.open(KatKennungModalComponent, {
         data: {
-          title: 'Kennung bearbeiten'
+          title: 'Kennung bearbeiten',
+          kennung
         }
       })
     } else {
@@ -89,5 +76,9 @@ export class KatKennungenComponent implements OnInit {
         }
       })
     }
+  }
+  
+  delete(id: string) {
+    this._katFacade.deleteKennung(id)
   }
 }

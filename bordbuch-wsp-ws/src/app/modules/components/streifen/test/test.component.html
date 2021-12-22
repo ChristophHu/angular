@@ -1,25 +1,22 @@
-<!-- <div class="relative w-full h-full flex flex-row">
-  <div class="flex-grow p-2 bg-yellow-100">
-		<div class="relative bg-red-200 z-20">
-			Test
-		</div>
-    <div class="w-full h-full ml-20 bg-blue-100 z-30">
-      <button class="w-8 h-8 m-3">
-        <icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
-        Test
-      </button>
-
-    </div>
-  </div>
-</div>
-
- -->
-
-<div class="relative w-full h-full bg-yellow-100">
+<!-- <div class="relative w-full h-full bg-yellow-100">
 	<div class="absolute top-0 bottom-0 left-0 w-60 bg-green-100">
 		Background
 	</div>
 	<div class="absolute top-0 right-0 bottom-0 bg-blue-100 transition-all" [ngClass]="status ? 'left-60' : 'left-0'">
+		<button class="w-8 h-8 m-2" *ngIf="!status" (click)="status = !status">
+			<icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
+		</button>
+		<button class="w-8 h-8 m-2" *ngIf="status" (click)="status = !status">
+			<icons class="w-8 h-8 stroke-1 stroke-current" name="arrow-left"></icons>
+		</button>
+	</div>
+</div> -->
+
+<div class="relative w-full h-full">
+	<div class="absolute top-2 bottom-2 left-2 w-64 bg-gray-50">
+		
+	</div>
+	<div class="absolute top-2 right-2 bottom-2 bg-blue-100 transition-all shadow" [ngClass]="status ? 'left-64' : 'left-2'">
 		<button class="w-8 h-8 m-2" *ngIf="!status" (click)="status = !status">
 			<icons class="w-8 h-8 stroke-1 stroke-current" name="menu"></icons>
 		</button>

@@ -2,32 +2,17 @@
 #map
     @apply h-full w-full z-30
 
-/* content */
-.content
-  @apply absolute top-32 right-8 bottom-16 left-8 overflow-auto
-  -webkit-overflow-scrolling: touch
-  -ms-overflow-style: -ms-autohiding-scrollbar
+// /* modal dark-theme*/
+// .dark .mat-form-field-ripple
+//   background-color: rgba(255, 255, 255, 0.4) !important
 
-  &::-webkit-scrollbar
-    display: none
+// .dark .mat-form-field-underline
+//   &:before
+//     background-color: rgba(255, 255, 255, 0.4) !important
 
-/* modal dark-theme*/
-.dark .mat-form-field-ripple
-  background-color: rgba(255, 255, 255, 0.4) !important
+// .dark mat-label
+//   color: lightgray !important
 
-.dark .mat-form-field-underline
-  &:before
-    background-color: rgba(255, 255, 255, 0.4) !important
+// .dark .mat-select-value
+//   color: lightgray !important
 
-.dark mat-label
-  color: lightgray !important
-
-.dark .mat-select-value
-  color: lightgray !important
-
-tbody
-  tr:nth-child(odd)
-    @apply bg-gray-50
-
-  tr:nth-child(even)
-    @apply bg-white

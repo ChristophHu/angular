@@ -7,6 +7,7 @@ import { AusgewaehlteStreifenComponent } from './ausgewaehlte-streifen/ausgewaeh
 import { AusgewaehlteStreifenModalComponent } from './ausgewaehlte-streifen/ausgewaehlte-streifen-modal/ausgewaehlte-streifen-modal.component';
 import { AusgewaehlteStreifeComponent } from './ausgewaehlte-streife/ausgewaehlte-streife.component';
 import { TestComponent } from './test/test.component';
+import { TabSchiffeComponent } from './aktuelle-positionen/tab-schiffe/tab-schiffe.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
     AktuellePositionenComponent,
     AusgewaehlteStreifenComponent,
     AusgewaehlteStreifenModalComponent,
-    TestComponent
+    TestComponent,
+    TabSchiffeComponent
   ],
   imports: [
     RouterModule.forChild(routes),

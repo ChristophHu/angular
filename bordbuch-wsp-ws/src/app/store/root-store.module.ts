@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { KatFacade } from './kat-store/kat.facade';
 import { metaReducers, reducers } from './root-store.state';
 
 // import { ShipSelectionModule } from './ship-selection-store/ship-selection.module';
