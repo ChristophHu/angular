@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatBetriebsstoffeModalComponent } from './kat-betriebsstoffe-modal/kat-betriebsstoffe-modal.component';
 
 @Component({
@@ -14,12 +15,11 @@ export class KatBetriebsstoffeComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  kat: Kat[] = [
-    {"id":"463945a9-0812-4c5b-a683-8e82a76679b6","bezeichnung":"Benzin"},
-    {"id":"e1167262-3e8c-4c25-b572-f99939784a8f","bezeichnung":"Diesel"}
-  ]
+  betriebsstoffe$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatBetriebsstoffeModalComponent>) { }
+  constructor(private _modalService: ModalService<KatBetriebsstoffeModalComponent>, private _katFacade: KatFacade) {
+    this.betriebsstoffe$ = _katFacade.betriebsstoffe$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -55,21 +55,17 @@ export class KatBetriebsstoffeComponent implements OnInit {
         },
       }
     }
-    // this._betankungService.getBetankungen()
   }
 
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    // let zweck: Kat | undefined
+  async showModal(kat?: Kat): Promise<void> {
     const { KatBetriebsstoffeModalComponent } = await import(
       './kat-betriebsstoffe-modal/kat-betriebsstoffe-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (kat) {
       this._modalService.open(KatBetriebsstoffeModalComponent, {
         data: {
-          title: 'Betriebsstoff bearbeiten'
+          title: 'Betriebsstoff bearbeiten',
+          kat
         }
       })
     } else {
@@ -79,5 +75,9 @@ export class KatBetriebsstoffeComponent implements OnInit {
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._katFacade.deleteBetriebsstoffe(id)
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Dienststelle } from 'src/app/core/models/dienststelle.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatDienststelleModalComponent } from './kat-dienststelle-modal/kat-dienststelle-modal.component';
 
 @Component({
@@ -14,24 +15,27 @@ export class KatDienststellenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-  dienststellen: any = [
-    {
-      id: "1",
-      bezeichnung: "DST NORD",
-      position: {
-        longitude:2.2000000476837158,
-        latitude:1.1000000238418579
-      },
-      adresse: {
-        strasse: "AA",
-        hausnummer: "1A",
-        postleitzahl: "11111",
-        ort:"ORT1"
-      },
-      mailadresse:"A@A.A"},
-  ]
+  // dienststellen: any = [
+  //   {
+  //     id: "1",
+  //     bezeichnung: "DST NORD",
+  //     position: {
+  //       longitude:2.2000000476837158,
+  //       latitude:1.1000000238418579
+  //     },
+  //     adresse: {
+  //       strasse: "AA",
+  //       hausnummer: "1A",
+  //       postleitzahl: "11111",
+  //       ort:"ORT1"
+  //     },
+  //     mailadresse:"A@A.A"},
+  // ]
+  dienststellen$: Observable<Dienststelle[]>
 
-  constructor(private _modalService: ModalService<KatDienststelleModalComponent>) { }
+  constructor(private _modalService: ModalService<KatDienststelleModalComponent>, private _katFacade: KatFacade) {
+    this.dienststellen$ = _katFacade.dienststellen$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -70,18 +74,15 @@ export class KatDienststellenComponent implements OnInit {
     // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    // let zweck: Zweck | undefined
+  async showModal(dienststelle?: Dienststelle): Promise<void> {
     const { KatDienststelleModalComponent } = await import(
       './kat-dienststelle-modal/kat-dienststelle-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (dienststelle) {
       this._modalService.open(KatDienststelleModalComponent, {
         data: {
-          title: 'Dienststelle bearbeiten'
+          title: 'Dienststelle bearbeiten',
+          dienststelle
         }
       })
     } else {
@@ -91,5 +92,9 @@ export class KatDienststellenComponent implements OnInit {
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._katFacade.deleteDienststelle(id)
   }
 }

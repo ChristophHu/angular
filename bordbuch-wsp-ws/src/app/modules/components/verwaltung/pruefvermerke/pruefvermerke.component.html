@@ -2,28 +2,28 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
+                <th>Bestandteil</th>
                 <th hidden>ID</th>
                 <th>Kategorie</th>
-                <th>Bestandteil</th>
                 <th>Beschreibung</th>
                 <th class="w-12"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let pruefvermerk of pruefvermerke">
+            <tr *ngFor="let pruefvermerk of (pruefvermerke$ | async)">
+                <td>{{ pruefvermerk.item }}</td>
                 <td hidden>{{ pruefvermerk.id }}</td>
                 <td>{{ pruefvermerk.kategorie }}</td>
-                <td>{{ pruefvermerk.item }}</td>
                 <td>{{ pruefvermerk.description }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" appDropdown>
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                     </button>
                     <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(pruefvermerk.id)">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(pruefvermerk)">
                             <p>Bearbeiten</p>
                         </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(pruefvermerk.id)">
                             <p>Löschen</p>
                         </div>
                     </div>
@@ -31,4 +31,10 @@
             </tr>
         </tbody>
     </table>
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Prüfvermerk hinzufügen
+    </button>
 </div>

@@ -8,11 +8,23 @@ import * as KatState from './store/reducers'
 import { Observable } from "rxjs";
 
 import { Kat } from "src/app/core/models/kat.model";
+import { Pruefvermerk } from "src/app/core/models/pruefvermerk.model";
+import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model";
+import { Dienststelle } from "src/app/core/models/dienststelle.model";
+import { Schiff } from "src/app/core/models/schiff.model";
 
 @Injectable()
 export class KatFacade {
     // public selectors
+    betriebsstoffe$  = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Kat[]>
+    checkliste$  = this.store.pipe(select(KatSelectors.selectAllCheckliste)) as Observable<Kat[]>
+    dienststellen$  = this.store.pipe(select(KatSelectors.selectAllDienststellen)) as Observable<Dienststelle[]>
+    funktionen$  = this.store.pipe(select(KatSelectors.selectAllFunktionen)) as Observable<Kat[]>
     kennungen$  = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kat[]>
+    pruefvermerke$  = this.store.pipe(select(KatSelectors.selectAllPruefvermerke)) as Observable<Pruefvermerk[]>
+    pruefvermerkkategorien$  = this.store.pipe(select(KatSelectors.selectAllPruefvermerkkategorien)) as Observable<Kat[]>
+    schiffe$  = this.store.pipe(select(KatSelectors.selectAllSchiffe)) as Observable<Schiff[]>
+    zaehlerstandstypen$  = this.store.pipe(select(KatSelectors.selectAllZaehlerstandstypen)) as Observable<Zaehlerstandstyp[]>
     zweck$      = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Kat[]>
 
     constructor(private store: Store<RootStoreState>) {}
@@ -22,14 +34,14 @@ export class KatFacade {
     loadCheckliste() {
         this.store.dispatch(KatAction.loadCheckliste())
     }
-    insertCheckliste(insert: Kat) {
-        this.store.dispatch(KatAction.insertCheckliste({ insert }))
+    insertChecklist(insert: Kat) {
+        this.store.dispatch(KatAction.insertChecklist({ insert }))
     }
-    updateCheckliste(update: Kat) {
-        this.store.dispatch(KatAction.updateCheckliste({ update }))
+    updateChecklist(update: Kat) {
+        this.store.dispatch(KatAction.updateChecklist({ update }))
     }
-    deleteCheckliste(id: string) {
-        this.store.dispatch(KatAction.deleteCheckliste({ id }))
+    deleteChecklist(id: string) {
+        this.store.dispatch(KatAction.deleteChecklist({ id }))
     }
 
     // betriebsstoffe
@@ -37,41 +49,44 @@ export class KatFacade {
         this.store.dispatch(KatAction.loadBetriebsstoffe())
     }
     insertBetriebsstoffe(insert: Kat) {
-        this.store.dispatch(KatAction.insertBetriebsstoffe({ insert }))
+        this.store.dispatch(KatAction.insertBetriebsstoff({ insert }))
     }
     updateBetriebsstoffe(update: Kat) {
-        this.store.dispatch(KatAction.updateBetriebsstoffe({ update }))
+        this.store.dispatch(KatAction.updateBetriebsstoff({ update }))
     }
     deleteBetriebsstoffe(id: string) {
-        this.store.dispatch(KatAction.deleteBetriebsstoffe({ id }))
+        this.store.dispatch(KatAction.deleteBetriebsstoff({ id }))
     }
 
     // dienststellen
     loadDienststellen() {
         this.store.dispatch(KatAction.loadDienststellen())
     }
-    insertDienststellen(insert: Kat) {
-        this.store.dispatch(KatAction.insertDienststellen({ insert }))
+    insertDienststelle(insert: Dienststelle) {
+        this.store.dispatch(KatAction.insertDienststelle({ insert }))
     }
-    updateDienststellen(update: Kat) {
-        this.store.dispatch(KatAction.updateDienststellen({ update }))
+    updateDienststelle(update: Dienststelle) {
+        this.store.dispatch(KatAction.updateDienststelle({ update }))
     }
-    deleteDienststellen(id: string) {
-        this.store.dispatch(KatAction.deleteDienststellen({ id }))
+    deleteDienststelle(id: string) {
+        this.store.dispatch(KatAction.deleteDienststelle({ id }))
+    }
+    getIdByDienststelle(bezeichnung: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByDienststelle(bezeichnung)))
     }
 
     // funktionen
     loadFunktionen() {
         this.store.dispatch(KatAction.loadFunktionen())
     }
-    insertFunktionen(insert: Kat) {
-        this.store.dispatch(KatAction.insertFunktionen({ insert }))
+    insertFunktion(insert: Kat) {
+        this.store.dispatch(KatAction.insertFunktion({ insert }))
     }
-    updateFunktionen(update: Kat) {
-        this.store.dispatch(KatAction.updateFunktionen({ update }))
+    updateFunktion(update: Kat) {
+        this.store.dispatch(KatAction.updateFunktion({ update }))
     }
-    deleteFunktionen(id: string) {
-        this.store.dispatch(KatAction.deleteFunktionen({ id }))
+    deleteFunktion(id: string) {
+        this.store.dispatch(KatAction.deleteFunktion({ id }))
     }
 
     // kennungen
@@ -88,6 +103,23 @@ export class KatFacade {
         this.store.dispatch(KatAction.deleteKennung({ id }))
     }
 
+    // pruefvermerke
+    loadPruefvermerke() {
+        this.store.dispatch(KatAction.loadPruefvermerke())
+    }
+    insertPruefvermerk(insert: Pruefvermerk) {
+        this.store.dispatch(KatAction.insertPruefvermerk({ insert }))
+    }
+    updatePruefvermerk(update: Pruefvermerk) {
+        this.store.dispatch(KatAction.updatePruefvermerk({ update }))
+    }
+    deletePruefvermerk(id: string) {
+        this.store.dispatch(KatAction.deletePruefvermerk({ id }))
+    }
+    getIdByKategorie(bezeichnung: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByKategorie(bezeichnung)))
+    }
+
     // pruefvermerkkategorien
     loadPruefvermerkkategorien() {
         this.store.dispatch(KatAction.loadPruefvermerkkategorien())
@@ -102,14 +134,28 @@ export class KatFacade {
         this.store.dispatch(KatAction.deletePruefvermerkkategorie({ id }))
     }
 
+    // schiffe
+    loadSchiffe() {
+        this.store.dispatch(KatAction.loadSchiffe())
+    }
+    insertSchiff(insert: Schiff) {
+        this.store.dispatch(KatAction.insertSchiff({ insert }))
+    }
+    updateSchiff(update: Schiff) {
+        this.store.dispatch(KatAction.updateSchiff({ update }))
+    }
+    deleteSchiff(id: string) {
+        this.store.dispatch(KatAction.deleteSchiff({ id }))
+    }
+
     // zaehlerstandstypen
     loadZaehlerstandstypen() {
         this.store.dispatch(KatAction.loadZaehlerstandstypen())
     }
-    insertZaehlerstandstyp(insert: Kat) {
+    insertZaehlerstandstyp(insert: Zaehlerstandstyp) {
         this.store.dispatch(KatAction.insertZaehlerstandstyp({ insert }))
     }
-    updateZaehlerstandstyp(update: Kat) {
+    updateZaehlerstandstyp(update: Zaehlerstandstyp) {
         this.store.dispatch(KatAction.updateZaehlerstandstyp({ update }))
     }
     deleteZaehlerstandstyp(id: string) {

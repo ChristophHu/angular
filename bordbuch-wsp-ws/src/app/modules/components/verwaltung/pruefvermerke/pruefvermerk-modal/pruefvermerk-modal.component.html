@@ -9,18 +9,22 @@
     </header>
     <div class="content">
         <form [formGroup]="pruefvermerkForm">
-            <div class="hidden">
+            <div class="">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
                 <input matInput type="text" formControlName="id" readonly>
               </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>id_kategorie</mat-label>
+                <input matInput type="text" formControlName="id_kategorie" readonly>
+              </mat-form-field>
             </div>
             <mat-form-field appearance="fill">
                 <mat-label>Kategorie</mat-label>
-                <mat-select formControlName="kategorie">
-                  <!-- <mat-option *ngFor="let betriebsstoff of (betriebsstoffe$ | async)" [value]="schiffForm.bezeichnung">
-                    {{ betriebsstoff.bezeichnung }}
-                  </mat-option> -->
+                <mat-select formControlName="kategorie" (selectionChange)="selectKategorie($event.value)">
+                  <mat-option *ngFor="let kategorie of (pruefvermerkkategorien$ | async)" [value]="kategorie.bezeichnung">
+                    {{ kategorie.bezeichnung }}
+                  </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
@@ -28,7 +32,7 @@
                 <input matInput type="text" formControlName="item">
               </mat-form-field>
             <mat-form-field appearance="fill">
-              <mat-label>Besachreibung</mat-label>
+              <mat-label>Beschreibung</mat-label>
               <input matInput type="text" formControlName="description">
             </mat-form-field>
           </form>
@@ -41,12 +45,11 @@
   <ng-template #toolbar>
     <div>
       <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-      <!-- <button *ngIf="pruefvermerkForm.value.id" (click)="delete(pruefvermerkForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+      <button *ngIf="pruefvermerkForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
     </div>
     <div>
-      <!-- <button *ngIf="!pruefvermerkForm.pristine && pruefvermerkForm.value.id" (click)="update()" type="button"
-        class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-      <!-- <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+      <button *ngIf="!pruefvermerkForm.pristine && pruefvermerkForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>
   

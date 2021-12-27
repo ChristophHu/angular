@@ -2,8 +2,8 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
-                <th hidden>ID</th>
                 <th>Bezeichnung</th>
+                <th hidden>ID</th>
                 <th>Straße</th>
                 <th>Hausnummer</th>
                 <th>PLZ</th>
@@ -13,23 +13,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let dienststelle of dienststellen">
-                <td hidden>{{ dienststelle.id }}</td>
+            <tr *ngFor="let dienststelle of (dienststellen$ | async)">
                 <td>{{ dienststelle.bezeichnung }}</td>
-                <td>{{ dienststelle.strasse }}</td>
-                <td>{{ dienststelle.hausnummer }}</td>
-                <td>{{ dienststelle.postleitzahl }}</td>
-                <td>{{ dienststelle.ort }}</td>
+                <td hidden>{{ dienststelle.id }}</td>
+                <td>{{ dienststelle.adresse.strasse }}</td>
+                <td>{{ dienststelle.adresse.hausnummer }}</td>
+                <td>{{ dienststelle.adresse.postleitzahl }}</td>
+                <td>{{ dienststelle.adresse.ort }}</td>
                 <td>{{ dienststelle.mailadresse }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" appDropdown>
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                     </button>
                     <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(dienststelle.id)">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(dienststelle)">
                             <p>Bearbeiten</p>
                         </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(dienststelle.id)">
                             <p>Löschen</p>
                         </div>
                     </div>
@@ -37,4 +37,10 @@
             </tr>
         </tbody>
     </table>
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Dienststelle hinzufügen
+    </button>
 </div>

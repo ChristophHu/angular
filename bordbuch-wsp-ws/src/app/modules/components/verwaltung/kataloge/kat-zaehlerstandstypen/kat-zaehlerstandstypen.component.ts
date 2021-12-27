@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
+import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatZaehlerstandstypModalComponent } from './kat-zaehlerstandstyp-modal/kat-zaehlerstandstyp-modal.component';
 
 @Component({
@@ -14,14 +16,18 @@ export class KatZaehlerstandstypenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-  kat: Kat[] = [
-    {id: "1", bezeichnung: "MOTOR1"},
-    {id: "2", bezeichnung: "MOTOR2"},
-    {id: "3", bezeichnung: "EINSATZZEIT"},
-    {id: "6", bezeichnung: "MOTOR3"}
-  ]
+  // kat: Kat[] = [
+  //   {id: "1", bezeichnung: "MOTOR1"},
+  //   {id: "2", bezeichnung: "MOTOR2"},
+  //   {id: "3", bezeichnung: "EINSATZZEIT"},
+  //   {id: "6", bezeichnung: "MOTOR3"}
+  // ]
 
-  constructor(private _modalService: ModalService<KatZaehlerstandstypModalComponent>) { }
+  zaehlerstandstypen$: Observable<Zaehlerstandstyp[]>
+
+  constructor(private _modalService: ModalService<KatZaehlerstandstypModalComponent>, private _katFacade: KatFacade) {
+    this.zaehlerstandstypen$ = _katFacade.zaehlerstandstypen$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -60,18 +66,15 @@ export class KatZaehlerstandstypenComponent implements OnInit {
     // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    // let zweck: Zweck | undefined
+  async showModal(kat?: Zaehlerstandstyp): Promise<void> {
     const { KatZaehlerstandstypModalComponent } = await import(
       './kat-zaehlerstandstyp-modal/kat-zaehlerstandstyp-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (kat) {
       this._modalService.open(KatZaehlerstandstypModalComponent, {
         data: {
-          title: 'Zählerstandstyp bearbeiten'
+          title: 'Zählerstandstyp bearbeiten',
+          kat
         }
       })
     } else {
@@ -81,5 +84,9 @@ export class KatZaehlerstandstypenComponent implements OnInit {
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._katFacade.deleteZaehlerstandstyp(id)
   }
 }

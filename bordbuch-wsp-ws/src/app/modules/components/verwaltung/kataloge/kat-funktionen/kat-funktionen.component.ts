@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatFunktionModalComponent } from './kat-funktion-modal/kat-funktion-modal.component';
 
 @Component({
@@ -14,13 +15,11 @@ export class KatFunktionenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-  kat: Kat[] = [
-    {"id":"8873343a-9dfc-4f00-ac6a-38918e786eaa","bezeichnung":"Streifenbegleiter"},
-    {"id":"d21ef47c-f9b6-4576-9c6f-5f8627b12016","bezeichnung":"Gast"},
-    {"id":"e1d86f29-9556-40f9-93d8-65fe7d8fb63b","bezeichnung":"Streifenführer"}
-  ]
+  funktionen$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatFunktionModalComponent>) { }
+  constructor(private _modalService: ModalService<KatFunktionModalComponent>, private _katFacade: KatFacade) {
+    this.funktionen$ = _katFacade.funktionen$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -56,21 +55,17 @@ export class KatFunktionenComponent implements OnInit {
         },
       }
     }
-    // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    // let zweck: Zweck | undefined
+  async showModal(kat?: Kat): Promise<void> {
     const { KatFunktionModalComponent } = await import(
       './kat-funktion-modal/kat-funktion-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (kat) {
       this._modalService.open(KatFunktionModalComponent, {
         data: {
-          title: 'Funktion bearbeiten'
+          title: 'Funktion bearbeiten',
+          kat
         }
       })
     } else {
@@ -80,5 +75,9 @@ export class KatFunktionenComponent implements OnInit {
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._katFacade.deleteFunktion(id)
   }
 }

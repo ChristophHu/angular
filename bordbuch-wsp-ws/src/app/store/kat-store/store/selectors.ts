@@ -43,16 +43,66 @@ export const isKatLoaded = createSelector(
 //     state => state.betriebsstoffe
 // )
 
-// // funktionen
-// export const selectAllFunktionen = createSelector(
-//     katState,
-//     state => state.funktionen
-// )
+// betriebsstoffe
+export const selectAllBetriebsstoffe = createSelector(
+    katState,
+    state => state.betriebsstoffe
+)
+
+// checkliste
+export const selectAllCheckliste = createSelector(
+    katState,
+    state => state.checkliste
+)
+
+// dienststellen
+export const selectAllDienststellen = createSelector(
+    katState,
+    state => state.dienststellen
+)
+export const selectIdByDienststelle = (bezeichnung: string) => createSelector(
+    selectAllDienststellen,
+    kategorie => kategorie?.find(el => el.bezeichnung == bezeichnung)?.id
+)
+
+// funktionen
+export const selectAllFunktionen = createSelector(
+    katState,
+    state => state.funktionen
+)
 
 // kennungen
 export const selectAllKennungen = createSelector(
     katState,
     state => state.kennungen
+)
+
+// pruefvermerkkategorien
+export const selectAllPruefvermerke = createSelector(
+    katState,
+    state => state.pruefvermerke
+)
+
+// pruefvermerkkategorien
+export const selectAllPruefvermerkkategorien = createSelector(
+    katState,
+    state => state.pruefvermerkKategorien
+)
+export const selectIdByKategorie = (bezeichnung: string) => createSelector(
+    selectAllPruefvermerkkategorien,
+    kategorie => kategorie?.find(el => el.bezeichnung == bezeichnung)?.id
+)
+
+// schiffe
+export const selectAllSchiffe = createSelector(
+    katState,
+    state => state.schiffe
+)
+
+// zaehlerstandstypen
+export const selectAllZaehlerstandstypen = createSelector(
+    katState,
+    state => state.zaehlerstandstypen
 )
 
 // zwecke

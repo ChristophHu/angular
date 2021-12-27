@@ -16,25 +16,6 @@ export class KatZweckComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-//   zweck: Zweck[] = [
-//     {
-//        "id":"22868a48-e930-426e-a8cc-89a7d2b0c651",
-//        "bezeichnung":"Raumschutz"
-//     },
-//     {
-//        "id":"a40c5ee7-2c07-45aa-a045-6acbf36562a6",
-//        "bezeichnung":"Sonstiges"
-//     },
-//     {
-//        "id":"b165963d-ec6d-49cf-a9a4-32cf5f9fc4d4",
-//        "bezeichnung":"Pause"
-//     },
-//     {
-//        "id":"fded9094-8d5c-48f7-be6e-f1b4cc5288ad",
-//        "bezeichnung":"Betankung"
-//     }
-//  ]
-
   zweck$: Observable<Kat[]>
 
   constructor(private _modalService: ModalService<KatZweckModalComponent>, private _katFacade: KatFacade) {
@@ -75,7 +56,6 @@ export class KatZweckComponent implements OnInit {
         },
       }
     }
-    // this._betankungService.getBetankungen()
   }
   
   async showModal(kat?: Kat): Promise<void> {
@@ -83,8 +63,6 @@ export class KatZweckComponent implements OnInit {
       './kat-zweck-modal/kat-zweck-modal.component'
     )
     if (kat) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
       this._modalService.open(KatZweckModalComponent, {
         data: {
           title: 'Zweck bearbeiten',

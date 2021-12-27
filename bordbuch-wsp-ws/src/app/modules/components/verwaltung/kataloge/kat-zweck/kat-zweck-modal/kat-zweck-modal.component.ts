@@ -13,10 +13,10 @@ import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 export class KatZweckModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<KatZweckModalComponent> | undefined;
   title: string = ''
-  zweckForm: FormGroup
+  katForm: FormGroup
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<KatZweckModalComponent>, private _katFacade: KatFacade) {
-    this.zweckForm = this._formBuilder.group({
+    this.katForm = this._formBuilder.group({
       id: [],
       bezeichnung: []
     })
@@ -25,22 +25,22 @@ export class KatZweckModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.zweckForm.patchValue(data.data.kat)
+      this.katForm.patchValue(data.data.kat)
     })
   }
 
   create() {
-    const insert: Kat = this.zweckForm.value
+    const insert: Kat = this.katForm.value
     this._katFacade.insertZweck(insert)
     this.modal?.close()
   }
   update() {
-    const update: Kat = this.zweckForm.value
+    const update: Kat = this.katForm.value
     this._katFacade.updateZweck(update)
     this.modal?.close()
   }
   delete() {
-    this._katFacade.deleteZweck(this.zweckForm.value.id)
+    this._katFacade.deleteZweck(this.katForm.value.id)
     this.modal?.close()
   }
 

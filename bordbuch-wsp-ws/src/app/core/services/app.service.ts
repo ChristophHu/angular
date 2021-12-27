@@ -4,7 +4,10 @@ import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
 import { from, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { Dienststelle } from '../models/dienststelle.model';
 import { Kat } from '../models/kat.model';
+import { Schiff } from '../models/schiff.model';
+import { Zaehlerstandstyp } from '../models/zaehlerstandstyp.model';
 
 // import { PositionActions } from 'src/app/store/positionreport-store';
 // import { ShipSelectors } from 'src/app/store/ship-store';
@@ -112,6 +115,7 @@ export class AppService {
             // betriebsstoffe, dienststellen, kennung, pruefvermerkkategorie, zaehlerstandstypen, zweck
             case 'inserteinsatzmittel':
             case 'insertKatBetriebsstoff':
+            case 'insertKatFunktion':
             case 'insertKatKennung':
             case 'insertKatZweck':
                 param = `bezeichnung=${data.bezeichnung}`
@@ -127,19 +131,30 @@ export class AppService {
             case 'deleteeinsatzmittel':
             case 'deleteKatBetriebsstoff':
             case 'deleteDienststelle':
+            case 'deleteKatFunktion':
             case 'deleteKatKennung':
             case 'deleteKatZwecke':
+            case 'deletePruefvermerk':
             case 'deletePruefvermerkKat':
+            case 'deleteSchiff':
             case 'deleteZaehlerstandsTyp':
                 param = `id=${data}`
                 break
 
             case 'insertDienststelle':
-                param = `id=${data.id}&bezeichnung=${data.bezeichnung}&latitude=${data.latitude}&longitude=${data.longitude}&strasse=${data.strasse}&hausnummer=${data.hausnummer}&postleitzahl=${data.postleitzahl}&ort=${data.ort}&mailadresse=${data.mailadresse}`
+                param = `bezeichnung=${data.bezeichnung}&latitude=${data.position.latitude}&longitude=${data.position.longitude}&strasse=${data.adresse.strasse}&hausnummer=${data.adresse.hausnummer}&postleitzahl=${data.adresse.postleitzahl}&ort=${data.adresse.ort}&mailadresse=${data.mailadresse}`
                 break
 
             case 'updateDienststelle':
-                param = `id=${data.id}&bezeichnung=${data.bezeichnung}&latitude=${data.latitude}&longitude=${data.longitude}&strasse=${data.strasse}&hausnummer=${data.hausnummer}&postleitzahl=${data.postleitzahl}&ort=${data.ort}&mailadresse=${data.mailadresse}`
+                param = `id=${data.id}&bezeichnung=${data.bezeichnung}&latitude=${data.position.latitude}&longitude=${data.position.longitude}&strasse=${data.adresse.strasse}&hausnummer=${data.adresse.hausnummer}&postleitzahl=${data.adresse.postleitzahl}&ort=${data.adresse.ort}&mailadresse=${data.mailadresse}`
+                break
+
+            case 'insertPruefvermerk':
+                param = `id_kategorie=${data.id_kategorie}&bezeichnung=${data.item}&beschreibung=${data.description}`
+                break
+
+            case 'updatePruefvermerk':
+                param = `id=${data.id}&id_kategorie=${data.id_kategorie}&bezeichnung=${data.item}&beschreibung=${data.description}`
                 break
 
             case 'insertKatPruefvermerk':
@@ -147,7 +162,7 @@ export class AppService {
                 break
 
             case 'updateKatPruefvermerk':
-                param = `kategorie=${data.bezeichnung}`
+                param = `id=${data.id}&kategorie=${data.bezeichnung}`
                 break
 
             case 'insertKatZaehlerstand':
@@ -156,6 +171,14 @@ export class AppService {
 
             case 'updateKatZaehlerstand':
                 param = `id=${data.id}&zaehlerstandstyp=${data.bezeichnung}`
+                break
+
+            // schiffe
+            case 'insertSchiff':
+                param = `id_dienststelle=${data.dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
+                break
+            case 'updateSchiff':
+                param = `id=${data.id}&id_dienststelle=${data.dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
                 break
 
             // checkliste
@@ -189,6 +212,8 @@ export class AppService {
                 console.error('There is no action to switch.')
                 break
         }
+
+        console.log(`${baseURL} ${param}`)
         
         return this.httpClient.post(
             baseURL, 
@@ -555,15 +580,23 @@ export class AppService {
 
     // checkliste
     getCheckliste(): Observable<any> {
-        return this.get('getFEM')
+        return new Observable ((observer) => {
+            let checkliste: any[] = []
+            this.get('getFEM').subscribe(data => {
+                data.forEach((el: any) => {
+                    checkliste.push({ id: el[0], bezeichnung: el[1] })
+                });
+                observer.next(checkliste)
+            })
+        })
     }
-    insertCheckliste(kat: Kat): Observable<any> {
+    insertChecklist(kat: Kat): Observable<any> {
         return this.insert(kat, 'inserteinsatzmittel')
     }
-    updateCheckliste(kat: Kat): Observable<any> {
+    updateChecklist(kat: Kat): Observable<any> {
         return this.update(kat, 'updateeinsatzmittel')
     }
-    deleteCheckliste(id: string): Observable<any> {
+    deleteChecklist(id: string): Observable<any> {
         return this.delete(id, 'deleteeinsatzmittel')
     }
 
@@ -571,11 +604,12 @@ export class AppService {
     getDienststellen(): Observable<any> {
         return this.get('getDienststellen')
     }
-    insertDienststelle(kat: Kat): Observable<any> {
-        return this.insert(kat, 'insertDienststelle')
+    insertDienststelle(dienststelle: Dienststelle): Observable<any> {
+        console.log(dienststelle)
+        return this.insert(dienststelle, 'insertDienststelle')
     }
-    updateDienststelle(kat: Kat): Observable<any> {
-        return this.update(kat, 'updateDienststelle')
+    updateDienststelle(dienststelle: Dienststelle): Observable<any> {
+        return this.update(dienststelle, 'updateDienststelle')
     }
     deleteDienststelle(id: string): Observable<any> {
         return this.delete(id, 'deleteDienststelle')
@@ -583,16 +617,30 @@ export class AppService {
 
     // funktionen
     getFunktionen(): Observable<any> {
-        return this.get('getFunktionen')
+        return this.get('getKatFunktionen')
     }
-    insertFunktion(dienststelle: any): Observable<any> {
-        return this.insert(dienststelle, 'insertKatFunktion')
+    insertFunktion(kat: any): Observable<any> {
+        return this.insert(kat, 'insertKatFunktion')
     }
-    updateFunktion(dienststelle: any): Observable<any> {
-        return this.update(dienststelle, 'updateKatFunktion')
+    updateFunktion(kat: any): Observable<any> {
+        return this.update(kat, 'updateKatFunktion')
     }
     deleteFunktion(id: string): Observable<any> {
         return this.delete(id, 'deleteKatFunktion')
+    }
+
+    // pruefvermerke
+    getPruefvermerke(): Observable<any> {
+        return this.get('getPruefvermerke')
+    }
+    insertPruefvermerk(kat: any): Observable<any> {
+        return this.insert(kat, 'insertPruefvermerk')
+    }
+    updatePruefvermerk(kat: any): Observable<any> {
+        return this.update(kat, 'updatePruefvermerk')
+    }
+    deletePruefvermerk(id: string): Observable<any> {
+        return this.delete(id, 'deletePruefvermerk')
     }
 
     // kennungen
@@ -664,27 +712,41 @@ export class AppService {
             }), (error: any) => observer.error(error)
         })
     }
+    getSchiffe(): Observable<any> {
+        return this.get('getSchiffe')
+    }
+    insertSchiff(schiff: Schiff): Observable<any> {
+        console.log(schiff)
+        return this.insert(schiff, 'insertSchiff')
+    }
+    updateSchiff(schiff: Schiff): Observable<any> {
+        console.log(schiff)
+        return this.update(schiff, 'insertSchiff')
+    }
+    deleteSchiff(id: string): Observable<any> {
+        return this.delete(id, 'deleteSchiff')
+    }
 
     // zaehlerstandstypen
     getZaehlerstandstypen(): Observable<any> {
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getKatZaehlerstand', {})
+            const source$ = this.getReducer('getZaehlerstandstypen', {})
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }
-    insertZaehlerstandstyp(zweck: Kat): Observable<any> {
+    insertZaehlerstandstyp(zaehlerstandstyp: Zaehlerstandstyp): Observable<any> {
         return new Observable ((observer) => {
-            const source$ = this.reducer('insertKatZaehlerstand', zweck)
+            const source$ = this.reducer('insertKatZaehlerstand', zaehlerstandstyp)
             source$.subscribe((data: any) => {
                 observer.next(data.id)
             }), (error: any) => observer.error(error)
         })
     }
-    updateZaehlerstandstyp(zweck: Kat): Observable<any> {
+    updateZaehlerstandstyp(zaehlerstandstyp: Zaehlerstandstyp): Observable<any> {
         return new Observable ((observer) => {
-            const source$ = this.reducer('updateKatZaehlerstand', zweck)
+            const source$ = this.reducer('updateKatZaehlerstand', zaehlerstandstyp)
             source$.subscribe((status: any) => {
                 observer.next(status)
             }),

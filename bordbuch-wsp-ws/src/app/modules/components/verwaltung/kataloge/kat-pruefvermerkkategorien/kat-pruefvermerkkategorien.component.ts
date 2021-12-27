@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { KatPruefvermerkkategorieModalComponent } from './kat-pruefvermerkkategorie-modal/kat-pruefvermerkkategorie-modal.component';
 
 @Component({
@@ -14,14 +15,11 @@ export class KatPruefvermerkkategorienComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
   
-  kat: Kat[] = [
-    { id:"14c1af2c-404b-465a-a421-7250484759fb", bezeichnung: "Schiffskörper"},
-    { id:"49320211-960e-4308-804e-135976c255a7", bezeichnung: "E-Anlage"},
-    { id:"691ee06a-a8a2-44ef-b756-1dacae3af566", bezeichnung: "Feste Ausrüstung"},
-    { id:"d9c21733-be56-4a15-a267-71e16917835f", bezeichnung: "Manövereinrichtungen"}
-  ]
+  pruefvermerkkategorien$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatPruefvermerkkategorieModalComponent>) { }
+  constructor(private _modalService: ModalService<KatPruefvermerkkategorieModalComponent>, private _katFacade: KatFacade) {
+    this.pruefvermerkkategorien$ = _katFacade.pruefvermerkkategorien$
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -57,21 +55,17 @@ export class KatPruefvermerkkategorienComponent implements OnInit {
         },
       }
     }
-    // this._betankungService.getBetankungen()
   }
   
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    // let zweck: Zweck | undefined
+  async showModal(kat?: Kat): Promise<void> {
     const { KatPruefvermerkkategorieModalComponent } = await import(
       './kat-pruefvermerkkategorie-modal/kat-pruefvermerkkategorie-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      // console.log(betankung)
+    if (kat) {
       this._modalService.open(KatPruefvermerkkategorieModalComponent, {
         data: {
-          title: 'Prüfvermerkkategorie bearbeiten'
+          title: 'Prüfvermerkkategorie bearbeiten',
+          kat
         }
       })
     } else {
@@ -81,5 +75,9 @@ export class KatPruefvermerkkategorienComponent implements OnInit {
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._katFacade.deletePruefvermerkkategorie(id)
   }
 }

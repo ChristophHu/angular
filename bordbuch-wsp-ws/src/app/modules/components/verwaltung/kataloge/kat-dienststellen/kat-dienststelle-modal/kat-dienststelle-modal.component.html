@@ -8,8 +8,8 @@
       </button>
     </header>
     <div class="content">
-      <form [formGroup]="katForm">
-        <div class="">
+      <form [formGroup]="dienststelleForm">
+        <div class="hidden">
           <mat-form-field appearance="fill">
             <mat-label>id</mat-label>
             <input matInput type="text" formControlName="id" readonly>
@@ -18,6 +18,42 @@
         <mat-form-field appearance="fill">
           <mat-label>Bezeichnung</mat-label>
           <input matInput type="text" formControlName="bezeichnung">
+        </mat-form-field>
+        <div formGroupName="position" class="flex flex-row">
+          <mat-form-field appearance="fill">
+            <mat-label>Latitude</mat-label>
+            <input matInput type="text" formControlName="latitude">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Longitude</mat-label>
+            <input matInput type="text" formControlName="longitude">
+          </mat-form-field>
+        </div>
+        <div formGroupName="adresse">
+          <div class="flex flex-row">
+            <mat-form-field class="flex-grow mr-2" appearance="fill">
+              <mat-label>Strasse</mat-label>
+              <input matInput type="text" formControlName="strasse">
+            </mat-form-field>
+            <mat-form-field class="w-32" appearance="fill">
+              <mat-label>Hausnummer</mat-label>
+              <input matInput type="text" formControlName="hausnummer">
+            </mat-form-field>
+          </div>
+          <div class="flex flex-row">
+            <mat-form-field class="flex-grow mr-2" appearance="fill">
+              <mat-label>Ort</mat-label>
+              <input matInput type="text" formControlName="ort">
+            </mat-form-field>
+            <mat-form-field class="w-32" appearance="fill">
+              <mat-label>Postleitzahl</mat-label>
+              <input matInput type="text" formControlName="postleitzahl">
+            </mat-form-field>h
+          </div>
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Mail</mat-label>
+          <input matInput type="text" formControlName="mailadresse">
         </mat-form-field>
       </form>
     </div>
@@ -29,11 +65,10 @@
   <ng-template #toolbar>
     <div>
       <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-      <!-- <button *ngIf="katForm.value.id" (click)="delete(katForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+      <button *ngIf="dienststelleForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
     </div>
     <div>
-      <!-- <button *ngIf="!katForm.pristine && katForm.value.id" (click)="update()" type="button"
-          class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-      <button *ngIf="!katForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+      <button *ngIf="!dienststelleForm.pristine && dienststelleForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="!dienststelleForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>

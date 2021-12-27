@@ -20,7 +20,15 @@ export class Resolver implements Resolve<any> {
             tap(() => {
                 if (!this.loading) {
                     this.loading = true
+                    this.katFacade.loadBetriebsstoffe()
+                    this.katFacade.loadCheckliste()
+                    this.katFacade.loadDienststellen()
+                    this.katFacade.loadFunktionen()
                     this.katFacade.loadKennungen()
+                    this.katFacade.loadPruefvermerke()
+                    this.katFacade.loadPruefvermerkkategorien()
+                    this.katFacade.loadSchiffe()
+                    this.katFacade.loadZaehlerstandstypen()
                     this.katFacade.loadZweck()
                 }
             }),

@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Kat } from 'src/app/core/models/kat.model';
+import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 
 @Component({
   selector: 'app-schiff-modal',
@@ -13,30 +17,50 @@ export class SchiffModalComponent implements OnInit {
   title: string = ''
   schiffForm: FormGroup
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<SchiffModalComponent>) {
+  dienststellen$: Observable<Kat[]>
+
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<SchiffModalComponent>, private _katFacade: KatFacade) {
+    this.dienststellen$ = _katFacade.dienststellen$
+
     this.schiffForm = this._formBuilder.group({
       id: [],
+      id_dienststelle: [],
       name: [],
       marke: [],
       typ: [],
       identifikationsnummer: [],
-      dienststelle: []
+      dienststelle: [],
+      durchsicht: []
     })
   }
 
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      // this.peilungForm.patchValue({ date: data.data.date })
+      this.schiffForm.patchValue(data.data.schiff)
+      this.schiffForm.patchValue({ durchsicht: new Date().toISOString()})
+      if (data.data.schiff) this.selectDienststelle(data.data.schiff.dienststelle)
     })
   }
 
-  create() {
-
+  selectDienststelle(dienststelle: string) {
+    this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
   }
 
+  create() {
+    const insert: Schiff = this.schiffForm.value
+    this._katFacade.insertSchiff(insert)
+    this.modal?.close()
+  }
   update() {
-
+    let update: Schiff = this.schiffForm.value
+    console.log(update)
+    this._katFacade.updateSchiff(update)
+    this.modal?.close()
+  }
+  delete() {
+    this._katFacade.deleteSchiff(this.schiffForm.value.id)
+    this.modal?.close()
   }
 
   cancel() {

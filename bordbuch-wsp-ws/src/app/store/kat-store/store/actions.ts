@@ -1,38 +1,9 @@
-import { createAction, props } from "@ngrx/store"
+import { createAction, createSelector, props } from "@ngrx/store"
+import { Dienststelle } from "src/app/core/models/dienststelle.model"
 import { Kat } from "src/app/core/models/kat.model"
-
-// checkliste
-export const loadCheckliste = createAction(
-	"[Kat Resolver] Load Checkliste"
-)
-export const loadedCheckliste = createAction(
-	"[Load Kat Effect] Loaded Checkliste",
-	props<{ funktionen: Kat[] }>()
-)
-export const insertCheckliste = createAction(
-	"[Modal Checkliste] Insert Checkliste",
-	props<{ insert: Kat }>()
-)
-export const insertChecklisteSuccess = createAction(
-	"[Modal Checkliste] Insert Checkliste Success",
-	props<{ action: { insert: Kat }, id: string }>()
-)
-export const updateCheckliste = createAction(
-	"[Modal Checkliste] Update Checkliste",
-	props<{ update: Kat }>()
-)
-export const updateChecklisteSuccess = createAction(
-	"[Modal Checkliste] Delete Checkliste Success",
-	props<{ update: Kat }>()
-)
-export const deleteCheckliste = createAction(
-	"[Modal Checkliste] Delete Checkliste",
-	props<{ id: string }>()
-)
-export const deleteChecklisteSuccess = createAction(
-	"[Modal Checkliste] Delete Checkliste Success",
-	props<{ id: string }>()
-)
+import { Pruefvermerk } from "src/app/core/models/pruefvermerk.model"
+import { Schiff } from "src/app/core/models/schiff.model"
+import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model"
 
 // betriebsstoffe
 export const loadBetriebsstoffe = createAction(
@@ -40,30 +11,63 @@ export const loadBetriebsstoffe = createAction(
 )
 export const loadedBetriebsstoffe = createAction(
 	"[Load Kat Effect] Loaded Betriebsstoffe",
-	props<{ funktionen: Kat[] }>()
+	props<{ kat: Kat[] }>()
 )
-export const insertBetriebsstoffe = createAction(
-	"[Modal Betriebsstoffe] Insert Betriebsstoffe",
+export const insertBetriebsstoff = createAction(
+	"[Modal Betriebsstoff] Insert Betriebsstoff",
 	props<{ insert: Kat }>()
 )
-export const insertBetriebsstoffeSuccess = createAction(
-	"[Modal Betriebsstoffe] Insert Betriebsstoffe Success",
+export const insertBetriebsstoffSuccess = createAction(
+	"[Modal Betriebsstoff] Insert Betriebsstoff Success",
 	props<{ action: { insert: Kat }, id: string }>()
 )
-export const updateBetriebsstoffe = createAction(
-	"[Modal Betriebsstoffe] Update Betriebsstoffe",
+export const updateBetriebsstoff = createAction(
+	"[Modal Betriebsstoff] Update Betriebsstoff",
 	props<{ update: Kat }>()
 )
-export const updateBetriebsstoffeSuccess = createAction(
-	"[Modal Betriebsstoffe] Delete Betriebsstoffe Success",
+export const updateBetriebsstoffSuccess = createAction(
+	"[Modal Betriebsstoff] Update Betriebsstoff Success",
 	props<{ update: Kat }>()
 )
-export const deleteBetriebsstoffe = createAction(
-	"[Modal Betriebsstoffe] Delete Betriebsstoffe",
+export const deleteBetriebsstoff = createAction(
+	"[Modal Betriebsstoff] Delete Betriebsstoff",
 	props<{ id: string }>()
 )
-export const deleteBetriebsstoffeSuccess = createAction(
-	"[Modal Betriebsstoffe] Delete Betriebsstoffe Success",
+export const deleteBetriebsstoffSuccess = createAction(
+	"[Modal Betriebsstoff] Delete Betriebsstoff Success",
+	props<{ id: string }>()
+)
+
+// checkliste
+export const loadCheckliste = createAction(
+	"[Kat Resolver] Load Checkliste"
+)
+export const loadedCheckliste = createAction(
+	"[Load Kat Effect] Loaded Checkliste",
+	props<{ kat: Kat[] }>()
+)
+export const insertChecklist = createAction(
+	"[Modal Checklist] Insert Checklist",
+	props<{ insert: Kat }>()
+)
+export const insertChecklistSuccess = createAction(
+	"[Modal Checklist] Insert Checklist Success",
+	props<{ action: { insert: Kat }, id: string }>()
+)
+export const updateChecklist = createAction(
+	"[Modal Checklist] Update Checklist",
+	props<{ update: Kat }>()
+)
+export const updateChecklistSuccess = createAction(
+	"[Modal Checklist] Update Checklist Success",
+	props<{ update: Kat }>()
+)
+export const deleteChecklist = createAction(
+	"[Modal Checklist] Delete Checklist",
+	props<{ id: string }>()
+)
+export const deleteChecklistSuccess = createAction(
+	"[Modal Checklist] Delete Checklist Success",
 	props<{ id: string }>()
 )
 
@@ -73,30 +77,30 @@ export const loadDienststellen = createAction(
 )
 export const loadedDienststellen = createAction(
 	"[Load Kat Effect] Loaded Dienststellen",
-	props<{ funktionen: Kat[] }>()
+	props<{ dienststelle: Dienststelle[] }>()
 )
-export const insertDienststellen = createAction(
-	"[Modal Dienststellen] Insert Dienststellen",
-	props<{ insert: Kat }>()
+export const insertDienststelle = createAction(
+	"[Modal Dienststelle] Insert Dienststelle",
+	props<{ insert: Dienststelle }>()
 )
-export const insertDienststellenSuccess = createAction(
-	"[Modal Dienststellen] Insert Dienststellen Success",
-	props<{ action: { insert: Kat }, id: string }>()
+export const insertDienststelleSuccess = createAction(
+	"[Modal Dienststelle] Insert Dienststelle Success",
+	props<{ action: { insert: Dienststelle }, id: string }>()
 )
-export const updateDienststellen = createAction(
-	"[Modal Dienststellen] Update Dienststellen",
-	props<{ update: Kat }>()
+export const updateDienststelle = createAction(
+	"[Modal Dienststelle] Update Dienststelle",
+	props<{ update: Dienststelle }>()
 )
-export const updateDienststellenSuccess = createAction(
-	"[Modal Dienststellen] Delete Dienststellen Success",
-	props<{ update: Kat }>()
+export const updateDienststelleSuccess = createAction(
+	"[Modal Dienststelle] Update Dienststelle Success",
+	props<{ update: Dienststelle }>()
 )
-export const deleteDienststellen = createAction(
-	"[Modal Dienststellen] Delete Dienststellen",
+export const deleteDienststelle = createAction(
+	"[Modal Dienststelle] Delete Dienststelle",
 	props<{ id: string }>()
 )
-export const deleteDienststellenSuccess = createAction(
-	"[Modal Dienststellen] Delete Dienststellen Success",
+export const deleteDienststelleSuccess = createAction(
+	"[Modal Dienststelle] Delete Dienststelle Success",
 	props<{ id: string }>()
 )
 
@@ -106,30 +110,30 @@ export const loadFunktionen = createAction(
 )
 export const loadedFunktionen = createAction(
 	"[Load Kat Effect] Loaded Funktionen",
-	props<{ funktionen: Kat[] }>()
+	props<{ kat: Kat[] }>()
 )
-export const insertFunktionen = createAction(
-	"[Modal Funktionen] Insert Funktionen",
+export const insertFunktion = createAction(
+	"[Modal Funktion] Insert Funktion",
 	props<{ insert: Kat }>()
 )
-export const insertFunktionenSuccess = createAction(
-	"[Modal Funktionen] Insert Funktionen Success",
+export const insertFunktionSuccess = createAction(
+	"[Modal Funktion] Insert Funktion Success",
 	props<{ action: { insert: Kat }, id: string }>()
 )
-export const updateFunktionen = createAction(
-	"[Modal Funktionen] Update Funktionen",
+export const updateFunktion = createAction(
+	"[Modal Funktion] Update Funktion",
 	props<{ update: Kat }>()
 )
-export const updateFunktionenSuccess = createAction(
-	"[Modal Funktionen] Delete Funktionen Success",
+export const updateFunktionSuccess = createAction(
+	"[Modal Funktion] Update Funktion Success",
 	props<{ update: Kat }>()
 )
-export const deleteFunktionen = createAction(
-	"[Modal Funktionen] Delete Funktionen",
+export const deleteFunktion = createAction(
+	"[Modal Funktion] Delete Funktion",
 	props<{ id: string }>()
 )
-export const deleteFunktionenSuccess = createAction(
-	"[Modal Funktionen] Delete Funktionen Success",
+export const deleteFunktionSuccess = createAction(
+	"[Modal Funktion] Delete Funktion Success",
 	props<{ id: string }>()
 )
 
@@ -166,6 +170,39 @@ export const deleteKennungSuccess = createAction(
 	props<{ id: string }>()
 )
 
+// pruefvermerke
+export const loadPruefvermerke = createAction(
+	"[Kat Resolver] Load Pruefvermerke"
+)
+export const loadedPruefvermerke = createAction(
+	"[Load Kat Effect] Loaded Pruefvermerke",
+	props<{ pruefvermerk: Pruefvermerk[] }>()
+)
+export const insertPruefvermerk = createAction(
+	"[Modal Pruefvermerk] Insert Pruefvermerk",
+	props<{ insert: Pruefvermerk }>()
+)
+export const insertPruefvermerkSuccess = createAction(
+	"[Modal Pruefvermerk] Insert Pruefvermerk Success",
+	props<{ action: { insert: Pruefvermerk }, id: string }>()
+)
+export const updatePruefvermerk = createAction(
+	"[Modal Pruefvermerk] Update Pruefvermerk",
+	props<{ update: Pruefvermerk }>()
+)
+export const updatePruefvermerkSuccess = createAction(
+	"[Modal Pruefvermerk] Update Pruefvermerk Success",
+	props<{ update: Pruefvermerk }>()
+)
+export const deletePruefvermerk = createAction(
+	"[Modal Pruefvermerk] Delete Pruefvermerk",
+	props<{ id: string }>()
+)
+export const deletePruefvermerkSuccess = createAction(
+	"[Modal Pruefvermerk] Delete Pruefvermerk Success",
+	props<{ id: string }>()
+)
+
 // pruefvermerkkategorien
 export const loadPruefvermerkkategorien = createAction(
 	"[Kat Resolver] Load Pruefvermerkkategorien"
@@ -175,27 +212,60 @@ export const loadedPruefvermerkkategorien = createAction(
 	props<{ kat: Kat[] }>()
 )
 export const insertPruefvermerkkategorie = createAction(
-	"[Modal Pruefvermerkkategorien] Insert Pruefvermerkkategorien",
+	"[Modal Pruefvermerkkategorie] Insert Pruefvermerkkategorie",
 	props<{ insert: Kat }>()
 )
 export const insertPruefvermerkkategorieSuccess = createAction(
-	"[Modal Pruefvermerkkategorien] Insert Pruefvermerkkategorien Success",
+	"[Modal Pruefvermerkkategorie] Insert Pruefvermerkkategorie Success",
 	props<{ action: { insert: Kat }, id: string }>()
 )
 export const updatePruefvermerkkategorie = createAction(
-	"[Modal Pruefvermerkkategorien] Update Pruefvermerkkategorien",
+	"[Modal Pruefvermerkkategorie] Update Pruefvermerkkategorie",
 	props<{ update: Kat }>()
 )
 export const updatePruefvermerkkategorieSuccess = createAction(
-	"[Modal Pruefvermerkkategorien] Update Pruefvermerkkategorien Success",
+	"[Modal Pruefvermerkkategorie] Update Pruefvermerkkategorie Success",
 	props<{ update: Kat }>()
 )
 export const deletePruefvermerkkategorie = createAction(
-	"[Modal Pruefvermerkkategorien] Delete Pruefvermerkkategorien",
+	"[Modal Pruefvermerkkategorie] Delete Pruefvermerkkategorie",
 	props<{ id: string }>()
 )
 export const deletePruefvermerkkategorieSuccess = createAction(
-	"[Modal Pruefvermerkkategorien] Delete Pruefvermerkkategorien Success",
+	"[Modal Pruefvermerkkategorie] Delete Pruefvermerkkategorie Success",
+	props<{ id: string }>()
+)
+
+// schiffe
+export const loadSchiffe = createAction(
+	"[Kat Resolver] Load Schiffe"
+)
+export const loadedSchiffe = createAction(
+	"[Load Kat Effect] Loaded Schiffe",
+	props<{ schiffe: Schiff[] }>()
+)
+export const insertSchiff = createAction(
+	"[Modal Schiff] Insert Schiff",
+	props<{ insert: Schiff }>()
+)
+export const insertSchiffSuccess = createAction(
+	"[Modal Schiff] Insert Schiff Success",
+	props<{ action: { insert: Schiff }, id: string }>()
+)
+export const updateSchiff = createAction(
+	"[Modal Schiff] Update Schiff",
+	props<{ update: Schiff }>()
+)
+export const updateSchiffSuccess = createAction(
+	"[Modal Schiff] Update Schiff Success",
+	props<{ update: Schiff }>()
+)
+export const deleteSchiff = createAction(
+	"[Modal Schiff] Delete Schiff",
+	props<{ id: string }>()
+)
+export const deleteSchiffSuccess = createAction(
+	"[Modal Schiff] Delete Schiff Success",
 	props<{ id: string }>()
 )
 
@@ -205,30 +275,30 @@ export const loadZaehlerstandstypen = createAction(
 )
 export const loadedZaehlerstandstypen = createAction(
 	"[Load Kat Effect] Loaded Zaehlerstandstypen",
-	props<{ kat: Kat[] }>()
+	props<{ kat: Zaehlerstandstyp[] }>()
 )
 export const insertZaehlerstandstyp = createAction(
-	"[Modal Zaehlerstandstypen] Insert Zaehlerstandstypen",
-	props<{ insert: Kat }>()
+	"[Modal Zaehlerstandstyp] Insert Zaehlerstandstyp",
+	props<{ insert: Zaehlerstandstyp }>()
 )
 export const insertZaehlerstandstypSuccess = createAction(
-	"[Modal Zaehlerstandstypen] Insert Zaehlerstandstypen Success",
-	props<{ action: { insert: Kat }, id: string }>()
+	"[Modal Zaehlerstandstyp] Insert Zaehlerstandstyp Success",
+	props<{ action: { insert: Zaehlerstandstyp }, id: string }>()
 )
 export const updateZaehlerstandstyp = createAction(
-	"[Modal Zaehlerstandstypen] Update Zaehlerstandstypen",
-	props<{ update: Kat }>()
+	"[Modal Zaehlerstandstyp] Update Zaehlerstandstyp",
+	props<{ update: Zaehlerstandstyp }>()
 )
 export const updateZaehlerstandstypSuccess = createAction(
-	"[Modal Zaehlerstandstypen] Update Zaehlerstandstypen Success",
-	props<{ update: Kat }>()
+	"[Modal Zaehlerstandstyp] Update Zaehlerstandstyp Success",
+	props<{ update: Zaehlerstandstyp }>()
 )
 export const deleteZaehlerstandstyp = createAction(
-	"[Modal Zaehlerstandstypen] Delete Zaehlerstandstypen",
+	"[Modal Zaehlerstandstyp] Delete Zaehlerstandstyp",
 	props<{ id: string }>()
 )
 export const deleteZaehlerstandstypSuccess = createAction(
-	"[Modal Zaehlerstandstypen] Delete Zaehlerstandstypen Success",
+	"[Modal Zaehlerstandstyp] Delete Zaehlerstandstyp Success",
 	props<{ id: string }>()
 )
 
