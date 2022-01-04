@@ -11,11 +11,6 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   login(username: string, password: string): Observable<BackendResponse> { // User
-
-    // this.auth_login(username, password).subscribe(data => {
-    //   console.log(data)
-    // })
-    // const user = from([{ id: '24225132', email: 'christoph@hu.de', role: 'Admin' }])
     return this.auth_login(username, password)
   }
 

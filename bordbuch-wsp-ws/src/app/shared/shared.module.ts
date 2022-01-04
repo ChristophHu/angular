@@ -15,11 +15,13 @@ import { ClickOutsideDirective } from './directives/click-outside/click-outside.
 import { DataTablesModule } from 'angular-datatables';
 import { PageHeaderModule } from './components/page-header/page-header.module';
 import { TitlecasePipe } from './pipes/titlecase/titlecase.pipe';
+import { IsRoleOfDirective } from './directives/is-role-of/is-role-of.directive';
 
 @NgModule({
   declarations: [
     DropdownDirective,
     ClickOutsideDirective,
+    IsRoleOfDirective,
     TitlecasePipe
   ],
   imports: [
@@ -48,7 +50,7 @@ import { TitlecasePipe } from './pipes/titlecase/titlecase.pipe';
     // directives
     DropdownDirective,
     ClickOutsideDirective,
-    
+    IsRoleOfDirective,
     
     CommonModule,
 

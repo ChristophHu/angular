@@ -50,7 +50,7 @@
             </a>
           </div>
         </li>
-          <li class="dropdown flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" [routerLink]="['/controlling']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+        <li class="dropdown flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" [routerLink]="['/controlling']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" *appIsRoleOf="['Administration', 'Leitung', 'Controlling']">
           <div class="flex items-center justify-between w-full">
             <a href="javascript:void(0)"
               class="flex items-center rounded focus:outline-none">
@@ -59,9 +59,7 @@
             </a>
           </div>
         </li>
-        <li
-            class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2"
-            routerLinkActive="active-dropdown">
+        <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung', 'Controlling', 'Service']">
             <div class="dropdown flex items-center justify-between w-full" appDropdown>
               <a class="flex items-center rounded focus:outline-none">
                 <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
@@ -74,9 +72,7 @@
               <li class="mt-2 pl-8 hover:bg-gray-100 cursor-pointer py-2" [routerLink]="['/streifen/ausgewaehlte-streifen']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Ausgewählte Streifen</li>
             </ul>
           </li>
-          <li
-            class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2"
-            routerLinkActive="active-dropdown">
+          <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung', 'Service']">
             <div class="dropdown flex items-center justify-between w-full" appDropdown>
               <a class="flex items-center rounded focus:outline-none">
                 <icons class="w-8 h-8 stroke-1 stroke-current" name="settings"></icons>
@@ -92,8 +88,7 @@
               <li class="mt-2 pl-8 hover:bg-gray-100 cursor-pointer py-2" [routerLink]="['/service/zaehlerstaende']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Zählerstände</li>
             </ul>
           </li>
-          <li
-            class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown">
+          <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung']">
             <div class="dropdown flex items-center justify-between w-full" appDropdown>
               <a class="flex items-center rounded focus:outline-none">
                 <icons class="w-8 h-8 stroke-1 stroke-current" name="table"></icons>

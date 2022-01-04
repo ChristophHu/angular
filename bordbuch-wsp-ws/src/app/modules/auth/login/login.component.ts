@@ -67,5 +67,5 @@ export class LoginComponent {
 		  './changelog/changelog.component'
 		)
 		this.modalService.open(ChangelogComponent, {})
-	  }
+	}
 }

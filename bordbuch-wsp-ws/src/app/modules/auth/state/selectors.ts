@@ -28,3 +28,8 @@ export const selectBackendresponse = createSelector(
     selectAuthState,
     (auth) => auth.backendResponse
 )
+
+export const selectRole = createSelector(
+    selectBackendresponse,
+    response => response?.role
+)
