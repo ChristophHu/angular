@@ -9,7 +9,7 @@
     </header>
     <div class="content">
         <form [formGroup]="schiffForm">
-            <div class="">
+            <div class="hidden">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
                 <input matInput type="text" formControlName="id" readonly>
@@ -36,16 +36,16 @@
                 <input matInput type="text" formControlName="identifikationsnummer">
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label>Dienststelle</mat-label>
-                <mat-select formControlName="dienststelle" (selectionChange)="selectDienststelle($event.value)">
-                  <mat-option *ngFor="let dienststelle of (dienststellen$ | async)" [value]="dienststelle.bezeichnung">
-                    {{ dienststelle.bezeichnung }}
-                  </mat-option>
-                </mat-select>
+              <mat-label>Dienststelle</mat-label>
+              <mat-select formControlName="dienststelle" (selectionChange)="selectDienststelle($event.value)">
+                <mat-option *ngFor="let dienststelle of (dienststellen$ | async)" [value]="dienststelle.bezeichnung">
+                  {{ dienststelle.bezeichnung }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Durchsicht</mat-label>
-              <input matInput type="datetime-local" formControlName="durchsicht" value="{{schiffForm.value.durchsicht | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+              <input matInput type="date" formControlName="durchsicht" value="{{schiffForm.value.durchsicht | date:'yyyy-MM-dd':'+1:00'}}">
             </mat-form-field>
           </form>
     </div>

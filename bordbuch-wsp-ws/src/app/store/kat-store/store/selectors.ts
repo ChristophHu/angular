@@ -82,6 +82,10 @@ export const selectAllPruefvermerke = createSelector(
     katState,
     state => state.pruefvermerke
 )
+export const selectItemByKategorie = (kategorie: string) => createSelector(
+    selectAllPruefvermerke,
+    pruefvermerke => pruefvermerke?.filter(el => el.kategorie == kategorie)
+)
 
 // pruefvermerkkategorien
 export const selectAllPruefvermerkkategorien = createSelector(
@@ -98,11 +102,33 @@ export const selectAllSchiffe = createSelector(
     katState,
     state => state.schiffe
 )
+export const selectIdByShip = (name: string) => createSelector(
+    selectAllSchiffe,
+    schiffe => schiffe?.find(el => el.name == name)?.id
+)
+export const selectNameById = (id: string) => createSelector(
+    selectAllSchiffe,
+    schiffe => schiffe?.find(el => el.id == id)?.name
+)
+// status
+export const selectAllStatus = createSelector(
+    katState,
+    state => state.status
+)
+export const selectIdByStatus = (bezeichnung: string) => createSelector(
+    selectAllStatus,
+    status => status?.find(el => el.bezeichnung == bezeichnung)?.id
+)
+
 
 // zaehlerstandstypen
 export const selectAllZaehlerstandstypen = createSelector(
     katState,
     state => state.zaehlerstandstypen
+)
+export const selectIdByZaehlerstandstyp = (zaehlerstandstyp: string) => createSelector(
+    selectAllZaehlerstandstypen,
+    zaehlerstandstypen => zaehlerstandstypen?.find(el => el.zaehlerstandstyp == zaehlerstandstyp)?.id
 )
 
 // zwecke

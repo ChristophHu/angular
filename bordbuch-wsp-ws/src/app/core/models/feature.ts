@@ -5,5 +5,6 @@ export enum Features {
     LastPosition        = 'lastPosition',
     Ship                = 'ship',
     ShipSelection       = 'ship-selection',
+    Spec                = 'spec',
     Zaehlerstand        = 'zaehlerstand'
 }

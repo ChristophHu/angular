@@ -1,0 +1,207 @@
+import { createAction, props } from "@ngrx/store"
+import { Betankung } from "src/app/core/models/betankung"
+import { Checklist } from "src/app/core/models/checklist.model"
+import { Reparatur } from "src/app/core/models/reparatur.model"
+import { Standort } from "src/app/core/models/standort.model"
+import { Streife } from "src/app/core/models/streife.model"
+import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
+
+// betankungen
+export const loadAllBetankungen = createAction(
+	"[Kat Resolver] Load Betankungen"
+)
+export const loadedAllBetankungen = createAction(
+	"[Load Spec Effect] Loaded Betankungen",
+	props<{ betankungen: Betankung[] }>()
+)
+export const insertBetankung = createAction(
+	"[Modal Betankung] Insert Betankung",
+	props<{ insert: Betankung }>()
+)
+export const insertBetankungSuccess = createAction(
+	"[Modal Betankung] Insert Betankung Success",
+	props<{ action: { insert: Betankung }, id: string }>()
+)
+export const updateBetankung = createAction(
+	"[Modal Betankung] Update Betankung",
+	props<{ update: Betankung }>()
+)
+export const updateBetankungSuccess = createAction(
+	"[Modal Betankung] Update Betankung Success",
+	props<{ action: { update: Betankung }, id: string }>()
+)
+export const deleteBetankung = createAction(
+	"[Modal Betankung] Delete Betankung",
+	props<{ id: string }>()
+)
+export const deleteBetankungSuccess = createAction(
+	"[Modal Betankung] Delete Betankung Success",
+	props<{ id: string }>()
+)
+
+// reparaturen
+export const loadAllReparaturen = createAction(
+	"[Ship Resolver] Load Reparaturen"
+)
+export const loadedAllReparaturen = createAction(
+	"[Load Spec Effect] Reparaturen Loaded",
+	props<{ reparaturen: Reparatur[] }>()
+)
+export const insertReparatur = createAction(
+	"[Edit Reparatur Dialog] Reparatur Insert",
+	props<{ insert: Reparatur }>()
+)
+export const insertReparaturSuccess = createAction(
+	"[Edit Reparatur Dialog] Reparatur Insert Success",
+	props<{ action: { insert: Reparatur }, id: string }>()
+)
+export const updateReparatur = createAction(
+	"[Edit Reparatur Dialog] Reparatur Update",
+	props<{ update: Reparatur }>()
+)
+export const updateReparaturSuccess = createAction(
+	"[Edit Reparatur Dialog] Reparatur Update Success",
+	props<{ action: { update: Reparatur }, id: string }>()
+)
+export const deleteReparatur = createAction(
+	"[Modal Reparatur Dialog] Delete Reparatur",
+	props<{ id: string }>()
+)
+export const deleteReparaturSuccess = createAction(
+	"[Modal Reparatur Dialog] Delete Reparatur Success",
+	props<{ id: string }>()
+)
+
+// ShipChecklists
+export const loadAllShipChecklists = createAction(
+	"[Kat Resolver] Load ShipChecklists"
+)
+export const loadedAllShipChecklists = createAction(
+	"[Load Spec Effect] Loaded ShipChecklists",
+	props<{ checklists: Checklist[] }>()
+)
+export const insertShipChecklist = createAction(
+	"[Modal ShipChecklist] Insert ShipChecklist",
+	props<{ insert: Checklist }>()
+)
+export const insertShipChecklistSuccess = createAction(
+	"[Modal ShipChecklist] Insert ShipChecklist Success",
+	props<{ action: { insert: Checklist }, id: string }>()
+)
+export const deleteShipChecklist = createAction(
+	"[Modal ShipChecklist] Delete ShipChecklist",
+	props<{ id: string, date: string }>()
+)
+export const deleteShipChecklistSuccess = createAction(
+	"[Modal ShipChecklist] Delete ShipChecklist Success",
+	props<{ id: string, date: string }>()
+)
+
+// laststandort
+export const loadAllLastStandorte = createAction(
+	"[Kat Resolver] Load LastStandorte"
+)
+export const loadedAllLastStandorte = createAction(
+	"[Load Spec Effect] Loaded LastStandorte",
+	props<{ laststandorte: Standort[] }>()
+)
+
+// standorte
+export const loadAllStandorte = createAction(
+	"[Kat Resolver] Load Standorte",
+	props<{ id: string }>()
+)
+export const loadedAllStandorte = createAction(
+	"[Load Spec Effect] Loaded Standorte",
+	props<{ standorte: Standort[] }>()
+)
+export const insertStandort = createAction(
+	"[Modal Standorte] Insert Standorte",
+	props<{ insert: Standort }>()
+)
+export const insertStandortSuccess = createAction(
+	"[Modal Standorte] Insert Standorte Success",
+	props<{ action: { insert: Standort }, id: string }>()
+)
+export const updateStandort = createAction(
+	"[Modal Standorte] Update Standorte",
+	props<{ update: Standort }>()
+)
+export const updateStandortSuccess = createAction(
+	"[Modal Standorte] Update Standorte Success",
+	props<{ action: { update: Standort }, id: string }>()
+)
+export const deleteStandort = createAction(
+	"[Modal Standorte] Delete Standorte",
+	props<{ id: string }>()
+)
+export const deleteStandortSuccess = createAction(
+	"[Modal Standorte] Delete Standorte Success",
+	props<{ id: string }>()
+)
+
+// streifen
+export const loadAllStreifen = createAction(
+	"[Ship Resolver] Load Streifen"
+)
+export const loadedAllStreifen = createAction(
+	"[Load Spec Effect] Streifen Loaded",
+	props<{ streifen: Streife[] }>()
+)
+export const insertStreife = createAction(
+	"[Edit Streife Dialog] Streife Insert",
+	props<{ insert: Streife }>()
+)
+export const insertStreifeSuccess = createAction(
+	"[Edit Streife Dialog] Streife Insert Success",
+	props<{ action: { insert: Streife }, id: string }>()
+)
+export const updateStreife = createAction(
+	"[Edit Streife Dialog] Streife Update",
+	props<{ update: Streife }>()
+)
+export const updateStreifeSuccess = createAction(
+	"[Edit Streife Dialog] Streife Update Success",
+	props<{ action: { update: Streife }, id: string }>()
+)
+export const deleteStreife = createAction(
+	"[Modal Streife Dialog] Delete Streife",
+	props<{ id: string }>()
+)
+export const deleteStreifeSuccess = createAction(
+	"[Modal Streife Dialog] Delete Streife Success",
+	props<{ id: string }>()
+)
+
+// zaehlerstaende
+export const loadAllZaehlerstaende = createAction(
+	"[Kat Resolver] Load Zaehlerstaende"
+)
+export const loadedAllZaehlerstaende = createAction(
+	"[Load Spec Effect] Loaded Zaehlerstaende",
+	props<{ zaehlerstaende: Zaehlerstand[] }>()
+)
+export const insertZaehlerstand = createAction(
+	"[Modal Betankung] Insert Zaehlerstand",
+	props<{ insert: Zaehlerstand }>()
+)
+export const insertZaehlerstandSuccess = createAction(
+	"[Modal Zaehlerstand] Insert Zaehlerstand Success",
+	props<{ action: { insert: Zaehlerstand }, id: string }>()
+)
+export const updateZaehlerstand = createAction(
+	"[Modal Zaehlerstand] Update Zaehlerstand",
+	props<{ update: Zaehlerstand }>()
+)
+export const updateZaehlerstandSuccess = createAction(
+	"[Modal Zaehlerstand] Update Zaehlerstand Success",
+	props<{ action: { update: Zaehlerstand }, id: string }>()
+)
+export const deleteZaehlerstand = createAction(
+	"[Modal Zaehlerstand] Delete Zaehlerstand",
+	props<{ id: string }>()
+)
+export const deleteZaehlerstandSuccess = createAction(
+	"[Modal Zaehlerstand] Delete Zaehlerstand Success",
+	props<{ id: string }>()
+)

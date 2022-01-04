@@ -1,6 +1,6 @@
 export interface Checklistitem {
     id: string
-    name: string
+    bezeichnung: string
     anzahl: string
     seriennummern: string
     checked: boolean

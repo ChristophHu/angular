@@ -9,7 +9,7 @@
     </header>
     <div class="content">
         <form [formGroup]="pruefvermerkForm">
-            <div class="">
+            <div class="hidden">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
                 <input matInput type="text" formControlName="id" readonly>
@@ -20,17 +20,21 @@
               </mat-form-field>
             </div>
             <mat-form-field appearance="fill">
-                <mat-label>Kategorie</mat-label>
-                <mat-select formControlName="kategorie" (selectionChange)="selectKategorie($event.value)">
-                  <mat-option *ngFor="let kategorie of (pruefvermerkkategorien$ | async)" [value]="kategorie.bezeichnung">
-                    {{ kategorie.bezeichnung }}
-                  </mat-option>
-                </mat-select>
+              <mat-label>Kategorie</mat-label>
+              <mat-select formControlName="kategorie" (selectionChange)="selectKategorie($event.value)">
+                <mat-option *ngFor="let kategorie of (pruefvermerkkategorien$ | async)" [value]="kategorie.bezeichnung">
+                  {{ kategorie.bezeichnung }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label>Bestandteil</mat-label>
-                <input matInput type="text" formControlName="item">
-              </mat-form-field>
+              <mat-label>Bestandteil</mat-label>
+              <mat-select formControlName="item">
+                <mat-option *ngFor="let item of (items$ | async)" [value]="item.item">
+                  {{ item.item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Beschreibung</mat-label>
               <input matInput type="text" formControlName="description">

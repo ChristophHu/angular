@@ -9,7 +9,7 @@
     </header>
     <div class="content">
         <form [formGroup]="betankungForm">
-            <div class="hidden">
+            <div class="">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
                 <input matInput type="text" formControlName="id" readonly>
@@ -19,6 +19,14 @@
                 <input matInput type="text" formControlName="id_ship" readonly>
               </mat-form-field>
             </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
+                <mat-option *ngFor="let schiff of (schiffe$ | async)" [value]="schiff.name">
+                  {{ schiff.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Datum/Uhrzeit</mat-label>
               <input matInput type="datetime-local" formControlName="date" value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
@@ -45,9 +53,9 @@
             <mat-form-field appearance="fill">
               <mat-label>Was wurde getankt</mat-label>
               <mat-select formControlName="fuel">
-                <!-- <mat-option *ngFor="let betriebsstoff of (betriebsstoffe$ | async)" [value]="betriebsstoff.bezeichnung">
+                <mat-option *ngFor="let betriebsstoff of (betriebsstoffe$ | async)" [value]="betriebsstoff.bezeichnung">
                   {{ betriebsstoff.bezeichnung }}
-                </mat-option> -->
+                </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
@@ -64,12 +72,11 @@
   <ng-template #toolbar>
     <div>
       <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-      <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+      <button *ngIf="betankungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
     </div>
     <div>
-      <!-- <button *ngIf="!peilungForm.pristine && peilungForm.value.id" (click)="update()" type="button"
-        class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-      <!-- <button *ngIf="!peilungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+      <button *ngIf="!betankungForm.pristine && betankungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="!betankungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>
   

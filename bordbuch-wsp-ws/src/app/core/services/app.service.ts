@@ -4,9 +4,17 @@ import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
 import { from, interval, Observable, Subscription } from 'rxjs';
 import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { Betankung } from '../models/betankung';
+import { Checklist } from '../models/checklist.model';
+import { Checklistitem } from '../models/checklistitem.model';
 import { Dienststelle } from '../models/dienststelle.model';
 import { Kat } from '../models/kat.model';
+import { Status } from '../models/reparatur-status.model';
+import { Reparatur } from '../models/reparatur.model';
 import { Schiff } from '../models/schiff.model';
+import { Standort } from '../models/standort.model';
+import { Streife } from '../models/streife.model';
+import { Zaehlerstand } from '../models/zaehlerstand.model';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp.model';
 
 // import { PositionActions } from 'src/app/store/positionreport-store';
@@ -31,48 +39,14 @@ import { LocationService } from './location.service';
 export class AppService {
 
     private token: string = ''
-    // patrol!: Patrol
 
-    private _positionSubscription = new Subscription
-    private i: Observable<number> = interval(3*60*1000)
-
-    // items: Checklistitem[] = [
-    //     { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
-    //     { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
-    //     { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
-    // ]
-
-    constructor(
-        private httpClient: HttpClient,
-        private store: Store,
-        private locationService: LocationService
-        ) {
-        // this.store.pipe(select(selectToken)).subscribe(token => {
-        //     this.token = token
-        // })
-        // this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-        //     this.patrol = patrol!
-        // })
-    }
+    constructor(private httpClient: HttpClient) { }
 
     reducer(action: string, data: any): Observable<any> {
         console.info(`reducer | action: '${action}', data: ${data}`)
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
-
-            // streife
-            case 'insertStreife': {
-                param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
-                break
-            }
-            case 'updateStreife': {
-                param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
-                break
-            }
-            case 'deleteStreife':
-                param = `id=${data}`
-                break
 
             // besatzung
             case 'insertBesatzung': {
@@ -94,17 +68,12 @@ export class AppService {
                 break
             }
             case 'updateBetankung':
-                param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                param = `id=${data.id}&id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
 
             case'deleteBetankung':
                 param = `id=${data}`
                 break
-
-            case 'updateZaehlerstand': {
-                param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
-                break
-            }
 
             // peilung
             case 'insertPeilung': {
@@ -124,6 +93,7 @@ export class AppService {
             case 'updateeinsatzmittel':
             case 'updateKatBetriebsstoff':
             case 'updateKatKennung':
+            case 'updateKatStatus':
             case 'updateKatZwecke':
                 param = `id=${data.id}&bezeichnung=${data.bezeichnung}`
                 break
@@ -137,6 +107,8 @@ export class AppService {
             case 'deletePruefvermerk':
             case 'deletePruefvermerkKat':
             case 'deleteSchiff':
+            case 'deleteStatus':
+            case 'deleteStreife':
             case 'deleteZaehlerstandsTyp':
                 param = `id=${data}`
                 break
@@ -165,6 +137,14 @@ export class AppService {
                 param = `id=${data.id}&kategorie=${data.bezeichnung}`
                 break
 
+            case 'insertKatStatus':
+                param = `status=${data.bezeichnung}`
+                break
+            
+            case 'updateKatStatus':
+                param = `id=${data.id}&status=${data.bezeichnung}`
+                break
+
             case 'insertKatZaehlerstand':
                 param = `zaehlerstandstyp=${data.bezeichnung}`
                 break
@@ -175,18 +155,30 @@ export class AppService {
 
             // schiffe
             case 'insertSchiff':
-                param = `id_dienststelle=${data.dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
+                param = `id_dienststelle=${data.id_dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
                 break
             case 'updateSchiff':
-                param = `id=${data.id}&id_dienststelle=${data.dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
+                param = `id=${data.id}&id_dienststelle=${data.id_dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
                 break
 
-            // checkliste
-            case 'insertCheckliste': {
-                console.log(data)
-                param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
+            // streife
+            case 'insertStreife': {
+                param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
                 break
             }
+            case 'updateStreife': {
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
+                break
+            }
+
+            // checkliste
+            case 'insertCheckliste':
+                param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
+                break
+            case 'deleteCheckliste':
+                console.log(data)
+                param = `id_schiff=${data.id}&datum=${data.date}`
+                break
 
             // pruefvermerk/reparatur
             case 'insertReparatur': {
@@ -207,6 +199,24 @@ export class AppService {
                 param = `id=${data}`
                 break
             }
+
+            // reparaturen
+            case 'insertReparatur':
+                param = `id_schiff=${data.id_ship}&id_status=${data.id_status}&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                break
+            case 'updateReparatur':
+                param = `id=${data.id}&id_schiff=${data.id_ship}&id_status=${data.id_status}&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                break  
+
+            // zaehlerstaende
+            case 'insertZaehlerstand':
+                param = `id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
+                break
+            case 'updateZaehlerstand':
+                console.log(data)
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
+                console.log(param)
+                break               
 
             default:
                 console.error('There is no action to switch.')
@@ -230,14 +240,19 @@ export class AppService {
         const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         let param = ``
         switch (action) {
+            case 'getBetankungenAll':
             case 'getDienststellen':
             case 'getPruefvermerke':
             case 'getPruefvermerksKategorien':
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
+            case 'getLastChecklistAll':
             case 'getLastPositionsFromAllShips':
+            case 'getReparaturen':
             case 'getSchiffe':
+            case 'getStatustypen':
+            case 'getStreifen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
                 param = ``
@@ -245,6 +260,10 @@ export class AppService {
 
             case 'getSchiff':
                 param = `?id=${data}`
+                break
+
+            case 'getPositionenVonStreife':
+                param = `?id_streife=${data}`
                 break
 
             case 'getLastChecklist':
@@ -257,13 +276,16 @@ export class AppService {
             
             // case 'getPeilungVonSchiff':
             case 'getPosition':
-            case 'getReparaturen':
                 param = `?id_schiff=${data}&all=true`
                 break
 
             case 'getPeilungVonSchiff':
             case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false`
+                break
+            
+            case 'getZaehlerstaendeAll':
+                param = `?all=false`
                 break
 
             default:
@@ -329,44 +351,6 @@ export class AppService {
     //             observer.next(status)
     //         })
     //         , (error: any) => observer.error(error)
-    //     })
-    // }
-
-    // betankung
-    // insertBetankung(betankung: Betankung): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.reducer('insertBetankung', betankung)
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data.id)
-    //         })
-    //         // , (error: any) => observer.error(error)
-    //     })
-    // }
-    // updateBetankung(changes: Partial<Betankung>): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.reducer('updateBetankung', changes)
-    //         source$.subscribe((status: any) => {
-    //         })
-    //     })
-    // }
-    // deleteBetankung(id: string): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.reducer('deleteBetankung', id)
-    //         source$.subscribe((status: any) => {
-    //             observer.next(status)
-    //         })
-    //         , (error: any) => observer.error(error)
-    //     })
-    // }
-
-    // zaehlerstaende
-    // updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.reducer('updateZaehlerstand', changes)
-    //         source$.subscribe((status: any) => {
-    //             // observer.next(data)
-    //         })
-    //         // , (error: any) => observer.error(error)
     //     })
     // }
 
@@ -564,6 +548,22 @@ export class AppService {
         })
     }
 
+    // betankungen   
+    getAllBetankungen(): Observable<any> {
+        return this.get('getBetankungenAll')
+    }
+    insertBetankung(betankung: Betankung): Observable<any> {
+        console.log(betankung)
+        return this.insert(betankung, 'insertBetankung')
+    }
+    updateBetankung(betankung: Betankung): Observable<any> {
+        console.log(betankung)
+        return this.update(betankung, 'updateBetankung')
+    }
+    deleteBetankung(id: string): Observable<any> {
+        return this.delete(id, 'deleteBetankung')
+    }
+
     // betriebsstoffe
     getBetriebsstoffe(): Observable<any> {
         return this.get('getKatBetriebsstoffe')
@@ -576,6 +576,54 @@ export class AppService {
     }
     deleteBetriebsstoff(id: string): Observable<any> {
         return this.delete(id, 'deleteKatBetriebsstoff')
+    }
+
+    // checklists
+    getAllShipChecklists(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getLastChecklistAll', {})
+            source$.subscribe((data: any) => {
+                data.forEach((checklist: Checklist) => {
+                    checklist.checklistItems = JSON.parse(checklist.gbookdaten!)
+                    delete checklist.gbookdaten
+
+                    if (Array.isArray(checklist.checklistItems)) {
+                        checklist.status = this.getChecklistStatus(checklist.checklistItems)
+                    } else {
+                        checklist.checklistItems = []
+                        checklist.status = 'vollständig'
+                    }
+                })
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getChecklistStatus(checklistItems?: Checklistitem[]): string {
+        status = 'vollständig'
+        checklistItems?.forEach((checklistItem: Checklistitem) => {
+            switch (true) {
+                case (checklistItem.checked == false && checklistItem.relevant == false):
+                    status = 'unvollständig'
+                    break
+                case (checklistItem.checked == false && checklistItem.relevant == true):
+                    status = 'Tätigkeit eingeschränkt'
+                    break
+                default:
+                    status = 'vollständig'
+            }
+        })
+        return status
+    }
+    insertShipChecklist(checklist: Checklist): Observable<any>  {
+        return this.insert(checklist, 'insertCheckliste')
+    }
+    deleteShipChecklist(id: string, date: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer('deleteCheckliste', {id, date})
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
     }
 
     // checkliste
@@ -712,6 +760,22 @@ export class AppService {
             }), (error: any) => observer.error(error)
         })
     }
+
+    // reparaturen   
+    getAllReparaturen(): Observable<any> {
+        return this.get('getReparaturen')
+    }
+    insertReparatur(reparatur: Reparatur): Observable<any> {
+        return this.insert(reparatur, 'insertReparatur')
+    }
+    updateReparatur(reparatur: Reparatur): Observable<any> {
+        return this.update(reparatur, 'updateReparatur')
+    }
+    deleteReparatur(id: string): Observable<any> {
+        return this.delete(id, 'deleteReparatur')
+    }
+
+    // schiffe
     getSchiffe(): Observable<any> {
         return this.get('getSchiffe')
     }
@@ -721,10 +785,66 @@ export class AppService {
     }
     updateSchiff(schiff: Schiff): Observable<any> {
         console.log(schiff)
-        return this.update(schiff, 'insertSchiff')
+        return this.update(schiff, 'updateSchiff')
     }
     deleteSchiff(id: string): Observable<any> {
         return this.delete(id, 'deleteSchiff')
+    }
+
+    // status
+    getStatus(): Observable<any> {
+        return this.get('getStatustypen')
+    }
+    insertStatus(schiff: Status): Observable<any> {
+        console.log(schiff)
+        return this.insert(schiff, 'insertKatStatus')
+    }
+    updateStatus(schiff: Status): Observable<any> {
+        console.log(schiff)
+        return this.update(schiff, 'updateKatStatus')
+    }
+    deleteStatus(id: string): Observable<any> {
+        return this.delete(id, 'deleteStatus')
+    }
+
+    // laststandorte   
+    getAllLastStandorte(): Observable<any> {
+        return this.get('getLastPositionsFromAllShips')
+    }
+
+    // standorte
+    getAllStandorteVonStreife(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPositionenVonStreife', id)
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertStandort(standort: Standort): Observable<any> {
+        return this.insert(standort, 'insertPosition')
+    }
+    updateStandort(standort: Standort): Observable<any> {
+        return this.update(standort, 'updatePosition')
+    }
+    deleteStandort(id: string): Observable<any> {
+        return this.delete(id, 'deletePosition')
+    }
+
+    // streifen   
+    getAllStreifen(): Observable<any> {
+        return this.get('getStreifen')
+    }
+    insertStreife(streife: Streife): Observable<any> {
+        console.log(streife)
+        return this.insert(streife, 'insertStreife')
+    }
+    updateStreife(streife: Streife): Observable<any> {
+        console.log(streife)
+        return this.update(streife, 'updateStreife')
+    }
+    deleteStreife(id: string): Observable<any> {
+        return this.delete(id, 'deleteStreife')
     }
 
     // zaehlerstandstypen
@@ -762,6 +882,22 @@ export class AppService {
         })
     }
 
+    // zaehlerstaende   
+    getAllZaehlerstaende(): Observable<any> {
+        return this.get('getZaehlerstaendeAll')
+    }
+    insertZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
+        console.log(zaehlerstand)
+        return this.insert(zaehlerstand, 'insertZaehlerstand')
+    }
+    updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
+        console.log(zaehlerstand)
+        return this.update(zaehlerstand, 'updateZaehlerstand')
+    }
+    deleteZaehlerstand(id: string): Observable<any> {
+        return this.delete(id, 'deleteZaehlerstand')
+    }
+
     // zweck
     getZweck(): Observable<any> {
         return new Observable ((observer) => {
@@ -796,101 +932,4 @@ export class AppService {
             }), (error: any) => observer.error(error)
         })
     }
-
-    // getChecklist(id: string = '1'): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getLastChecklist', id)
-    //         source$.subscribe((data: any) => {
-    //             const gbook: Geraetebuch = JSON.parse(data[0].gbookdaten)
-    //             observer.next(gbook)
-    //             // this.updateChecklist(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    //     // return new Observable ((observer) => {
-    //     //     from([this.items]).subscribe((data: any) => {
-    //     //         observer.next(data)
-    //     //     }, (error: any) => observer.error(error))
-    //     // })
-    // }
-
-    // updateChecklist(gbook: any) {
-    //     // console.log(data)
-    //     // let gbook = JSON.parse(data[0].gbookdaten)
-    //     // console.log(gbook)
-    //     gbook = {"id_schiff":"1","einsatzmittel":[{"id":"75764649-769b-4935-848c-25ccb213cf56","name":"Anhaltestab","anzahl":"3","seriennummern":"","sonstiges":"false"},{"id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef","name":"Alkomat","anzahl":"1","seriennummern":"SN-1234","sonstiges":"false"},{"id":"bd34d03c-3728-4df3-9ba7-7ead0d575532","name":"Anker","anzahl":"2","seriennummern":"","sonstiges":""},{"id":"c6aac15c-4fea-49ce-943b-21070169f361","name":"Rettungsring","anzahl":"1","seriennummern":"","sonstiges":""}]}
-    //     console.log(gbook)
-    //     const checkliste: Checklist = { id_schiff: '1', datum: new Date().toISOString(), streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', gbookdaten: JSON.stringify(gbook)}
-    //     this.insertCheckliste(checkliste)
-    // }
-
-    // insertCheckliste(gbook: Geraetebuch): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const checklist: Checklist = { id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
-    //         const source$ = this.reducer('insertCheckliste', checklist)
-    //         source$.subscribe((status) => {
-
-    //         })
-    //         // , (error: any) => observer.error(error)
-    //     })
-    // }
-    
-    // getChecklistItems(id: string = '1'): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getPeilungVonSchiff', id)
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    //     // return new Observable ((observer) => {
-    //     //     from([this.items]).subscribe((data: any) => {
-    //     //         observer.next(data)
-    //     //     }, (error: any) => observer.error(error))
-    //     // })
-    // }
-    
-    // getPeilung(id: string = '1'): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getPeilungVonSchiff', id)
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    // }
-    // insertPeilung(peilung: Peilung): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.reducer('insertPeilung', peilung)
-    //         source$.subscribe((data: any) => {
-    //             const peil : Peilung = Object.assign({}, peilung, { id: data.id })
-    //             observer.next(peil)
-    //         })
-    //         // , (error: any) => observer.error(error)
-    //     })
-    // }
-    // updatePeilung(peil: Peilung) {
-    //     // return new Observable ((observer) => {
-    //     //     this.peilung = this.peilung.filter(el => el.id != peil.id)
-    //     //     this.peilung.push(peil)
-    //     //     console.log(this.peilung)
-
-    //     //     // const source$ = this.reducer('updatePosition', position)
-    //     //     // source$.subscribe((data: any) => {
-    //     // //     observer.next(peil)
-    //     // //     })
-    //     // //     , (error: any) => observer.error(error)
-    //     // })
-    // }
-
-    // checkPositionStart() {
-    //     if (this._positionSubscription.closed) {
-    //         this._positionSubscription = this.i.subscribe((data: number) => {
-    //             this.locationService.getCurrentPosition().then(position => {
-    //                 const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
-    //                 this.store.dispatch(PositionActions.insertData({ positionReport }))
-    //             })
-    //         })
-    //     }
-    // }
-    // checkPositionStop() {
-    //     this._positionSubscription.unsubscribe()
-    // }
 }

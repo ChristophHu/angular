@@ -1,0 +1,26 @@
+<div class="container mx-auto px-4">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th hidden>ID</th>
+                <th>Typ</th>
+                <th>Durchsicht</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let schiff of (schiffe$ | async)">
+                <td>{{ schiff.name }}</td>
+                <td hidden>{{ schiff.id }}</td>
+                <td>{{ schiff.typ }}</td>
+                <td>{{ schiff.durchsicht | date: 'dd.MM.yyyy' }}</td>
+                <td class="flex flex-row justify-start text-gray-500">
+                    <button class="dropdown w-6 h-6" (click)="showModal(schiff)">
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

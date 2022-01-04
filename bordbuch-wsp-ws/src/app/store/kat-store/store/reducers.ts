@@ -1,17 +1,17 @@
 import { createReducer, on } from "@ngrx/store"
 // import { Checklistitem } from "src/app/core/model/checklistitem.model"
 // import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen } from "./actions"
-import { deleteBetriebsstoffSuccess, deleteChecklistSuccess, deleteDienststelleSuccess, deleteFunktionSuccess, deleteKennungSuccess, deletePruefvermerkkategorieSuccess, deletePruefvermerkSuccess, deleteZaehlerstandstypSuccess, deleteZweckSuccess, insertBetriebsstoffSuccess, insertChecklistSuccess, insertDienststelleSuccess, insertFunktionSuccess, insertKennungSuccess, insertPruefvermerkkategorieSuccess, insertPruefvermerkSuccess, insertZaehlerstandstypSuccess, insertZweckSuccess, loadedBetriebsstoffe, loadedCheckliste, loadedDienststellen, loadedFunktionen, loadedKennungen, loadedPruefvermerke, loadedPruefvermerkkategorien, loadedSchiffe, loadedZaehlerstandstypen, loadedZweck, updateBetriebsstoffSuccess, updateChecklistSuccess, updateDienststelleSuccess, updateFunktionSuccess, updateKennungSuccess, updatePruefvermerkkategorieSuccess, updatePruefvermerkSuccess, updateZaehlerstandstypSuccess, updateZweckSuccess } from './actions'
+import { deleteBetriebsstoffSuccess, deleteChecklistSuccess, deleteDienststelleSuccess, deleteFunktionSuccess, deleteKennungSuccess, deletePruefvermerkkategorieSuccess, deletePruefvermerkSuccess, deleteSchiffSuccess, deleteStatusSuccess, deleteZaehlerstandstypSuccess, deleteZweckSuccess, insertBetriebsstoffSuccess, insertChecklistSuccess, insertDienststelleSuccess, insertFunktionSuccess, insertKennungSuccess, insertPruefvermerkkategorieSuccess, insertPruefvermerkSuccess, insertSchiffSuccess, insertStatusSuccess, insertZaehlerstandstypSuccess, insertZweckSuccess, loadedAllStatus, loadedBetriebsstoffe, loadedCheckliste, loadedDienststellen, loadedFunktionen, loadedKennungen, loadedPruefvermerke, loadedPruefvermerkkategorien, loadedSchiffe, loadedZaehlerstandstypen, loadedZweck, updateBetriebsstoffSuccess, updateChecklistSuccess, updateDienststelleSuccess, updateFunktionSuccess, updateKennungSuccess, updatePruefvermerkkategorieSuccess, updatePruefvermerkSuccess, updateSchiffSuccess, updateStatusSuccess, updateZaehlerstandstypSuccess, updateZweckSuccess } from './actions'
 import { Kat } from "src/app/core/models/kat.model"
 import { Pruefvermerk } from "src/app/core/models/pruefvermerk.model"
 import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model"
 import { Dienststelle } from "src/app/core/models/dienststelle.model"
 import { Schiff } from "src/app/core/models/schiff.model"
+import { Status } from "src/app/core/models/reparatur-status.model"
 
 export interface State {
     // shipSelection: ShipSelection[] | undefined
     // pruefvermerke: Pruefvermerk[] | undefined
-    
     betriebsstoffe: Kat[] | undefined
     checkliste: Kat[] | undefined
     dienststellen: Dienststelle[] | undefined
@@ -20,27 +20,27 @@ export interface State {
     pruefvermerke: Pruefvermerk[] | undefined
     pruefvermerkKategorien: Kat[] | undefined
     schiffe: Schiff[] | undefined
+    status: Status[] | undefined
     zaehlerstandstypen: Zaehlerstandstyp[] | undefined
-    zweck: Kat[] | undefined
-    
+    zweck: Kat[] | undefined  
     isAllDataLoaded: boolean
 }
 
 export const initialDataState: State = {
     // shipSelection: undefined,
     // pruefvermerke: undefined,
-    
-    betriebsstoffe: undefined,
-    checkliste: undefined,
-    dienststellen: undefined,
-    funktionen: undefined,
-    kennungen: undefined,
-    pruefvermerke: undefined,
+    betriebsstoffe  : undefined,
+    checkliste      : undefined,
+    dienststellen   : undefined,
+    funktionen      : undefined,
+    kennungen       : undefined,
+    pruefvermerke   : undefined,
     pruefvermerkKategorien: undefined,
-    schiffe: undefined,
+    schiffe         : undefined,
+    status          : undefined,
     zaehlerstandstypen: undefined,
-    zweck: undefined,
-    isAllDataLoaded: false
+    zweck           : undefined,
+    isAllDataLoaded : false
 }
 
 export const reducer = createReducer(
@@ -310,6 +310,68 @@ export const reducer = createReducer(
         return {
             ...state,
             schiffe: action.schiffe
+        }
+    }),
+    on(insertSchiffSuccess, (state, action) => {
+        let schiff: Schiff = Object.assign({}, action.action.insert, { id: action.id })
+        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        clearedSchiffe = [...clearedSchiffe!, ...[schiff]]
+        return {
+            ...state,
+            schiffe: clearedSchiffe
+        }
+    }),
+    on(updateSchiffSuccess, (state, action) => {
+        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        clearedSchiffe = clearedSchiffe?.filter(el => el.id != action.update.id)
+        clearedSchiffe = [...clearedSchiffe!, ...[action.update]]
+        return {
+            ...state,
+            schiffe: clearedSchiffe
+        }
+    }),
+    on(deleteSchiffSuccess, (state, action) => {
+        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        clearedSchiffe = clearedSchiffe?.filter(el => el.id != action.id)
+        clearedSchiffe = [...clearedSchiffe!]
+        return {
+            ...state,
+            schiffe: clearedSchiffe
+        }
+    }),
+
+    // status
+    on(loadedAllStatus, (state, action) => {
+        return {
+            ...state,
+            status: action.status
+        }
+    }),
+    on(insertStatusSuccess, (state, action) => {
+        let status: Status = Object.assign({}, action.action.insert, { id: action.id })
+        let cleared: Status[] | undefined = state.status
+        cleared = [...cleared!, ...[status]]
+        return {
+            ...state,
+            status: cleared
+        }
+    }),
+    on(updateStatusSuccess, (state, action) => {
+        let cleared: Status[] | undefined = state.status
+        cleared = cleared?.filter(el => el.id != action.update.id)
+        cleared = [...cleared!, ...[action.update]]
+        return {
+            ...state,
+            status: cleared
+        }
+    }),
+    on(deleteStatusSuccess, (state, action) => {
+        let cleared: Status[] | undefined = state.status
+        cleared = cleared?.filter(el => el.id != action.id)
+        cleared = [...cleared!]
+        return {
+            ...state,
+            status: cleared
         }
     }),
 

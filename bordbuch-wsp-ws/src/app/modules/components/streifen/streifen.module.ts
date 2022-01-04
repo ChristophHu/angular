@@ -6,14 +6,14 @@ import { StreifenComponent } from './streifen.component';
 import { AusgewaehlteStreifenComponent } from './ausgewaehlte-streifen/ausgewaehlte-streifen.component';
 import { AusgewaehlteStreifenModalComponent } from './ausgewaehlte-streifen/ausgewaehlte-streifen-modal/ausgewaehlte-streifen-modal.component';
 import { AusgewaehlteStreifeComponent } from './ausgewaehlte-streife/ausgewaehlte-streife.component';
-import { TestComponent } from './test/test.component';
 import { TabSchiffeComponent } from './aktuelle-positionen/tab-schiffe/tab-schiffe.component';
+import { AusgewaehlterStandortModalComponent } from './ausgewaehlte-streife/ausgewaehlter-standort-modal/ausgewaehlter-standort-modal.component';
+import { TabStandorteComponent } from './ausgewaehlte-streife/tab-standorte/tab-standorte.component';
 
 
 const routes: Routes = [
   { path: '', component: StreifenComponent,
     children: [
-      { path: 'test', component: TestComponent },
       { path: 'aktuelle-positionen', component: AktuellePositionenComponent },
       { path: 'ausgewaehlte-streifen', component: AusgewaehlteStreifenComponent },
       { path: ':id', component: AusgewaehlteStreifeComponent }
@@ -27,8 +27,10 @@ const routes: Routes = [
     AktuellePositionenComponent,
     AusgewaehlteStreifenComponent,
     AusgewaehlteStreifenModalComponent,
-    TestComponent,
-    TabSchiffeComponent
+    AusgewaehlteStreifeComponent,
+    AusgewaehlterStandortModalComponent,
+    TabSchiffeComponent,
+    TabStandorteComponent,
   ],
   imports: [
     RouterModule.forChild(routes),

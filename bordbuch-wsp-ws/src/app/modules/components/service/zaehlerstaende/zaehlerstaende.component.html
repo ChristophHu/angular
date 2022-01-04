@@ -2,37 +2,37 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
+                <th>Name</th>
                 <th hidden>ID</th>
-                <th>Id_schiff</th>
+                <th hidden>Id_schiff</th>
                 <th>Zählerstandstyp</th>
                 <th>Datum/Uhrzeit</th>
-                <th>Betriebsstunden</th>
+                <th>Stand</th>
                 <th hidden>Betriebsstunden</th>
                 <th class="w-12"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstand of zaehlerstaende">
+            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
+                <td>{{ zaehlerstand.name }}</td>
                 <td hidden>{{ zaehlerstand.id }}</td>
-                <td>{{ zaehlerstand.id_schiff }}</td>
+                <td hidden>{{ zaehlerstand.id_schiff }}</td>
                 <td>{{ zaehlerstand.zaehlerstandstyp }}</td>
-                <td>{{ zaehlerstand.Datum }}</td>
+                <td>{{ zaehlerstand.date | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ zaehlerstand.value }}</td>
                 <td hidden>{{ zaehlerstand.betriebsstunden }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
-                    <button class="dropdown w-6 h-6" appDropdown>
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    <button class="dropdown w-6 h-6" (click)="showModal(zaehlerstand)">
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>
                     </button>
-                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(zaehlerstand.id)">
-                            <p>Bearbeiten</p>
-                        </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
-                            <p>Löschen</p>
-                        </div>
-                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Zaehlerstand hinzufügen
+    </button>
 </div>

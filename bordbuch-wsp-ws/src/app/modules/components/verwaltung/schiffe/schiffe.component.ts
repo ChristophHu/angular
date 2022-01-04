@@ -80,7 +80,7 @@ export class SchiffeComponent implements OnInit {
     }
   }
 
-  async showChecklistModal(id: string): Promise<void> {
+  async showChecklistModal(schiff: Schiff): Promise<void> {
     const { ChecklisteModalComponent } = await import(
       './checkliste-modal/checkliste-modal.component'
     )
@@ -88,7 +88,7 @@ export class SchiffeComponent implements OnInit {
     this._modalServiceChecklist.open(ChecklisteModalComponent, {
       data: {
         title: 'Checkliste bearbeiten',
-        id
+        schiff
       }
     })
   }

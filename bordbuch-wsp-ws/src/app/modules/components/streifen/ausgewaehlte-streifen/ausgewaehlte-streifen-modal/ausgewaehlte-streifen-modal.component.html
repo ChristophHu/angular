@@ -8,8 +8,8 @@
     </button>
   </header>
   <div class="content">
-    <form [formGroup]="katForm">
-      <div class="hidden">
+    <form [formGroup]="streifeForm">
+      <div class="">
         <mat-form-field appearance="fill">
           <mat-label>id</mat-label>
           <input matInput type="text" formControlName="id" readonly>
@@ -20,20 +20,50 @@
         </mat-form-field>
       </div>
       <mat-form-field appearance="fill">
-        <mat-label>Schiffsname</mat-label>
-        <input matInput type="text" formControlName="schiffsname">
+        <mat-label>Name</mat-label>
+        <mat-select formControlName="schiffsname" (selectionChange)="selectShip($event.value)">
+          <mat-option *ngFor="let schiff of (schiffe$ | async)" [value]="schiff.name">
+            {{ schiff.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Kennung</mat-label>
-        <input matInput type="text" formControlName="kennung">
+        <mat-select formControlName="kennung" >
+          <mat-option *ngFor="let kennung of (kennungen$ | async)" [value]="kennung.bezeichnung">
+            {{ kennung.bezeichnung }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Zweck</mat-label>
-        <input matInput type="text" formControlName="zweck">
+        <mat-select formControlName="zweck">
+          <mat-option *ngFor="let zweck of (zwecke$ | async)" [value]="zweck.bezeichnung">
+            {{ zweck.bezeichnung }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
         <input matInput type="text" formControlName="status">
+      </mat-form-field> -->
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Zweck</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let s of status" [value]="s">
+            {{ s }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Start Datum/Uhrzeit</mat-label>
+        <input matInput type="datetime-local" formControlName="start" value="{{streifeForm.value.start | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Ende Datum/Uhrzeit</mat-label>
+        <input matInput type="datetime-local" formControlName="ende" value="{{streifeForm.value.ende | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
       </mat-form-field>
       <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
         <thead>
@@ -85,12 +115,10 @@
 <ng-template #toolbar>
   <div>
     <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-    <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+    <button *ngIf="streifeForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
   </div>
   <div>
-    <!-- <button *ngIf="!katForm.pristine && katForm.value.id" (click)="update()" type="button"
-          class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-    <button *ngIf="!katForm.value.id" (click)="create()" type="button"
-      class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+    <button *ngIf="!streifeForm.pristine && streifeForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+    <!-- <button *ngIf="!streifeForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
   </div>
 </ng-template>

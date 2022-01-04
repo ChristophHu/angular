@@ -18,11 +18,11 @@ export class PruefvermerkModalComponent implements OnInit {
   pruefvermerkForm: FormGroup
 
   pruefvermerkkategorien$: Observable<Kat[]>
+  items$!: Observable<Pruefvermerk[]>
   id_kategorie: string | undefined
 
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<PruefvermerkModalComponent>, private _katFacade: KatFacade) {
     this.pruefvermerkkategorien$ = _katFacade.pruefvermerkkategorien$
-    // _katFacade.pruefvermerkkategorien$.subscribe(data => console.log(data))
 
     this.pruefvermerkForm = this._formBuilder.group({
       id: [],
@@ -43,6 +43,7 @@ export class PruefvermerkModalComponent implements OnInit {
 
   selectKategorie(kategorie: string) {
     this._katFacade.getIdByKategorie(kategorie).subscribe(id => this.pruefvermerkForm.patchValue({ id_kategorie: id }))
+    this.items$ = this._katFacade.getItemByKategorie(kategorie)
   }
 
   create() {

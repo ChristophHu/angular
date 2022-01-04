@@ -12,6 +12,7 @@ import { Pruefvermerk } from "src/app/core/models/pruefvermerk.model";
 import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model";
 import { Dienststelle } from "src/app/core/models/dienststelle.model";
 import { Schiff } from "src/app/core/models/schiff.model";
+import { Status } from "src/app/core/models/reparatur-status.model";
 
 @Injectable()
 export class KatFacade {
@@ -24,6 +25,7 @@ export class KatFacade {
     pruefvermerke$  = this.store.pipe(select(KatSelectors.selectAllPruefvermerke)) as Observable<Pruefvermerk[]>
     pruefvermerkkategorien$  = this.store.pipe(select(KatSelectors.selectAllPruefvermerkkategorien)) as Observable<Kat[]>
     schiffe$  = this.store.pipe(select(KatSelectors.selectAllSchiffe)) as Observable<Schiff[]>
+    status$ = this.store.pipe(select(KatSelectors.selectAllStatus)) as Observable<Status[]>
     zaehlerstandstypen$  = this.store.pipe(select(KatSelectors.selectAllZaehlerstandstypen)) as Observable<Zaehlerstandstyp[]>
     zweck$      = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Kat[]>
 
@@ -119,6 +121,9 @@ export class KatFacade {
     getIdByKategorie(bezeichnung: string): Observable<string | undefined> {
         return this.store.pipe(select(KatSelectors.selectIdByKategorie(bezeichnung)))
     }
+    getItemByKategorie(bezeichnung: string): Observable<any> {
+        return this.store.pipe(select(KatSelectors.selectItemByKategorie(bezeichnung)))
+    }
 
     // pruefvermerkkategorien
     loadPruefvermerkkategorien() {
@@ -147,6 +152,29 @@ export class KatFacade {
     deleteSchiff(id: string) {
         this.store.dispatch(KatAction.deleteSchiff({ id }))
     }
+    getIdByShip(name: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByShip(name)))
+    }
+    getNameById(id: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectNameById(id)))
+    }
+
+    // status
+    loadAllStatus() {
+        this.store.dispatch(KatAction.loadAllStatus())
+    }
+    insertStatus(insert: Status) {
+        this.store.dispatch(KatAction.insertStatus({ insert }))
+    }
+    updateStatus(update: Status) {
+        this.store.dispatch(KatAction.updateStatus({ update }))
+    }
+    deleteStatus(id: string) {
+        this.store.dispatch(KatAction.deleteStatus({ id }))
+    }
+    getIdByStatus(bezeichnung: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByStatus(bezeichnung)))
+    }
 
     // zaehlerstandstypen
     loadZaehlerstandstypen() {
@@ -160,6 +188,9 @@ export class KatFacade {
     }
     deleteZaehlerstandstyp(id: string) {
         this.store.dispatch(KatAction.deleteZaehlerstandstyp({ id }))
+    }
+    getIdByZaehlerstandstyp(zaehlerstandstyp: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByZaehlerstandstyp(zaehlerstandstyp)))
     }
 
     // zweck

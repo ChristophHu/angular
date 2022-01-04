@@ -1,62 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { from, Observable, Subject } from 'rxjs';
+import { Schiff } from 'src/app/core/models/schiff.model';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 
 @Component({
   selector: 'tab-schiffe',
   templateUrl: './tab-schiffe.component.html',
   styleUrls: ['./tab-schiffe.component.sass']
 })
-export class TabSchiffeComponent implements OnInit {
+export class TabSchiffeComponent {
+  @Output() checked = new EventEmitter()
+  @Output() hover = new EventEmitter()
+  
   public allCheck: boolean = true
 
-  schiffe: any[] = [
-    {
-      "id":"1",
-      "name":"BOOT 1A",
-      "marke":"MARKE1",
-      "typ":"SCHLAUCHBOOT",
-      "identifikationsnummer":"A1A",
-      "durchsicht":"",
-      "dienststelle":"DST NORD"
-    },
-    {
-      "id":"3",
-      "name":"BOOT 3A",
-      "marke":"MARKE3",
-      "typ":"FREGATTE",
-      "identifikationsnummer":"A3A",
-      "durchsicht":"",
-      "dienststelle":"DST NORD"
-    },
-    {
-      "id":"36b9e7d3-fb83-41a6-b54e-93e226db12e3",
-      "name":"Seemöve",
-      "marke":"",
-      "typ":"",
-      "identifikationsnummer":"",
-      "durchsicht":"",
-      "dienststelle":"DST NORD"
-    },
-    {
-      "id":"4",
-      "name":"BOOT 1B",
-      "marke":"MARKE1B",
-      "typ":"UBOOT",
-      "identifikationsnummer":"B1B",
-      "durchsicht":"",
-      "dienststelle":"DST OST"
-    }
-  ]
-  constructor() { }
+  schiffe: any[] = []
+  
+  constructor(private _katFacade: KatFacade) {
+    this._katFacade.schiffe$.subscribe(schiffe => {
+      schiffe.forEach(schiff => {
+        this.schiffe.push(Object.assign({}, schiff, { checked: true }))
+      })
+    })
+  }
 
-  ngOnInit(): void {
+  change(id?: string) {
+    if (id) {
+      this.schiffe.find(el => {
+        if (el.id == id) {
+          el.checked = !el.checked
+        }
+      })
+    }
+    const checked_schiffe = this.schiffe.filter(el => el.checked == true)
+		this.checked.emit(checked_schiffe)
+  }
+
+  clickShip(id: string) {
+    console.log(`click: ${id}`)
+  }
+
+  hoverShip(id: string) {
+    console.log(`hover: ${id}`)
+		this.hover.emit(id);
   }
 
   toggleCheck() {
     this.allCheck = !this.allCheck
-
-  }
-
-  hoverShow(id: string) {
-    console.log(id)
+    this.schiffe.forEach(schiff => {
+      schiff.checked = this.allCheck
+    })
+    this.change()
   }
 }

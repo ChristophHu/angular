@@ -1,7 +1,8 @@
-import { createAction, createSelector, props } from "@ngrx/store"
+import { createAction, props } from "@ngrx/store"
 import { Dienststelle } from "src/app/core/models/dienststelle.model"
 import { Kat } from "src/app/core/models/kat.model"
 import { Pruefvermerk } from "src/app/core/models/pruefvermerk.model"
+import { Status } from "src/app/core/models/reparatur-status.model"
 import { Schiff } from "src/app/core/models/schiff.model"
 import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model"
 
@@ -266,6 +267,39 @@ export const deleteSchiff = createAction(
 )
 export const deleteSchiffSuccess = createAction(
 	"[Modal Schiff] Delete Schiff Success",
+	props<{ id: string }>()
+)
+
+// status
+export const loadAllStatus = createAction(
+	"[Kat Resolver] Load Status"
+)
+export const loadedAllStatus = createAction(
+	"[Load Kat Status] Loaded Status",
+	props<{ status: Status[] }>()
+)
+export const insertStatus = createAction(
+	"[Modal Status] Insert Status",
+	props<{ insert: Status }>()
+)
+export const insertStatusSuccess = createAction(
+	"[Modal Status] Insert Status Success",
+	props<{ action: { insert: Status }, id: string }>()
+)
+export const updateStatus = createAction(
+	"[Modal Status] Update Status",
+	props<{ update: Status }>()
+)
+export const updateStatusSuccess = createAction(
+	"[Modal Status] Update Status Success",
+	props<{ update: Status }>()
+)
+export const deleteStatus = createAction(
+	"[Modal Status] Delete Status",
+	props<{ id: string }>()
+)
+export const deleteStatusSuccess = createAction(
+	"[Modal Status] Delete Status Success",
 	props<{ id: string }>()
 )
 

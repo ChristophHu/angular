@@ -12,19 +12,34 @@ export class ControllingComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.data[0])
+    
   }
 
   download() {
-    // https://stackoverflow.com/questions/35138424/how-do-i-download-a-file-with-angular2-or-greater
-    let myBlob: Blob = new Blob(['test'], {type: ''})
-    // let fileUrl = URL.createObjectURL(myBlob)
-    // window.open(fileUrl);
+    let str: string = this.jsonToCSV(this.data, true)
+    let blob: Blob = new Blob([str], { type: 'text/csv; charset=utf-8' })
 
-    const a = document.createElement('a');
-    a.href = window.URL.createObjectURL(myBlob);
-    a.download = 'filename';
+    let a = document.createElement('a')
+    var url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = 'data';
     a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }
+
+  jsonToCSV(data: any[], header: boolean = true): string {
+    let csv_string: string = ''
+    // header
+    if (header) {
+      csv_string += Object.keys(data[0]).toString() + '\r\n'
+    }
+    // data
+    data.forEach(object => {
+      let arr = Object.values(object)
+      csv_string += arr.toString() + '\r\n'
+    })
+    return csv_string
   }
 
 }

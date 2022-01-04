@@ -5,6 +5,7 @@
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'funktionen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('funktionen')">Funktionen</button>
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'kennungen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('kennungen')">Kennungen</button>
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'pruefvermerkkategorien') ? 'bg-blue-600 text-white' : ''" (click)="toggle('pruefvermerkkategorien')">Prüfvermerkkategorien</button>
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'status') ? 'bg-blue-600 text-white' : ''" (click)="toggle('status')">Reparatur-Status</button>
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zaehlerstandstypen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zaehlerstandstypen')">Zählerstandstypen</button>
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zweck') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zweck')">Zweck</button>
 </div>
@@ -15,5 +16,6 @@
 <app-kat-funktionen *ngIf="kat == 'funktionen'"></app-kat-funktionen>
 <app-kat-kennungen *ngIf="kat == 'kennungen'"></app-kat-kennungen>
 <app-kat-pruefvermerkkategorien *ngIf="kat == 'pruefvermerkkategorien'"></app-kat-pruefvermerkkategorien>
+<app-kat-status *ngIf="kat == 'status'"></app-kat-status>
 <app-kat-zaehlerstandstypen *ngIf="kat == 'zaehlerstandstypen'"></app-kat-zaehlerstandstypen>
 <app-kat-zweck *ngIf="kat == 'zweck'"></app-kat-zweck>

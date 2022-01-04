@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Betankung } from 'src/app/core/models/betankung';
+import { Kat } from 'src/app/core/models/kat.model';
+import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-betankung-modal',
@@ -13,10 +19,17 @@ export class BetankungModalComponent implements OnInit {
   title: string = ''
   betankungForm: FormGroup
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<BetankungModalComponent>) {
+  betriebsstoffe$: Observable<Kat[]>
+  schiffe$: Observable<Schiff[]>
+
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<BetankungModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
+    this.betriebsstoffe$ = _katFacade.betriebsstoffe$
+    this.schiffe$ = _katFacade.schiffe$
+
     this.betankungForm = this._formBuilder.group({
       id: [],
       id_ship: [],
+      name: [],
       date: [],
       location: this._formBuilder.group({
         latitude: [],
@@ -31,16 +44,30 @@ export class BetankungModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      // this.peilungForm.patchValue({ date: data.data.date })
+
+      this.betankungForm.patchValue({ date: data.data.date })
+      this.betankungForm.patchValue(data.data.betankung)
     })
   }
 
-  create() {
-
+  selectShip(name: string) {
+    this._katFacade.getIdByShip(name).subscribe(id => this.betankungForm.patchValue({ id_ship: id }))
   }
 
+  create() {
+    const insert: Betankung = this.betankungForm.value
+    this._specFacade.insertBetankung(insert)
+    this.modal?.close()
+  }
   update() {
-
+    let update: Betankung = this.betankungForm.value
+    console.log(update)
+    this._specFacade.updateBetankung(update)
+    this.modal?.close()
+  }
+  delete() {
+    this._specFacade.deleteBetankung(this.betankungForm.value.id)
+    this.modal?.close()
   }
 
   cancel() {

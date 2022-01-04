@@ -47,5 +47,4 @@ export class KatZweckModalComponent implements OnInit {
   cancel() {
     this.modal?.close()
   }
-
 }

@@ -8,20 +8,27 @@
       </button>
     </header>
     <div class="content">
-      <!-- <form [formGroup]="katForm">
-        <div class="">
+      <p class="p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
+        Schiff
+      </p>
+      <form [formGroup]="checklistForm">
+        <div class="hidden">
           <mat-form-field appearance="fill">
             <mat-label>id</mat-label>
             <input matInput type="text" formControlName="id" readonly>
           </mat-form-field>
         </div>
         <mat-form-field appearance="fill">
-          <mat-label>Bezeichnung</mat-label>
-          <input matInput type="text" formControlName="bezeichnung">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name" readonly>
         </mat-form-field>
-      </form> -->
+      </form>
+
+      <p class="mt-5 p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
+        Checkliste
+      </p>
       <div class="w-full overflow-x-scroll xl:overflow-x-hidden">
-        <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
+          <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
             <thead>
                 <tr class="w-full h-12 border-gray-300 border-b py-8">
                     <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
@@ -51,11 +58,11 @@
                       {{ katItem.id }}
                     </td>
                     <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
-                      <input type="checkbox" [checked]="katItem.checked == false ? false : true" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+                      <input type="checkbox" [checked]="katItem.checked == false ? false : true" (change)="changeCheck(katItem)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
                       <!-- (change)="table_interact1 =! table_interact1" -->
                     </td>
                     <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4" [ngClass]="katItem.relevant ? 'underline' : ''">
-                      {{ katItem.name }}
+                      {{ katItem.bezeichnung }}
                     </td>
                     <td class="w-12 text-sm pr-6 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
                       {{ katItem.anzahl }}
@@ -70,7 +77,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+          </table>
       </div>
     </div>
     <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
@@ -95,8 +102,8 @@
             </mat-form-field>
           </div>
           <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" formControlName="name" readonly>
+            <mat-label>Bezeichnung</mat-label>
+            <input matInput type="text" formControlName="bezeichnung" readonly>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Anzahl</mat-label>
@@ -126,11 +133,9 @@
   <ng-template #toolbar>
     <div>
       <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-      <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+      <!-- <button (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button> -->
     </div>
     <div>
-      <!-- <button *ngIf="!katForm.pristine && katForm.value.id" (click)="update()" type="button"
-          class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
       <button (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>

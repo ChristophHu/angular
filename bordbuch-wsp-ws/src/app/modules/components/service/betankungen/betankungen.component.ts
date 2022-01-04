@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { Betankung } from 'src/app/core/models/betankung';
 import { BetankungService } from 'src/app/core/services/betankung.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { BetankungModalComponent } from './betankung-modal/betankung-modal.component';
 
 @Component({
@@ -17,8 +18,8 @@ export class BetankungenComponent implements OnInit {
 
   betankungen$!: Observable<Betankung[]>
 
-  constructor(private _betankungService: BetankungService, private _modalService: ModalService<BetankungModalComponent>) {
-    this.betankungen$ = this._betankungService.betankungen
+  constructor(private _modalService: ModalService<BetankungModalComponent>, private _specFacade: SpecFacade) {
+    this.betankungen$ = this._specFacade.allBetankungen$
   }
 
   ngOnInit(): void {
@@ -55,30 +56,30 @@ export class BetankungenComponent implements OnInit {
         },
       }
     }
-    // this._betankungService.getBetankungen()
   }
 
-  async showModal(id?: string): Promise<void> {
-    console.log(id)
-    let betankung: Betankung | undefined
+  async showModal(betankung?: Betankung): Promise<void> {
     const { BetankungModalComponent } = await import(
       './betankung-modal/betankung-modal.component'
     )
-    if (id) {
-      // betankung = this._betankungService._dataStore.betankungen.find(el => el.id == id)
-      console.log(betankung)
+    if (betankung) {
       this._modalService.open(BetankungModalComponent, {
         data: {
-          title: 'Betankung bearbeiten'
+          title: 'Betankung bearbeiten',
+          betankung
         }
       })
     } else {
       this._modalService.open(BetankungModalComponent, {
         data: {
           title: 'Betankung hinzufügen',
-          date: new Date()
+          date: new Date().toISOString()
         }
       })
     }
+  }
+
+  delete(id: string) {
+    this._specFacade.deleteBetankung(id)
   }
 }

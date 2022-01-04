@@ -4,6 +4,7 @@ import { concatMap, map, switchMap, tap } from 'rxjs/operators'
 import { Dienststelle } from 'src/app/core/models/dienststelle.model'
 import { Kat } from 'src/app/core/models/kat.model'
 import { Pruefvermerk } from 'src/app/core/models/pruefvermerk.model'
+import { Status } from 'src/app/core/models/reparatur-status.model'
 import { Schiff } from 'src/app/core/models/schiff.model'
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model'
 import { AppService } from 'src/app/core/services/app.service'
@@ -25,7 +26,7 @@ import {
     loadFunktionen, loadedFunktionen, insertFunktion, insertFunktionSuccess, updateFunktion, updateFunktionSuccess, deleteFunktion, deleteFunktionSuccess,
     loadKennungen, loadedKennungen, insertKennung, insertKennungSuccess, deleteKennung, deleteKennungSuccess, updateKennung, updateKennungSuccess, 
     loadZaehlerstandstypen, loadedZaehlerstandstypen, insertZaehlerstandstyp, insertZaehlerstandstypSuccess, updateZaehlerstandstyp, deleteZaehlerstandstyp, deleteZaehlerstandstypSuccess, updateZaehlerstandstypSuccess,
-    loadZweck, insertZweck, updateZweck, deleteZweck, loadedZweck, insertZweckSuccess, updateZweckSuccess, deleteZweckSuccess, loadDienststellen, loadPruefvermerkkategorien, loadedPruefvermerkkategorien, insertPruefvermerkkategorie, insertPruefvermerkkategorieSuccess, updatePruefvermerkkategorie, updatePruefvermerkkategorieSuccess, deletePruefvermerkkategorie, deletePruefvermerkkategorieSuccess, loadPruefvermerke, loadedPruefvermerke, insertPruefvermerk, insertPruefvermerkSuccess, updatePruefvermerk, updatePruefvermerkSuccess, deletePruefvermerk, deletePruefvermerkSuccess, loadSchiffe, loadedSchiffe, insertSchiff, updateSchiff, deleteSchiff, insertSchiffSuccess, updateSchiffSuccess, deleteSchiffSuccess,
+    loadZweck, insertZweck, updateZweck, deleteZweck, loadedZweck, insertZweckSuccess, updateZweckSuccess, deleteZweckSuccess, loadDienststellen, loadPruefvermerkkategorien, loadedPruefvermerkkategorien, insertPruefvermerkkategorie, insertPruefvermerkkategorieSuccess, updatePruefvermerkkategorie, updatePruefvermerkkategorieSuccess, deletePruefvermerkkategorie, deletePruefvermerkkategorieSuccess, loadPruefvermerke, loadedPruefvermerke, insertPruefvermerk, insertPruefvermerkSuccess, updatePruefvermerk, updatePruefvermerkSuccess, deletePruefvermerk, deletePruefvermerkSuccess, loadSchiffe, loadedSchiffe, insertSchiff, updateSchiff, deleteSchiff, insertSchiffSuccess, updateSchiffSuccess, deleteSchiffSuccess, loadAllStatus, loadedAllStatus, insertStatus, insertStatusSuccess, updateStatus, updateStatusSuccess, deleteStatus, deleteStatusSuccess,
 } from './actions'
 // loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen 
  
@@ -381,6 +382,45 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteSchiff(action.id).pipe(
                     map(() => deleteSchiffSuccess(action))
+                )
+            })
+        )
+    })
+
+    // status
+    loadAllStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadAllStatus),
+            concatMap(action => this.appService.getStatus()),
+            map((status: Status[]) => loadedAllStatus({ status }))
+        )
+    })
+    insertStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertStatus),
+            switchMap(action => {
+                return this.appService.insertStatus(action.insert).pipe(
+                    map((id: string) => insertStatusSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateStatus),
+            switchMap(action => {
+                return this.appService.updateStatus(action.update).pipe(
+                    map(() => updateStatusSuccess(action))
+                )
+            })
+        )
+    })
+    deleteStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteStatus),
+            switchMap(action => {
+                return this.appService.deleteStatus(action.id).pipe(
+                    map(() => deleteStatusSuccess(action))
                 )
             })
         )

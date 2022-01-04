@@ -2,20 +2,20 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
+                <th class="w-28">Name</th>
                 <th hidden>ID</th>
-                <th class="w-28">ID_Ship</th>
                 <th class="w-28">Datum</th>
                 <th>Ort</th>
-                <th>Kraftstoff/Betriebsmittel</th>
+                <th>Kraftstoff</th>
                 <th>Menge</th>
                 <th class="w-12"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let betankung of (betankungen$ | async)">
+                <td>{{ betankung.name }}</td>
                 <td hidden>{{ betankung.id }}</td>
-                <td>{{ betankung.id_ship }}</td>
-                <td>{{ betankung.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+                <td>{{ betankung.date | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ betankung.ort }}</td>
                 <td>{{ betankung.fuel }}</td>
                 <td>{{ betankung.fuelfillingquantity }}</td>
@@ -24,10 +24,10 @@
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                     </button>
                     <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(betankung.id)">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(betankung)">
                             <p>Bearbeiten</p>
                         </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(betankung.id)">
                             <p>Löschen</p>
                         </div>
                     </div>
@@ -35,4 +35,10 @@
             </tr>
         </tbody>
     </table>
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Betankung hinzufügen
+    </button>
 </div>

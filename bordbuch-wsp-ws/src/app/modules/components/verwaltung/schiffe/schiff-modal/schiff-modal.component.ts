@@ -38,7 +38,6 @@ export class SchiffModalComponent implements OnInit {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
       this.schiffForm.patchValue(data.data.schiff)
-      this.schiffForm.patchValue({ durchsicht: new Date().toISOString()})
       if (data.data.schiff) this.selectDienststelle(data.data.schiff.dienststelle)
     })
   }
@@ -54,7 +53,6 @@ export class SchiffModalComponent implements OnInit {
   }
   update() {
     let update: Schiff = this.schiffForm.value
-    console.log(update)
     this._katFacade.updateSchiff(update)
     this.modal?.close()
   }
