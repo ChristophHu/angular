@@ -1,48 +1,60 @@
-<div class="container mx-auto p-4 mb-8">
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'aktiv') ? 'bg-blue-600 text-white' : ''" (click)="toggle('aktiv')">Aktive Streifen</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'beendet') ? 'bg-blue-600 text-white' : ''" (click)="toggle('beendet')">Beendete Streifen</button>
+<div class="relative container h-16 px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between z-10">
+    <div>
+        <p class="flex items-center text-gray-500 text-xs">
+            <span>
+              Streifen > Ausgewählte Streife
+            </span>
+        </p>
+        <h4 class="text-2xl font-bold leading-tight text-gray-800">Ausgewählte Streife</h4>
+    </div>
 </div>
-
-<div class="container mx-auto px-4">
-    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th hidden>ID</th>
-                <th hidden>ID-Schiff</th>
-                <th>Name</th>
-                <th>Kennung</th>
-                <th>Zweck</th>
-                <th>Status</th>
-                <th class="w-12"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let streife of (streifen$ | async)">
-                <td>{{ streife.start | date: 'dd.MM.yyyy' }}</td>
-                <td hidden>{{ streife.id }}</td>
-                <td hidden>{{ streife.id_schiff }}</td>
-                <td>{{ streife.schiffsname }}</td>
-                <td>{{ streife.kennung }}</td>
-                <td>{{ streife.zweck }}</td>
-                <td>{{ streife.status }}</td>
-                <td class="flex flex-row justify-start text-gray-500">
-                    <button class="dropdown w-6 h-6" [routerLink]="['/streifen', streife.id]">
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="location-marker"></icons>
-                    </button>
-                    <button class="dropdown w-6 h-6" appDropdown>
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
-                    </button>
-                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(streife)">
-                            <p>Bearbeiten</p>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto p-4 mb-8">
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'aktiv') ? 'bg-blue-600 text-white' : ''" (click)="toggle('aktiv')">Aktive Streifen</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'beendet') ? 'bg-blue-600 text-white' : ''" (click)="toggle('beendet')">Beendete Streifen</button>
+    </div>
+    
+    <div class="container mx-auto px-4">
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th hidden>ID</th>
+                    <th hidden>ID-Schiff</th>
+                    <th>Name</th>
+                    <th>Kennung</th>
+                    <th>Zweck</th>
+                    <th>Status</th>
+                    <th class="w-12"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let streife of (streifen$ | async)">
+                    <td>{{ streife.start | date: 'dd.MM.yyyy' }}</td>
+                    <td hidden>{{ streife.id }}</td>
+                    <td hidden>{{ streife.id_schiff }}</td>
+                    <td>{{ streife.schiffsname }}</td>
+                    <td>{{ streife.kennung }}</td>
+                    <td>{{ streife.zweck }}</td>
+                    <td>{{ streife.status }}</td>
+                    <td class="flex flex-row justify-start text-gray-500">
+                        <button class="dropdown w-6 h-6" [routerLink]="['/streifen', streife.id]">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="location-marker"></icons>
+                        </button>
+                        <button class="dropdown w-6 h-6" appDropdown>
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(streife)">
+                                <p>Bearbeiten</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(streife.id)">
+                                <p>Löschen</p>
+                            </div>
                         </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(streife.id)">
-                            <p>Löschen</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

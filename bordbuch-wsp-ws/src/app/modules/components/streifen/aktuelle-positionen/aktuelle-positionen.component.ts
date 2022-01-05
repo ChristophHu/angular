@@ -101,7 +101,11 @@ export class AktuellePositionenComponent implements OnInit, AfterViewInit, OnDes
     this._map.removeLayer(this.standort_marker_group)
     this.set_marker(cleared)
   }
-  hovered(e: any) {}
+
+  hovered(id: any) {
+    const standort = this.standorte.find(standort => standort.id_ship == id)
+    if (standort) this._map.panTo(new L.LatLng( standort!.location.latitude, standort!.location.longitude ))
+  }
 
   reset() {
     this._map.removeLayer(this.standort_marker_group)
@@ -137,6 +141,8 @@ export class AktuellePositionenComponent implements OnInit, AfterViewInit, OnDes
       this._map.panTo(new L.LatLng( position.latitude, position.longitude ))
     })
 	}
+
+
 
   mark_current_position() {
     var svgIcon = L.divIcon({

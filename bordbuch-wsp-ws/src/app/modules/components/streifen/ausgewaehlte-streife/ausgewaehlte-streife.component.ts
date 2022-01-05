@@ -17,6 +17,8 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
   private _map!: L.Map
 
   standorte: Standort[] = []
+  marker_current_position: any
+  marker_current_status: boolean = true
   standort_marker: L.Marker[] = []
   standort_marker_group: any
 
@@ -105,7 +107,22 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
     this.locationService.getCurrentPosition().then(position => {
       this._map.panTo(new L.LatLng( position.latitude, position.longitude ))
     })
+    if (this.marker_current_position) {
+      this._map.removeLayer(this.marker_current_position)
+      console.log('remove')
+    } else {
+      this.marker_current_position.addTo(this._map)
+      console.log('add')
+    }
+
+    // if (this.standort_marker_group && this._map.hasLayer(this.standort_marker_group))
+    //   this._map.removeLayer(this.standort_marker_group)
 	}
+
+  hovered(id: any) {
+    const standort = this.standorte.find(standort => standort.id == id)
+    if (standort) this._map.panTo(new L.LatLng( standort!.location.latitude, standort!.location.longitude ))
+  }
 
   mark_current_position() {
     var svgIcon = L.divIcon({
@@ -127,9 +144,9 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
     });
 
     this.locationService.getCurrentPosition().then(position => {
-      const Pos = L.layerGroup([L.marker([position.latitude, position.longitude], { icon: svgIcon}).bindPopup('Aktuelle Position')])
-      Pos.remove()
-      Pos.addTo(this._map)
+      this.marker_current_position = L.layerGroup([L.marker([position.latitude, position.longitude], { icon: svgIcon}).bindPopup('Aktuelle Position')])
+      // this.marker_current_position.remove()
+      this.marker_current_position.addTo(this._map)
     })
   }
 }

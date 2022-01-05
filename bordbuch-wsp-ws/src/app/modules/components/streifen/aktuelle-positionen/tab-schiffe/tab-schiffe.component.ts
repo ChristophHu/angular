@@ -10,7 +10,7 @@ import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 })
 export class TabSchiffeComponent {
   @Output() checked = new EventEmitter()
-  @Output() hover = new EventEmitter()
+  @Output() hovered = new EventEmitter()
   
   public allCheck: boolean = true
 
@@ -37,12 +37,11 @@ export class TabSchiffeComponent {
   }
 
   clickShip(id: string) {
-    console.log(`click: ${id}`)
+    // console.log(`click: ${id}`)
   }
 
   hoverShip(id: string) {
-    console.log(`hover: ${id}`)
-		this.hover.emit(id);
+		this.hovered.emit(id);
   }
 
   toggleCheck() {

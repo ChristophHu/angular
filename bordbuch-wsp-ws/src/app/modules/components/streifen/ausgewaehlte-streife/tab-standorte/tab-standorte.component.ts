@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Standort } from 'src/app/core/models/standort.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
@@ -10,6 +10,8 @@ import { AusgewaehlterStandortModalComponent } from '../ausgewaehlter-standort-m
   styleUrls: ['./tab-standorte.component.sass']
 })
 export class TabStandorteComponent implements OnInit {
+  @Output() hovered = new EventEmitter()
+  
   standorte: Standort[] = []
 
   constructor(private _modalService: ModalService<AusgewaehlterStandortModalComponent>, private _specFacade: SpecFacade) { }
@@ -45,5 +47,9 @@ export class TabStandorteComponent implements OnInit {
 
   delete(id: string) {
     this._specFacade.deleteStandort(id)
+  }
+
+  hoverPosition(id: string) {
+    this.hovered.emit(id)
   }
 }

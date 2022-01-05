@@ -1,8 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { Subscription } from 'rxjs'
-import { Role } from 'src/app/core/models/role'
-import { AuthState } from 'src/app/modules/auth/model/authstate.model'
 import { selectRole } from 'src/app/modules/auth/state/selectors'
 import { RootStoreState } from 'src/app/store/root-store.state'
 
@@ -10,11 +7,10 @@ import { RootStoreState } from 'src/app/store/root-store.state'
   selector: '[appIsRoleOf]'
 })
 export class IsRoleOfDirective implements OnInit {
-  // private subscription: Subscription[] = [];
   @Input() public appIsRoleOf: Array<string> = []
 
-  roles = Object.values(Role)
-  role: string[] = []
+  // roles = Object.values(Role)
+  private role: string[] = []
   
   /**
    * @param {ViewContainerRef} viewContainerRef -- the location where to render the templateRef
@@ -30,14 +26,11 @@ export class IsRoleOfDirective implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(this.appIsRoleOf)
     // const idx = this.roles.findIndex((element) => this.appIsRoleOf.indexOf(element) !== -1)
     const idx = this.role.findIndex((element) => this.appIsRoleOf.indexOf(element) !== -1)
-    console.log(idx)
     if (idx < 0) {
       this.viewContainerRef.clear()
     } else {
-      // appends the ref element to DOM
       this.viewContainerRef.createEmbeddedView(this.templateRef)
     }
   }
