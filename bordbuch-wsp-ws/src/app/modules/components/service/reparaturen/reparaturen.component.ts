@@ -19,7 +19,7 @@ export class ReparaturenComponent implements OnInit {
 
   status: string = ''
   
-  reparaturen$!: Observable<Reparatur[] | undefined>//<Betankung[]>
+  reparaturen$!: Observable<Reparatur[] | undefined>
   kat$: Observable<Kat[]>
 
   constructor(private _modalService: ModalService<ReparaturModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
@@ -77,14 +77,14 @@ export class ReparaturenComponent implements OnInit {
     if (reparatur) {
       this._modalService.open(ReparaturModalComponent, {
         data: {
-          title: 'Betankung bearbeiten',
+          title: 'Reparatur bearbeiten',
           reparatur
         }
       })
     } else {
       this._modalService.open(ReparaturModalComponent, {
         data: {
-          title: 'Betankung hinzufügen',
+          title: 'Reparatur hinzufügen',
           date: new Date().toISOString()
         }
       })

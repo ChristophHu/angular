@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap } from 'rxjs'
+import { concatMap, map, switchMap, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
 import { Reparatur } from 'src/app/core/models/reparatur.model'
@@ -15,7 +15,7 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess,
 } from './actions'
  
 @Injectable()
@@ -123,6 +123,36 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteReparatur(action.id).pipe(
                     map(() => deleteReparaturSuccess(action))
+                )
+            })
+        )
+    })
+
+    // reparaturfotos
+    downloadReparaturFotos$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(downloadReparaturFotos),
+            concatMap(action => this.appService.downloadReparaturFoto(action.id)),
+            map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
+        )
+    })
+    uploadReparaturFoto$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(uploadReparaturFoto),
+            switchMap(action => {
+                return this.appService.uploadReparaturFoto(action.upload).pipe(
+                    tap(id => console.log(id)),
+                    map((id: string) => uploadReparaturFotoSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    deleteReparaturFoto$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteReparaturFoto),
+            switchMap(action => {
+                return this.appService.deleteReparaturFoto(action.id).pipe(
+                    map(() => deleteReparaturFotoSuccess(action))
                 )
             })
         )
@@ -255,8 +285,4 @@ export class Effects {
     })
 
     constructor(private actions$: Actions, private appService: AppService ) {}
-}
-
-function insertLastStandort(insertLastStandort: any): import("rxjs").OperatorFunction<import("@ngrx/store").Action, any> {
-    throw new Error('Function not implemented.')
 }

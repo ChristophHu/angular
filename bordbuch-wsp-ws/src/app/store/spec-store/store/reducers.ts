@@ -5,12 +5,13 @@ import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
-import { deleteBetankungSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteZaehlerstandSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateZaehlerstandSuccess } from "./actions"
+import { deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
     checklists      : Checklist[]       | undefined
     betankungen     : Betankung[]       | undefined
     reparaturen     : Reparatur[]       | undefined
+    reparaturfotos  : any[]             | undefined
     laststandorte   : Standort[]        | undefined
     standorte       : Standort[]        | undefined
     streifen        : Streife[]         | undefined
@@ -22,6 +23,7 @@ export const initialDataState: State = {
     checklists      : undefined,
     betankungen     : undefined,
     reparaturen     : undefined,
+    reparaturfotos  : undefined,
     laststandorte   : undefined,
     standorte       : undefined,
     streifen        : undefined,
@@ -129,6 +131,33 @@ export const reducer = createReducer(
         return {
             ...state,
             reparaturen: clearedReparaturen
+        }
+    }),
+
+    // reparaturfotos
+    on(downloadReparaturFotosSuccess, (state, action) => {
+        return {
+            ...state,
+            reparaturfotos: action.fotos
+        }
+    }),
+    on(uploadReparaturFotoSuccess, (state, action) => {
+        let reparaturfoto: any = Object.assign({}, action.action.upload, { id: action.id })
+        let cleared: any[] | undefined = state.reparaturfotos
+        cleared = cleared?.filter(el => el.id != action.action.upload.id)
+        cleared = [...cleared!, ...[reparaturfoto]]
+        return {
+            ...state,
+            reparaturfotos: cleared
+        }
+    }),
+    on(deleteReparaturFotoSuccess, (state, action) => {
+        let cleared: any[] | undefined = state.reparaturfotos
+        cleared = cleared?.filter(el => el.id != action.id)
+        cleared = [...cleared!]
+        return {
+            ...state,
+            reparaturfotos: cleared
         }
     }),
 

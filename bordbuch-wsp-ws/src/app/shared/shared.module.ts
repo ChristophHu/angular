@@ -16,6 +16,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { PageHeaderModule } from './components/page-header/page-header.module';
 import { TitlecasePipe } from './pipes/titlecase/titlecase.pipe';
 import { IsRoleOfDirective } from './directives/is-role-of/is-role-of.directive';
+import { ImageBase64UploadModule } from './components/image-base64-upload/image-base64-upload.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { IsRoleOfDirective } from './directives/is-role-of/is-role-of.directive'
 
     ModalModule,
     PageHeaderModule,
+    ImageBase64UploadModule,
 
     // icon lib
     IconLibraryModule,
@@ -56,6 +58,7 @@ import { IsRoleOfDirective } from './directives/is-role-of/is-role-of.directive'
 
     ModalModule,
     PageHeaderModule,
+    ImageBase64UploadModule,
     
     // icon lib
     IconLibraryModule,

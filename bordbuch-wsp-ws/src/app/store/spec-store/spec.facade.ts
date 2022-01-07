@@ -20,6 +20,7 @@ export class SpecFacade {
     allBetankungen$ = this.store.pipe(select(SpecSelectors.selectAllBetankungen)) as Observable<Betankung[]>
     allChecklists$  = this.store.pipe(select(SpecSelectors.selectAllChecklists)) as Observable<Checklist[]>
     allReparaturen$  = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
+    allReparaturfotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
     allLastStandorte$ = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$ = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
     allStreifen$  = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>
@@ -72,6 +73,15 @@ export class SpecFacade {
     }
     getReparaturen(status: string): Observable<Reparatur[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectReparaturen(status)))
+    }
+    downloadReparaturFotos( id: string ) {
+        this.store.dispatch(SpecActions.downloadReparaturFotos({ id }))
+    }
+    uploadReparaturFoto( upload: any ) {
+        this.store.dispatch(SpecActions.uploadReparaturFoto({ upload }))
+    }
+    deleteReparaturFoto( id: string ) {
+        this.store.dispatch(SpecActions.deleteReparaturFoto({ id }))
     }
     
     // laststandorte

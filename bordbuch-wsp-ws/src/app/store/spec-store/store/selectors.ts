@@ -37,6 +37,12 @@ export const selectReparaturen = (status: string) => createSelector(
     reparaturen => reparaturen?.filter(el => el.status == status)
 )
 
+// reparaturfotos
+export const selectAllReparaturFotos = createSelector(
+    specState,
+    state => state.reparaturfotos
+)
+
 // laststandorte
 export const selectAllLastStandorte = createSelector(
     specState,

@@ -57,6 +57,8 @@ export class ReparaturModalComponent implements OnInit {
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
       }
+      this._specFacade.downloadReparaturFotos
+      this._specFacade.allReparaturfotos$.subscribe(data => console.log(data))
     })
   }
 
@@ -69,7 +71,14 @@ export class ReparaturModalComponent implements OnInit {
   }
   selectStatus(status: string) {
     this._katFacade.getIdByStatus(status).subscribe(id => this.reparaturForm.patchValue({ id_status: id }))
+  }
 
+  downloadImages(id: string) {
+
+  }
+  uploadImage(imageBase64: string) {
+    const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.reparaturForm.value.id, foto: imageBase64 }
+    this._specFacade.uploadReparaturFoto(upload)
   }
 
   create() {
