@@ -107,7 +107,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     }
 
   ngAfterViewInit(): void {
-    console.log(this.patrol.status)
+    console.log(this.patrol)
   }
 
   ngOnInit(): void {

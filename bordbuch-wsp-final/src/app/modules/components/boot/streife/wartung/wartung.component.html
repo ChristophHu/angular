@@ -19,11 +19,11 @@
         <!-- <div class="flex flex-row justify-between"> -->
           <div class="flex flex-row flex-grow">
               <p class="w-32 text-gray-600 mr-2">Vorführdatum: </p>
-              <p class="w-32">{{ ship.durchsicht }}</p>
+              <p class="w-32">{{ ship.durchsicht | date:'yyyy-MM-dd' }}</p>
           </div>
           <div class="flex flex-row flex-grow">
               <p class="w-32 text-gray-600 mr-2">Tage bis zur Wartung: </p>
-              <p class="w-32">{{ ship.durchsicht }}</p>
+              <p class="w-32">{{ ship.durchsicht | diffDateToToday }}</p>
           </div>
         <!-- </div> -->
       </div>

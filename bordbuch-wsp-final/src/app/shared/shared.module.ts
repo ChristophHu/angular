@@ -17,9 +17,18 @@ import { HeadlineStepperModule } from './components/headline-stepper/headline-st
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { Number2stringPipe } from './pipes/number2string/number2string.pipe';
-import { String2numberPipe } from './pipes/string2number/string2number.pipe'
+import { String2numberPipe } from './pipes/string2number/string2number.pipe';
+import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe';
+import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
 
 @NgModule({
+    declarations: [
+        ProgressBarComponent,
+        Number2stringPipe,
+        String2numberPipe,
+        DiffDateToTodayPipe,
+        DaysAgoPipe
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -41,6 +50,10 @@ import { String2numberPipe } from './pipes/string2number/string2number.pipe'
         MatStepperModule,
     ],
     exports: [
+        // pipes
+        DiffDateToTodayPipe,
+        DaysAgoPipe,
+        
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -63,11 +76,6 @@ import { String2numberPipe } from './pipes/string2number/string2number.pipe'
         MatSelectModule,
 
         ProgressBarComponent,
-        String2numberPipe
-    ],
-    declarations: [
-        ProgressBarComponent,
-        Number2stringPipe,
         String2numberPipe
     ]
 })

@@ -32,11 +32,6 @@ export class AppService {
     private _positionSubscription = new Subscription
     private i: Observable<number> = interval(3*60*1000)
 
-    // peilung = [
-    //     { id: '1', id_schiff: '1',  tank: 'Haupttank', menge: 123, date: new Date() },
-    //     { id: '2', id_schiff: '1',  tank: 'Generatortank', menge: 50, date: new Date() }
-    // ]
-
     items: Checklistitem[] = [
         { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
         { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
