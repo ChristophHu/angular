@@ -145,7 +145,7 @@ export const reducer = createReducer(
         let reparaturfoto: any = Object.assign({}, action.action.upload, { id: action.id })
         let cleared: any[] | undefined = state.reparaturfotos
         cleared = cleared?.filter(el => el.id != action.action.upload.id)
-        cleared = [...cleared!, ...[reparaturfoto]]
+        cleared = (cleared) ? [...cleared!, ...[reparaturfoto]] : [reparaturfoto]
         return {
             ...state,
             reparaturfotos: cleared

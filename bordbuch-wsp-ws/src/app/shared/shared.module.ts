@@ -17,13 +17,21 @@ import { PageHeaderModule } from './components/page-header/page-header.module';
 import { TitlecasePipe } from './pipes/titlecase/titlecase.pipe';
 import { IsRoleOfDirective } from './directives/is-role-of/is-role-of.directive';
 import { ImageBase64UploadModule } from './components/image-base64-upload/image-base64-upload.module';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html/sanitize-html.pipe';
+import { ImageSliderComponent } from './components/image-slider/image-slider.component';
+import { CarouselItemDirective } from './directives/carousel-item.directive';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
     DropdownDirective,
     ClickOutsideDirective,
     IsRoleOfDirective,
-    TitlecasePipe
+    TitlecasePipe,
+    SanitizeHtmlPipe,
+    ImageSliderComponent,
+    CarouselItemDirective,
+    CarouselComponent
   ],
   imports: [
     CommonModule,
@@ -49,18 +57,22 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
     DataTablesModule
   ],
   exports: [
+    // components
+    ImageSliderComponent,
+
     // directives
     DropdownDirective,
     ClickOutsideDirective,
     IsRoleOfDirective,
     
-    CommonModule,
+    // pipes
+    SanitizeHtmlPipe,
+    TitlecasePipe,
 
+    CommonModule,
     ModalModule,
     PageHeaderModule,
     ImageBase64UploadModule,
-    
-    // icon lib
     IconLibraryModule,
 
     // mat
@@ -76,10 +88,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
     ReactiveFormsModule,
 
     // datatables
-    DataTablesModule,
-
-    // pipes
-    TitlecasePipe
+    DataTablesModule
   ]
 })
 export class SharedModule { }

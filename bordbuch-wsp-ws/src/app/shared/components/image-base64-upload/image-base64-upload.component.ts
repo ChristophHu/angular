@@ -23,67 +23,69 @@ export class ImageBase64UploadComponent implements OnInit {
 
   ngOnInit() {}
 
-  fileChangeEvent(fileInput: any) {
-    this.imageError = null
-    if (fileInput.target.files && fileInput.target.files[0]) {
+  fileChangeEvent(fileInput: any): false | void {
+    let file = fileInput.target.files[0]
 
-      // Size Filter Bytes
-      const max_size = 20971520;
-      const allowed_types = ['image/png', 'image/jpeg'];
-      const max_height = 15200;
-      const max_width = 25600;
+    const max_size = 500000
+    const allowed_types = ['image/jpeg', 'image/png']
+    const max_height = 15200
+    const max_width = 25600
 
-      if (fileInput.target.files[0].size > max_size) {
-        this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+    if (fileInput.target.files[0].size > max_size) {
+      this.imageError = 'Maximale Größe ist ' + max_size / 1000 + 'Kb.'
 
-        // return false;
-      }
-
-      // if (!_.includes(allowed_types, fileInput.target.files[0].type)) {
-      //     this.imageError = 'Only Images are allowed ( JPG | PNG )';
-      //     return false;
-      // }
-      const reader = new FileReader()
-      reader.onload = (e: any) => {
-        const image = new Image()
-        image.src = e.target.result
-        image.onload = rs => {
-          // const img_height = rs.currentTarget['height'];
-          // const img_width = rs.currentTarget['width'];
-
-          // console.log(img_height, img_width);
-
-
-          // if (img_height > max_height && img_width > max_width) {
-          //     this.imageError =
-          //         'Maximum dimentions allowed ' +
-          //         max_height +
-          //         '*' +
-          //         max_width +
-          //         'px';
-          //     return false;
-          // } else {
-          //     const imgBase64Path = e.target.result;
-          //     this.cardImageBase64 = imgBase64Path;
-          //     this.isImageSaved = true;
-          //     // this.previewImagePath = imgBase64Path;
-          //     return false
-          // }
-          const imgBase64Path = e.target.result
-          this.cardImageBase64 = imgBase64Path
-          this.isImageSaved = true
-          
-          this.upload()
-        };
-      };
-
-      reader.readAsDataURL(fileInput.target.files[0])
+      return false
     }
+
+    if (!allowed_types.includes(fileInput.target.files[0].type)) {
+        this.imageError = 'Es sind nud die Datei-Formate *.jpg/*.png erlaubt.';
+        return false;
+    }
+
+    let reader = new FileReader()
+    reader.onload = () => {
+      const res = btoa(reader.result as string)
+      console.log(res)
+      this.imageBase64.emit(res)
+    }
+    reader.onerror = function (error) {
+      console.log('Error: ', error)
+    }
+    reader.readAsDataURL(file)
   }
 
-  upload() {
-    this.imageBase64.emit(this.cardImageBase64)
-  }
+  // fileChangeEvent2(fileInput: any): false | void {
+  //   let imageURLBase64: any
+  //   console.log(fileInput)
+  //   this.imageError = null
+  //   if (fileInput.target.files && fileInput.target.files[0]) {
+
+  //     // Size Filter Bytes
+  //     const max_size = 500000
+  //     const allowed_types = ['image/jpeg']
+  //     const max_height = 15200
+  //     const max_width = 25600
+
+  //     if (fileInput.target.files[0].size > max_size) {
+  //       this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb'
+
+  //       return false
+  //     }
+
+  //     if (!allowed_types.includes(fileInput.target.files[0].type)) {
+  //         this.imageError = 'Only Images are allowed ( JPG )';
+  //         return false;
+  //     }
+  //     const reader = new FileReader()
+  //     reader.onload = () => {
+  //       imageURLBase64 = reader.result
+  //       console.log(reader.result)
+  //       this.imageBase64.emit(reader.result)
+  //     }
+
+  //     reader.readAsDataURL(fileInput.target.files[0])
+  //   }
+  // }
 
   removeImage() {
     this.cardImageBase64 = null

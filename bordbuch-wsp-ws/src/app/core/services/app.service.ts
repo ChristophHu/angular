@@ -17,21 +17,6 @@ import { Streife } from '../models/streife.model';
 import { Zaehlerstand } from '../models/zaehlerstand.model';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp.model';
 
-// import { PositionActions } from 'src/app/store/positionreport-store';
-// import { ShipSelectors } from 'src/app/store/ship-store';
-// import { Besatzung } from '../model/besatzung.model';
-// import { Betankung } from '../model/betankung';
-// import { Checklist } from '../model/checklist.model';
-// import { Checklistitem } from '../model/checklistitem.model';
-// import { Geraetebuch } from '../model/geraetebuch.model';
-// import { Patrol } from '../model/patrol.model';
-// import { Peilung } from '../model/peilung.model';
-// import { PositionReport } from '../model/positionreport.model';
-// import { Reparatur } from '../model/reparatur';
-// import { Zaehlerstand } from '../model/zaehlerstand';
-import { LocationService } from './location.service';
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -301,6 +286,7 @@ export class AppService {
             default:
                 break
         }
+        console.log(baseURL + param)
 
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
     }
@@ -572,6 +558,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getFotosVonReparatur', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

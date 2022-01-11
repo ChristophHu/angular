@@ -1,9 +1,6 @@
 <form>
     <div class="form-group">
         <fieldset class="form-group">
-
-            <label>Upload Logo</label>
-            {{imageError}}
             <div class="custom-file fileInputProfileWrap">
                 <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
                 <!-- <div class="img-space">
@@ -17,8 +14,8 @@
                     </ng-template>
 
                 </div> -->
-
             </div>
+            {{imageError}}
         </fieldset>
     </div>
     <!-- <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a> -->

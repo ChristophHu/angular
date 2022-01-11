@@ -42,6 +42,10 @@ export const selectAllReparaturFotos = createSelector(
     specState,
     state => state.reparaturfotos
 )
+export const selectReparaturFotosCount = createSelector(
+    selectAllReparaturFotos,
+    reparaturfotos => reparaturfotos?.length
+)
 
 // laststandorte
 export const selectAllLastStandorte = createSelector(

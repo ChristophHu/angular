@@ -86,7 +86,7 @@ export const uploadReparaturFoto = createAction(
 	props<{ upload: any }>()
 )
 export const uploadReparaturFotoSuccess = createAction(
-	"[Edit Reparatur Dialog] ReparaturFoto Upload",
+	"[Edit Reparatur Dialog] ReparaturFoto Upload Success",
 	props<{ action: { upload: any }, id: string }>()
 )
 export const deleteReparaturFoto = createAction(

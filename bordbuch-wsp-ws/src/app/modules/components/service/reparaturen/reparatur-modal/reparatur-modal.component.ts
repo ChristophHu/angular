@@ -21,16 +21,24 @@ export class ReparaturModalComponent implements OnInit {
   title: string = ''
   reparaturForm: FormGroup
 
-  // betriebsstoffe$: Observable<Kat[]>
+  // image-slider
+  showGalerie: boolean = false
+  images: any[] = []
+
   schiffe$: Observable<Schiff[]>
   pruefvermerkkategorien$: Observable<Kat[]>
   items$!: Observable<Pruefvermerk[]>
   status$: Observable<Status[]>
+  reparaturfotos$: Observable<any[]>
+  reparaturFotoCount$: Observable<number>
 
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<ReparaturModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this.pruefvermerkkategorien$ = _katFacade.pruefvermerkkategorien$
     this.status$ = _katFacade.status$
     this.schiffe$ = _katFacade.schiffe$
+    this.reparaturfotos$ = _specFacade.allReparaturFotos$
+    this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
+    _specFacade.allReparaturFotoCount$.subscribe(data => console.log(data))
 
     this.reparaturForm = this._formBuilder.group({
       id: [],
@@ -56,9 +64,12 @@ export class ReparaturModalComponent implements OnInit {
       if (data.data.reparatur) {
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
+
+        this._specFacade.downloadReparaturFotos(data.data.reparatur.id)
+        this._specFacade.allReparaturFotos$.subscribe(data => {
+          if (data != undefined) this.decodeImages(data)
+        })
       }
-      this._specFacade.downloadReparaturFotos
-      this._specFacade.allReparaturfotos$.subscribe(data => console.log(data))
     })
   }
 
@@ -73,9 +84,13 @@ export class ReparaturModalComponent implements OnInit {
     this._katFacade.getIdByStatus(status).subscribe(id => this.reparaturForm.patchValue({ id_status: id }))
   }
 
-  downloadImages(id: string) {
-
+  decodeImages(data: any[]) {
+    this.images = []
+    data.forEach(el => {
+      this.images.push(el)
+    })
   }
+
   uploadImage(imageBase64: string) {
     const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.reparaturForm.value.id, foto: imageBase64 }
     this._specFacade.uploadReparaturFoto(upload)
@@ -94,6 +109,10 @@ export class ReparaturModalComponent implements OnInit {
   }
   delete() {
     this._specFacade.deleteReparatur(this.reparaturForm.value.id)
+    this.modal?.close()
+  }
+  deleteFoto(id: string) {
+    this._specFacade.deleteReparaturFoto(id)
     this.modal?.close()
   }
 

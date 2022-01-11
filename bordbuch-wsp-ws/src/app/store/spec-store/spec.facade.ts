@@ -20,7 +20,8 @@ export class SpecFacade {
     allBetankungen$ = this.store.pipe(select(SpecSelectors.selectAllBetankungen)) as Observable<Betankung[]>
     allChecklists$  = this.store.pipe(select(SpecSelectors.selectAllChecklists)) as Observable<Checklist[]>
     allReparaturen$  = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
-    allReparaturfotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
+    allReparaturFotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
+    allReparaturFotoCount$ = this.store.pipe(select(SpecSelectors.selectReparaturFotosCount)) as Observable<number>
     allLastStandorte$ = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$ = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
     allStreifen$  = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>

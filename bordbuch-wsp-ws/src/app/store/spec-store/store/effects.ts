@@ -133,6 +133,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(downloadReparaturFotos),
             concatMap(action => this.appService.downloadReparaturFoto(action.id)),
+            tap(data => console.log(data)),
             map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
         )
     })
