@@ -74,6 +74,12 @@ https://www.geekstrick.com/view-component-based-on-user-role/
 
 
 
+## Image-Carousel-Library
+
+https://github.com/ivylaboratory/angular-carousel
+
+
+
 ## Documentation
 
 https://medium.com/vincent-ogloblinsky/compodoc-documentation-tool-for-angular-2-applications-44ec650e01a8
