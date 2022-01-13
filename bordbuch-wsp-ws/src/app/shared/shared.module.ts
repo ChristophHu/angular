@@ -20,7 +20,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
 import { SanitizeHtmlPipe } from './pipes/sanitize-html/sanitize-html.pipe';
 import { ImageSliderComponent } from './components/image-slider/image-slider.component';
 import { CarouselItemDirective } from './directives/carousel-item.directive';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { IvyCarouselModule } from 'image-carousel';
 
 @NgModule({
   declarations: [
@@ -30,8 +30,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     TitlecasePipe,
     SanitizeHtmlPipe,
     ImageSliderComponent,
-    CarouselItemDirective,
-    CarouselComponent
+    CarouselItemDirective
   ],
   imports: [
     CommonModule,
@@ -42,6 +41,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 
     // icon lib
     IconLibraryModule,
+    IvyCarouselModule,
 
     // mat
     MatInputModule,
@@ -74,6 +74,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     PageHeaderModule,
     ImageBase64UploadModule,
     IconLibraryModule,
+    IvyCarouselModule,
 
     // mat
     MatInputModule,

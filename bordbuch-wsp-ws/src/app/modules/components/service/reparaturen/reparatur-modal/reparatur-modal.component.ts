@@ -87,7 +87,8 @@ export class ReparaturModalComponent implements OnInit {
   decodeImages(data: any[]) {
     this.images = []
     data.forEach(el => {
-      this.images.push(el)
+      // this.images.push(el)
+      this.images.push(Object.assign({}, { path: el.foto }))
     })
   }
 

@@ -531,7 +531,7 @@ export class AppService {
         })
     }
     deletePruefvermerkkategorie(id: string): Observable<any> {
-        return new Observable ((bserver) => {
+        return new Observable ((observer) => {
             const source$ = this.reducer('deletePruefvermerkKat', id)
             source$.subscribe((status: any) => {
                 observer.next(status)
@@ -590,7 +590,7 @@ export class AppService {
     getStatus(): Observable<any> {
         return this.get('getStatustypen')
     }
-    insertStatus(schiff: Status): Observable<anq> {
+    insertStatus(schiff: Status): Observable<any> {
         console.log(schiff)
         return this.insert(schiff, 'insertKatStatus')
     }
@@ -611,7 +611,7 @@ export class AppService {
     getAllStandorteVonStreife(id: string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getPositionenVonStreife', id)
-`           source$.subscribe((data: any) => {
+            source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

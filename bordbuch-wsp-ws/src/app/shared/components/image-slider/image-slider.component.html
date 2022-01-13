@@ -19,18 +19,18 @@
       <!-- <img class="w-32 h-32" [src]="image.foto | sanitizeHtml" alt=""/> -->
     <!-- </div> -->
 
-    <div class="h-auto w-full flex flex-col justify-center">
+    <!-- <div class="h-auto w-full flex flex-col justify-center">
         <div class="flex overflow-y-scroll justify-center">
             <div class="w-auto h-auto p-4 flex-shrink-0" *ngFor="let url of images">
                 <img class="w-auto h-auto max-h-96" [src]="url.foto | sanitizeHtml" alt=""/>
             </div>
         </div>
-    <!-- <div class="bg-red-100 mt-32">
+    <div class="bg-red-100 mt-32">
             <div class="p-4 flex-shrink-0">
                 <img class="w-full" [src]="images[0] | sanitizeHtml" alt=""/>
             </div>
-        </div> -->
-    </div>
+        </div>
+    </div> -->
 
     <!-- <carousel>
         <ng-container *ngFor="let item of images">
@@ -39,6 +39,25 @@
           </ng-container>
         </ng-container>
       </carousel> -->
+
+    <!-- <div class="demo">
+      <carousel
+        [images]="images"
+        [objectFit]="'cover'">
+      </carousel>
+    </div> -->
+
+    <div class="p-4 w-full">
+			<carousel
+				[images]="images"
+				[objectFit]="'cover'"
+				[cellWidth]="'100%'"
+				[height]="500"
+				[autoplay]="false"
+				[dots]="true"
+				[loop]="false">
+			</carousel>
+		</div>
 
   </div>
 </section>

@@ -7,12 +7,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "paths": {
-      "image-carousel": [
-        "dist/image-carousel/image-carousel",
-        "dist/image-carousel"
-      ]
-    },
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

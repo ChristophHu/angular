@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bordbuch-wsp-ws": {
+    "ng-gallery": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bordbuch-wsp-ws",
+            "outputPath": "dist/ng-gallery",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,27 +31,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/custom-theme.scss",
-              "src/styles.sass",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "src/styles.sass"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2mb",
-                  "maximumError": "4mb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
               "fileReplacements": [
@@ -77,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bordbuch-wsp-ws:build:production"
+              "browserTarget": "ng-gallery:build:production"
             },
             "development": {
-              "browserTarget": "bordbuch-wsp-ws:build:development"
+              "browserTarget": "ng-gallery:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bordbuch-wsp-ws:build"
+            "browserTarget": "ng-gallery:build"
           }
         },
         "test": {
@@ -110,38 +105,7 @@
           }
         }
       }
-    },
-    "image-carousel": {
-      "projectType": "library",
-      "root": "projects/image-carousel",
-      "sourceRoot": "projects/image-carousel/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/image-carousel/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/image-carousel/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/image-carousel/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/image-carousel/src/test.ts",
-            "tsConfig": "projects/image-carousel/tsconfig.spec.json",
-            "karmaConfig": "projects/image-carousel/karma.conf.js"
-          }
-        }
-      }
     }
   },
-  "defaultProject": "bordbuch-wsp-ws"
+  "defaultProject": "ng-gallery"
 }
