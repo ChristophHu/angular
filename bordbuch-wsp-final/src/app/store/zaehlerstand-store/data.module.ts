@@ -12,7 +12,7 @@ import { reducer } from './reducers'
     EffectsModule.forFeature([Effects])
   ],
   providers: [
-    AppService
+    
   ]
 })
 export class ZaehlerstandModule { }

@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
-import { from, interval, Observable, Subscription } from 'rxjs';
-import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { interval, Observable, Subscription } from 'rxjs';
+import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
 
 import { PositionActions } from 'src/app/store/positionreport-store';
-import { ShipSelectors } from 'src/app/store/ship-store';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
 import { Checklist } from '../model/checklist.model';
@@ -17,21 +15,23 @@ import { Peilung } from '../model/peilung.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
 import { Zaehlerstand } from '../model/zaehlerstand';
+import { ConnectionService } from './connection.service';
 import { LocationService } from './location.service';
 
-
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-
 export class AppService {
-
+    // connection
     private token: string = ''
-    patrol!: Patrol
+    private backendUrl: string = '' //'https://polosk-lb.int.polizei.berlin.de/polwsp/PolWSP.asmx'
 
+    private patrol!: Patrol
+
+    // position
     private _positionSubscription = new Subscription
     private i: Observable<number> = interval(3*60*1000)
-
+   
     items: Checklistitem[] = [
         { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
         { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
@@ -41,54 +41,55 @@ export class AppService {
     constructor(
         private httpClient: HttpClient,
         private store: Store,
+        private _ConnectionService: ConnectionService,
         private locationService: LocationService
         ) {
         this.store.pipe(select(selectToken)).subscribe(token => {
-            this.token = token
+            this._ConnectionService.setToken(token)
         })
-        this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-            this.patrol = patrol!
+        this.store.pipe(select(selectBackendUrl)).subscribe(backendUrl => {
+            this._ConnectionService.setBackendUrl(backendUrl)
         })
     }
 
-    reducer(action: string, data: any): Observable<any> {
+    private reducer(action: string, data: any): Observable<any> {
         console.info(`reducer | action: '${action}', data: ${data}`)
-        const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        const baseURL = `${this.backendUrl}/${action}`
         let param = ``
         switch (action) {
 
             // streife
-            case 'insertStreife': {
+            case 'insertStreife':
                 param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
                 break
-            }
-            case 'updateStreife': {
+
+            case 'updateStreife':
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
-            }
+
             case 'deleteStreife':
                 param = `id=${data}`
                 break
 
             // besatzung
-            case 'insertBesatzung': {
+            case 'insertBesatzung':
                 param = `id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
                 break
-            }
-            case 'updateBesatzung': {
+
+            case 'updateBesatzung':
                 param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
                 break
-            }
-            case 'deleteBesatzung': {
+
+            case 'deleteBesatzung':
                 param = `id=${data}`
                 break
-            }
 
             // betankung
-            case 'insertBetankung': {
+            case 'insertBetankung':
                 param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
-            }
+
             case 'updateBetankung':
                 param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
@@ -97,43 +98,36 @@ export class AppService {
                 param = `id=${data}`
                 break
 
-            case 'updateZaehlerstand': {
+            case 'updateZaehlerstand':
                 param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
                 break
-            }
 
             // peilung
-            case 'insertPeilung': {
+            case 'insertPeilung':
                 param = `id_schiff=${data.id_schiff}&id_tank=${data.id_tank}&vol=${data.vol}&date=${data.date}`
                 break
-            }
 
             // checkliste
-            case 'insertCheckliste': {
+            case 'insertCheckliste':
                 console.log(data)
                 param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
                 break
-            }
 
             // pruefvermerk/reparatur
-            case 'insertReparatur': {
+            case 'insertReparatur':
                 param = `id_schiff=${data.id_ship}&id_status=9f666873-4fc4-4f9b-8f98-f3fa182be7eb&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
                 break
-            }
 
             // position
-            case 'insertPosition': {
+            case 'insertPosition':
                 param = `id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
                 break
-            }
-            case 'updatePosition': {
+            case 'updatePosition':
                 param = `id=${data.id}&id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
                 break
-            }
-            case 'deletePosition': {
+            case 'deletePosition':
                 param = `id=${data}`
                 break
-            }
 
             default:
                 console.error('There is no action to switch.')
@@ -150,9 +144,14 @@ export class AppService {
         ) // .pipe(retry(2), take(1))
     }
 
-    getReducer(action: string, data: any): any {
+    private getReducer(action: string, data: any): any {
+        const backendUrl: string = this._ConnectionService.getBackendUrl()
+        const token     : string = this._ConnectionService.getToken()
+
+        console.info(`token: ${token} /n backendUrl: ${this.backendUrl}`)
         console.info(`getreducer | action: '${action}', data: `, data)
-        const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
             case 'getDienststellen':
@@ -195,7 +194,7 @@ export class AppService {
                 break
         }
 
-        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
+        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': token } }) //.pipe(retry(2),take(1))
     }
 
     // streife
@@ -340,8 +339,9 @@ export class AppService {
     // get
     getSchiffe(): Observable<any> {
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getSchiffe', {})
-            source$.subscribe((data: any) => {
+            // const source$ = this.getReducer('getSchiffe', {})
+            // console.log(source$)
+            this.getReducer('getSchiffe', {}).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -440,6 +440,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getDienststellen', {})
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

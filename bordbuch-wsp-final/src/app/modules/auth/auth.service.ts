@@ -8,7 +8,7 @@ import { BackendResponse } from './model/backendresponse.model';
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) { }
 
   login(username: string, password: string): Observable<BackendResponse> { // User
     return this.auth_login(username, password)
@@ -16,7 +16,9 @@ export class AuthService {
 
   auth_login(username: string, password: string): Observable<BackendResponse> {
     const auth      = btoa(`${username}:${password}`)
-    const baseUrl   = `http://192.168.178.220/login/Login.asmx/login`
+    // ohne:http://192.168.178.220/login/Login.asmx/login
+    // map: https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login
+    const baseUrl   = `https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login`
     const packageid = `de.berlin.polizei.polwsp`
 
     return new Observable((observer) => {
@@ -35,6 +37,7 @@ export class AuthService {
               if (el.packageid == packageid) {
                 const backendUrl = JSON.parse(el.config_json).backendurl
                 this.backend_login(backendUrl, backend_token).subscribe(data => {
+                  console.log('backendlogin')
                   observer.next({
                     sub: json_jwt_payload.sub, 
                     exp: json_jwt_payload.exp, 
@@ -67,6 +70,7 @@ export class AuthService {
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
             observer.next(xmlhttp.responseText)
+            console.log(`backend-login success`)
           } else {
             observer.error(xmlhttp)
           }

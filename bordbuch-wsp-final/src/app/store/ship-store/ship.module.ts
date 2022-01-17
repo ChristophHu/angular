@@ -12,7 +12,7 @@ import { shipReducer } from './ship.reducers'
     EffectsModule.forFeature([ShipEffects])
   ],
   providers: [
-    AppService
+    
   ]
 })
 export class ShipModule { }

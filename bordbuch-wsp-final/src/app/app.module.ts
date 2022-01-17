@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RootStoreModule } from './store/root-store.module'
 import { SharedModule } from './shared/shared.module'
 import { MarkdownModule } from 'ngx-markdown';
-
+import { ConnectionService } from './core/services/connection.service'
 
 @NgModule({
   declarations: [
@@ -24,7 +24,10 @@ import { MarkdownModule } from 'ngx-markdown';
     SharedModule,
     MarkdownModule.forRoot()
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: ConnectionService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

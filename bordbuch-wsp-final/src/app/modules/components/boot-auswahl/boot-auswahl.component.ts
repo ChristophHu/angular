@@ -7,7 +7,6 @@ import { ShipSelection } from 'src/app/core/model/ship-selection.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectionSelectors } from 'src/app/store/ship-selection-store';
 import { logout } from '../../auth/state/actions';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 
@@ -30,7 +29,7 @@ export class BootAuswahlComponent {
       bordbuch: []
     })
 
-    this.allShips$ = this.store.pipe(select(ShipSelectionSelectors.selectAllShip)) as Observable<ShipSelection[]>
+    this.allShips$ = this.store.pipe(select(KatSelectors.selectShips)) as Observable<ShipSelection[]>
     this.dienststellen$ = this.store.pipe(select(KatSelectors.selectDienststellen)) as Observable<Dienststelle[]>
   }
 

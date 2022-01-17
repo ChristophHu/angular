@@ -20,18 +20,21 @@ export class ShipSelectionResolver implements Resolve<any> {
             tap(isDataLoaded => {
                 if (!this.loading && !isDataLoaded) {
                     this.loading = true
-                    this.store.dispatch(loadAllShip())
-
+                    
                     // kat
-                    this.store.dispatch(KatAction.loadAllShip())
-                    this.store.dispatch(KatAction.loadPruefvermerke())
-                    this.store.dispatch(KatAction.loadPruefvermerkKategorien())
-                    this.store.dispatch(KatAction.loadZaehlerstandstypen())
-                    this.store.dispatch(KatAction.loadDienststellen())
-                    this.store.dispatch(KatAction.loadBetriebsstoffe())
-                    this.store.dispatch(KatAction.loadFunktionen())
-                    this.store.dispatch(KatAction.loadKennungen())
-                    this.store.dispatch(KatAction.loadZwecke())
+                    setTimeout(() => {
+                        // this.store.dispatch(loadAllShip())
+
+                        this.store.dispatch(KatAction.loadAllShip())
+                        this.store.dispatch(KatAction.loadPruefvermerke())
+                        this.store.dispatch(KatAction.loadPruefvermerkKategorien())
+                        this.store.dispatch(KatAction.loadZaehlerstandstypen())
+                        this.store.dispatch(KatAction.loadDienststellen())
+                        this.store.dispatch(KatAction.loadBetriebsstoffe())
+                        this.store.dispatch(KatAction.loadFunktionen())
+                        this.store.dispatch(KatAction.loadKennungen())
+                        this.store.dispatch(KatAction.loadZwecke())
+                    }, 1000)
                 }
             }),
             filter(dataLoaded => dataLoaded),

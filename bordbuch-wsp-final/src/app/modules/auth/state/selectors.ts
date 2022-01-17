@@ -24,6 +24,11 @@ export const selectToken = createSelector(
     (auth) => auth.backendResponse!.token
 )
 
+export const selectBackendUrl = createSelector(
+    selectAuthState,
+    (auth) => auth.backendResponse!.backendUrl
+)
+
 export const selectBackendresponse = createSelector(
     selectAuthState,
     (auth) => auth.backendResponse

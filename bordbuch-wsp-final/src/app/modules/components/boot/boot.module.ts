@@ -48,7 +48,7 @@ export const routes: Routes = [
   providers: [
     ShipSelectionResolver,
     ShipResolver,
-    AppService
+    // AppService
   ]
 })
 export class BootModule { }

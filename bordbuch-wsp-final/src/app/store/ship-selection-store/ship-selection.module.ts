@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store'
 import { shipSelectionReducer } from './ship-selection.reducers'
 import { ShipSelectionEffects } from './ship-selection.effects'
 import { Features } from 'src/app/core/model/feature'
-import { AppService } from 'src/app/core/services/app.service'
+// import { AppService } from 'src/app/core/services/app.service'
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { AppService } from 'src/app/core/services/app.service'
     EffectsModule.forFeature([ShipSelectionEffects])
   ],
   providers: [
-    AppService
+    // AppService
   ]
 })
 export class ShipSelectionModule { }
