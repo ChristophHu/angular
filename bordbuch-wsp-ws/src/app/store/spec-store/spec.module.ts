@@ -11,8 +11,6 @@ import { reducer } from './store/reducers'
     StoreModule.forFeature(Features.Spec, reducer),
     EffectsModule.forFeature([Effects])
   ],
-  providers: [
-    AppService
-  ]
+  providers: []
 })
 export class SpecModule { }

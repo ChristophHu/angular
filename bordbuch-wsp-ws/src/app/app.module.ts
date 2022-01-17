@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MarkdownModule } from 'ngx-markdown';
 import { RootStoreModule } from './store/root-store.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ConnectionService } from './core/services/connection.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     MarkdownModule.forRoot(),
     StoreRouterConnectingModule.forRoot()
   ],
-  providers: [],
+  providers: [{ provide: ConnectionService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

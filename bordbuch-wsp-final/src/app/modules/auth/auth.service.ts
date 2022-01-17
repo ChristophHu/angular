@@ -37,7 +37,6 @@ export class AuthService {
               if (el.packageid == packageid) {
                 const backendUrl = JSON.parse(el.config_json).backendurl
                 this.backend_login(backendUrl, backend_token).subscribe(data => {
-                  console.log('backendlogin')
                   observer.next({
                     sub: json_jwt_payload.sub, 
                     exp: json_jwt_payload.exp, 
@@ -70,7 +69,6 @@ export class AuthService {
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
             observer.next(xmlhttp.responseText)
-            console.log(`backend-login success`)
           } else {
             observer.error(xmlhttp)
           }

@@ -16,7 +16,9 @@ export class AuthService {
 
   auth_login(username: string, password: string): Observable<BackendResponse> {
     const auth      = btoa(`${username}:${password}`)
-    const baseUrl   = `http://192.168.178.220/login/Login.asmx/login`
+    // ohne:http://192.168.178.220/login/Login.asmx/login
+    // map: https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login
+    const baseUrl   = `https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login`
     const packageid = `de.berlin.polizei.polwsp`
 
     return new Observable((observer) => {
@@ -34,6 +36,8 @@ export class AuthService {
             allowed_apps_arr.forEach((el: any) => {
               if (el.packageid == packageid) {
                 const backendUrl = JSON.parse(el.config_json).backendurl
+                console.log(backendUrl)
+                console.log(backend_token)
                 this.backend_login(backendUrl, backend_token).subscribe(data => {
                   observer.next({
                     sub: json_jwt_payload.sub, 
@@ -64,10 +68,13 @@ export class AuthService {
       let xmlhttp = new XMLHttpRequest()
 
       xmlhttp.onreadystatechange = () => {
+        console.log(xmlhttp.readyState)
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
+            console.log('backendlogin success')
             observer.next(xmlhttp.responseText)
           } else {
+            console.log(xmlhttp)
             observer.error(xmlhttp)
           }
         }

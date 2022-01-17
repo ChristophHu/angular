@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
 import { from, interval, Observable, Subscription } from 'rxjs';
-import { selectToken } from 'src/app/modules/auth/state/selectors';
+import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
 import { Betankung } from '../models/betankung';
 import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
@@ -16,20 +16,33 @@ import { Standort } from '../models/standort.model';
 import { Streife } from '../models/streife.model';
 import { Zaehlerstand } from '../models/zaehlerstand.model';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp.model';
+import { ConnectionService } from './connection.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AppService {
-
+    // connection
     private token: string = ''
+    // private backendUrl: string = ''
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
+        this._store.pipe(select(selectToken)).subscribe(token => {
+            this._connectionService.setToken(token)
+        })
+        this._store.pipe(select(selectBackendUrl)).subscribe(backendUrl => {
+            this._connectionService.setBackendUrl(backendUrl)
+        })
+    }
 
     reducer(action: string, data: any): Observable<any> {
+        const backendUrl: string = this._connectionService.getBackendUrl()
+        const token     : string = this._connectionService.getToken()
+
         console.info(`reducer | action: '${action}', data: ${data}`)
-        const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
 
@@ -221,14 +234,18 @@ export class AppService {
             param, 
             { headers: { 
                 'Content-Type': 'application/x-www-form-urlencoded', 
-                'Authorization': this.token 
+                'Authorization': token 
             }}
         ) // .pipe(retry(2), take(1))
     }
 
     getReducer(action: string, data: any): any {
+        const backendUrl: string = this._connectionService.getBackendUrl()
+        const token     : string = this._connectionService.getToken()
+
         console.info(`getreducer | action: '${action}', data: `, data)
-        const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+        const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
             case 'getBetankungenAll':
@@ -288,7 +305,7 @@ export class AppService {
         }
         console.log(baseURL + param)
 
-        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': this.token } }) //.pipe(retry(2),take(1))
+        return this.httpClient.get(baseURL + param, { headers: { 'Authorization': token } }) //.pipe(retry(2),take(1))
     }
 
     // allg
