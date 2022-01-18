@@ -26,4 +26,8 @@ export class NotificationComponent implements OnInit {
     let Notification = document.getElementById("notification");
     Notification!.style.transform = "translateX(150%)";
   }
+
+  public response() {
+    console.log('res')
+  }
 }

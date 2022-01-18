@@ -2,6 +2,7 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { NotificationComponent } from '../notification/notification.component'
 import { Notification } from '../model/notification.model'
 import { NotificationsService } from '../notifications.service'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'notifications-container',
@@ -17,7 +18,10 @@ export class NotificationsContainerComponent implements OnInit {
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private _NotificationsService: NotificationsService) {}
 
   ngOnInit(): void {
-
+    this._NotificationsService.onAlert().subscribe(notification => {
+      this.addNotification(notification)
+      console.log(notification)
+    })
   }
 
   addNotification(notification: Notification) {
@@ -40,6 +44,10 @@ export class NotificationsContainerComponent implements OnInit {
       this.notifications.remove(this.components.length-1)
       this.components.splice(componentIndex, 1)
     }
+  }
+
+  response(id: string) {
+    this._NotificationsService.response(id)
   }
 
 }
