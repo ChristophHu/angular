@@ -30,6 +30,7 @@ export class Resolver implements Resolve<any> {
                     this._katFacade.loadAllStatus()
                     this._katFacade.loadZaehlerstandstypen()
                     this._katFacade.loadZweck()
+                    
                     this._specFacade.loadAllChecklists()
                     this._specFacade.loadAllBetankungen()
                     this._specFacade.loadAllZaehlerstaende()

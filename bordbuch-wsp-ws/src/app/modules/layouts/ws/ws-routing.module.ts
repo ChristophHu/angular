@@ -6,6 +6,7 @@ import { KatModule } from 'src/app/store/kat-store/kat.module';
 import { Resolver } from 'src/app/store/resolver';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { SpecModule } from 'src/app/store/spec-store/spec.module';
+import { AuthGuard } from '../../auth/auth.guard';
 import { UebersichtComponent } from '../../components/uebersicht/uebersicht.component';
 import { WsComponent } from './ws.component';
 

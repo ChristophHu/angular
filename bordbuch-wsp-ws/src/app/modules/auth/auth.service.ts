@@ -29,7 +29,7 @@ export class AuthService {
           if (xmlhttp.status == 200) {
             const jwt_token         = xmlhttp.getResponseHeader('Authorization')!.toString()
             const backend_token     = jwt_token.split(' ')[1]
-            const json_jwt_payload  = JSON.parse(atob(jwt_token.split('.')[1]))
+            const json_jwt_payload  = JSON.parse(this.myatob(jwt_token.split('.')[1]))
             const allowed_apps_arr  = JSON.parse(json_jwt_payload.allowed_apps)
   
             // check for backend and login
@@ -63,6 +63,16 @@ export class AuthService {
     })
   }
 
+  myatob(payload: string): string {
+    try {
+      return atob(payload);
+      }
+      catch(e)
+      {
+      return atob(this.base64UrlDecode(payload));
+    }
+  }
+
   backend_login(backendUrl: string, token: string): Observable<any> {
     return new Observable((observer) => {
       let xmlhttp = new XMLHttpRequest()
@@ -79,10 +89,28 @@ export class AuthService {
           }
         }
       }
-
+      console.log(`${backendUrl}/loginjwt`)
       xmlhttp.open('GET', `${backendUrl}/loginjwt`, true)
       xmlhttp.setRequestHeader('Authorization', `Bearer ${token}`)
       xmlhttp.send()
     })
+  }
+
+  base64UrlDecode(input: string): string {
+    // Replace non-url compatible chars with base64 standard chars
+    input = input
+        .replace(/-/g, '+')
+        .replace(/_/g, '/')
+
+    // Pad out with standard base64 required padding characters
+    var pad = input.length % 4;
+    if(pad) {
+      if(pad === 1) {
+        throw new Error('InvalidLengthError: Input base64url string is the wrong length to determine padding');
+      }
+      input += new Array(5-pad).join('=');
+    }
+
+    return input;
   }
 }

@@ -6,8 +6,14 @@ export const selectAuthState = createFeatureSelector<AuthState>(Features.Auth)
 
 export const isLoggedIn = createSelector(
     selectAuthState,
-    // (state: AppState) => state.auth,
-    (auth) => !!auth.backendResponse
+    (auth) => {
+        if(!!auth.backendResponse) {
+            console.log('backendResponse: true')
+            return true
+        } else {
+            return false
+        }
+    }
 )
 export const isLoggedOut = createSelector(
     isLoggedIn,
@@ -19,20 +25,38 @@ export const selectSub = createSelector(
     (auth) => auth.backendResponse!.sub
 )
 
-export const selectToken = createSelector(
+export const selectBackendresponse = createSelector(
     selectAuthState,
-    (auth) => auth.backendResponse!.token
+    auth => auth.backendResponse
+)
+
+export const selectToken = createSelector(
+    selectBackendresponse,
+    backendResponse => {
+        if(!!backendResponse) {
+            console.log(`backendresponse: ${backendResponse.token}`)
+            return backendResponse.token
+        } else {
+            console.log('no backendresponse')
+            return ''
+        }
+    }
 )
 
 export const selectBackendUrl = createSelector(
-    selectAuthState,
-    (auth) => auth.backendResponse!.backendUrl
+    selectBackendresponse,
+    backendResponse => {
+        if(!!backendResponse) {
+            console.log(`backendresponse: ${backendResponse.backendUrl}`)
+            return backendResponse.backendUrl
+        } else {
+            console.log('no backendresponse')
+            return ''
+        }
+    }
 )
 
-export const selectBackendresponse = createSelector(
-    selectAuthState,
-    (auth) => auth.backendResponse
-)
+
 
 export const selectRole = createSelector(
     selectBackendresponse,

@@ -10,6 +10,7 @@ export class WsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('WSComponent')
   }
 
 }

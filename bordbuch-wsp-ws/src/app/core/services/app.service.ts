@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { select, Store } from '@ngrx/store';
-import { from, interval, Observable, Subscription } from 'rxjs';
-import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
+import { Observable } from 'rxjs';
+import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors'
 import { Betankung } from '../models/betankung';
 import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
@@ -23,13 +22,11 @@ import { ConnectionService } from './connection.service';
 })
 
 export class AppService {
-    // connection
-    private token: string = ''
-    // private backendUrl: string = ''
 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
-        this._store.pipe(select(selectToken)).subscribe(token => {
-            this._connectionService.setToken(token)
+        console.log('appService construct')
+        this._store.pipe(select(selectToken)).subscribe((token: string) => {
+            if (token) this._connectionService.setToken(token)
         })
         this._store.pipe(select(selectBackendUrl)).subscribe(backendUrl => {
             this._connectionService.setBackendUrl(backendUrl)

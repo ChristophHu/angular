@@ -1,5 +1,5 @@
 // angular
-import { Component, ViewEncapsulation } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 
@@ -29,7 +29,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service'
   animations   : Animations,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 	opened: boolean = false
   	loginForm: FormGroup
 	hide = true
@@ -43,7 +43,7 @@ export class LoginComponent {
 		) {
 		this.loginForm = this._formBuilder.group({
 			username: ['24225132', [Validators.required]],
-			password: ['Abc123!', [Validators.required]]
+			password: ['Lono4451', [Validators.required]]
 		})
 	}
 
@@ -67,5 +67,9 @@ export class LoginComponent {
 		  './changelog/changelog.component'
 		)
 		this.modalService.open(ChangelogComponent, {})
+	}
+
+	ngOnInit(): void {
+		console.log('LoginComponent')
 	}
 }

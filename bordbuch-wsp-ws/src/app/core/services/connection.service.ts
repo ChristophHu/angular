@@ -13,9 +13,11 @@ export class ConnectionService {
   }
 
   getBackendUrl(): string {
+    console.log(this.backendUrl)
     return this.backendUrl
   }
   setBackendUrl(backendUrl: string) {
+    console.log(backendUrl)
     this.backendUrl = backendUrl
   }
 
