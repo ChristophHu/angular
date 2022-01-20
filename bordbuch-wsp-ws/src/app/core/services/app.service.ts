@@ -24,7 +24,6 @@ import { ConnectionService } from './connection.service';
 export class AppService {
 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
-        console.log('appService construct')
         this._store.pipe(select(selectToken)).subscribe((token: string) => {
             if (token) this._connectionService.setToken(token)
         })
@@ -38,7 +37,7 @@ export class AppService {
         const token     : string = this._connectionService.getToken()
 
         console.info(`reducer | action: '${action}', data: ${data}`)
-        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+
         const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
@@ -223,8 +222,6 @@ export class AppService {
                 console.error('There is no action to switch.')
                 break
         }
-
-        console.log(`${baseURL} ${param}`)
         
         return this.httpClient.post(
             baseURL, 
@@ -241,7 +238,7 @@ export class AppService {
         const token     : string = this._connectionService.getToken()
 
         console.info(`getreducer | action: '${action}', data: `, data)
-        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+
         const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
@@ -300,7 +297,6 @@ export class AppService {
             default:
                 break
         }
-        console.log(baseURL + param)
 
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': token } }) //.pipe(retry(2),take(1))
     }

@@ -27,13 +27,17 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
               <mat-label>Bestandteil</mat-label>
               <mat-select formControlName="item">
                 <mat-option *ngFor="let item of (items$ | async)" [value]="item.item">
                   {{ item.item }}
                 </mat-option>
               </mat-select>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Bestandteil</mat-label>
+              <input matInput type="text" formControlName="item">
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Beschreibung</mat-label>

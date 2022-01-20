@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { from, Observable } from 'rxjs';
-import { BackendResponse } from './model/backendresponse.model';
+import { Injectable } from '@angular/core'
+import { HttpClient } from "@angular/common/http"
+import { Observable } from 'rxjs'
+import { BackendResponse } from './model/backendresponse.model'
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,10 @@ export class AuthService {
     const auth      = btoa(`${username}:${password}`)
     // ohne:http://192.168.178.220/login/Login.asmx/login
     // map: https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login
-    const baseUrl   = `https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login`
-    const packageid = `de.berlin.polizei.polwsp`
+    const baseUrl   = environment.loginServerUrl
+    // const baseUrl   = `https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login`
+    const packageid = environment.packageid
+    // const packageid = `de.berlin.polizei.polwsp`
 
     return new Observable((observer) => {
       let xmlhttp = new XMLHttpRequest()
@@ -81,7 +84,6 @@ export class AuthService {
         console.log(xmlhttp.readyState)
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
-            console.log('backendlogin success')
             observer.next(xmlhttp.responseText)
           } else {
             console.log(xmlhttp)
@@ -89,7 +91,6 @@ export class AuthService {
           }
         }
       }
-      console.log(`${backendUrl}/loginjwt`)
       xmlhttp.open('GET', `${backendUrl}/loginjwt`, true)
       xmlhttp.setRequestHeader('Authorization', `Bearer ${token}`)
       xmlhttp.send()

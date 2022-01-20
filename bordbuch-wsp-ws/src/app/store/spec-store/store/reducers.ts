@@ -99,6 +99,7 @@ export const reducer = createReducer(
 
     // reparaturen
     on(loadedAllReparaturen, (state, action) => {
+        console.log(action.reparaturen)
         return {
             ...state,
             reparaturen: action.reparaturen
