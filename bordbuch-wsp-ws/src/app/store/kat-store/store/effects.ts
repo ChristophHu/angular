@@ -28,52 +28,9 @@ import {
     loadZaehlerstandstypen, loadedZaehlerstandstypen, insertZaehlerstandstyp, insertZaehlerstandstypSuccess, updateZaehlerstandstyp, deleteZaehlerstandstyp, deleteZaehlerstandstypSuccess, updateZaehlerstandstypSuccess,
     loadZweck, insertZweck, updateZweck, deleteZweck, loadedZweck, insertZweckSuccess, updateZweckSuccess, deleteZweckSuccess, loadDienststellen, loadPruefvermerkkategorien, loadedPruefvermerkkategorien, insertPruefvermerkkategorie, insertPruefvermerkkategorieSuccess, updatePruefvermerkkategorie, updatePruefvermerkkategorieSuccess, deletePruefvermerkkategorie, deletePruefvermerkkategorieSuccess, loadPruefvermerke, loadedPruefvermerke, insertPruefvermerk, insertPruefvermerkSuccess, updatePruefvermerk, updatePruefvermerkSuccess, deletePruefvermerk, deletePruefvermerkSuccess, loadSchiffe, loadedSchiffe, insertSchiff, updateSchiff, deleteSchiff, insertSchiffSuccess, updateSchiffSuccess, deleteSchiffSuccess, loadAllStatus, loadedAllStatus, insertStatus, insertStatusSuccess, updateStatus, updateStatusSuccess, deleteStatus, deleteStatusSuccess,
 } from './actions'
-// loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen 
  
 @Injectable()
 export class Effects {
-    // loadAllShip$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadAllShip),
-    //         concatMap(action => this.appService.getSchiffe()),
-    //         map((shipSelection: ShipSelection[]) => allShipLoaded({ shipSelection }))
-    //     )
-    // })
-    // loadPruefvermerke$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadPruefvermerke),
-    //         concatMap(action => this.appService.getPruefvermerke()),
-    //         map((pruefvermerke: Pruefvermerk[]) => pruefvermerkeLoaded({ pruefvermerke }))
-    //     )
-    // })
-    // loadPruefvermerkKategorien$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadPruefvermerkKategorien),
-    //         concatMap(action => this.appService.getPruefvermerkKategorien()),
-    //         map((pruefvermerkKategorien: PruefvermerkKategorien[]) => pruefvermerkKategorienLoaded({ pruefvermerkKategorien }))
-    //     )
-    // })
-    // loadZaehlerstandstypen$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadZaehlerstandstypen),
-    //         concatMap(action => this.appService.getZaehlerstandstypen()),
-    //         map((zaehlerstandstypen: Zaehlerstandstyp[]) => zaehlerstandstypenLoaded({ zaehlerstandstypen }))
-    //     )
-    // })
-    // loadDienststellen$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadDienststellen),
-    //         concatMap(action => this.appService.getDienststellen()),
-    //         map((dienststellen: Dienststelle[]) => dienststellenLoaded({ dienststellen }))
-    //     )
-    // })
-    // loadBetriebsstoffe$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadBetriebsstoffe),
-    //         concatMap(action => this.appService.getBetriebsstoffe()),
-    //         map((betriebsstoffe: Betriebsstoff[]) => loadedBetriebsstoffe({ betriebsstoffe }))
-    //     )
-    // })
 
     // betriebsstoffe
     loadBetriebsstoffe$ = createEffect(() => {
@@ -431,6 +388,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadZaehlerstandstypen),
             concatMap(action => this.appService.getZaehlerstandstypen()),
+            tap(value => console.log(value)),
             map((kat: Zaehlerstandstyp[]) => loadedZaehlerstandstypen({ kat }))
         )
     })

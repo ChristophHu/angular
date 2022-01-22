@@ -8,6 +8,7 @@ import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model"
 import { Dienststelle } from "src/app/core/models/dienststelle.model"
 import { Schiff } from "src/app/core/models/schiff.model"
 import { Status } from "src/app/core/models/reparatur-status.model"
+import { checkStateForEmptyArrays } from "src/app/shared/utils"
 
 export interface State {
     // shipSelection: ShipSelection[] | undefined
@@ -67,7 +68,7 @@ export const reducer = createReducer(
     }),
     on(insertBetriebsstoffSuccess, (state, action) => {
         let betriebsstoff: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedBetriebsstoffe: Kat[] | undefined = state.betriebsstoffe
+        let clearedBetriebsstoffe: Kat[] | undefined = checkStateForEmptyArrays(state.betriebsstoffe)
         clearedBetriebsstoffe = [...clearedBetriebsstoffe!, ...[betriebsstoff]]
         return {
             ...state,

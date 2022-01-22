@@ -141,11 +141,11 @@ export class AppService {
                 break
 
             case 'insertKatZaehlerstand':
-                param = `zaehlerstandstyp=${data.bezeichnung}`
+                param = `zaehlerstandstyp=${data.zaehlerstandstyp}`
                 break
 
             case 'updateKatZaehlerstand':
-                param = `id=${data.id}&zaehlerstandstyp=${data.bezeichnung}`
+                param = `id=${data.id}&zaehlerstandstyp=${data.zaehlerstandstyp}`
                 break
 
             // schiffe
@@ -222,6 +222,8 @@ export class AppService {
                 console.error('There is no action to switch.')
                 break
         }
+
+        console.log(`request: ${baseURL} + ${param}`)
         
         return this.httpClient.post(
             baseURL, 
@@ -341,7 +343,7 @@ export class AppService {
         return this.get('getBetankungenAll')
     }
     insertBetankung(betankung: Betankung): Observable<any> {
-        console.log(betankung)
+        console.warn(betankung)
         return this.insert(betankung, 'insertBetankung')
     }
     updateBetankung(betankung: Betankung): Observable<any> {
@@ -662,6 +664,7 @@ export class AppService {
         })
     }
     insertZaehlerstandstyp(zaehlerstandstyp: Zaehlerstandstyp): Observable<any> {
+        console.log(zaehlerstandstyp)
         return new Observable ((observer) => {
             const source$ = this.reducer('insertKatZaehlerstand', zaehlerstandstyp)
             source$.subscribe((data: any) => {

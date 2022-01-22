@@ -21,6 +21,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html/sanitize-html.pipe';
 import { ImageSliderComponent } from './components/image-slider/image-slider.component';
 import { CarouselItemDirective } from './directives/carousel-item.directive';
 import { IvyCarouselModule } from 'image-carousel';
+import { ToArrayPipe } from './pipes/to-array/to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { IvyCarouselModule } from 'image-carousel';
     TitlecasePipe,
     SanitizeHtmlPipe,
     ImageSliderComponent,
-    CarouselItemDirective
+    CarouselItemDirective,
+    ToArrayPipe
   ],
   imports: [
     CommonModule,
@@ -68,6 +70,7 @@ import { IvyCarouselModule } from 'image-carousel';
     // pipes
     SanitizeHtmlPipe,
     TitlecasePipe,
+    ToArrayPipe,
 
     CommonModule,
     ModalModule,

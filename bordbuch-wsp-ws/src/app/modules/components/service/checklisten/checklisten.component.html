@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>Schiff</th>
-                <th>ID</th>
+                <th hidden>ID</th>
                 <th>Datum</th>
                 <th>Status</th>
                 <th class="w-12"></th>
@@ -12,7 +12,7 @@
         <tbody>
             <tr *ngFor="let checklist of (checklists$ | async)">
                 <td>{{ checklist.name }}</td>
-                <td>{{ checklist.id_schiff }}</td>
+                <td hidden>{{ checklist.id_schiff }}</td>
                 <td>{{ checklist.datum | date:"dd.MM.yyyy" }}</td>
                 <td>{{ checklist.status }}</td>
                 <td class="flex flex-row justify-start text-gray-500">

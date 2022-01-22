@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let betriebsstoff of (betriebsstoffe$ | async)?.toArray()">
+            <tr *ngFor="let betriebsstoff of (betriebsstoffe$ | async | toArray)">
                 <td>{{ betriebsstoff.bezeichnung }}</td>
                 <td hidden>{{ betriebsstoff.id }}</td>
                 <td class="flex flex-row justify-start text-gray-500">

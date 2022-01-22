@@ -8,7 +8,7 @@ export const isLoggedIn = createSelector(
     selectAuthState,
     (auth) => {
         if(!!auth.backendResponse) {
-            console.log('backendResponse: true')
+            // console.log('backendResponse: true')
             return true
         } else {
             return false
@@ -34,10 +34,10 @@ export const selectToken = createSelector(
     selectBackendresponse,
     backendResponse => {
         if(!!backendResponse) {
-            console.log(`backendresponse: ${backendResponse.token}`)
+            // console.log(`backendresponse: ${backendResponse.token}`)
             return backendResponse.token
         } else {
-            console.log('no backendresponse')
+            // console.log('no backendresponse')
             return ''
         }
     }
@@ -47,10 +47,10 @@ export const selectBackendUrl = createSelector(
     selectBackendresponse,
     backendResponse => {
         if(!!backendResponse) {
-            console.log(`backendresponse: ${backendResponse.backendUrl}`)
+            // console.log(`backendresponse: ${backendResponse.backendUrl}`)
             return backendResponse.backendUrl
         } else {
-            console.log('no backendresponse')
+            // console.log('no backendresponse')
             return ''
         }
     }

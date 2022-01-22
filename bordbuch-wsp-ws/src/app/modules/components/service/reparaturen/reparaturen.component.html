@@ -7,8 +7,9 @@
         <thead>
             <tr>
                 <!-- <th class="w-28">Name</th> -->
+                <th>Name</th>
                 <th hidden>id</th>
-                <th>id_ship</th>
+                <th hidden>id_ship</th>
                 <th>Datum</th>
                 <th>Kategorie</th>
                 <th>Bestandteil</th>
@@ -17,7 +18,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let reparatur of (reparaturen$ | async)">
-                <!-- <td>{{ reparatur.name }}</td> -->
+                <td>{{ reparatur.name }}</td>
                 <td hidden>{{ reparatur.id }}</td>
                 <td>{{ reparatur.id_ship }}</td>
                 <td>{{ reparatur.date | date: 'dd.MM.yyyy' }}</td>

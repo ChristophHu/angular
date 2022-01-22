@@ -8,5 +8,6 @@ export interface Reparatur {
     kategorie   : string
     item        : string
     description : string
+    name        : string
     status      : string
 }

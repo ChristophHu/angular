@@ -94,6 +94,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllReparaturen),
             concatMap(action => this.appService.getAllReparaturen()),
+            tap(value => console.log(value)),
             map((reparaturen: Reparatur[]) => loadedAllReparaturen({ reparaturen }))
         )
     })
