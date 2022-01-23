@@ -1,3 +1,5 @@
+import { combineLatestInit } from "rxjs/internal/observable/combineLatest"
+
 export function checkStateForEmptyArrays(value: any): any[] {
     if (isArray(value)) {
         return value
@@ -54,4 +56,13 @@ export function isFunction(value: any): boolean {
 
 export function toDecimal(value: number, decimal: number): number {
     return Math.round(value * Math.pow(10, decimal)) / Math.pow(10, decimal)
+}
+
+export function testFunction(cb: any) {
+    console.time('duration')
+    for (var i = 0; i < 1000; i++) {
+        // this.funcToTest()
+        cb // callbackFunction
+    };
+    console.timeEnd('duration')
 }

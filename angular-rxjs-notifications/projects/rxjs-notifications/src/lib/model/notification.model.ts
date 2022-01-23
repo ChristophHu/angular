@@ -7,9 +7,10 @@ export enum NotificationType {
 }
 
 export interface Notification {
-    id?     : string
-    content : string
-    date?   : Date
-    title   : string
-    type?   : NotificationType
+    id?         : string
+    content     : string
+    date?       : Date
+    response?   : null | boolean | Object
+    title       : string
+    type?       : NotificationType
 }

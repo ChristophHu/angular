@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationType } from 'projects/rxjs-notifications/src/lib/model/notification.model';
+import { Notification, NotificationType } from 'projects/rxjs-notifications/src/lib/model/notification.model';
 import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api';
 
 @Component({
@@ -12,16 +12,10 @@ export class AppComponent {
 
   constructor(private _RxjsNotificationService: RxjsNotificationsService) {}
 
-  insertNotification() {
-    let id: string
-    this._RxjsNotificationService.insertNotification({ content: 'T', title: 'T', type: NotificationType.Success }).subscribe(id => id)
-    // this._RxjsNotificationService.notifications$.subscribe(data => {
-    //   console.log(data)
-    //   if 
-    // })
-  }
-
-  getNotification() {
-    console.log(this._RxjsNotificationService.getAllNotifications())
+  addAndResponseNotification() {
+    const aar: Notification = { content: 'AARNotification', title: 'T', type: NotificationType.Success }
+    this._RxjsNotificationService.addAndResponseNotification(aar).subscribe((response: any) => {
+      console.log(response)
+    })
   }
 }

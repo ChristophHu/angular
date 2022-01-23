@@ -14,8 +14,7 @@ export class NotificationContainerComponent implements AfterViewInit {
   constructor(private _ComponentFactoryResolver: ComponentFactoryResolver, private _RxjsNotificationsService: RxjsNotificationsService) { }
 
   ngAfterViewInit(): void {
-    this._RxjsNotificationsService.notifications.subscribe(notifications => {
-      console.log(notifications)
+    this._RxjsNotificationsService.notifications.subscribe((notifications: Notification[]) => {
       notifications.forEach(notification => this.addNotification(notification))
     })
   }

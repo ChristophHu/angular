@@ -20,7 +20,7 @@ export class NotificationComponent implements OnInit {
 
     setTimeout(function () {
         Notification!.style.transform = "translateX(0%)";
-    }, 200);
+    }, 200)
   }
 
   public closeNotification() {
@@ -28,8 +28,7 @@ export class NotificationComponent implements OnInit {
     Notification!.style.transform = "translateX(150%)";
   }
 
-  response(id: string = '') {
-    this._RxjsNotificationsService.response(id)
+  response(id: string = '', response: any = 'default-Response') {
+    this._RxjsNotificationsService.response(id, response)
   }
-
 }

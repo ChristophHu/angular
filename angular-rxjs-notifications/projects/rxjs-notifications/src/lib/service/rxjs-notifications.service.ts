@@ -18,53 +18,50 @@ export class RxjsNotificationsService {
     console.log(this.generateId())
   }
 
-  getAllNotifications(): Notification[] {
-    return this.source$.getValue()
-  }
-  getNotification(id: string): Notification {
-    const notifications = this.source$.getValue()
-    const notification =  notifications.filter(el => el.id == id)
-    return notification[0]
-  }
+  // getAllNotifications(): Notification[] {
+  //   return this.source$.getValue()
+  // }
 
-  insertNotification(notification: Notification): Observable<string> {
-    // this.source$.next([...this.getAllNotifications(), insert])
+  addAndResponseNotification(notification: Notification): Observable<any> {
     return new Observable ((observer) => {
-      const insert: Notification = Object.assign({}, notification, { id: this.generateId(), date: new Date().toISOString() })
-
+      // add notification
+      const id: string = this.generateId()
+      const insert: Notification = Object.assign({}, notification, { id: id, date: new Date().toISOString(), response: null })
       this.source$.next([insert])
 
+      // add notification to database
       this.dataStore.notifications.push(insert)
     	this._notifications$.next(Object.assign({}, this.dataStore).notifications)
-      console.log(this.dataStore.notifications)
 
-      // return id
-      observer.next(insert.id)
+      // 
+      this.notifications$.subscribe((notifications: Notification[]) => {
+        notifications.forEach(notification => {
+          if (notification.id == id && notification.response != null) { 
+            observer.next(notification.response)
+          }
+        })
+      })
     })
   }
-  updateNotification(update: Notification) {
-    this.source$.next([...this.getAllNotifications().filter(el => el.id == update.id), update])
-  }
-  deleteNotification(id: string) {
-    this.source$.next(this.getAllNotifications().filter(el => el.id != id))
-  }
-
+  
   generateId(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   }
-
-  testFunction() {
-    console.time('duration')
-    for (var i = 0; i < 1000; i++) {
-      this.generateId()
-    };
-    console.timeEnd('duration')
-  }
-
-  response(id: string) {
-    console.log(`response: ${id}`)
+  response(id: string, response: any) {
     this.dataStore.notifications.forEach(notification => {
-      if (notification.id = id) console.log(`get id ${notification}`)
+      if (notification.id == id) {
+        notification.response = response
+        this._notifications$.next(Object.assign({}, this.dataStore).notifications)
+      }
     })
   }
+
+  // updateNotification(update: Notification) {
+  //   this.source$.next([...this.getAllNotifications().filter(el => el.id == update.id), update])
+  // }
+  // deleteNotification(id: string) {
+  //   this.source$.next(this.getAllNotifications().filter(el => el.id != id))
+  // }
+
+
 }
