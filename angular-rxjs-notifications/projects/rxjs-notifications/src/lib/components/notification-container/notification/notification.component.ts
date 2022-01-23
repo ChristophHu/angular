@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
+import { RxjsNotificationsService } from '../../../service/rxjs-notifications.service';
 import { Notification, NotificationType } from './../../../model/notification.model'
 
 @Component({
@@ -7,11 +8,9 @@ import { Notification, NotificationType } from './../../../model/notification.mo
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
-  @Input() id   : string = ''
-  @Input() title: string = ''
-  @Input() type : NotificationType = NotificationType.Success
+  @Input() notification!: Notification
   
-  constructor() { }
+  constructor(private _RxjsNotificationsService: RxjsNotificationsService) { }
 
   ngOnInit(): void {
     // get Animations
@@ -27,6 +26,10 @@ export class NotificationComponent implements OnInit {
   public closeNotification() {
     let Notification = document.getElementById("notification");
     Notification!.style.transform = "translateX(150%)";
+  }
+
+  response(id: string = '') {
+    this._RxjsNotificationsService.response(id)
   }
 
 }

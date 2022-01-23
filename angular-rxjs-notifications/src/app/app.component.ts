@@ -13,7 +13,12 @@ export class AppComponent {
   constructor(private _RxjsNotificationService: RxjsNotificationsService) {}
 
   insertNotification() {
-    this._RxjsNotificationService.insertNotification({ id: '2', content: 'T', date: new Date(), title: 'T', type: NotificationType.Success })
+    let id: string
+    this._RxjsNotificationService.insertNotification({ content: 'T', title: 'T', type: NotificationType.Success }).subscribe(id => id)
+    // this._RxjsNotificationService.notifications$.subscribe(data => {
+    //   console.log(data)
+    //   if 
+    // })
   }
 
   getNotification() {

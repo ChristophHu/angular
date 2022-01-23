@@ -21,13 +21,12 @@ export class NotificationContainerComponent implements AfterViewInit {
   }
 
   addNotification(notification: Notification) {
-    console.log('add')
-    // Create component dynamically inside the ng-template
     const componentFactory = this._ComponentFactoryResolver.resolveComponentFactory(NotificationComponent)
     const componentRef = this.notifications.createComponent(componentFactory)
-    componentRef.instance.id = notification.id
-    componentRef.instance.title = notification.title
-    componentRef.instance.type = notification.type!
+    componentRef.instance.notification = notification
+    // componentRef.instance.id = notification.id!
+    // componentRef.instance.title = notification.title
+    // componentRef.instance.type = notification.type!
     // componentRef.instance.type = notification.type
     // Push the component so that we can keep track of which components are created
     // this.components.push(componentRef)
