@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Features } from "src/app/core/model/feature";
-import { State } from './state'
+import { State } from '../state'
 
 
 export const katState = createFeatureSelector<State>(Features.Kat)

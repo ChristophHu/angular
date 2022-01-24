@@ -9,11 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RootStoreModule } from './store/root-store.module'
 import { SharedModule } from './shared/shared.module'
 import { MarkdownModule } from 'ngx-markdown';
-import { ConnectionService } from './core/services/connection.service'
+import { ConnectionService } from './core/services/connection.service';
+import { TestComponent } from './modules/components/test/test.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

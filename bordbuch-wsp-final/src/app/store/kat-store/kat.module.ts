@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { Features } from 'src/app/core/model/feature'
-// import { AppService } from 'src/app/core/services/app.service'
-import { Effects } from './effects'
-import { reducer } from './reducers'
+import { AppService } from 'src/app/core/services/app.service'
+import { Effects } from './store/effects'
+import { reducer } from './store/reducers'
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { reducer } from './reducers'
     EffectsModule.forFeature([Effects])
   ],
   providers: [
-    // AppService
+    AppService
   ]
 })
 export class KatModule { }

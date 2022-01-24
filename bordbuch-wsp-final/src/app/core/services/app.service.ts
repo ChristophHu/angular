@@ -54,7 +54,6 @@ export class AppService {
 
     private reducer(action: string, data: any): Observable<any> {
         console.info(`reducer | action: '${action}', data: ${data}`)
-        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
         const baseURL = `${this.backendUrl}/${action}`
         let param = ``
         switch (action) {
@@ -148,9 +147,9 @@ export class AppService {
         const backendUrl: string = this._ConnectionService.getBackendUrl()
         const token     : string = this._ConnectionService.getToken()
 
-        console.info(`token: ${token} /n backendUrl: ${this.backendUrl}`)
+        // console.info(`token: ${token} /n backendUrl: ${this.backendUrl}`)
         console.info(`getreducer | action: '${action}', data: `, data)
-        // const baseURL = `http://192.168.178.220/polwsp/PolWSP.asmx/${action}`
+
         const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
@@ -350,6 +349,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiff', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data[0])
             }, (error: any) => observer.error(error))
         })

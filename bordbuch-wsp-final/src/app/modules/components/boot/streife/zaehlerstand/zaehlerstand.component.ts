@@ -7,7 +7,7 @@ import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { RootStoreState } from 'src/app/store';
+import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction } from 'src/app/store/ship-store';
 import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
 

@@ -9,7 +9,7 @@ export class ConnectionService {
   private token     : string = ''
 
   constructor() {
-    console.log('ConnectionService constructor')
+    
   }
 
   getBackendUrl(): string {

@@ -23,8 +23,6 @@ export class ShipSelectionResolver implements Resolve<any> {
                     
                     // kat
                     setTimeout(() => {
-                        // this.store.dispatch(loadAllShip())
-
                         this.store.dispatch(KatAction.loadAllShip())
                         this.store.dispatch(KatAction.loadPruefvermerke())
                         this.store.dispatch(KatAction.loadPruefvermerkKategorien())

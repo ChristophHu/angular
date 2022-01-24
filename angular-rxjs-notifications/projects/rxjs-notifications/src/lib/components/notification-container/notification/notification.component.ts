@@ -34,7 +34,8 @@ export class NotificationComponent implements OnInit {
     }, 400)
   }
 
-  response(id: string = '', response: any = 'default-Response') {
-    this._RxjsNotificationsService.response(id, response)
+  response(id: string = '', reply: any = null) {
+    this._RxjsNotificationsService.response({ id, reply })
+    this.close()
   }
 }

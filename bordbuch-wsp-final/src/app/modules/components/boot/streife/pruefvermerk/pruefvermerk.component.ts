@@ -9,7 +9,7 @@ import { Status } from 'src/app/core/model/status';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { RootStoreState } from 'src/app/store';
+import { RootStoreState } from 'src/app/store/root-store.state';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction } from 'src/app/store/ship-store';
 

@@ -3,14 +3,20 @@ export enum NotificationType {
     Error = 'error',
     Alert = 'alert',
     Info = 'info',
-    Warn = 'warn'
+    Warn = 'warn',
+    Delete = 'delete'
+}
+export enum ExceptionType {
+    OK          = 'ok',
+    YesNo       = 'yesno',
+    Response    = 'response'
 }
 
 export interface Notification {
     id?         : string
     content     : string
     date?       : Date
-    response?   : null | boolean | Object
     title       : string
     type?       : NotificationType
+    exception   : ExceptionType
 }

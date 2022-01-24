@@ -25,6 +25,7 @@ export class BootAuswahlComponent {
   bordbuchForm: FormGroup
   
   constructor(private formBuilder: FormBuilder, private store: Store<RootStoreState>, private modalService: ModalService<QrscannerComponent>) {
+    console.log('boot-auswahl constructor')
     this.bordbuchForm = this.formBuilder.group({
       bordbuch: []
     })

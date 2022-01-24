@@ -27,12 +27,4 @@ export class NotificationContainerComponent implements AfterViewInit {
       componentRef.destroy()
     })
   }
-
-  closeNotification(id: string) {
-    const componentRef = this.notifications
-  }
-
-  // destroy() {
-    
-  // }
 }

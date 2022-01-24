@@ -9,20 +9,16 @@ import { environment } from '../../../environments/environment'
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor() { }
 
-  login(username: string, password: string): Observable<BackendResponse> { // User
+  login(username: string, password: string): Observable<BackendResponse> {
     return this.auth_login(username, password)
   }
 
   auth_login(username: string, password: string): Observable<BackendResponse> {
     const auth      = btoa(`${username}:${password}`)
-    // ohne:http://192.168.178.220/login/Login.asmx/login
-    // map: https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login
     const baseUrl   = environment.loginServerUrl
-    // const baseUrl   = `https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login`
     const packageid = environment.packageid
-    // const packageid = `de.berlin.polizei.polwsp`
 
     return new Observable((observer) => {
       let xmlhttp = new XMLHttpRequest()
@@ -66,16 +62,6 @@ export class AuthService {
     })
   }
 
-  myatob(payload: string): string {
-    try {
-      return atob(payload);
-      }
-      catch(e)
-      {
-      return atob(this.base64UrlDecode(payload));
-    }
-  }
-
   backend_login(backendUrl: string, token: string): Observable<any> {
     return new Observable((observer) => {
       let xmlhttp = new XMLHttpRequest()
@@ -95,6 +81,16 @@ export class AuthService {
       xmlhttp.setRequestHeader('Authorization', `Bearer ${token}`)
       xmlhttp.send()
     })
+  }
+
+  myatob(payload: string): string {
+    try {
+      return atob(payload);
+      }
+      catch(e)
+      {
+      return atob(this.base64UrlDecode(payload));
+    }
   }
 
   base64UrlDecode(input: string): string {

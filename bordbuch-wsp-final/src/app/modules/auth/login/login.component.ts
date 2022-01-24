@@ -43,7 +43,7 @@ export class LoginComponent {
 		) {
 		this.loginForm = this._formBuilder.group({
 			username: ['24225132', [Validators.required]],
-			password: ['Abc123!', [Validators.required]]
+			password: ['', [Validators.required]]
 		})
 	}
 
@@ -53,7 +53,7 @@ export class LoginComponent {
 		  .pipe(
 			tap((backendResponse: BackendResponse) => {
 			  this.store.dispatch(login({ backendResponse }))
-			  this.router.navigateByUrl('/mobile')
+			  this.router.navigateByUrl('/')
 			})
 		  )
 		  .subscribe(

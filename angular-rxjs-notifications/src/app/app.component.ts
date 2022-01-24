@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { Notification, NotificationType } from 'projects/rxjs-notifications/src/lib/model/notification.model';
-import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api';
+import { Component } from '@angular/core'
+import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
+import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api'
+import { first, take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,10 @@ export class AppComponent {
   constructor(private _RxjsNotificationService: RxjsNotificationsService) {}
 
   addAndResponseNotification() {
-    const aar: Notification = { content: 'AARNotification', title: 'T', type: NotificationType.Success }
-    this._RxjsNotificationService.addAndResponseNotification(aar).subscribe((response: any) => {
+    const aar: Notification = { content: 'Soll dierer Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
+    this._RxjsNotificationService.addAndResponseNotification(aar).pipe(take(1)).subscribe((response: any) => {
       console.log(response)
     })
   }
 }
+

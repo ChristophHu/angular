@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap } from 'rxjs/operators'
+import { concatMap, map, switchMap, tap } from 'rxjs/operators'
 import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model'
 import { Checklistitem } from 'src/app/core/model/checklistitem.model'
 import { Dienststelle } from 'src/app/core/model/dienststelle.model'
@@ -20,6 +20,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllShip),
             concatMap(action => this.appService.getSchiffe()),
+            tap(data => console.log(data)),
             map((shipSelection: ShipSelection[]) => allShipLoaded({ shipSelection }))
         )
     })

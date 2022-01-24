@@ -26,7 +26,6 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.qrScannerComponent.getMediaDevices().then(devices => {
-      console.log(devices);
       const videoDevices: MediaDeviceInfo[] = [];
       for (const device of devices) {
           if (device.kind.toString() === 'videoinput') {
@@ -34,7 +33,6 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
           }
       }
       if (videoDevices.length > 0){
-        console.log(videoDevices)
           let choosenDev;
           for (const dev of videoDevices){
               if (dev.label.includes('environment')){  // front
@@ -52,7 +50,6 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
 
   this.qrScannerComponent.capturedQr.subscribe((result: any) => {
       let QRCode: QRCodeJSON = JSON.parse(result)
-      console.log(result)
       this.modal?.close()
       this.router.navigate(['/mobile', 'boot', QRCode.id])
   });
@@ -66,7 +63,6 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
 
   onCodeResult(result: string) {
     let QRCode: QRCodeJSON = JSON.parse(result)
-    console.log(result)
     this.modal?.close()
     this.router.navigate(['/mobile', 'boot', QRCode.id])
   }

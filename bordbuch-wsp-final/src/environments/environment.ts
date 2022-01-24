@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  base_href: '/polwspweb/',
+  loginServerUrl: 'https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login',
+  packageid: 'de.berlin.polizei.polwsp'
 };
 
 /*

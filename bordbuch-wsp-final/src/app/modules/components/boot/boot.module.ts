@@ -16,7 +16,8 @@ import { AppService } from 'src/app/core/services/app.service';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
 
 export const routes: Routes = [
-  { path: ':id', component: BootComponent, resolve: { data: ShipResolver }, data: { param: 'id'},
+  { path: ':id', component: BootComponent, data: { param: 'id'},
+  // resolve: { data: ShipResolver },
     children: [
       { path: '', component: StreifeComponent },
       { path: 'map', component: MapComponent },
@@ -48,7 +49,7 @@ export const routes: Routes = [
   providers: [
     ShipSelectionResolver,
     ShipResolver,
-    // AppService
+    AppService
   ]
 })
 export class BootModule { }

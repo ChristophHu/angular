@@ -51,6 +51,6 @@
       <icons class="w-8 h-8 stroke-1 stroke-current text-blue-500" name="qrcode"></icons>
     </button>
     <div></div>
-    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [routerLink]="['/mobile', 'boot', selectedIdShip]" [ngClass]="selectedIdShip == undefined ? 'text-gray-400' : 'text-blue-500'" [disabled]="selectedIdShip == undefined">Auswahl bestätigen</button>
+    <button class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [routerLink]="['/', 'boot', selectedIdShip]" [ngClass]="selectedIdShip == undefined ? 'text-gray-400' : 'text-blue-500'" [disabled]="selectedIdShip == undefined">Auswahl bestätigen</button>
   </div>
 </tabbar>

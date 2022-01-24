@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { Checklistitem } from "src/app/core/model/checklistitem.model"
 import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen } from "./actions"
-import { State } from "./state"
+import { State } from "../state"
 
 export const initialDataState: State = {
     shipSelection: undefined,

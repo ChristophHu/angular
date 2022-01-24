@@ -89,6 +89,9 @@
             },
             "development": {
               "browserTarget": "bordbuch-wsp-ws:build:development"
+            },
+            "test": {
+              "browserTarget": "bordbuch-wsp-ws:build:test"
             }
           },
           "defaultConfiguration": "development"

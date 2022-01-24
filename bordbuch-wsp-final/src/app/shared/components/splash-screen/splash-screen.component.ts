@@ -13,19 +13,19 @@ export class SplashScreenComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // setTimeout(() => {
-    //   this.windowWidth = `-${window.innerWidth+300}px`
-
-    //   setTimeout(() => {
-    //     this.showSplash = !this.showSplash;
-    //   }, 500);
-    // }, 3000);
-  }
-
-  check() {
-    this.windowWidth = `-${window.innerWidth+300}px`
     setTimeout(() => {
-      this.showSplash = !this.showSplash;
-    }, 1500);
+      this.windowWidth = `-${window.innerWidth+300}px`
+
+      setTimeout(() => {
+        this.showSplash = !this.showSplash;
+      }, 500);
+    }, 3000);
   }
+
+  // check() {
+  //   this.windowWidth = `-${window.innerWidth+300}px`
+  //   setTimeout(() => {
+  //     this.showSplash = !this.showSplash;
+  //   }, 1500);
+  // }
 }
