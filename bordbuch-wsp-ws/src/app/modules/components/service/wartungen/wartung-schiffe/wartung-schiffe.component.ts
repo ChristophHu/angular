@@ -57,7 +57,7 @@ export class WartungSchiffeComponent implements OnInit {
     }
   }
 
-  async showModal(schiff: Schiff): Promise<void> {
+  async showModal(schiff?: Schiff): Promise<void> {
     console.log(schiff)
     const { WartungSchiffModalComponent } = await import(
       './wartung-schiff-modal/wartung-schiff-modal.component'
@@ -67,6 +67,12 @@ export class WartungSchiffeComponent implements OnInit {
         data: {
           title: 'Wartung durchführen',
           schiff
+        }
+      })
+    } else {
+      this._modalService.open(WartungSchiffModalComponent, {
+        data: {
+          title: 'Wartung durchführen'
         }
       })
     }

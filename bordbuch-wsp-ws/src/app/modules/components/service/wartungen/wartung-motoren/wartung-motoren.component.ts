@@ -57,7 +57,7 @@ export class WartungMotorenComponent implements OnInit {
     }
   }
 
-  async showModal(zaehlerstand: Zaehlerstand): Promise<void> {
+  async showModal(zaehlerstand?: Zaehlerstand): Promise<void> {
     console.log(zaehlerstand)
     const { WartungMotorModalComponent } = await import(
       './wartung-motor-modal/wartung-motor-modal.component'
@@ -67,6 +67,12 @@ export class WartungMotorenComponent implements OnInit {
         data: {
           title: 'Wartung bearbeiten',
           zaehlerstand
+        }
+      })
+    } else {
+      this._modalService.open(WartungMotorModalComponent, {
+        data: {
+          title: 'Wartung hinzufügen'
         }
       })
     }

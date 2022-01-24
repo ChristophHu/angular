@@ -34,7 +34,7 @@ export class ZaehlerstandModalComponent implements OnInit {
       zaehlerstandstyp: [],
       date: [],
       value: [],
-      betriebsstunden: ['0']
+      betriebsstunden: []
     })
   }
 
