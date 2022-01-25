@@ -14,16 +14,26 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 export class TankModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<TankModalComponent> | undefined;
   title: string = ''
+  tankTabForm: FormGroup
   tankForm: FormGroup
+
+  show: boolean = false
 
   tanks$: Observable<Tank[]>
 
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<TankModalComponent>, private _specFacade: SpecFacade) {
     this.tanks$ = _specFacade.allTanks$
 
+    this.tankTabForm = this._formBuilder.group({
+      id: [],
+      id_schiff: [],
+      name: []
+    })
+
     this.tankForm = this._formBuilder.group({
       id: [],
       id_schiff: [],
+      name: [],
       bezeichnung: [],
       max_vol: []
     })
@@ -32,13 +42,15 @@ export class TankModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.tankForm.patchValue(data.data.tank)
+      this.tankForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
+      this._specFacade.loadTanks(data.data.schiff.id)
     })
   }
 
-  // selectDienststelle(dienststelle: string) {
-  //   this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
-  // }
+  loadTank(tank: Tank) {
+    this.tankForm.patchValue(tank)
+    this.show = !this.show
+  }
 
   create() {
     const insert: Tank = this.tankForm.value

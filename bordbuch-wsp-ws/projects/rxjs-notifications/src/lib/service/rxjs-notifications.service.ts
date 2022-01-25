@@ -22,10 +22,12 @@ export class RxjsNotificationsService {
     return new Observable ((observer) => {
       // add notification
       const id: string = this.generateId()
+      console.log(`neue id: ${id}`)
       const insert: Notification = Object.assign({}, notification, { id: id, date: new Date().toISOString() })
 
       // add notification to database
       this.dataStore.notifications.push(insert)
+      console.log(`datastore: ${this.dataStore.notifications}`)
     	this._notifications$.next(Object.assign({}, this.dataStore).notifications)
 
       // 

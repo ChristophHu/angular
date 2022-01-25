@@ -136,6 +136,9 @@ export class SpecFacade {
     deleteTank(id: string,) {
         this.store.dispatch(SpecActions.deleteTank({ id }))
     }
+    // getTankById(id: string): Observable<Tank[] | undefined> {
+    //     return this.store.pipe(select(SpecSelectors.selectTanks))
+    // }
 
     // zaehlerstaende
     loadAllZaehlerstaende() {

@@ -65,7 +65,6 @@ export class AuthService {
       let xmlhttp = new XMLHttpRequest()
 
       xmlhttp.onreadystatechange = () => {
-        console.log(xmlhttp.readyState)
         if (xmlhttp.readyState == 4) {
           if (xmlhttp.status == 200) {
             observer.next(xmlhttp.responseText)
