@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
+            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
                 <td>{{ zaehlerstand.name }}</td>
                 <td hidden>{{ zaehlerstand.id }}</td>
                 <td hidden>{{ zaehlerstand.id_schiff }}</td>

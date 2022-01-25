@@ -22,7 +22,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <mat-select formControlName="schiffsname" (selectionChange)="selectShip($event.value)">
-          <mat-option *ngFor="let schiff of (schiffe$ | async)" [value]="schiff.name">
+          <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
             {{ schiff.name }}
           </mat-option>
         </mat-select>
@@ -30,7 +30,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Kennung</mat-label>
         <mat-select formControlName="kennung" >
-          <mat-option *ngFor="let kennung of (kennungen$ | async)" [value]="kennung.bezeichnung">
+          <mat-option *ngFor="let kennung of (kennungen$ | async | toArray)" [value]="kennung.bezeichnung">
             {{ kennung.bezeichnung }}
           </mat-option>
         </mat-select>
@@ -38,7 +38,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Zweck</mat-label>
         <mat-select formControlName="zweck">
-          <mat-option *ngFor="let zweck of (zwecke$ | async)" [value]="zweck.bezeichnung">
+          <mat-option *ngFor="let zweck of (zwecke$ | async | toArray)" [value]="zweck.bezeichnung">
             {{ zweck.bezeichnung }}
           </mat-option>
         </mat-select>

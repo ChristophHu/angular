@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let schiff of (schiffe$ | async)">
+            <tr *ngFor="let schiff of (schiffe$ | async | toArray)">
                 <td>{{ schiff.name }}</td>
                 <td hidden>{{ schiff.id }}</td>
                 <td>{{ schiff.dienststelle }}</td>

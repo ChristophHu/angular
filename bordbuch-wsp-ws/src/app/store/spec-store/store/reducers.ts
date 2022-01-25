@@ -5,6 +5,7 @@ import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
+import { checkStateForEmptyArrays } from "src/app/shared/utils"
 import { deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
@@ -43,7 +44,7 @@ export const reducer = createReducer(
     }),
     on(insertBetankungSuccess, (state, action) => {
         let betankung: Betankung = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedBetankungen: Betankung[] | undefined = state.betankungen
+        let clearedBetankungen: Betankung[] | undefined = checkStateForEmptyArrays(state.betankungen)
         clearedBetankungen = clearedBetankungen?.filter(el => el.id != action.id)
         clearedBetankungen = [...clearedBetankungen!, ...[betankung]]
         return {
@@ -52,7 +53,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateBetankungSuccess, (state, action) => {
-        let clearedBetankungen: Betankung[] | undefined = state.betankungen
+        let clearedBetankungen: Betankung[] | undefined = checkStateForEmptyArrays(state.betankungen)
         clearedBetankungen = clearedBetankungen?.filter(el => el.id != action.action.update.id)
         clearedBetankungen = [...clearedBetankungen!, ...[action.action.update]]
         return {
@@ -61,7 +62,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteBetankungSuccess, (state, action) => {
-        let clearedBetankungen: Betankung[] | undefined = state.betankungen
+        let clearedBetankungen: Betankung[] | undefined = checkStateForEmptyArrays(state.betankungen)
         clearedBetankungen = clearedBetankungen?.filter(el => el.id != action.id)
         clearedBetankungen = [...clearedBetankungen!]
         return {
@@ -79,7 +80,7 @@ export const reducer = createReducer(
     }),
     on(insertShipChecklistSuccess, (state, action) => {
         let checklist: Checklist = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedCheckliste: Checklist[] | undefined = state.checklists
+        let clearedCheckliste: Checklist[] | undefined = checkStateForEmptyArrays(state.checklists)
         clearedCheckliste = clearedCheckliste?.filter(el => el.id_schiff != action.action.insert.id_schiff)
         clearedCheckliste = [...clearedCheckliste!, ...[checklist]]
         return {
@@ -88,7 +89,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteShipChecklistSuccess, (state, action) => {
-        let clearedShipCheckliste: Checklist[] | undefined = state.checklists
+        let clearedShipCheckliste: Checklist[] | undefined = checkStateForEmptyArrays(state.checklists)
         clearedShipCheckliste = clearedShipCheckliste?.filter(el => el.id != action.id && el.datum != action.date)
         clearedShipCheckliste = [...clearedShipCheckliste!]
         return {
@@ -107,7 +108,7 @@ export const reducer = createReducer(
     }),
     on(insertReparaturSuccess, (state, action) => {
         let reparatur: Reparatur = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedReparaturen: Reparatur[] | undefined = state.reparaturen
+        let clearedReparaturen: Reparatur[] | undefined = checkStateForEmptyArrays(state.reparaturen)
         clearedReparaturen = clearedReparaturen?.filter(el => el.id != action.action.insert.id)
         clearedReparaturen = [...clearedReparaturen!, ...[reparatur]]
         return {
@@ -117,7 +118,7 @@ export const reducer = createReducer(
     }),
     on(updateReparaturSuccess, (state, action) => {
         // let reparatur: Reparatur = Object.assign({}, action.action.update, { id: action.id })
-        let clearedReparaturen: Reparatur[] | undefined = state.reparaturen
+        let clearedReparaturen: Reparatur[] | undefined = checkStateForEmptyArrays(state.reparaturen)
         clearedReparaturen = clearedReparaturen?.filter(el => el.id != action.action.update.id)
         clearedReparaturen = [...clearedReparaturen!, ...[action.action.update]]
         return {
@@ -126,7 +127,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteReparaturSuccess, (state, action) => {
-        let clearedReparaturen: Reparatur[] | undefined = state.reparaturen
+        let clearedReparaturen: Reparatur[] | undefined = checkStateForEmptyArrays(state.reparaturen)
         clearedReparaturen = clearedReparaturen?.filter(el => el.id != action.id)
         clearedReparaturen = [...clearedReparaturen!]
         return {
@@ -144,7 +145,7 @@ export const reducer = createReducer(
     }),
     on(uploadReparaturFotoSuccess, (state, action) => {
         let reparaturfoto: any = Object.assign({}, action.action.upload, { id: action.id })
-        let cleared: any[] | undefined = state.reparaturfotos
+        let cleared: any[] | undefined = checkStateForEmptyArrays(state.reparaturfotos)
         cleared = cleared?.filter(el => el.id != action.action.upload.id)
         cleared = (cleared) ? [...cleared!, ...[reparaturfoto]] : [reparaturfoto]
         return {
@@ -153,7 +154,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteReparaturFotoSuccess, (state, action) => {
-        let cleared: any[] | undefined = state.reparaturfotos
+        let cleared: any[] | undefined = checkStateForEmptyArrays(state.reparaturfotos)
         cleared = cleared?.filter(el => el.id != action.id)
         cleared = [...cleared!]
         return {
@@ -180,7 +181,7 @@ export const reducer = createReducer(
     }),
     on(insertStandortSuccess, (state, action) => {
         let standort: Standort = Object.assign({}, action.action.insert, { id: action.id })
-        let cleared: Standort[] | undefined = state.standorte
+        let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.standorte)
         cleared = cleared?.filter(el => el.id != action.action.insert.id)
         cleared = [...cleared!, ...[standort]]
         return {
@@ -190,7 +191,7 @@ export const reducer = createReducer(
     }),
     on(updateStandortSuccess, (state, action) => {
         // let standort: Standort = Object.assign({}, action.action.update, { id: action.id })
-        let cleared: Standort[] | undefined = state.standorte
+        let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.standorte)
         cleared = cleared?.filter(el => el.id != action.action.update.id)
         cleared = [...cleared!, ...[action.action.update]]
         return {
@@ -199,7 +200,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteStandortSuccess, (state, action) => {
-        let cleared: Standort[] | undefined = state.laststandorte
+        let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.laststandorte)
         cleared = cleared?.filter(el => el.id != action.id)
         cleared = [...cleared!]
         return {
@@ -217,7 +218,7 @@ export const reducer = createReducer(
     }),
     on(insertStreifeSuccess, (state, action) => {
         let streife: Streife = Object.assign({}, action.action.insert, { id: action.id })
-        let cleared: Streife[] | undefined = state.streifen
+        let cleared: Streife[] | undefined = checkStateForEmptyArrays(state.streifen)
         cleared = cleared?.filter(el => el.id != action.action.insert.id)
         cleared = [...cleared!, ...[streife]]
         return {
@@ -226,7 +227,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateStreifeSuccess, (state, action) => {
-        let cleared: Streife[] | undefined = state.streifen
+        let cleared: Streife[] | undefined = checkStateForEmptyArrays(state.streifen)
         cleared = cleared?.filter(el => el.id != action.action.update.id)
         cleared = [...cleared!, ...[action.action.update]]
         return {
@@ -235,7 +236,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteStreifeSuccess, (state, action) => {
-        let cleared: Streife[] | undefined = state.streifen
+        let cleared: Streife[] | undefined = checkStateForEmptyArrays(state.streifen)
         cleared = cleared?.filter(el => el.id != action.id)
         cleared = [...cleared!]
         return {
@@ -253,7 +254,7 @@ export const reducer = createReducer(
     }),
     on(insertZaehlerstandSuccess, (state, action) => {
         let zaehlerstand: Zaehlerstand = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedZaehlerstaende: Zaehlerstand[] | undefined = state.zaehlerstaende
+        let clearedZaehlerstaende: Zaehlerstand[] | undefined = checkStateForEmptyArrays(state.zaehlerstaende)
         clearedZaehlerstaende = clearedZaehlerstaende?.filter(el => el.id != action.id)
         clearedZaehlerstaende = [...clearedZaehlerstaende!, ...[zaehlerstand]]
         return {
@@ -262,7 +263,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateZaehlerstandSuccess, (state, action) => {
-        let clearedZaehlerstaende: Zaehlerstand[] | undefined = state.zaehlerstaende
+        let clearedZaehlerstaende: Zaehlerstand[] | undefined = checkStateForEmptyArrays(state.zaehlerstaende)
         clearedZaehlerstaende = clearedZaehlerstaende?.filter(el => el.id != action.action.update.id)
         clearedZaehlerstaende = [...clearedZaehlerstaende!, ...[action.action.update]]
         return {
@@ -271,7 +272,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteZaehlerstandSuccess, (state, action) => {
-        let clearedZaehlerstaende: Zaehlerstand[] | undefined = state.zaehlerstaende
+        let clearedZaehlerstaende: Zaehlerstand[] | undefined = checkStateForEmptyArrays(state.zaehlerstaende)
         clearedZaehlerstaende = clearedZaehlerstaende?.filter(el => el.id != action.id)
         clearedZaehlerstaende = [...clearedZaehlerstaende!]
         return {

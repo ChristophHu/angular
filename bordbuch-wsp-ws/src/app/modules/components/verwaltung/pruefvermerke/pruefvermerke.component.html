@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let pruefvermerk of (pruefvermerke$ | async)">
+            <tr *ngFor="let pruefvermerk of (pruefvermerke$ | async | toArray)">
                 <td>{{ pruefvermerk.item }}</td>
                 <td hidden>{{ pruefvermerk.id }}</td>
                 <td>{{ pruefvermerk.kategorie }}</td>

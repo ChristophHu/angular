@@ -76,7 +76,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateBetriebsstoffSuccess, (state, action) => {
-        let clearedBetriebsstoffe: Kat[] | undefined = state.betriebsstoffe
+        let clearedBetriebsstoffe: Kat[] | undefined = checkStateForEmptyArrays(state.betriebsstoffe)
         clearedBetriebsstoffe = clearedBetriebsstoffe?.filter(el => el.id != action.update.id)
         clearedBetriebsstoffe = [...clearedBetriebsstoffe!, ...[action.update]]
         return {
@@ -85,7 +85,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteBetriebsstoffSuccess, (state, action) => {
-        let clearedBetriebsstoffe: Kat[] | undefined = state.betriebsstoffe
+        let clearedBetriebsstoffe: Kat[] | undefined = checkStateForEmptyArrays(state.betriebsstoffe)
         clearedBetriebsstoffe = clearedBetriebsstoffe?.filter(el => el.id != action.id)
         clearedBetriebsstoffe = [...clearedBetriebsstoffe!]
         return {
@@ -103,7 +103,7 @@ export const reducer = createReducer(
     }),
     on(insertChecklistSuccess, (state, action) => {
         let checklist: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedCheckliste: Kat[] | undefined = state.checkliste
+        let clearedCheckliste: Kat[] | undefined = checkStateForEmptyArrays(state.checkliste)
         clearedCheckliste = [...clearedCheckliste!, ...[checklist]]
         return {
             ...state,
@@ -111,7 +111,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateChecklistSuccess, (state, action) => {
-        let clearedCheckliste: Kat[] | undefined = state.checkliste
+        let clearedCheckliste: Kat[] | undefined = checkStateForEmptyArrays(state.checkliste)
         clearedCheckliste = clearedCheckliste?.filter(el => el.id != action.update.id)
         clearedCheckliste = [...clearedCheckliste!, ...[action.update]]
         return {
@@ -120,7 +120,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteChecklistSuccess, (state, action) => {
-        let clearedCheckliste: Kat[] | undefined = state.checkliste
+        let clearedCheckliste: Kat[] | undefined = checkStateForEmptyArrays(state.checkliste)
         clearedCheckliste = clearedCheckliste?.filter(el => el.id != action.id)
         clearedCheckliste = [...clearedCheckliste!]
         return {
@@ -138,7 +138,7 @@ export const reducer = createReducer(
     }),
     on(insertDienststelleSuccess, (state, action) => {
         let dienststelle: Dienststelle = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedDienststellen: Dienststelle[] | undefined = state.dienststellen
+        let clearedDienststellen: Dienststelle[] | undefined = checkStateForEmptyArrays(state.dienststellen)
         clearedDienststellen = [...clearedDienststellen!, ...[dienststelle]]
         return {
             ...state,
@@ -146,7 +146,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateDienststelleSuccess, (state, action) => {
-        let clearedDienststellen: Dienststelle[] | undefined = state.dienststellen
+        let clearedDienststellen: Dienststelle[] | undefined = checkStateForEmptyArrays(state.dienststellen)
         clearedDienststellen = clearedDienststellen?.filter(el => el.id != action.update.id)
         clearedDienststellen = [...clearedDienststellen!, ...[action.update]]
         return {
@@ -155,7 +155,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteDienststelleSuccess, (state, action) => {
-        let clearedDienststellen: Dienststelle[] | undefined = state.dienststellen
+        let clearedDienststellen: Dienststelle[] | undefined = checkStateForEmptyArrays(state.dienststellen)
         clearedDienststellen = clearedDienststellen?.filter(el => el.id != action.id)
         clearedDienststellen = [...clearedDienststellen!]
         return {
@@ -173,7 +173,7 @@ export const reducer = createReducer(
     }),
     on(insertFunktionSuccess, (state, action) => {
         let funktion: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedFunktionen: Kat[] | undefined = state.funktionen
+        let clearedFunktionen: Kat[] | undefined = checkStateForEmptyArrays(state.funktionen)
         clearedFunktionen = [...clearedFunktionen!, ...[funktion]]
         return {
             ...state,
@@ -181,7 +181,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateFunktionSuccess, (state, action) => {
-        let clearedFunktionen: Kat[] | undefined = state.funktionen
+        let clearedFunktionen: Kat[] | undefined = checkStateForEmptyArrays(state.funktionen)
         clearedFunktionen = clearedFunktionen?.filter(el => el.id != action.update.id)
         clearedFunktionen = [...clearedFunktionen!, ...[action.update]]
         return {
@@ -190,7 +190,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteFunktionSuccess, (state, action) => {
-        let clearedFunktionen: Kat[] | undefined = state.funktionen
+        let clearedFunktionen: Kat[] | undefined = checkStateForEmptyArrays(state.funktionen)
         clearedFunktionen = clearedFunktionen?.filter(el => el.id != action.id)
         clearedFunktionen = [...clearedFunktionen!]
         return {
@@ -209,7 +209,7 @@ export const reducer = createReducer(
     on(insertKennungSuccess, (state, action) => {
         console.log(action)
         let kennung: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedKennungen: Kat[] | undefined = state.kennungen
+        let clearedKennungen: Kat[] | undefined = checkStateForEmptyArrays(state.kennungen)
         // clearedKennungen = clearedKennungen?.filter(el => el.bezeichnung != action.action.insert.bezeichnung)
         clearedKennungen = [...clearedKennungen!, ...[kennung]]
         return {
@@ -218,7 +218,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateKennungSuccess, (state, action) => {
-        let clearedKennungen: Kat[] | undefined = state.kennungen
+        let clearedKennungen: Kat[] | undefined = checkStateForEmptyArrays(state.kennungen)
         clearedKennungen = clearedKennungen?.filter(el => el.id != action.update.id)
         clearedKennungen = [...clearedKennungen!, ...[action.update]]
         return {
@@ -227,7 +227,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteKennungSuccess, (state, action) => {
-        let clearedKennungen: Kat[] | undefined = state.kennungen
+        let clearedKennungen: Kat[] | undefined = checkStateForEmptyArrays(state.kennungen)
         clearedKennungen = clearedKennungen?.filter(el => el.id != action.id)
         clearedKennungen = [...clearedKennungen!]
         return {
@@ -245,7 +245,7 @@ export const reducer = createReducer(
     }),
     on(insertPruefvermerkSuccess, (state, action) => {
         let pruefvermerk: Pruefvermerk = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedPruefvermerke: Pruefvermerk[] | undefined = state.pruefvermerke
+        let clearedPruefvermerke: Pruefvermerk[] | undefined = checkStateForEmptyArrays(state.pruefvermerke)
         clearedPruefvermerke = [...clearedPruefvermerke!, ...[pruefvermerk]]
         return {
             ...state,
@@ -253,7 +253,7 @@ export const reducer = createReducer(
         }
     }),
     on(updatePruefvermerkSuccess, (state, action) => {
-        let clearedPruefvermerke: Pruefvermerk[] | undefined = state.pruefvermerke
+        let clearedPruefvermerke: Pruefvermerk[] | undefined = checkStateForEmptyArrays(state.pruefvermerke)
         clearedPruefvermerke = clearedPruefvermerke?.filter(el => el.id != action.update.id)
         clearedPruefvermerke = [...clearedPruefvermerke!, ...[action.update]]
         return {
@@ -262,7 +262,7 @@ export const reducer = createReducer(
         }
     }),
     on(deletePruefvermerkSuccess, (state, action) => {
-        let clearedPruefvermerke: Pruefvermerk[] | undefined = state.pruefvermerke
+        let clearedPruefvermerke: Pruefvermerk[] | undefined = checkStateForEmptyArrays(state.pruefvermerke)
         clearedPruefvermerke = clearedPruefvermerke?.filter(el => el.id != action.id)
         clearedPruefvermerke = [...clearedPruefvermerke!]
         return {
@@ -280,7 +280,7 @@ export const reducer = createReducer(
     }),
     on(insertPruefvermerkkategorieSuccess, (state, action) => {
         let pruefvermerkkategorie: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedPruefvermerkkategorien: Kat[] | undefined = state.pruefvermerkKategorien
+        let clearedPruefvermerkkategorien: Kat[] | undefined = checkStateForEmptyArrays(state.pruefvermerkKategorien)
         clearedPruefvermerkkategorien = [...clearedPruefvermerkkategorien!, ...[pruefvermerkkategorie]]
         return {
             ...state,
@@ -288,7 +288,7 @@ export const reducer = createReducer(
         }
     }),
     on(updatePruefvermerkkategorieSuccess, (state, action) => {
-        let clearedPruefvermerkkategorien: Kat[] | undefined = state.pruefvermerkKategorien
+        let clearedPruefvermerkkategorien: Kat[] | undefined = checkStateForEmptyArrays(state.pruefvermerkKategorien)
         clearedPruefvermerkkategorien = clearedPruefvermerkkategorien?.filter(el => el.id != action.update.id)
         clearedPruefvermerkkategorien = [...clearedPruefvermerkkategorien!, ...[action.update]]
         return {
@@ -297,7 +297,7 @@ export const reducer = createReducer(
         }
     }),
     on(deletePruefvermerkkategorieSuccess, (state, action) => {
-        let clearedPruefvermerkkategorien: Kat[] | undefined = state.pruefvermerkKategorien
+        let clearedPruefvermerkkategorien: Kat[] | undefined = checkStateForEmptyArrays(state.pruefvermerkKategorien)
         clearedPruefvermerkkategorien = clearedPruefvermerkkategorien?.filter(el => el.id != action.id)
         clearedPruefvermerkkategorien = [...clearedPruefvermerkkategorien!]
         return {
@@ -315,7 +315,7 @@ export const reducer = createReducer(
     }),
     on(insertSchiffSuccess, (state, action) => {
         let schiff: Schiff = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        let clearedSchiffe: Schiff[] | undefined = checkStateForEmptyArrays(state.schiffe)
         clearedSchiffe = [...clearedSchiffe!, ...[schiff]]
         return {
             ...state,
@@ -323,7 +323,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateSchiffSuccess, (state, action) => {
-        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        let clearedSchiffe: Schiff[] | undefined = checkStateForEmptyArrays(state.schiffe)
         clearedSchiffe = clearedSchiffe?.filter(el => el.id != action.update.id)
         clearedSchiffe = [...clearedSchiffe!, ...[action.update]]
         return {
@@ -332,7 +332,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteSchiffSuccess, (state, action) => {
-        let clearedSchiffe: Schiff[] | undefined = state.schiffe
+        let clearedSchiffe: Schiff[] | undefined = checkStateForEmptyArrays(state.schiffe)
         clearedSchiffe = clearedSchiffe?.filter(el => el.id != action.id)
         clearedSchiffe = [...clearedSchiffe!]
         return {
@@ -350,7 +350,7 @@ export const reducer = createReducer(
     }),
     on(insertStatusSuccess, (state, action) => {
         let status: Status = Object.assign({}, action.action.insert, { id: action.id })
-        let cleared: Status[] | undefined = state.status
+        let cleared: Status[] | undefined = checkStateForEmptyArrays(state.status)
         cleared = [...cleared!, ...[status]]
         return {
             ...state,
@@ -358,7 +358,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateStatusSuccess, (state, action) => {
-        let cleared: Status[] | undefined = state.status
+        let cleared: Status[] | undefined = checkStateForEmptyArrays(state.status)
         cleared = cleared?.filter(el => el.id != action.update.id)
         cleared = [...cleared!, ...[action.update]]
         return {
@@ -367,7 +367,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteStatusSuccess, (state, action) => {
-        let cleared: Status[] | undefined = state.status
+        let cleared: Status[] | undefined = checkStateForEmptyArrays(state.status)
         cleared = cleared?.filter(el => el.id != action.id)
         cleared = [...cleared!]
         return {
@@ -385,7 +385,7 @@ export const reducer = createReducer(
     }),
     on(insertZaehlerstandstypSuccess, (state, action) => {
         let zaehlerstandstyp: Zaehlerstandstyp = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = state.zaehlerstandstypen
+        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = checkStateForEmptyArrays(state.zaehlerstandstypen)
         clearedZaehlerstandstypen = [...clearedZaehlerstandstypen!, ...[zaehlerstandstyp]]
         return {
             ...state,
@@ -393,7 +393,7 @@ export const reducer = createReducer(
         }
     }),
     on(updateZaehlerstandstypSuccess, (state, action) => {
-        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = state.zaehlerstandstypen
+        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = checkStateForEmptyArrays(state.zaehlerstandstypen)
         clearedZaehlerstandstypen = clearedZaehlerstandstypen?.filter(el => el.id != action.update.id)
         clearedZaehlerstandstypen = [...clearedZaehlerstandstypen!, ...[action.update]]
         return {
@@ -402,7 +402,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteZaehlerstandstypSuccess, (state, action) => {
-        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = state.zaehlerstandstypen
+        let clearedZaehlerstandstypen: Zaehlerstandstyp[] | undefined = checkStateForEmptyArrays(state.zaehlerstandstypen)
         clearedZaehlerstandstypen = clearedZaehlerstandstypen?.filter(el => el.id != action.id)
         clearedZaehlerstandstypen = [...clearedZaehlerstandstypen!]
         return {
@@ -421,7 +421,7 @@ export const reducer = createReducer(
     on(insertZweckSuccess, (state, action) => {
         console.log(action)
         let zweck: Kat = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedZweck: Kat[] | undefined = state.zweck
+        let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = [...clearedZweck!, ...[zweck]]
         return {
             ...state,
@@ -430,7 +430,7 @@ export const reducer = createReducer(
     }),
     on(updateZweckSuccess, (state, action) => {
         console.log(action)
-        let clearedZweck: Kat[] | undefined = state.zweck
+        let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = clearedZweck?.filter(el => el.id != action.update.id)
         clearedZweck = [...clearedZweck!, ...[action.update]]
         return {
@@ -440,7 +440,7 @@ export const reducer = createReducer(
     }),
     on(deleteZweckSuccess, (state, action) => {
         console.log(action)
-        let clearedZweck: Kat[] | undefined = state.zweck
+        let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = clearedZweck?.filter(el => el.id != action.id)
         clearedZweck = [...clearedZweck!]
         return {

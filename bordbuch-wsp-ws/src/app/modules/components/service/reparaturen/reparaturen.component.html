@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let reparatur of (reparaturen$ | async)">
+            <tr *ngFor="let reparatur of (reparaturen$ | async | toArray)">
                 <td>{{ reparatur.name }}</td>
                 <td hidden>{{ reparatur.id }}</td>
                 <td>{{ reparatur.id_ship }}</td>

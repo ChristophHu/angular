@@ -26,7 +26,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
-          <mat-option *ngFor="let schiff of (schiffe$ | async)" [value]="schiff.name">
+          <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
             {{ schiff.name }}
           </mat-option>
         </mat-select>
@@ -38,7 +38,7 @@
       <mat-form-field appearance="fill">
           <mat-label>Kategorie</mat-label>
           <mat-select formControlName="kategorie" (selectionChange)="selectKategorie($event.value)">
-            <mat-option *ngFor="let kategorie of (pruefvermerkkategorien$ | async)" [value]="kategorie.bezeichnung">
+            <mat-option *ngFor="let kategorie of (pruefvermerkkategorien$ | async | toArray)" [value]="kategorie.bezeichnung">
               {{ kategorie.bezeichnung }}
             </mat-option>
           </mat-select>
@@ -46,7 +46,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Bestandteil</mat-label>
         <mat-select formControlName="item">
-          <mat-option *ngFor="let item of (items$ | async)" [value]="item.item">
+          <mat-option *ngFor="let item of (items$ | async | toArray)" [value]="item.item">
             {{ item.item }}
           </mat-option>
         </mat-select>
@@ -58,7 +58,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" (selectionChange)="selectStatus($event.value)">
-          <mat-option *ngFor="let status of (status$ | async)" [value]="status.bezeichnung">
+          <mat-option *ngFor="let status of (status$ | async | toArray)" [value]="status.bezeichnung">
             {{ status.bezeichnung }}
           </mat-option>
         </mat-select>
@@ -78,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let foto of (reparaturfotos$ | async); index as i">
+            <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let foto of (reparaturfotos$ | async | toArray); index as i">
               <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
                 {{ i + 1 }}.
               </td>
@@ -93,7 +93,7 @@
             </tr>
           </tbody>
         </table>
-        <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async) != null" (click)="showGalerie = !showGalerie">
+        <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
           {{ reparaturFotoCount$ | async }} Fotos anzeigen
         </button>
       </div>

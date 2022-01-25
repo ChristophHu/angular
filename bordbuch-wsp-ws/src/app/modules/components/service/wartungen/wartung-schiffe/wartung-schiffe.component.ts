@@ -72,7 +72,7 @@ export class WartungSchiffeComponent implements OnInit {
     } else {
       this._modalService.open(WartungSchiffModalComponent, {
         data: {
-          title: 'Wartung durchführen'
+          title: 'Wartung hinzufügen'
         }
       })
     }

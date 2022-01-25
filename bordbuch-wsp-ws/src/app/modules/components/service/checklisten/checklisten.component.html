@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let checklist of (checklists$ | async)">
+            <tr *ngFor="let checklist of (checklists$ | async | toArray)">
                 <td>{{ checklist.name }}</td>
                 <td hidden>{{ checklist.id_schiff }}</td>
                 <td>{{ checklist.datum | date:"dd.MM.yyyy" }}</td>

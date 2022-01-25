@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zweck of (zweck$ | async)">
+            <tr *ngFor="let zweck of (zweck$ | async | toArray)">
                 <td>{{ zweck.bezeichnung }}</td>
                 <td hidden>{{ zweck.id }}</td>
                 <td class="flex flex-row justify-start text-gray-500">

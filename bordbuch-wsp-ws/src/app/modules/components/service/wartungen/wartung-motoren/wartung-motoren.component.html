@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
+            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
                 <td>{{ zaehlerstand.name }}</td>
                 <td hidden>{{ zaehlerstand.id }}</td>
                 <td hidden>{{ zaehlerstand.id_schiff }}</td>
@@ -33,6 +33,6 @@
         <span class="h-6 w-6 mr-2">
             <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
         </span>
-        Wartung aufnehmen
+        Wartung hinzufügen
     </button>
 </div>
