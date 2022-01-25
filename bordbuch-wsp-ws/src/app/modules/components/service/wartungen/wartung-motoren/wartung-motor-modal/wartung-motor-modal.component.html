@@ -9,7 +9,7 @@
     </header>
     <div class="content">
         <form [formGroup]="zaehlerstandForm">
-            <div class="hidden">
+            <div class="">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
                 <input matInput type="text" formControlName="id" readonly>
@@ -23,13 +23,29 @@
                 <input matInput type="text" formControlName="id_zaehlerstandstyp" readonly>
               </mat-form-field>
             </div>
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
               <input matInput type="text" formControlName="name" readonly>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
+                <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
+                  {{ schiff.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- <mat-form-field appearance="fill">
               <mat-label>Typ</mat-label>
               <input matInput type="text" formControlName="zaehlerstandstyp" readonly>
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Zählerstandstyp</mat-label>
+              <mat-select formControlName="zaehlerstandstyp" (selectionChange)="selectZaehlerstandstyp($event.value)">
+                <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)" [value]="zaehlerstandstyp.bezeichnung">
+                  {{ zaehlerstandstyp.bezeichnung }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Datum/Uhrzeit</mat-label>
@@ -37,7 +53,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Betriebsstunden</mat-label>
-              <input matInput type="text" formControlName="value" readonly>
+              <input matInput type="text" formControlName="value">
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Nächste Durchsicht bei</mat-label>

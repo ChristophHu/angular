@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api';
+import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
+import { Observable, Subject, take } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
@@ -17,8 +19,12 @@ export class KatBetriebsstoffeComponent implements OnInit {
 
   betriebsstoffe$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatBetriebsstoffeModalComponent>, private _katFacade: KatFacade) {
-    this.betriebsstoffe$ = _katFacade.betriebsstoffe$
+  constructor(
+    private _modalService: ModalService<KatBetriebsstoffeModalComponent>, 
+    private _katFacade: KatFacade,
+    private _RxjsNotificationService: RxjsNotificationsService) 
+    {
+      this.betriebsstoffe$ = _katFacade.betriebsstoffe$
   }
 
   ngOnInit(): void {
@@ -78,6 +84,10 @@ export class KatBetriebsstoffeComponent implements OnInit {
   }
 
   delete(id: string) {
-    this._katFacade.deleteBetriebsstoffe(id)
+    const notification: Notification = { content: 'Soll dierer Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
+    this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
+      console.log(response)
+      if (response) this._katFacade.deleteBetriebsstoffe(id)
+    })
   }
 }

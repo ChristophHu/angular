@@ -8,9 +8,7 @@ export class ToArrayPipe implements PipeTransform {
     if (!this.isObject(input)) {
       return input
     }
-    console.log('toArray-pipe: isObject')
     const output = Object.keys(input).map(value => input[value])
-    console.log(output)
     return Object.keys(input).map(value => input[value])
   }
 

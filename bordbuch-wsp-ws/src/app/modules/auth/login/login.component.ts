@@ -69,7 +69,5 @@ export class LoginComponent implements OnInit {
 		this.modalService.open(ChangelogComponent, {})
 	}
 
-	ngOnInit(): void {
-		console.log('LoginComponent')
-	}
+	ngOnInit(): void {}
 }

@@ -23,6 +23,7 @@ import { CarouselItemDirective } from './directives/carousel-item.directive'
 import { IvyCarouselModule } from 'image-carousel'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
 import { BarChartVerticalComponent } from './components/charts/bar-chart-vertical/bar-chart-vertical.component'
+import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-api'
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { BarChartVerticalComponent } from './components/charts/bar-chart-vertica
     ImageBase64UploadModule,
     IconLibraryModule,
     IvyCarouselModule,
+    RxjsNotificationsModule,
 
     // mat
     MatInputModule,

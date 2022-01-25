@@ -8,17 +8,7 @@ import { Status } from 'src/app/core/models/reparatur-status.model'
 import { Schiff } from 'src/app/core/models/schiff.model'
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model'
 import { AppService } from 'src/app/core/services/app.service'
-// import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model'
-// import { Checklistitem } from 'src/app/core/model/checklistitem.model'
-// import { Dienststelle } from 'src/app/core/model/dienststelle.model'
-// import { Funktion } from 'src/app/core/model/funktion.model'
-// import { Kennung } from 'src/app/core/model/kennung.model'
-// import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
-// import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
-// import { ShipSelection } from 'src/app/core/model/ship-selection.model'
-// import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
-// import { Zweck } from 'src/app/core/model/zwecke.model'
-// import { AppService } from 'src/app/core/services/app.service'
+
 import {
     loadBetriebsstoffe, loadedBetriebsstoffe, insertBetriebsstoff, insertBetriebsstoffSuccess, updateBetriebsstoff, updateBetriebsstoffSuccess, deleteBetriebsstoff, deleteBetriebsstoffSuccess,
     loadCheckliste, loadedCheckliste, insertChecklist, insertChecklistSuccess, updateChecklist, updateChecklistSuccess, deleteChecklist, deleteChecklistSuccess,
@@ -388,7 +378,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadZaehlerstandstypen),
             concatMap(action => this.appService.getZaehlerstandstypen()),
-            tap(value => console.log(value)),
             map((kat: Zaehlerstandstyp[]) => loadedZaehlerstandstypen({ kat }))
         )
     })

@@ -152,6 +152,37 @@
           }
         }
       }
+    },
+    "rxjs-notifications": {
+      "projectType": "library",
+      "root": "projects/rxjs-notifications",
+      "sourceRoot": "projects/rxjs-notifications/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/rxjs-notifications/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/rxjs-notifications/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/rxjs-notifications/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rxjs-notifications/src/test.ts",
+            "tsConfig": "projects/rxjs-notifications/tsconfig.spec.json",
+            "karmaConfig": "projects/rxjs-notifications/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "bordbuch-wsp-ws"

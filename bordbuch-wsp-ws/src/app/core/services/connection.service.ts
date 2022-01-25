@@ -8,16 +8,12 @@ export class ConnectionService {
   private backendUrl: string = ''
   private token     : string = ''
 
-  constructor() {
-    console.log('ConnectionService constructor')
-  }
+  constructor() { }
 
   getBackendUrl(): string {
-    console.log(this.backendUrl)
     return this.backendUrl
   }
   setBackendUrl(backendUrl: string) {
-    console.log(backendUrl)
     this.backendUrl = backendUrl
   }
 
