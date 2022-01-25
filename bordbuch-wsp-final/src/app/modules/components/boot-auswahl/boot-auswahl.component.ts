@@ -25,7 +25,6 @@ export class BootAuswahlComponent {
   bordbuchForm: FormGroup
   
   constructor(private formBuilder: FormBuilder, private store: Store<RootStoreState>, private modalService: ModalService<QrscannerComponent>) {
-    console.log('boot-auswahl constructor')
     this.bordbuchForm = this.formBuilder.group({
       bordbuch: []
     })
@@ -40,6 +39,7 @@ export class BootAuswahlComponent {
 
   selectSchiff(id_ship: string) {
     this.selectedIdShip = id_ship
+    console.log(id_ship)
   }
 
   async showModal(): Promise<void> {

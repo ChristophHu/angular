@@ -6,7 +6,5 @@ import { Component } from '@angular/core'
   styleUrls: ['./mobile.component.sass']
 })
 export class MobileComponent {
-  constructor() {
-    console.log('mobile component init')
-  }
+  constructor() { }
 }

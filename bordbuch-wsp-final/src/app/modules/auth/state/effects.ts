@@ -17,14 +17,12 @@ export class AuthEffects {
     logout$ = createEffect(() => 
         this.actions$.pipe(
             ofType(logout),
-            tap(action => {
+            tap(() => {
                 localStorage.removeItem('user')
-                this.router.navigateByUrl('/')
+                this.router.navigateByUrl('/login')
             })
         )
     , { dispatch: false })
 
-    constructor(private actions$: Actions, private router: Router) {
-
-    }
+    constructor(private actions$: Actions, private router: Router) { }
 }
