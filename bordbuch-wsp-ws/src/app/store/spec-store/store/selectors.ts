@@ -34,7 +34,7 @@ export const selectAllReparaturen = createSelector(
 )
 export const selectReparaturen = (status: string) => createSelector(
     selectAllReparaturen,
-    reparaturen => reparaturen?.filter(el => el.status == status)
+    reparaturen => reparaturen?.filter(el => el.status == status || status == 'alle')
 )
 
 // reparaturfotos

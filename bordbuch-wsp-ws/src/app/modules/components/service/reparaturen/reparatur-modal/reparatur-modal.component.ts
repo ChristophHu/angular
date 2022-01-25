@@ -81,7 +81,10 @@ export class ReparaturModalComponent implements OnInit {
     this.items$ = this._katFacade.getItemByKategorie(kategorie)
   }
   selectStatus(status: string) {
-    this._katFacade.getIdByStatus(status).subscribe(id => this.reparaturForm.patchValue({ id_status: id }))
+    this._katFacade.getIdByStatus(status).subscribe(id => {
+      this.reparaturForm.patchValue({ id_status: id })
+      console.log(id)
+    })
   }
 
   decodeImages(data: any[]) {
@@ -99,6 +102,7 @@ export class ReparaturModalComponent implements OnInit {
 
   create() {
     const insert: Reparatur = this.reparaturForm.value
+    console.log(insert)
     this._specFacade.insertReparatur(insert)
     this.modal?.close()
   }

@@ -1,5 +1,6 @@
 <div class="container mx-auto p-4 mb-8">
     <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let kat of (kat$ | async)" [ngClass]="(status == kat.bezeichnung) ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen(kat.bezeichnung)">{{ kat.bezeichnung }}</button>
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(status == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen('alle')">Alle</button>
 </div>
 
 <div class="container mx-auto px-4">

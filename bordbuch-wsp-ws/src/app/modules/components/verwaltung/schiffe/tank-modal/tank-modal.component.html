@@ -12,34 +12,26 @@
         Schiff
       </p>
       <form [formGroup]="tankTabForm">
-          <div class="hidden">
-            <mat-form-field appearance="fill">
-              <mat-label>id</mat-label>
-              <input matInput type="text" formControlName="id" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-              <mat-label>id_schiff</mat-label>
-              <input matInput type="text" formControlName="id_schiff" readonly>
-            </mat-form-field>
-          </div>
+        <div class="hidden">
           <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" formControlName="name" readonly>
-          </mat-form-field>
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Bezeichnung</mat-label>
-            <input matInput type="text" formControlName="bezeichnung">
+            <mat-label>id</mat-label>
+            <input matInput type="text" formControlName="id" readonly>
           </mat-form-field>
           <mat-form-field appearance="fill">
-            <mat-label>Max. Volumen</mat-label>
-            <input matInput type="text" formControlName="max_vol">
-        </mat-form-field> -->
+            <mat-label>id_schiff</mat-label>
+            <input matInput type="text" formControlName="id_schiff" readonly>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name" readonly>
+        </mat-form-field>
       </form>
 
       <p class="mt-5 p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
-        Checkliste
+        Tank
       </p>
-      <div class="w-full overflow-x-scroll xl:overflow-x-hidden">
+      <div class="w-full overflow-x-hidden xl:overflow-x-hidden"><!-- overflow-x-scrol -->
         <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
           <thead>
               <tr class="w-full h-12 border-gray-300 border-b py-8">
