@@ -8,9 +8,7 @@ export class ConnectionService {
   private backendUrl: string = ''
   private token     : string = ''
 
-  constructor() {
-    
-  }
+  constructor() { }
 
   getBackendUrl(): string {
     return this.backendUrl

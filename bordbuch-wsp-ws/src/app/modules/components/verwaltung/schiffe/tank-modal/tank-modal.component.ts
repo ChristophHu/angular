@@ -35,7 +35,7 @@ export class TankModalComponent implements OnInit {
     this.tankForm = this._formBuilder.group({
       id: [],
       id_schiff: [],
-      name: [],
+      schiffsname: [],
       bezeichnung: [],
       max_vol: []
     })
@@ -45,12 +45,13 @@ export class TankModalComponent implements OnInit {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
       this.tankTabForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
-      this.tankForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
+      this.tankForm.patchValue({ id_schiff: data.data.schiff.id, schiffsname: data.data.schiff.name })
       this._specFacade.loadTanks(data.data.schiff.id)
     })
   }
 
   loadTank(tank: Tank) {
+    console.log(tank)
     this.tankForm.patchValue(tank)
     this.show = !this.show
   }

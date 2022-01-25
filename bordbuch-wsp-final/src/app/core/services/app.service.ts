@@ -22,10 +22,6 @@ import { LocationService } from './location.service';
     providedIn: 'root'
 })
 export class AppService {
-    // connection
-    private token: string = ''
-    private backendUrl: string = '' //'https://polosk-lb.int.polizei.berlin.de/polwsp/PolWSP.asmx'
-
     private patrol!: Patrol
 
     // position
@@ -41,20 +37,24 @@ export class AppService {
     constructor(
         private httpClient: HttpClient,
         private store: Store,
-        private _ConnectionService: ConnectionService,
+        private _connectionService: ConnectionService,
         private locationService: LocationService
         ) {
         this.store.pipe(select(selectToken)).subscribe(token => {
-            this._ConnectionService.setToken(token)
+            this._connectionService.setToken(token)
         })
         this.store.pipe(select(selectBackendUrl)).subscribe(backendUrl => {
-            this._ConnectionService.setBackendUrl(backendUrl)
+            this._connectionService.setBackendUrl(backendUrl)
         })
     }
 
     private reducer(action: string, data: any): Observable<any> {
+        const backendUrl: string = this._connectionService.getBackendUrl()
+        const token     : string = this._connectionService.getToken()
+
         console.info(`reducer | action: '${action}', data: ${data}`)
-        const baseURL = `${this.backendUrl}/${action}`
+
+        const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
 
@@ -64,6 +64,7 @@ export class AppService {
                 break
 
             case 'updateStreife':
+                console.log(`${data}`)
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
 
@@ -132,22 +133,23 @@ export class AppService {
                 console.error('There is no action to switch.')
                 break
         }
+
+        console.info(`backendurl: '${baseURL}', param: ${param}`)
         
         return this.httpClient.post(
             baseURL, 
             param, 
             { headers: { 
                 'Content-Type': 'application/x-www-form-urlencoded', 
-                'Authorization': this.token 
+                'Authorization': token 
             }}
         ) // .pipe(retry(2), take(1))
     }
 
     private getReducer(action: string, data: any): any {
-        const backendUrl: string = this._ConnectionService.getBackendUrl()
-        const token     : string = this._ConnectionService.getToken()
+        const backendUrl: string = this._connectionService.getBackendUrl()
+        const token     : string = this._connectionService.getToken()
 
-        // console.info(`token: ${token} /n backendUrl: ${this.backendUrl}`)
         console.info(`getreducer | action: '${action}', data: `, data)
 
         const baseURL = `${backendUrl}/${action}`
@@ -207,6 +209,7 @@ export class AppService {
         })
     }
     updateStreife(patrol: Patrol): Observable<any> {
+        console.log(patrol)
         return new Observable ((observer) => {
             const source$ = this.reducer('updateStreife', patrol)
             source$.subscribe((status: any) => {
