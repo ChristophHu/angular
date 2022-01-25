@@ -49,6 +49,7 @@ export class WartungMotorModalComponent implements OnInit {
   }
 
   selectZaehlerstandstyp(zaehlerstandstyp: string) {
+    console.log(zaehlerstandstyp)
     this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
   }
 

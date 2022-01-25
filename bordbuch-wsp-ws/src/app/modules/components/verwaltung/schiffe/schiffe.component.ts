@@ -5,6 +5,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { ChecklisteModalComponent } from './checkliste-modal/checkliste-modal.component';
 import { SchiffModalComponent } from './schiff-modal/schiff-modal.component';
+import { TankModalComponent } from './tank-modal/tank-modal.component';
 
 @Component({
   selector: 'app-schiffe',
@@ -21,6 +22,7 @@ export class SchiffeComponent implements OnInit {
   constructor(
     private _modalService: ModalService<SchiffModalComponent>,
     private _modalServiceChecklist: ModalService<ChecklisteModalComponent>,
+    private _modalServiceTank: ModalService<TankModalComponent>,
     private _katFacade: KatFacade) {
       this.schiffe$ = _katFacade.schiffe$
     }
@@ -88,6 +90,19 @@ export class SchiffeComponent implements OnInit {
     this._modalServiceChecklist.open(ChecklisteModalComponent, {
       data: {
         title: 'Checkliste bearbeiten',
+        schiff
+      }
+    })
+  }
+
+  async showTankModal(schiff: Schiff): Promise<void> {
+    const { TankModalComponent } = await import(
+      './tank-modal/tank-modal.component'
+    )
+
+    this._modalServiceTank.open(TankModalComponent, {
+      data: {
+        title: 'Tanks bearbeiten',
         schiff
       }
     })

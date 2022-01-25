@@ -4,6 +4,7 @@ import { Checklist } from "src/app/core/models/checklist.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
+import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 
 // betankungen
@@ -196,6 +197,40 @@ export const deleteStreife = createAction(
 )
 export const deleteStreifeSuccess = createAction(
 	"[Modal Streife Dialog] Delete Streife Success",
+	props<{ id: string }>()
+)
+
+// tanks
+export const loadTanks = createAction(
+	"[Ship Resolver] Load Tanks",
+	props<{ id: string }>()
+)
+export const loadedTanks = createAction(
+	"[Load Spec Effect] Tanks Loaded",
+	props<{ tanks: Tank[] }>()
+)
+export const insertTank = createAction(
+	"[Edit Tank Dialog] Tank Insert",
+	props<{ insert: Tank }>()
+)
+export const insertTankSuccess = createAction(
+	"[Edit Tank Dialog] Tank Insert Success",
+	props<{ action: { insert: Tank }, id: string }>()
+)
+export const updateTank = createAction(
+	"[Edit Tank Dialog] Tank Update",
+	props<{ update: Tank }>()
+)
+export const updateTankSuccess = createAction(
+	"[Edit Tank Dialog] Tank Update Success",
+	props<{ action: { update: Tank }, id: string }>()
+)
+export const deleteTank = createAction(
+	"[Modal Tank Dialog] Delete Tank",
+	props<{ id: string }>()
+)
+export const deleteTankSuccess = createAction(
+	"[Modal Tank Dialog] Delete Tank Success",
 	props<{ id: string }>()
 )
 

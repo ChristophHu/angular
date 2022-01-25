@@ -13,6 +13,7 @@ import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model";
 import { Reparatur } from "src/app/core/models/reparatur.model";
 import { Streife } from "src/app/core/models/streife.model";
 import { Standort } from "src/app/core/models/standort.model";
+import { Tank } from "src/app/core/models/tank.model";
 
 @Injectable()
 export class SpecFacade {
@@ -25,6 +26,7 @@ export class SpecFacade {
     allLastStandorte$ = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$ = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
     allStreifen$  = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>
+    allTanks$           = this.store.pipe(select(SpecSelectors.selectTanks)) as Observable<Tank[]>
     allZaehlerstaende$  = this.store.pipe(select(SpecSelectors.selectAllZaehlerstaende)) as Observable<Zaehlerstand[]>
 
     constructor(private store: Store<RootStoreState>) {}
@@ -119,6 +121,20 @@ export class SpecFacade {
     }
     getStreifen(status: string): Observable<Streife[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectStreifen(status)))
+    }
+
+    // tanks
+    loadTanks(id: string) {
+        this.store.dispatch(SpecActions.loadTanks({ id }))
+    }
+    insertTank(insert: Tank) {
+        this.store.dispatch(SpecActions.insertTank({ insert }))
+    }
+    updateTank(update: Tank) {
+        this.store.dispatch(SpecActions.updateTank({ update }))
+    }
+    deleteTank(id: string,) {
+        this.store.dispatch(SpecActions.deleteTank({ id }))
     }
 
     // zaehlerstaende

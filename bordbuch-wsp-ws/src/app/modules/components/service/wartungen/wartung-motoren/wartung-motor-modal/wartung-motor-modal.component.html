@@ -42,14 +42,14 @@
             <mat-form-field appearance="fill">
               <mat-label>Zählerstandstyp</mat-label>
               <mat-select formControlName="zaehlerstandstyp" (selectionChange)="selectZaehlerstandstyp($event.value)">
-                <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)" [value]="zaehlerstandstyp.bezeichnung">
-                  {{ zaehlerstandstyp.bezeichnung }}
+                <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)" [value]="zaehlerstandstyp.zaehlerstandstyp">
+                  {{ zaehlerstandstyp.zaehlerstandstyp }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Datum/Uhrzeit</mat-label>
-              <input matInput type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}" readonly>
+              <input matInput type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Betriebsstunden</mat-label>

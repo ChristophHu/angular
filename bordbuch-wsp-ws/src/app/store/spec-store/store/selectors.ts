@@ -73,6 +73,12 @@ export const selectStreifen = (status: string) => createSelector(
     streifen => streifen?.filter(el => el.status == status)
 )
 
+// tanks
+export const selectTanks = createSelector(
+    specState,
+    state => state.tanks
+)
+
 // zaehlerstaende
 export const selectAllZaehlerstaende = createSelector(
     specState,

@@ -4,9 +4,10 @@ import { Checklist } from "src/app/core/models/checklist.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
+import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
     checklists      : Checklist[]       | undefined
@@ -16,6 +17,7 @@ export interface State {
     laststandorte   : Standort[]        | undefined
     standorte       : Standort[]        | undefined
     streifen        : Streife[]         | undefined
+    tanks           : Tank[]            | undefined
     zaehlerstaende  : Zaehlerstand[]    | undefined
     isAllDataLoaded : boolean
 }
@@ -28,6 +30,7 @@ export const initialDataState: State = {
     laststandorte   : undefined,
     standorte       : undefined,
     streifen        : undefined,
+    tanks           : undefined,
     zaehlerstaende  : undefined,
     isAllDataLoaded : false
 }
@@ -242,6 +245,42 @@ export const reducer = createReducer(
         return {
             ...state,
             streifen: cleared
+        }
+    }),
+
+    // tanks
+    on(loadedTanks, (state, action) => {
+        return {
+            ...state,
+            tanks: action.tanks
+        }
+    }),
+    on(insertTankSuccess, (state, action) => {
+        let tank: Tank = Object.assign({}, action.action.insert, { id: action.id })
+        let cleared: Tank[] | undefined = checkStateForEmptyArrays(state.tanks)
+        cleared = cleared?.filter(el => el.id != action.action.insert.id)
+        cleared = [...cleared!, ...[tank]]
+        return {
+            ...state,
+            tanks: cleared
+        }
+    }),
+    on(updateTankSuccess, (state, action) => {
+        let cleared: Tank[] | undefined = checkStateForEmptyArrays(state.tanks)
+        cleared = cleared?.filter(el => el.id != action.action.update.id)
+        cleared = [...cleared!, ...[action.action.update]]
+        return {
+            ...state,
+            tanks: cleared
+        }
+    }),
+    on(deleteTankSuccess, (state, action) => {
+        let cleared: Tank[] | undefined = checkStateForEmptyArrays(state.tanks)
+        cleared = cleared?.filter(el => el.id != action.id)
+        cleared = [...cleared!]
+        return {
+            ...state,
+            tanks: cleared
         }
     }),
 

@@ -13,6 +13,7 @@ import { Reparatur } from '../models/reparatur.model';
 import { Schiff } from '../models/schiff.model';
 import { Standort } from '../models/standort.model';
 import { Streife } from '../models/streife.model';
+import { Tank } from '../models/tank.model';
 import { Zaehlerstand } from '../models/zaehlerstand.model';
 import { Zaehlerstandstyp } from '../models/zaehlerstandstyp.model';
 import { ConnectionService } from './connection.service';
@@ -43,24 +44,20 @@ export class AppService {
         switch (action) {
 
             // besatzung
-            case 'insertBesatzung': {
+            case 'insertBesatzung':
                 param = `id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
                 break
-            }
-            case 'updateBesatzung': {
+            case 'updateBesatzung':
                 param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
                 break
-            }
-            case 'deleteBesatzung': {
+            case 'deleteBesatzung':
                 param = `id=${data}`
                 break
-            }
 
             // betankung
-            case 'insertBetankung': {
+            case 'insertBetankung':
                 param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
-            }
             case 'updateBetankung':
                 param = `id=${data.id}&id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
@@ -70,10 +67,9 @@ export class AppService {
                 break
 
             // peilung
-            case 'insertPeilung': {
+            case 'insertPeilung':
                 param = `id_schiff=${data.id_schiff}&id_tank=${data.id_tank}&vol=${data.vol}&date=${data.date}`
                 break
-            }
 
             // betriebsstoffe, dienststellen, kennung, pruefvermerkkategorie, zaehlerstandstypen, zweck
             case 'inserteinsatzmittel':
@@ -104,6 +100,7 @@ export class AppService {
             case 'deleteSchiff':
             case 'deleteStatus':
             case 'deleteStreife':
+            case 'deleteTank':
             case 'deleteZaehlerstandsTyp':
                 param = `id=${data}`
                 break
@@ -157,14 +154,20 @@ export class AppService {
                 break
 
             // streife
-            case 'insertStreife': {
+            case 'insertStreife':
                 param = `id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&kennung=${data.kennung}`
                 break
-            }
-            case 'updateStreife': {
+            case 'updateStreife':
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
-            }
+
+            // tank
+            case 'insertTank':
+                param = `id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&max_vol=${data.max_vol}`
+                break
+            case 'updateTank':
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&max_vol=${data.max_vol}`
+                break
 
             // checkliste
             case 'insertCheckliste':
@@ -652,6 +655,25 @@ export class AppService {
     }
     deleteStreife(id: string): Observable<any> {
         return this.delete(id, 'deleteStreife')
+    }
+
+    // tanks
+    getTanksVonSchiff(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getTanksVonSchiff', id)
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertTank(tank: Tank): Observable<any> {
+        return this.insert(tank, 'insertTank')
+    }
+    updateTank(tank: Tank): Observable<any> {
+        return this.update(tank, 'updateTank')
+    }
+    deleteTank(id: string): Observable<any> {
+        return this.delete(id, 'deleteTank')
     }
 
     // zaehlerstandstypen

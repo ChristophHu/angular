@@ -6,6 +6,7 @@ import { Checklist } from 'src/app/core/models/checklist.model'
 import { Reparatur } from 'src/app/core/models/reparatur.model'
 import { Standort } from 'src/app/core/models/standort.model'
 import { Streife } from 'src/app/core/models/streife.model'
+import { Tank } from 'src/app/core/models/tank.model'
 import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model'
 import { AppService } from 'src/app/core/services/app.service'
 
@@ -15,7 +16,7 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess,
 } from './actions'
  
 @Injectable()
@@ -242,6 +243,45 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteStreife(action.id).pipe(
                     map(() => deleteStreifeSuccess(action))
+                )
+            })
+        )
+    })
+
+    // tanks
+    loadTanks$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadTanks),
+            concatMap(action => this.appService.getTanksVonSchiff(action.id)),
+            map((tanks: Tank[]) => loadedTanks({ tanks }))
+        )
+    })
+    insertTank$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertTank),
+            switchMap(action => {
+                return this.appService.insertTank(action.insert).pipe(
+                    map(id => insertTankSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateTank$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateTank),
+            switchMap(action => {
+                return this.appService.updateTank(action.update).pipe(
+                    map((id: string) => updateTankSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    deleteTank$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteTank),
+            switchMap(action => {
+                return this.appService.deleteTank(action.id).pipe(
+                    map(() => deleteTankSuccess(action))
                 )
             })
         )
