@@ -21,16 +21,19 @@ export class ControllingComponent implements OnInit {
   loadBetriebsstoffe() {
     this._katFacade.betriebsstoffe$.subscribe(data => {
       this.data = data
+      this.kat = 'betriebsstoffe'
     })
   }
   loadDienststellen() {
     this._katFacade.dienststellen$.subscribe(data => {
       this.data = data
+      this.kat = 'dienststellen'
     })
   }
   loadZaehlerstandsTypen() {
     this._katFacade.zaehlerstandstypen$.subscribe(data => {
       this.data = data
+      this.kat = 'zaehlerstandstypen'
     })
   }
 

@@ -43,6 +43,7 @@ import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-
     ModalModule,
     PageHeaderModule,
     ImageBase64UploadModule,
+    RxjsNotificationsModule,
 
     // icon lib
     IconLibraryModule,

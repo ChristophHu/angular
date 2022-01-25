@@ -1,14 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Checklistitem } from 'src/app/core/models/checklistitem.model';
-import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { FormBuilder, FormGroup } from '@angular/forms'
+import { Checklistitem } from 'src/app/core/models/checklistitem.model'
+import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
+import { ModalService } from 'src/app/shared/components/modal/modal.service'
 import { Animations } from 'src/app/shared/animations'
-import { Checklist } from 'src/app/core/models/checklist.model';
-import { Observable, throwError } from 'rxjs';
-import { Kat } from 'src/app/core/models/kat.model';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
-import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
+import { Checklist } from 'src/app/core/models/checklist.model'
+import { KatFacade } from 'src/app/store/kat-store/kat.facade'
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade'
 
 @Component({
   selector: 'app-checkliste-modal',

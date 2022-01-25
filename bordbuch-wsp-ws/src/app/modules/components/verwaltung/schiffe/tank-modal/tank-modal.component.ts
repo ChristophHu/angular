@@ -5,11 +5,13 @@ import { Tank } from 'src/app/core/models/tank.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
+import { Animations } from 'src/app/shared/animations'
 
 @Component({
   selector: 'app-tank-modal',
   templateUrl: './tank-modal.component.html',
-  styleUrls: ['./tank-modal.component.sass']
+  styleUrls: ['./tank-modal.component.sass'],
+  animations   : Animations
 })
 export class TankModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<TankModalComponent> | undefined;
@@ -42,7 +44,6 @@ export class TankModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      console.log(data.data.schiff)
       this.tankTabForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
       this._specFacade.loadTanks(data.data.schiff.id)
     })

@@ -20,7 +20,7 @@
             <tr *ngFor="let reparatur of (reparaturen$ | async | toArray)">
                 <td>{{ reparatur.name }}</td>
                 <td hidden>{{ reparatur.id }}</td>
-                <td>{{ reparatur.id_ship }}</td>
+                <td hidden>{{ reparatur.id_ship }}</td>
                 <td>{{ reparatur.date | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ reparatur.kategorie }}</td>
                 <td>{{ reparatur.item }}</td>
