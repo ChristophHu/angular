@@ -102,7 +102,7 @@ export class SchiffeComponent implements OnInit {
 
     this._modalServiceTank.open(TankModalComponent, {
       data: {
-        title: 'Tanks bearbeiten',
+        title: 'Tanks',
         schiff
       }
     })

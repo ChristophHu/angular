@@ -42,7 +42,8 @@ export class TankModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.tankForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
+      console.log(data.data.schiff)
+      this.tankTabForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
       this._specFacade.loadTanks(data.data.schiff.id)
     })
   }

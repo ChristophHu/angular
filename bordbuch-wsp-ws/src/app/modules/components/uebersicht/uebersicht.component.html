@@ -1,17 +1,14 @@
-<div class="relative container h-16 px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between z-10">
-    <div>
-        <p class="flex items-center text-gray-500 text-xs">
-            <span>
-              Streifen > Ausgewählte Streife
-            </span>
-        </p>
-        <h4 class="text-2xl font-bold leading-tight text-gray-800">Ausgewählte Streife</h4>
+<div class="relative w-full h-full py-4">
+    <div class="relative container h-16 px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between z-10">
+        <div>
+            <h4 class="text-2xl font-bold leading-tight text-gray-800">Übersicht</h4>
+        </div>
     </div>
-</div>
-<div class="absolute top-20 right-0 bottom-0 left-0">
-    <div class="w-full flex items-center justify-center">
-        <div class="py-4 sm:py-6 md:py-8 bg-white shadow rounded-lg">
-            <app-bar-chart-vertical [data]="data" [domain]="domain" [barColors]="barColor"></app-bar-chart-vertical>
+    <div class="absolute top-20 right-0 bottom-0 left-0">
+        <div class="w-full flex items-center justify-center">
+            <div class="py-4 sm:py-6 md:py-8 bg-white shadow rounded-lg">
+                <app-bar-chart-vertical [data]="data" [domain]="domain" [barColors]="barColor"></app-bar-chart-vertical>
+            </div>
         </div>
     </div>
 </div>
