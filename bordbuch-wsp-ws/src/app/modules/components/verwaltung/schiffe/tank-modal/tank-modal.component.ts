@@ -51,8 +51,11 @@ export class TankModalComponent implements OnInit {
   }
 
   loadTank(tank: Tank) {
-    console.log(tank)
     this.tankForm.patchValue(tank)
+    this.show = !this.show
+  }
+  newTank() {
+    this.tankForm.patchValue({ id: '', bezeichnung: '', max_vol: ''})
     this.show = !this.show
   }
 
