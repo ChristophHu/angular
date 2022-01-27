@@ -28,11 +28,11 @@ export class AppService {
     private _positionSubscription = new Subscription
     private i: Observable<number> = interval(3*60*1000)
    
-    items: Checklistitem[] = [
-        { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
-        { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
-        { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
-    ]
+    // items: Checklistitem[] = [
+    //     { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
+    //     { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
+    //     { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
+    // ]
 
     constructor(
         private httpClient: HttpClient,
@@ -495,6 +495,42 @@ export class AppService {
         //     }, (error: any) => observer.error(error))
         // })
     }
+    getLastChecklist(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getLastChecklist', id)
+            source$.subscribe((data: any) => {
+                data.forEach((checklist: Checklist) => {
+                    checklist.checklistItems = JSON.parse(checklist.gbookdaten!)
+                    delete checklist.gbookdaten
+
+                    if (Array.isArray(checklist.checklistItems)) {
+                        checklist.status = this.getChecklistStatus(checklist.checklistItems)
+                    } 
+                    // else {
+                    //     checklist.checklistItems = []
+                    //     checklist.status = 'vollständig'
+                    // }
+                })
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getChecklistStatus(checklistItems?: Checklistitem[]): string {
+        status = 'vollständig'
+        checklistItems?.forEach((checklistItem: Checklistitem) => {
+            switch (true) {
+                case (checklistItem.checked == false && checklistItem.relevant == false):
+                    status = 'unvollständig'
+                    break
+                case (checklistItem.checked == false && checklistItem.relevant == true):
+                    status = 'Tätigkeit eingeschränkt'
+                    break
+                default:
+                    status = 'vollständig'
+            }
+        })
+        return status
+    }
 
     // updateChecklist(gbook: any) {
     //     // console.log(data)
@@ -506,30 +542,30 @@ export class AppService {
     //     this.insertCheckliste(checkliste)
     // }
 
-    insertCheckliste(gbook: Geraetebuch): Observable<any> {
-        return new Observable ((observer) => {
-            const checklist: Checklist = { id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
-            const source$ = this.reducer('insertCheckliste', checklist)
-            source$.subscribe((status) => {
+    // insertCheckliste(gbook: Geraetebuch): Observable<any> {
+    //     return new Observable ((observer) => {
+    //         const checklist: Checklist = { id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
+    //         const source$ = this.reducer('insertCheckliste', checklist)
+    //         source$.subscribe((status) => {
 
-            })
-            // , (error: any) => observer.error(error)
-        })
-    }
+    //         })
+    //         // , (error: any) => observer.error(error)
+    //     })
+    // }
     
-    getChecklistItems(id: string = '1'): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getPeilungVonSchiff', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
-        // return new Observable ((observer) => {
-        //     from([this.items]).subscribe((data: any) => {
-        //         observer.next(data)
-        //     }, (error: any) => observer.error(error))
-        // })
-    }
+    // getChecklistItems(id: string = '1'): Observable<any> {
+    //     return new Observable ((observer) => {
+    //         const source$ = this.getReducer('getPeilungVonSchiff', id)
+    //         source$.subscribe((data: any) => {
+    //             observer.next(data)
+    //         }, (error: any) => observer.error(error))
+    //     })
+    //     // return new Observable ((observer) => {
+    //     //     from([this.items]).subscribe((data: any) => {
+    //     //         observer.next(data)
+    //     //     }, (error: any) => observer.error(error))
+    //     // })
+    // }
     
     getPeilung(id: string = '1'): Observable<any> {
         return new Observable ((observer) => {

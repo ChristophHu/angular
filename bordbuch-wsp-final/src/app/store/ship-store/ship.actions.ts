@@ -162,13 +162,13 @@ export const loadChecklist = createAction(
 )
 export const loadedChecklist = createAction(
 	"[Load Ship Effect] Loaded Checklist",
-	props<{ gbook: Geraetebuch }>()
-)
-export const updateChecklistItem = createAction(
-	"[Load Ship Effect] Update Checklist",
-	props<{ einsatzmittel: Einsatzmittel }>()
+	props<{ checklist: Checklist }>()
 )
 export const insertChecklist = createAction(
 	"[Load Ship Effect] Insert Checklist",
 	props<{ geraetebuch: Geraetebuch }>()
+)
+export const updateChecklistItem = createAction(
+	"[Load Ship Effect] Update Checklist",
+	props<{ einsatzmittel: Einsatzmittel }>()
 )

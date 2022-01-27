@@ -16,7 +16,7 @@ export interface State { //extends EntityState<any>
     zaehlerstaende?: Zaehlerstand[]
     reparaturen?: Reparatur[]
     betankungen?: Betankung[]
-    checklist?: Geraetebuch
+    checklist?: Checklist
     geraetebuch?: Geraetebuch
     tanks?: Tank[]
     peilungen?: Peilung[]

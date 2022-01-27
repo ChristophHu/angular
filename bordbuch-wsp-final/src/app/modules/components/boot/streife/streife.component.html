@@ -117,7 +117,7 @@
             </div>
             <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of zaehlerstaende$ | async; index as index" (click)="openZaehlerstandModal(zaehlerstand.id)">
               <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
-              <div class="flex flex-row justify-between">
+              <div class="flex flex-col justify-between">
                 <div class="flex flex-row flex-grow">
                   <p class="w-18 text-gray-600 mr-2">Einheiten:</p>
                   <p class="">{{ zaehlerstand.value }}</p>

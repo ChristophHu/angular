@@ -1,6 +1,12 @@
+import { Checklistitem } from "./checklistitem.model";
+
 export interface Checklist {
-    id_schiff: string
-    streife: string
-    datum: string
-    gbookdaten: string
+    id?         : string
+    id_schiff   : string
+    status?     : string
+    streife     : string
+    checklistItems?: Checklistitem[]
+    datum       : string
+    gbookdaten? : string
+    name        : string
 }

@@ -23,7 +23,7 @@
                 <td>{{ zaehlerstand.value }}</td>
                 <td>{{ zaehlerstand.betriebsstunden }}</td>
                 <td class="w-6 h-6">
-                    <progress-circle [value]="3" [maxvalue]="6"></progress-circle>
+                    <progress-circle [value]="zaehlerstand.value" [maxvalue]="zaehlerstand.betriebsstunden"></progress-circle>
                 </td>
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" (click)="showModal(zaehlerstand)">

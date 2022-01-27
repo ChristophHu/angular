@@ -1,7 +1,9 @@
 export interface Checklistitem {
     id: string
-    id_schiff: string
     bezeichnung: string
-    description: string
-    isChecked: boolean
+    anzahl: string
+    seriennummern: string
+    checked: boolean
+    relevant: boolean
+    benachrichtigen: string
 }

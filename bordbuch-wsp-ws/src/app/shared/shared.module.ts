@@ -24,7 +24,8 @@ import { IvyCarouselModule } from 'image-carousel'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
 import { BarChartVerticalComponent } from './components/charts/bar-chart-vertical/bar-chart-vertical.component'
 import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-api'
-import { ProgressComponent } from './components/progress/progress.component'
+import { ProgressComponent } from './components/progress/progress.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ProgressComponent } from './components/progress/progress.component'
     CarouselItemDirective,
     ToArrayPipe,
     BarChartVerticalComponent,
-    ProgressComponent
+    ProgressComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -69,6 +71,7 @@ import { ProgressComponent } from './components/progress/progress.component'
     ImageSliderComponent,
     BarChartVerticalComponent,
     ProgressComponent,
+    PageNotFoundComponent,
 
     // directives
     DropdownDirective,

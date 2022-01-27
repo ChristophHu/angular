@@ -16,7 +16,7 @@ import { MarkdownModule } from 'ngx-markdown'
 import { MatInputModule } from '@angular/material/input'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { KatModule } from 'src/app/store/kat-store/kat.module'
-// import { SplashScreenComponent } from 'src/app/shared/components/splash-screen/splash-screen.component'
+import { SplashScreenComponent } from 'src/app/shared/components/splash-screen/splash-screen.component'
 import { IconLibraryModule } from 'projects/icon-library/src/lib/icon-library.module';
 import { ChangelogComponent } from './login/changelog/changelog.component'
 import { ModalModule } from 'src/app/shared/components/modal/modal.module'
@@ -39,7 +39,7 @@ import { ModalModule } from 'src/app/shared/components/modal/modal.module'
   ],
   declarations: [
     LoginComponent,
-    // SplashScreenComponent,
+    SplashScreenComponent,
     ChangelogComponent
   ],
   exports: [

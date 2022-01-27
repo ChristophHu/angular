@@ -197,12 +197,14 @@ export class ShipEffects {
             // })
         )
     })
+
+    // checklist
     loadChecklist$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.loadChecklist),
             switchMap(action => {
-                return this.appService.getChecklist(action.id_ship).pipe(
-                    map((gbook: Geraetebuch) => ShipAction.loadedChecklist({ gbook }))
+                return this.appService.getLastChecklist(action.id_ship).pipe(
+                    map((checklist: Checklist) => ShipAction.loadedChecklist({ checklist }))
                 )
             })
         )
@@ -210,9 +212,9 @@ export class ShipEffects {
     insertChecklist$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.insertChecklist),
-            switchMap(action => {
-                return this.appService.insertCheckliste(action.geraetebuch)
-            })
+            // switchMap(action => {
+            //     return this.appService.insertCheckliste(action.geraetebuch)
+            // })
         )
     }) 
     

@@ -159,16 +159,16 @@ export const shipReducer = createReducer(
     on(ShipAction.loadedChecklist, (state, action) => {
         return {
             ...state,
-            checklist: action.gbook
+            checklist: action.checklist
         }
     }),
     on(ShipAction.updateChecklistItem, (state, action) => {
-        let einsatzmittel = state.checklist?.einsatzmittel.filter(el => el.id != action.einsatzmittel.id)
-        einsatzmittel?.push(action.einsatzmittel)
+        // let einsatzmittel = state.checklist?.einsatzmittel.filter(el => el.id != action.einsatzmittel.id)
+        // einsatzmittel?.push(action.einsatzmittel)
 
         return {
             ...state,
-            checklist: Object.assign({}, state.checklist, { einsatzmittel: einsatzmittel })
+            checklist: Object.assign({}, state.checklist)
         }
     }),
 
