@@ -1,0 +1,10 @@
+<svg class="progress__svg w-6 h-6" viewBox="0 0 24 24">
+    <circle [attr.r]="radius" cx="12" cy="12" class="progress__meter"></circle>
+    <circle [style.strokeDasharray]="circumference" [style.strokeDashoffset]="dashoffset" [attr.r]="radius" cx="12" cy="12" class="progress__value"></circle>
+    <!-- <text class="progress__text" x="50%" y="55%" text-anchor="middle" transform="rotate(90, 60, 60)">{{ value }} von {{ maxvalue }}</text> -->
+</svg>
+
+<!-- <svg viewBox="0 0 104 104">
+    <circle cx="52" cy="52" r="50" stroke="#003EFF" fill="#00FF98" class="progress__meter" />
+    <circle [style.strokeDasharray]="5" [style.strokeDashoffset]="dashoffset" [attr.r]="40" cx="52" cy="52" class="progress__value" />
+</svg> -->

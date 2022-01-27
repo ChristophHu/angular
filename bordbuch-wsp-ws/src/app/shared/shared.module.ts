@@ -24,6 +24,7 @@ import { IvyCarouselModule } from 'image-carousel'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
 import { BarChartVerticalComponent } from './components/charts/bar-chart-vertical/bar-chart-vertical.component'
 import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-api'
+import { ProgressComponent } from './components/progress/progress.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-
     ImageSliderComponent,
     CarouselItemDirective,
     ToArrayPipe,
-    BarChartVerticalComponent
+    BarChartVerticalComponent,
+    ProgressComponent
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,7 @@ import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-
     // components
     ImageSliderComponent,
     BarChartVerticalComponent,
+    ProgressComponent,
 
     // directives
     DropdownDirective,

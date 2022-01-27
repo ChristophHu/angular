@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NotificationsModule } from 'projects/notifications/src/public-api';
 
 import { AppComponent } from './app.component';
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,
