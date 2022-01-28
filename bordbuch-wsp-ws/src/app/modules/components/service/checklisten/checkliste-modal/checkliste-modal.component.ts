@@ -64,8 +64,14 @@ export class ChecklisteModalComponent implements OnInit {
     this._specFacade.insertChecklist(checklist)
   }
 
-  benachrichtigen(mail: string) {
+  benachrichtigen(item: Checklistitem) {
+    let message: string
+    let address: string[] = item.benachrichtigen.split(',')
 
+    message = `Das Checklistenelement ${item.bezeichnung} ist defekt/verbraucht und muss erneuert/ausgetauscht werden.`
+    
+    message = `mailto:${address.join(';')}+?subject=files&body=${message}`
+    window.location.href = message
   }
 
   // delete() {

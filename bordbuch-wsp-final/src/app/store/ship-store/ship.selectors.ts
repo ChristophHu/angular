@@ -108,9 +108,9 @@ export const selectChecklist = createSelector(
 )
 export const selectCheckedChecklistItems = createSelector(
     selectChecklist,
-    checklist => checklist?.einsatzmittel.filter(el => el.sonstiges == 'true' || el.sonstiges == '')
+    checklist => checklist?.checklistItems?.filter((el: any) => el.checked == 'true' || el.checked == '')
 )
 export const selectUncheckedChecklistItems = createSelector(
     selectChecklist,
-    checklist => checklist?.einsatzmittel.filter(el => el.sonstiges == 'false')
+    checklist => checklist?.checklistItems?.filter((el: any) => el.checked == 'false')
 )

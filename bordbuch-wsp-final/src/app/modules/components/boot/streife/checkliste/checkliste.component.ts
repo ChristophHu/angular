@@ -18,10 +18,10 @@ import { ChecklistItemsComponent } from './checklist-items/checklist-items.compo
 })
 export class ChecklisteComponent implements OnInit {
 
-  unchecked$!: Observable<Einsatzmittel[]>
+  unchecked$!: Observable<Checklistitem[]>
 
   constructor(private store: Store<RootStoreState>, private modalService: ModalService<ChecklistItemsComponent>) {
-    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Einsatzmittel[]>
+    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Checklistitem[]>
   }
 
   ngOnInit(): void {
