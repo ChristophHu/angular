@@ -26,14 +26,14 @@ export class ChecklistItemsComponent implements OnInit {
   // checklistForm!: FormGroup
 
   items$!: Observable<Checklistitem[]>
-  checked$!: Observable<Einsatzmittel[]>
-  unchecked$!: Observable<Einsatzmittel[]>
+  checked$!: Observable<Checklistitem[]>
+  unchecked$!: Observable<Checklistitem[]>
 
   constructor(private store: Store<RootStoreState>, private modalService: ModalService<ChecklistItemsComponent>) { }
 
   ngOnInit(): void {
-    this.checked$ = this.store.pipe(select(ShipSelectors.selectCheckedChecklistItems)) as Observable<Einsatzmittel[]>
-    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Einsatzmittel[]>
+    this.checked$ = this.store.pipe(select(ShipSelectors.selectCheckedChecklistItems)) as Observable<Checklistitem[]>
+    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Checklistitem[]>
 
     this.modalService.getData().then((data) => {
       this.title = data.data.title      
@@ -44,16 +44,16 @@ export class ChecklistItemsComponent implements OnInit {
     })
   }
 
-  toggleitem(item: Einsatzmittel) {
+  toggleitem(item: Checklistitem) {
     let sonstiges: string
-    if (item.sonstiges == 'true') { 
+    if (item.checked == true) { 
       sonstiges = 'false'
     } else {
       sonstiges = 'true'
     }
-    const einsatzmittel = Object.assign({}, item, { sonstiges })
+    // const einsatzmittel = Object.assign({}, item, { checked })
 
-    this.store.dispatch(ShipAction.updateChecklistItem({ einsatzmittel }))
+    // this.store.dispatch(ShipAction.updateChecklistItem({ einsatzmittel }))
   }
 
   cancel() {

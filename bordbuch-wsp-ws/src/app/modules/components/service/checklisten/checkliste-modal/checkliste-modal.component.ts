@@ -70,7 +70,7 @@ export class ChecklisteModalComponent implements OnInit {
 
     message = `Das Checklistenelement ${item.bezeichnung} ist defekt/verbraucht und muss erneuert/ausgetauscht werden.`
     
-    message = `mailto:${address.join(';')}+?subject=files&body=${message}`
+    message = `mailto:${address.join('; ')}?subject=Information: Checkliste zu ${this.checklistForm.value.name}&body=${message}`
     window.location.href = message
   }
 

@@ -70,6 +70,10 @@ export class ReparaturenComponent implements OnInit {
     this.reparaturen$ = this._specFacade.getReparaturen(status)
   }
 
+  reloadReparaturen() {
+    
+  }
+
   async showModal(reparatur?: Reparatur): Promise<void> {
     const { ReparaturModalComponent } = await import(
       './reparatur-modal/reparatur-modal.component'

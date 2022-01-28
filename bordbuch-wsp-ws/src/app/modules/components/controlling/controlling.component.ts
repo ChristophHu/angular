@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-controlling',
@@ -12,7 +13,7 @@ export class ControllingComponent implements OnInit {
   
   kat: string = 'betriebsstoffe'
 
-  constructor(private _katFacade: KatFacade) { }
+  constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) { }
 
   ngOnInit(): void {
     this.loadBetriebsstoffe()
@@ -24,10 +25,22 @@ export class ControllingComponent implements OnInit {
       this.kat = 'betriebsstoffe'
     })
   }
+  loadChecklisten() {
+    this._specFacade.allChecklists$.subscribe(data => {
+      this.data = data
+      this.kat = 'checklisten'
+    })
+  }
   loadDienststellen() {
     this._katFacade.dienststellen$.subscribe(data => {
       this.data = data
       this.kat = 'dienststellen'
+    })
+  }
+  loadPositionen() {
+    this._specFacade.allLastStandorte$.subscribe(data => {
+      this.data = data
+      this.kat = 'positionen'
     })
   }
   loadZaehlerstandsTypen() {
