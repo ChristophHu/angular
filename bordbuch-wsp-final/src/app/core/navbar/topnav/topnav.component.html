@@ -19,19 +19,19 @@
     <button class="w-8 h-8 block focus:outline-none" (click)="sidebarHandler()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="menu-off"></icons>
     </button>
-    <button class="btn" [routerLink]="['/mobile']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="auswahl()">
+    <button class="btn" [routerLink]="['/']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="auswahl()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="refresh"></icons>
       <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot',  id$ | async]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async)]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
       <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot', id$ | async, 'map']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async), 'map']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
       <p class="text-base leading-4">Map</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/mobile', 'boot',  id$ | async, 'positions']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async), 'positions']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Positionen</p>
     </button>

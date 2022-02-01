@@ -62,6 +62,12 @@ export class PruefvermerkComponent implements OnInit {
     this.pruefvermerkForm.controls.kategorie.setValue($event.kategorie)
   }
 
+  uploadImage(imageBase64: string) {
+    const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.pruefvermerkForm.value.id, foto: imageBase64 }
+    console.log(upload)
+    // this._specFacade.uploadReparaturFoto(upload)
+  }
+
   create() {
     const insert: Reparatur = this.pruefvermerkForm.value
     this.store.dispatch(ShipAction.insertReparatur({ insert }))

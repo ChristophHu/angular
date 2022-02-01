@@ -3,6 +3,7 @@ import { createAction, props } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
 import { Checklist } from "src/app/core/model/checklist.model"
+import { Checklistitem } from "src/app/core/model/checklistitem.model"
 import { Einsatzmittel } from "src/app/core/model/einsatzmittel.model"
 import { Geraetebuch } from "src/app/core/model/geraetebuch.model"
 import { Patrol } from "src/app/core/model/patrol.model"
@@ -166,9 +167,9 @@ export const loadedChecklist = createAction(
 )
 export const insertChecklist = createAction(
 	"[Load Ship Effect] Insert Checklist",
-	props<{ geraetebuch: Geraetebuch }>()
+	props<{ insert: Checklist }>()
 )
-export const updateChecklistItem = createAction(
+export const updateChecklist = createAction(
 	"[Load Ship Effect] Update Checklist",
-	props<{ einsatzmittel: Einsatzmittel }>()
+	props<{ update: Checklist }>()
 )

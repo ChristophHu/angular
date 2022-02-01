@@ -392,7 +392,7 @@ export class AppService {
         })
     }
     getChecklistStatus(checklistItems?: Checklistitem[]): string {
-        status = 'vollständig'
+        let status = 'vollständig'
         checklistItems?.forEach((checklistItem: Checklistitem) => {
             switch (true) {
                 case (checklistItem.checked == false && checklistItem.relevant == false):

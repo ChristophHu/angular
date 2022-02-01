@@ -191,7 +191,6 @@ export class ShipEffects {
     updatePeilung$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.updatePeilung),
-            tap(val => console.log(val)),
             // switchMap(action => {
             //     return this.appService.updatePeilung(action.peilung)
             // })
@@ -205,6 +204,7 @@ export class ShipEffects {
             switchMap(action => {
                 return this.appService.getLastChecklist(action.id_ship).pipe(
                     map((checklist: Checklist) => ShipAction.loadedChecklist({ checklist }))
+                    
                 )
             })
         )
@@ -212,9 +212,9 @@ export class ShipEffects {
     insertChecklist$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShipAction.insertChecklist),
-            // switchMap(action => {
-            //     return this.appService.insertCheckliste(action.geraetebuch)
-            // })
+            switchMap(action => {
+                return this.appService.insertCheckliste(action.insert)
+            })
         )
     }) 
     

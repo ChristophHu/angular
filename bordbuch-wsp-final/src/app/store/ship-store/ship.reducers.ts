@@ -3,11 +3,13 @@ import { createReducer, on, Store } from "@ngrx/store"
 import { Besatzung } from "src/app/core/model/besatzung.model"
 import { Betankung } from "src/app/core/model/betankung"
 import { Checklist } from "src/app/core/model/checklist.model"
+import { Checklistitem } from "src/app/core/model/checklistitem.model"
 import { Einsatzmittel } from "src/app/core/model/einsatzmittel.model"
 import { Geraetebuch } from "src/app/core/model/geraetebuch.model"
 import { Patrol } from "src/app/core/model/patrol.model"
 import { Peilung } from "src/app/core/model/peilung.model"
 import { Reparatur } from "src/app/core/model/reparatur"
+import { checkStateForEmptyArrays } from "src/app/shared/utils"
 
 import { ShipAction } from "."
 import { State } from "./ship.state"
@@ -84,7 +86,7 @@ export const shipReducer = createReducer(
     // besatzung
     on(ShipAction.insertPatrolBesatzungSuccess, (state, action) => {
         let besatzung: Besatzung = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedBesatzung: Besatzung[] | undefined = state.patrol?.besatzung
+        let clearedBesatzung: Besatzung[] | undefined = checkStateForEmptyArrays(state.patrol?.besatzung)
         clearedBesatzung = [...clearedBesatzung!, ...[besatzung]]
         return {
             ...state,
@@ -110,7 +112,7 @@ export const shipReducer = createReducer(
     // betankung
     on(ShipAction.insertBetankungSuccess, (state, action) => {
         let betankung: Betankung = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedBetankung: Betankung[] | undefined = state.betankungen
+        let clearedBetankung: Betankung[] | undefined = checkStateForEmptyArrays(state.betankungen)
         clearedBetankung = [...clearedBetankung!, ...[betankung]]
         return {
             ...state,
@@ -121,7 +123,7 @@ export const shipReducer = createReducer(
     // pruefvermerk
     on(ShipAction.insertReparaturSuccess, (state, action) => {
         let pruefvermerk: Reparatur = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedPruefvermerk: Reparatur[] | undefined = state.reparaturen
+        let clearedPruefvermerk: Reparatur[] | undefined = checkStateForEmptyArrays(state.reparaturen)
         clearedPruefvermerk = [...clearedPruefvermerk!, ...[pruefvermerk]]
         return {
             ...state,
@@ -137,7 +139,7 @@ export const shipReducer = createReducer(
     }),
     on(ShipAction.insertPeilungSuccess, (state, action) => {
         let peilung: Peilung = Object.assign({}, action.action.insert, { id: action.id })
-        let clearedPeilung: Peilung[] | undefined = state.peilungen
+        let clearedPeilung: Peilung[] | undefined = checkStateForEmptyArrays(state.peilungen)
         clearedPeilung = clearedPeilung?.filter(el => el.bezeichnung != action.action.insert.bezeichnung)
         clearedPeilung = [...clearedPeilung!, ...[peilung]]
         return {
@@ -149,6 +151,7 @@ export const shipReducer = createReducer(
         let clearedPeilungen = [...state.peilungen!]
         clearedPeilungen = clearedPeilungen.filter(el => el.id != action.peilung.id)
         clearedPeilungen.push(action.peilung)
+        // ggf. siehe ipdateChecklist
 
         return {
             ...state,
@@ -162,13 +165,18 @@ export const shipReducer = createReducer(
             checklist: action.checklist
         }
     }),
-    on(ShipAction.updateChecklistItem, (state, action) => {
-        // let einsatzmittel = state.checklist?.einsatzmittel.filter(el => el.id != action.einsatzmittel.id)
-        // einsatzmittel?.push(action.einsatzmittel)
+    on(ShipAction.updateChecklist, (state, action) => {
+        let checklist: Checklist = Object.assign({}, action.update)
+        console.log(checklist)
 
+        // let cleared: Checklist | undefined = state.checklist
+        // if (cleared) {
+        //     cleared.checklistItems = cleared.checklistItems?.filter(el => el.id != action.updateItem.id)
+        //     cleared.checklistItems = [...cleared.checklistItems!, ...[checklist]]
+        // }
         return {
             ...state,
-            checklist: Object.assign({}, state.checklist)
+            checklist: checklist
         }
     }),
 

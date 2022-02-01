@@ -4,7 +4,6 @@ import { TopnavComponent } from './topnav.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 
-
 @NgModule({
   declarations: [
     TopnavComponent

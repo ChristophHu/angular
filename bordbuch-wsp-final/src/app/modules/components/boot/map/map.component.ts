@@ -68,7 +68,7 @@ export class MapComponent implements OnInit {
 
         this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!)))
         this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectDataWithoutPatrol(this.id_streife!))).pipe(
-          tap(data => console.log(data))
+          tap(data => console.log(`lastPositions - data: ${data}`))
         )
       }
     })

@@ -22,11 +22,17 @@ export class Effects {
             ofType(PositionActions.insertData),
             switchMap(action => {
                 return this.appService.insertPosition(action.positionReport).pipe(
+                    tap(data => console.log(`insertPosition - ${data}`)),
                     map(positionReport => 
                         PositionActions.insertDataSuccess({ positionReport })
                     )
                 )
             })
+            // switchMap(action => {
+            //     return this.appService.insertPeilung(action.insert).pipe(
+            //         map(id => ShipAction.insertPeilungSuccess({ action, id }))
+            //     )
+            // })
         )
     })
     updateDate$ = createEffect(

@@ -1,26 +1,18 @@
-<div class="content2">
+<div class="main_content">
   <div class="absolute w-screen h-screen -m-px top-0 right-0 bottom-0 left-0">
     <div id="map"></div>
   </div>
 </div>
 
-<div class="absolute flex flex-col ml-2 bottom-0 left-0 z-40">
-  <button class="flex items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleMarkergroup()">
-    <a class="w-8 h-8 mr-2" *ngIf="positionToggle">
+<div class="absolute flex flex-row ml-2 bottom-0 left-0 z-40">
+  <button class="flex items-center p-2 mr-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleMarkergroup()">
+    <div class="w-8 h-8 mr-2" *ngIf="positionToggle">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="eye"></icons>
-    </a>
-  <a class="w-8 h-8 mr-2" *ngIf="!positionToggle">
-    <icons class="w-8 h-8 stroke-1 stroke-current" name="eye-off"></icons>
-  </a>
-    Positionen
+    </div>
   </button>
-  <button class="flex items-center p-2 mb-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleAllShips()">
-    <a class="w-8 h-8 mr-2" *ngIf="allPositionToggle">
+  <button class="flex items-center p-2 mr-2 bg-gray-100 rounded-lg shadow-md cursor-pointer" (click)="toggleAllShips()">
+    <div class="w-8 h-8 mr-2" *ngIf="allPositionToggle">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="eye"></icons>
-    </a>
-    <a class="w-8 h-8 mr-2" *ngIf="!allPositionToggle">
-      <icons class="w-8 h-8 stroke-1 stroke-current" name="eye-off"></icons>
-    </a>
-    Schiffe
+    </div>
   </button>
 </div>

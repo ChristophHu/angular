@@ -39,7 +39,6 @@ export class BootAuswahlComponent {
 
   selectSchiff(id_ship: string) {
     this.selectedIdShip = id_ship
-    console.log(id_ship)
   }
 
   async showModal(): Promise<void> {

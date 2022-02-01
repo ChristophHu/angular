@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { MobileComponent } from './mobile.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module';
-import { RouterModule, Routes } from '@angular/router';
-import { Resolver } from 'src/app/store/resolver';
-import { KatModule } from 'src/app/store/kat-store/kat.module';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
-
+import { NgModule } from '@angular/core'
+import { MobileComponent } from './mobile.component'
+import { SharedModule } from 'src/app/shared/shared.module'
+import { TopnavModule } from 'src/app/core/navbar/topnav/topnav.module'
+import { RouterModule, Routes } from '@angular/router'
+import { Resolver } from 'src/app/store/resolver'
+import { KatModule } from 'src/app/store/kat-store/kat.module'
+import { KatFacade } from 'src/app/store/kat-store/kat.facade'
 
 export const routes: Routes = [
   { path: '', component: MobileComponent,

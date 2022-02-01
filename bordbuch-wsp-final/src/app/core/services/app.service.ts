@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { interval, Observable, Subscription } from 'rxjs';
+import { EMPTY, interval, Observable, Subscription } from 'rxjs';
 import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
 
 import { PositionActions } from 'src/app/store/positionreport-store';
+import { environment } from 'src/environments/environment';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
 import { Checklist } from '../model/checklist.model';
 import { Checklistitem } from '../model/checklistitem.model';
-import { Geraetebuch } from '../model/geraetebuch.model';
 import { Patrol } from '../model/patrol.model';
 import { Peilung } from '../model/peilung.model';
 import { PositionReport } from '../model/positionreport.model';
@@ -22,18 +22,10 @@ import { LocationService } from './location.service';
     providedIn: 'root'
 })
 export class AppService {
-    private patrol!: Patrol
-
     // position
     private _positionSubscription = new Subscription
-    private i: Observable<number> = interval(3*60*1000)
+    private positionLogInterval: Observable<number> = interval(environment.positionLogInterval*(60*1000))
    
-    // items: Checklistitem[] = [
-    //     { id: '1', id_schiff: '1', bezeichnung: 'Anker', description: '', isChecked: true },
-    //     { id: '2', id_schiff: '1', bezeichnung: 'Rettungsring', description: '', isChecked: true },
-    //     { id: '3', id_schiff: '1', bezeichnung: 'Positionslicht', description: '', isChecked: false }
-    // ]
-
     constructor(
         private httpClient: HttpClient,
         private store: Store,
@@ -64,7 +56,6 @@ export class AppService {
                 break
 
             case 'updateStreife':
-                console.log(`${data}`)
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
 
@@ -209,7 +200,6 @@ export class AppService {
         })
     }
     updateStreife(patrol: Patrol): Observable<any> {
-        console.log(patrol)
         return new Observable ((observer) => {
             const source$ = this.reducer('updateStreife', patrol)
             source$.subscribe((status: any) => {
@@ -233,7 +223,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer('insertBesatzung', besatzung)
             source$.subscribe((data: any) => {
-                console.log(data.id)
                 observer.next(data.id)
             })
             // , (error: any) => observer.error(error)
@@ -338,11 +327,23 @@ export class AppService {
         })
     }
 
+    // reparaturfotos
+    downloadReparaturFoto(id: string): Observable<any> {
+        return EMPTY
+    }
+    uploadReparaturFoto(upload: any): Observable<any> {
+        return EMPTY
+        // return this.update(upload, 'insertReparaturFoto')
+    }
+    deleteReparaturFoto(id: string): Observable<any> {
+        return EMPTY
+        // return this.delete(id, 'deleteReparaturFoto')
+    }
+
     // get
     getSchiffe(): Observable<any> {
         return new Observable ((observer) => {
             // const source$ = this.getReducer('getSchiffe', {})
-            // console.log(source$)
             this.getReducer('getSchiffe', {}).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
@@ -352,7 +353,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiff', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data[0])
             }, (error: any) => observer.error(error))
         })
@@ -443,7 +443,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getDienststellen', {})
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -480,13 +479,23 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
-    getChecklist(id: string = '1'): Observable<any> {
+    getLastChecklist(id: string): Observable<any> {
         return new Observable ((observer) => {
+            let checklist: Checklist
             const source$ = this.getReducer('getLastChecklist', id)
             source$.subscribe((data: any) => {
-                const gbook: Geraetebuch = JSON.parse(data[0].gbookdaten)
-                observer.next(gbook)
-                // this.updateChecklist(data)
+                checklist = Object.assign({}, data[0])
+                checklist.checklistItems = JSON.parse(data[0].gbookdaten)
+                delete checklist.gbookdaten
+
+                if (Array.isArray(checklist.checklistItems)) {
+                    checklist.status = this.getChecklistStatus(checklist.checklistItems)
+                } else {
+                    checklist.checklistItems = []
+                    checklist.status = 'vollständig'
+                }
+
+                observer.next(checklist)
             }, (error: any) => observer.error(error))
         })
         // return new Observable ((observer) => {
@@ -495,10 +504,11 @@ export class AppService {
         //     }, (error: any) => observer.error(error))
         // })
     }
-    getLastChecklist(id: string): Observable<any> {
+    getLastChecklist2(id: string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getLastChecklist', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 data.forEach((checklist: Checklist) => {
                     checklist.checklistItems = JSON.parse(checklist.gbookdaten!)
                     delete checklist.gbookdaten
@@ -511,12 +521,13 @@ export class AppService {
                     //     checklist.status = 'vollständig'
                     // }
                 })
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }
     getChecklistStatus(checklistItems?: Checklistitem[]): string {
-        status = 'vollständig'
+        let status = 'vollständig'
         checklistItems?.forEach((checklistItem: Checklistitem) => {
             switch (true) {
                 case (checklistItem.checked == false && checklistItem.relevant == false):
@@ -542,16 +553,17 @@ export class AppService {
     //     this.insertCheckliste(checkliste)
     // }
 
-    // insertCheckliste(gbook: Geraetebuch): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const checklist: Checklist = { id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
-    //         const source$ = this.reducer('insertCheckliste', checklist)
-    //         source$.subscribe((status) => {
-
-    //         })
-    //         // , (error: any) => observer.error(error)
-    //     })
-    // }
+    insertCheckliste(insert: Checklist): Observable<any> {
+        return new Observable ((observer) => {
+            const checklist: Checklist = Object.assign({}, insert, { gbookdaten: JSON.stringify(insert.checklistItems) }) //{ id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
+            console.log(checklist.gbookdaten)
+            const source$ = this.reducer('insertCheckliste', checklist)
+            source$.subscribe((status) => {
+                // observer.next(status)
+            })
+            // , (error: any) => observer.error(error))
+        })
+    }
     
     // getChecklistItems(id: string = '1'): Observable<any> {
     //     return new Observable ((observer) => {
@@ -599,11 +611,11 @@ export class AppService {
         // })
     }
 
-    checkPositionStart() {
+    checkPositionStart(patrol: Patrol) {
         if (this._positionSubscription.closed) {
-            this._positionSubscription = this.i.subscribe((data: number) => {
+            this._positionSubscription = this.positionLogInterval.subscribe((data: number) => {
                 this.locationService.getCurrentPosition().then(position => {
-                    const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
+                    const positionReport: PositionReport = { id_streife: patrol.id, id_ship: patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
                     this.store.dispatch(PositionActions.insertData({ positionReport }))
                 })
             })

@@ -17,6 +17,7 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade'
 export class ChecklisteModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<ChecklisteModalComponent> | undefined;
   title: string = ''
+  allCheck: boolean = true
 
   show: boolean = false
   checklistitemForm: FormGroup
@@ -64,6 +65,13 @@ export class ChecklisteModalComponent implements OnInit {
     })
   }
 
+  toggleCheck() {
+    this.allCheck = !this.allCheck
+    this.kat.forEach(schiff => {
+      schiff.checked = this.allCheck
+    })
+  }
+
   load(id: string) {
     this._specFacade.getChecklistById(id).subscribe(checklist => {
       console.log(checklist)
@@ -107,11 +115,12 @@ export class ChecklisteModalComponent implements OnInit {
       name: this.checklistForm.value.name,
       status: 'Liste neu gesetzt',
       streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', 
-      datum: new Date().toISOString(), 
+      datum: new Date().toISOString(),
       checklistItems: this.kat.filter(el => el.checked == true), 
       gbookdaten: JSON.stringify(this.kat.filter(el => el.checked == true))
     }
     this._specFacade.insertChecklist(checklist)
+    this.modal?.close()
   }
 
   delete() {

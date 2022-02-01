@@ -1,7 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { from, Observable, Subject } from 'rxjs';
-import { Schiff } from 'src/app/core/models/schiff.model';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { KatFacade } from 'src/app/store/kat-store/kat.facade'
 
 @Component({
   selector: 'tab-schiffe',

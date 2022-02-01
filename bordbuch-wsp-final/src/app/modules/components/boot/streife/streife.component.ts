@@ -121,13 +121,14 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+      console.log(patrol)
       if (patrol) {
         this.zweckFormGroup.patchValue(patrol!)
         this.patrol = patrol!
       }
       if (patrol?.status == 'aktiv') {
         // auslagern und in den Store mit aufnehmen
-        this.appService.checkPositionStart()
+        this.appService.checkPositionStart(patrol)
       } else {
         this.appService.checkPositionStop()
       }

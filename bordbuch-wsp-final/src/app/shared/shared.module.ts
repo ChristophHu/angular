@@ -12,14 +12,14 @@ import { CardModule } from './components/card/card.module'
 import { IconLibraryModule } from 'projects/icon-library/src/public-api'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { MatSelectModule } from '@angular/material/select';
-import { HeadlineStepperComponent } from './components/headline-stepper/headline-stepper.component'
 import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module';
-import { TimelineComponent } from './components/timeline/timeline.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { Number2stringPipe } from './pipes/number2string/number2string.pipe';
 import { String2numberPipe } from './pipes/string2number/string2number.pipe';
 import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe';
 import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
+import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
+import { ImageBase64UploadModule } from './components/image-base64-upload/image-base64-upload.module'
 
 @NgModule({
     declarations: [
@@ -27,7 +27,8 @@ import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
         Number2stringPipe,
         String2numberPipe,
         DiffDateToTodayPipe,
-        DaysAgoPipe
+        DaysAgoPipe,
+        ToArrayPipe
     ],
     imports: [
         CommonModule,
@@ -37,6 +38,7 @@ import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
         // shared
         ModalModule,
         CardModule,
+        ImageBase64UploadModule,
 
         NgSelectModule,
 
@@ -53,6 +55,7 @@ import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
         // pipes
         DiffDateToTodayPipe,
         DaysAgoPipe,
+        ToArrayPipe,
         
         CommonModule,
         FormsModule,
@@ -63,6 +66,7 @@ import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
         CardModule,
         HeadlineStepperModule,
         NgSelectModule,
+        ImageBase64UploadModule,
 
         // library
         IconLibraryModule,

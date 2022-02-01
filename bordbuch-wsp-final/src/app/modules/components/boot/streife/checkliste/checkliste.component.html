@@ -16,7 +16,7 @@
       </button>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let item of (unchecked$ | async)">
+  <div *ngFor="let item of (unchecked$ | async)" class="p-4 border-b hover:bg-gray-50" [ngClass]="{'text-red-600': item.relevant == true}">
     {{ item.bezeichnung }}
   </div>
 </div>

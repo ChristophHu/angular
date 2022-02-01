@@ -63,7 +63,15 @@ export class AusgewaehlteStreifenComponent implements OnInit {
 
   toggle(status: string) {
     this.filter = status
-    this.streifen$ = this._specFacade.getStreifen(status) as Observable<Streife[]>
+    if (status == 'alle') {
+      this.streifen$ = this._specFacade.allStreifen$
+    } else {
+      this.streifen$ = this._specFacade.getStreifen(status) as Observable<Streife[]>
+    }
+  }
+
+  reload() {
+    this._specFacade.loadAllStreifen()
   }
 
   async showModal(streife: Streife): Promise<void> {

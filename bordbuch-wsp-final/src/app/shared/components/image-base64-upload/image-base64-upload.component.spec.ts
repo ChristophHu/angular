@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestComponent } from './test.component';
+import { ImageBase64UploadComponent } from './image-base64-upload.component';
 
-describe('TestComponent', () => {
-  let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
+describe('ImageBase64UploadComponent', () => {
+  let component: ImageBase64UploadComponent;
+  let fixture: ComponentFixture<ImageBase64UploadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TestComponent ]
+      declarations: [ ImageBase64UploadComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(ImageBase64UploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -20,7 +20,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllShip),
             concatMap(action => this.appService.getSchiffe()),
-            tap(data => console.log(data)),
             map((shipSelection: ShipSelection[]) => allShipLoaded({ shipSelection }))
         )
     })

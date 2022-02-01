@@ -14,6 +14,8 @@ import { LastPositionModule } from 'src/app/store/lastposition-store/data.module
 import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
 import { AppService } from 'src/app/core/services/app.service';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
+import { MapModule } from './map/map.module';
+import { PositionsModule } from './positions/positions.module';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, data: { param: 'id'}, resolve: { data: ShipResolver },
@@ -27,12 +29,12 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [
-    BootComponent,
-    MapComponent,
-    PositionsComponent
+    BootComponent
   ],
   imports: [
     StreifeModule,
+    MapModule,
+    PositionsModule,
     SharedModule,
 
     // router

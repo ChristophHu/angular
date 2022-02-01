@@ -26,6 +26,35 @@
           </li>
         </ul>
       <!-- </form> -->
+      <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
+        <thead>
+          <tr class="w-full h-12 border-gray-300 border-b py-8">
+            <th
+              class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
+              Id
+            </th>
+            <th class="px-2 w-8 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+              <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"/>
+            </th>
+            <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+              Bezeichnung
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let item of (checked$ | async)">
+            <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
+              {{ item.id }}
+            </td>
+            <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+              <input type="checkbox" [checked]="item.checked" (change)="toggleitem(item)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+            </td>
+            <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+              {{ item.bezeichnung }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
@@ -34,12 +63,12 @@
 </app-modal>
 
 <ng-template #toolbar>
-<div>
-  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Schließen</button>
-  <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
-</div>
-<div>
-  <!-- <button (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-  <!-- <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
-</div>
+  <div>
+    <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Schließen</button>
+    <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
+  </div>
+  <div>
+    <!-- <button (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
+    <button *ngIf="edit" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+  </div>
 </ng-template>

@@ -10,6 +10,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { KatSelectors } from 'src/app/store/kat-store';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
@@ -34,8 +35,8 @@ export class BetankungComponent implements OnInit {
     private appService: AppService,
     private locationService: LocationService,
     private _katFacade: KatFacade) {
-      this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
-      //this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
+      // this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
+      this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
       this.betankungForm = this._formBuilder.group({
         id: [],
         id_ship: [],

@@ -95,7 +95,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllReparaturen),
             concatMap(action => this.appService.getAllReparaturen()),
-            tap(value => console.log(value)),
             map((reparaturen: Reparatur[]) => loadedAllReparaturen({ reparaturen }))
         )
     })
@@ -135,7 +134,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(downloadReparaturFotos),
             concatMap(action => this.appService.downloadReparaturFoto(action.id)),
-            tap(data => console.log(data)),
             map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
         )
     })
@@ -144,7 +142,6 @@ export class Effects {
             ofType(uploadReparaturFoto),
             switchMap(action => {
                 return this.appService.uploadReparaturFoto(action.upload).pipe(
-                    tap(id => console.log(id)),
                     map((id: string) => uploadReparaturFotoSuccess({ action, id }))
                 )
             })

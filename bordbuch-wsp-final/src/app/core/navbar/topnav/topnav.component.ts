@@ -26,6 +26,7 @@ export class TopnavComponent {
 
   constructor(private store: Store<RootStoreState>) {
     this.id$ = this.store.pipe(select(ShipSelectors.selectShipId))
+    this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id => console.log(id))
     this.name$ = this.store.pipe(select(ShipSelectors.selectShipName))
   }
 
