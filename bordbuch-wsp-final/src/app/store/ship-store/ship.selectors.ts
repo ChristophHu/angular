@@ -114,3 +114,13 @@ export const selectUncheckedChecklistItems = createSelector(
     selectChecklist,
     checklist => checklist?.checklistItems?.filter((el: any) => el.checked == false)
 )
+
+// reparaturfotos
+export const selectAllReparaturFotos = createSelector(
+    selectShipState,
+    state => state.reparaturfotos
+)
+export const selectReparaturFotosCount = createSelector(
+    selectAllReparaturFotos,
+    reparaturfotos => reparaturfotos?.length
+)

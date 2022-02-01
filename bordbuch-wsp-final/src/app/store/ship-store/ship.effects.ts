@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { map, switchMap, tap } from 'rxjs/operators'
+import { concatMap, map, switchMap, tap } from 'rxjs/operators'
 import { Betankung } from 'src/app/core/model/betankung'
 import { Checklist } from 'src/app/core/model/checklist.model'
 import { Geraetebuch } from 'src/app/core/model/geraetebuch.model'
@@ -12,6 +12,7 @@ import { Tank } from 'src/app/core/model/tank.model'
 import { AppService } from 'src/app/core/services/app.service'
 
 import { ShipAction } from '.'
+import { deleteReparaturFoto, deleteReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess } from './ship.actions'
  
 @Injectable()
 export class ShipEffects {
@@ -84,6 +85,35 @@ export class ShipEffects {
             switchMap(action => {
                 return this.appService.insertReparatur(action.insert).pipe(
                     map(id => ShipAction.insertReparaturSuccess({ action, id }))
+                )
+            })
+        )
+    })
+
+    // reparaturfotos
+    downloadReparaturFotos$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(downloadReparaturFotos),
+            concatMap(action => this.appService.downloadReparaturFoto(action.id)),
+            map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
+        )
+    })
+    uploadReparaturFoto$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(uploadReparaturFoto),
+            switchMap(action => {
+                return this.appService.uploadReparaturFoto(action.upload).pipe(
+                    map((id: string) => uploadReparaturFotoSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    deleteReparaturFoto$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteReparaturFoto),
+            switchMap(action => {
+                return this.appService.deleteReparaturFoto(action.id).pipe(
+                    map(() => deleteReparaturFotoSuccess(action))
                 )
             })
         )

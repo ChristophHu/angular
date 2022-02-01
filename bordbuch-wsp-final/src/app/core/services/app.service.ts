@@ -59,6 +59,9 @@ export class AppService {
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&zweck=${data.zweck}&status=${data.status}&start=${data.start}&ende=${data.ende}&kennung=${data.kennung}`
                 break
 
+            case 'deleteBesatzung':
+            case 'deleteBetankung':
+            case 'deleteReparaturFoto':
             case 'deleteStreife':
                 param = `id=${data}`
                 break
@@ -72,9 +75,6 @@ export class AppService {
                 param = `id=${data.id}&id_streife=${data.id_streife}&persnr=${data.persnr}&funktion=${data.funktion}&an_bord=${data.an_bord}&von_bord=${data.von_bord}`
                 break
 
-            case 'deleteBesatzung':
-                param = `id=${data}`
-                break
 
             // betankung
             case 'insertBetankung':
@@ -83,10 +83,6 @@ export class AppService {
 
             case 'updateBetankung':
                 param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
-                break
-
-            case'deleteBetankung':
-                param = `id=${data}`
                 break
 
             case 'updateZaehlerstand':
@@ -106,7 +102,12 @@ export class AppService {
 
             // pruefvermerk/reparatur
             case 'insertReparatur':
-                param = `id_schiff=${data.id_ship}&id_status=9f666873-4fc4-4f9b-8f98-f3fa182be7eb&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                param = `id_schiff=${data.id_ship}&id_status=12af8c55-7726-4431-abaa-2c6dd44ba5dd&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                break
+
+            // reparaturFoto
+            case 'insertReparaturFoto':
+                param = `id_reparatur=${data.id_reparatur}&foto=${data.foto}`
                 break
 
             // position
@@ -163,6 +164,10 @@ export class AppService {
                 param = `?id=${data}`
                 break
 
+            case 'getFotosVonReparatur':
+                param = `?id_reparatur=${data}`
+                break
+
             case 'getLastChecklist':
             case 'getReparaturenVonSchiff':
             case 'getStreifeVonSchiff':
@@ -187,6 +192,41 @@ export class AppService {
         }
 
         return this.httpClient.get(baseURL + param, { headers: { 'Authorization': token } }) //.pipe(retry(2),take(1))
+    }
+
+    // allg
+    get(reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer(reducer_func, {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insert(kat: any, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, kat)
+            source$.subscribe((data: any) => {
+                observer.next(data.id)
+            }), (error: any) => observer.error(error)
+        })
+    }
+    update(kat: any, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, kat)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }),
+            (error: any) => observer.error(error)
+        })
+    }
+    delete(id: string, reducer_func: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.reducer(reducer_func, id)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
     }
 
     // streife
@@ -329,15 +369,22 @@ export class AppService {
 
     // reparaturfotos
     downloadReparaturFoto(id: string): Observable<any> {
-        return EMPTY
+        // return EMPTY
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getFotosVonReparatur', id)
+            source$.subscribe((data: any) => {
+                console.log(data)
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
     }
     uploadReparaturFoto(upload: any): Observable<any> {
-        return EMPTY
-        // return this.update(upload, 'insertReparaturFoto')
+        // return EMPTY
+        return this.update(upload, 'insertReparaturFoto')
     }
     deleteReparaturFoto(id: string): Observable<any> {
-        return EMPTY
-        // return this.delete(id, 'deleteReparaturFoto')
+        // return EMPTY
+        return this.delete(id, 'deleteReparaturFoto')
     }
 
     // get

@@ -15,6 +15,7 @@ export interface State { //extends EntityState<any>
     patrol?: Patrol
     zaehlerstaende?: Zaehlerstand[]
     reparaturen?: Reparatur[]
+    reparaturfotos?: any[]
     betankungen?: Betankung[]
     checklist?: Checklist
     geraetebuch?: Geraetebuch

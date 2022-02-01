@@ -11,7 +11,8 @@ import { ModalComponent } from 'src/app/shared/components/modal/modal.component'
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { KatSelectors } from 'src/app/store/kat-store';
-import { ShipAction } from 'src/app/store/ship-store';
+import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
+
 
 @Component({
   selector: 'app-pruefvermerk',
@@ -28,14 +29,28 @@ export class PruefvermerkComponent implements OnInit {
 
   pruefvermerkForm: FormGroup
 
+  reparaturfotos$: Observable<any[]>
+  reparaturFotoCount$: Observable<number>
+
+  // image-slider
+  showGalerie: boolean = false
+  images: any[] = []
+
   constructor(
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
-    private modalServiceP: ModalService<PruefvermerkComponent>, private appService: AppService) {
+    private modalServiceP: ModalService<PruefvermerkComponent>,
+    // private _specFacade: SpecFacade,
+    private appService: AppService) {
     // this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
 
     this.kategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<PruefvermerkKategorien[]>
+    // this.reparaturfotos$ = _specFacade.allReparaturFotos$
+    // this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
     
+    this.reparaturfotos$ = this.store.pipe(select(ShipSelectors.selectAllReparaturFotos)) as Observable<any[]>
+    this.reparaturFotoCount$ = this.store.pipe(select(ShipSelectors.selectReparaturFotosCount)) as Observable<any>
+
     this.pruefvermerkForm = this._formBuilder.group({
       id        : [''],
       id_ship   : [''],
@@ -66,6 +81,13 @@ export class PruefvermerkComponent implements OnInit {
     const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.pruefvermerkForm.value.id, foto: imageBase64 }
     console.log(upload)
     // this._specFacade.uploadReparaturFoto(upload)
+    this.store.dispatch(ShipAction.uploadReparaturFoto({ upload }))
+  }
+
+  deleteFoto(id: string) {
+    // this._specFacade.deleteReparaturFoto(id)
+    this.store.dispatch(ShipAction.deleteReparaturFoto({ id }))
+    this.modal?.close()
   }
 
   create() {

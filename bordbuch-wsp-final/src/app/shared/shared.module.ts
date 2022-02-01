@@ -20,10 +20,15 @@ import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.
 import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
 import { ImageBase64UploadModule } from './components/image-base64-upload/image-base64-upload.module'
+import { ImageSliderComponent } from './components/image-slider/image-slider.component'
+import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive'
+import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 
 @NgModule({
     declarations: [
         ProgressBarComponent,
+        ImageSliderComponent,
+        CarouselItemDirective,
         Number2stringPipe,
         String2numberPipe,
         DiffDateToTodayPipe,
@@ -44,6 +49,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
 
         // library
         IconLibraryModule,
+        IvyCarouselModule,
 
         // Mat
         MatInputModule,
@@ -70,6 +76,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
 
         // library
         IconLibraryModule,
+        IvyCarouselModule,
 
         // Mat
         MatInputModule,
@@ -80,6 +87,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
         MatSelectModule,
 
         ProgressBarComponent,
+        ImageSliderComponent,
         String2numberPipe
     ]
 })
