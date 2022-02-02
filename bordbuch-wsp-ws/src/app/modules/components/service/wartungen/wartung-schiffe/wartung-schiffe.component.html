@@ -6,6 +6,8 @@
                 <th hidden>ID</th>
                 <th>Typ</th>
                 <th>Durchsicht</th>
+                <th>Tage</th>
+                <th class="w-12"></th>
                 <th class="w-12"></th>
             </tr>
         </thead>
@@ -15,6 +17,12 @@
                 <td hidden>{{ schiff.id }}</td>
                 <td>{{ schiff.typ }}</td>
                 <td>{{ schiff.durchsicht | date: 'dd.MM.yyyy' }}</td>
+                <td>
+                    {{ schiff.durchsicht | diffDateToToday }}
+                </td>
+                <td>
+                    <progress-circle [value]="30 - (schiff.durchsicht | diffDateToToday)" [maxvalue]="30"></progress-circle>
+                </td>
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" (click)="showModal(schiff)">
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>
@@ -23,10 +31,4 @@
             </tr>
         </tbody>
     </table>
-    <!-- <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
-        <span class="h-6 w-6 mr-2">
-            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
-        </span>
-        Wartung hinzufügen
-    </button> -->
 </div>

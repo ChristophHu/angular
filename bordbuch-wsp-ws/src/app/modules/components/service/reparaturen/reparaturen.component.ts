@@ -15,7 +15,7 @@ import { ReparaturModalComponent } from './reparatur-modal/reparatur-modal.compo
 export class ReparaturenComponent implements OnInit {
   // datatables
   dtOptions: DataTables.Settings = {}
-  dtTrigger: Subject<any> = new Subject()
+  dtTrigger: Subject<any> = new Subject<any>()
 
   status: string = ''
   
@@ -62,7 +62,7 @@ export class ReparaturenComponent implements OnInit {
       }
     }
 
-    this.toggleReparaturen('In Bearbeitung')
+    this.toggleReparaturen('alle')
   }
 
   toggleReparaturen(status: string) {
@@ -70,8 +70,9 @@ export class ReparaturenComponent implements OnInit {
     this.reparaturen$ = this._specFacade.getReparaturen(status)
   }
 
-  reloadReparaturen() {
-    
+  reload() {
+    this._specFacade.loadAllReparaturen()
+    this.dtTrigger.next({})
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {
@@ -88,7 +89,7 @@ export class ReparaturenComponent implements OnInit {
     } else {
       this._modalService.open(ReparaturModalComponent, {
         data: {
-          title: 'Reparatur hinzufügen',
+          title: 'Reparaturauftrag aufnehmen',
           date: new Date().toISOString()
         }
       })
@@ -96,7 +97,7 @@ export class ReparaturenComponent implements OnInit {
   }
 
   delete(id: string) {
-    // this._specFacade.deleteBetankung(id)
+    this._specFacade.deleteReparatur(id)
   }
 
 }

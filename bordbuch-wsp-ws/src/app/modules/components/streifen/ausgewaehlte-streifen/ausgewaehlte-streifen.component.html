@@ -10,8 +10,9 @@
 </div>
 <div class="absolute top-20 right-0 bottom-0 left-0">
     <div class="container mx-auto p-4 mb-8">
-        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'aktiv') ? 'bg-blue-600 text-white' : ''" (click)="toggle('aktiv')">Aktive Streifen</button>
-        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'beendet') ? 'bg-blue-600 text-white' : ''" (click)="toggle('beendet')">Beendete Streifen</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let status of status$" [ngClass]="(filter == status) ? 'bg-blue-600 text-white' : ''" (click)="toggle(status)">{{ status }}</button>
+        <!-- <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'aktiv') ? 'bg-blue-600 text-white' : ''" (click)="toggle('aktiv')">Aktive Streifen</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'beendet') ? 'bg-blue-600 text-white' : ''" (click)="toggle('beendet')">Beendete Streifen</button> -->
         <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filter == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggle('alle')">Alle</button>
         <button class="w-6 h-6 p-1 bg-gray-300 text-black rounded-full" (click)="reload()">
             <icons class="w-4 h-4 stroke-1 stroke-current" name="refresh"></icons>

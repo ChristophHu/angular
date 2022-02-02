@@ -1,0 +1,82 @@
+<app-modal #modalComponent>
+    <header class="h-16 p-8 flex items-center justify-between border-b">
+      <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+        {{ title }}
+      </p>
+      <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+        <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+      </button>
+    </header>
+    <div class="content">
+      <p class="p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
+        Schiff
+      </p>
+      <form [formGroup]="motorForm">
+        <div class="hidden">
+          <mat-form-field appearance="fill">
+            <mat-label>id</mat-label>
+            <input matInput type="text" formControlName="id" readonly>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name" readonly>
+        </mat-form-field>
+      </form>
+
+      <p class="mt-5 p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
+        Checkliste
+      </p>
+      <div class="w-full overflow-x-hidden xl:overflow-x-hidden"><!-- overflow-x-scroll -->
+          <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
+            <thead>
+                <tr class="w-full h-12 border-gray-300 border-b py-8">
+                    <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
+                      Id
+                    </th>
+                    <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+                        <!-- (change)="checkAll($event.target.checked)" -->
+                        <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+                    </th>
+                    <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+                        Name
+                    </th>
+                    <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+                      
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let katItem of kat">
+                    <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
+                      {{ katItem.id }}
+                    </td>
+                    <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                      <input type="checkbox" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+                      <!-- (change)="table_interact1 =! table_interact1" -->
+                    </td>
+                    <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                      {{ katItem.zaehlerstandstyp }}
+                    </td>
+                    <td class="pr-2 leading-4">
+                      <button class="w-6 h-6">
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>
+                      </button>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+      <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+  
+  <ng-template #toolbar>
+    <div>
+      <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    </div>
+    <div>
+      <button (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+    </div>
+  </ng-template>

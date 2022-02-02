@@ -96,6 +96,7 @@ export class AppService {
             case 'deleteKatZwecke':
             case 'deletePruefvermerk':
             case 'deletePruefvermerkKat':
+            case 'deleteReparatur':
             case 'deleteReparaturFoto':
             case 'deleteSchiff':
             case 'deleteStatus':

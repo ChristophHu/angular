@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Standort } from 'src/app/core/models/standort.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
@@ -13,8 +14,11 @@ export class TabStandorteComponent implements OnInit {
   @Output() hovered = new EventEmitter()
   
   standorte: Standort[] = []
+  id_streife: string
 
-  constructor(private _modalService: ModalService<AusgewaehlterStandortModalComponent>, private _specFacade: SpecFacade) { }
+  constructor(private _route: ActivatedRoute, private _modalService: ModalService<AusgewaehlterStandortModalComponent>, private _specFacade: SpecFacade) {
+    this.id_streife = this._route.snapshot.paramMap.get('id')!
+  }
 
   ngOnInit(): void {
     this._specFacade.allStandorte$.subscribe(standorte => {
@@ -36,12 +40,17 @@ export class TabStandorteComponent implements OnInit {
         }
       })
     } else {
-      this._modalService.open(AusgewaehlterStandortModalComponent, {
-        data: {
-          title: 'Position hinzufügen',
-          date: new Date().toISOString()
-        }
+      console.log(`getStreifeById ${this.id_streife}`)
+      this._specFacade.getStreifeById(this.id_streife).subscribe(streife => {
+        this._modalService.open(AusgewaehlterStandortModalComponent, {
+          data: {
+            title: 'Position hinzufügen',
+            date: new Date().toISOString(),
+            streife
+          }
+        })
       })
+      
     }
   }
 

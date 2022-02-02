@@ -68,7 +68,7 @@
     </div>
     <div>
       <button *ngIf="!standortForm.pristine && standortForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-      <!-- <button *ngIf="!standortForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+      <button *ngIf="!standortForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>
   

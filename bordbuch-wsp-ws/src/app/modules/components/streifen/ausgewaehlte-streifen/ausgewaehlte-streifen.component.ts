@@ -11,8 +11,8 @@ import { AusgewaehlteStreifenModalComponent } from './ausgewaehlte-streifen-moda
   styleUrls: ['./ausgewaehlte-streifen.component.sass']
 })
 export class AusgewaehlteStreifenComponent implements OnInit {
-
-  filter: string = 'alle-streifen'
+  filter: string = 'alle'
+  status$: string[] = ['vorbereitend', 'aktiv', 'beendet']
 
   // datatables
   dtOptions: DataTables.Settings = {}
@@ -71,6 +71,7 @@ export class AusgewaehlteStreifenComponent implements OnInit {
   }
 
   reload() {
+    console.log(`reload streifen`)
     this._specFacade.loadAllStreifen()
   }
 

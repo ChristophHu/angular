@@ -77,13 +77,17 @@ export class SpecFacade {
     getReparaturen(status: string): Observable<Reparatur[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectReparaturen(status)))
     }
-    downloadReparaturFotos( id: string ) {
+    getReparaturFotosById(id: string): Observable<any> {
+        return this.store.pipe(select(SpecSelectors.selectReparaturFotosById(id)))
+    }
+    downloadReparaturFotos(id: string) {
+        console.log(id)
         this.store.dispatch(SpecActions.downloadReparaturFotos({ id }))
     }
-    uploadReparaturFoto( upload: any ) {
+    uploadReparaturFoto(upload: any) {
         this.store.dispatch(SpecActions.uploadReparaturFoto({ upload }))
     }
-    deleteReparaturFoto( id: string ) {
+    deleteReparaturFoto(id: string) {
         this.store.dispatch(SpecActions.deleteReparaturFoto({ id }))
     }
     
@@ -121,6 +125,9 @@ export class SpecFacade {
     }
     getStreifen(status: string): Observable<Streife[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectStreifen(status)))
+    }
+    getStreifeById(id_streife: string): Observable<Streife | undefined> {
+        return this.store.pipe(select(SpecSelectors.selectStreifeById(id_streife)))
     }
 
     // tanks

@@ -26,6 +26,7 @@ import { BarChartVerticalComponent } from './components/charts/bar-chart-vertica
 import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-api'
 import { ProgressComponent } from './components/progress/progress.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
+import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     ToArrayPipe,
     BarChartVerticalComponent,
     ProgressComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DiffDateToTodayPipe
   ],
   imports: [
     CommonModule,
@@ -82,6 +84,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     SanitizeHtmlPipe,
     TitlecasePipe,
     ToArrayPipe,
+    DiffDateToTodayPipe,
 
     CommonModule,
     ModalModule,

@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       { path: 'aktuelle-positionen', component: AktuellePositionenComponent },
       { path: 'ausgewaehlte-streifen', component: AusgewaehlteStreifenComponent },
-      { path: ':id', component: AusgewaehlteStreifeComponent }
+      { path: ':id', component: AusgewaehlteStreifeComponent, data: { param: 'id'} }
     ]
   }
 ]

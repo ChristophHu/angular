@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDestroy {
   status: boolean = false
+  id_streife: string | null
 
   // leaflet
   private _map!: L.Map
@@ -23,24 +24,25 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
   standort_marker_group: any
 
   constructor(private _route: ActivatedRoute, private locationService: LocationService, private _specFacade: SpecFacade) {
-    const id_streife = this._route.snapshot.paramMap.get('id')
-    _specFacade.loadAllStandorte(id_streife!)
+    this.id_streife = this._route.snapshot.paramMap.get('id')
+    _specFacade.loadAllStandorte(this.id_streife!)
   }
 
   ngOnInit(): void {
     L.Icon.Default.imagePath = "assets/leaflet/"
-
-    this._specFacade.allStandorte$.subscribe(standorte => {
-      if (standorte) {
-        this.standorte = standorte
-      }
-    })
   }
 
   ngAfterViewInit(): void {
     this.createMap()
-    this.set_marker(this.standorte)
     this.mark_current_position()
+
+    this._specFacade.allStandorte$.subscribe(standorte => {
+      // if (standorte) {
+        this.standorte = standorte
+        console.log(this.standorte)
+        this.set_marker(this.standorte)
+      // }
+    })    
   }
 
   ngOnDestroy(): void {
@@ -107,16 +109,11 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
     this.locationService.getCurrentPosition().then(position => {
       this._map.panTo(new L.LatLng( position.latitude, position.longitude ))
     })
-    if (this.marker_current_position) {
+    if (this._map.hasLayer(this.marker_current_position)) {
       this._map.removeLayer(this.marker_current_position)
-      console.log('remove')
     } else {
       this.marker_current_position.addTo(this._map)
-      console.log('add')
     }
-
-    // if (this.standort_marker_group && this._map.hasLayer(this.standort_marker_group))
-    //   this._map.removeLayer(this.standort_marker_group)
 	}
 
   hovered(id: any) {
@@ -145,7 +142,6 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
 
     this.locationService.getCurrentPosition().then(position => {
       this.marker_current_position = L.layerGroup([L.marker([position.latitude, position.longitude], { icon: svgIcon}).bindPopup('Aktuelle Position')])
-      // this.marker_current_position.remove()
       this.marker_current_position.addTo(this._map)
     })
   }

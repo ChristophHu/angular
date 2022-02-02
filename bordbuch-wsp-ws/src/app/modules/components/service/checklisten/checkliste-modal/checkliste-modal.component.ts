@@ -17,8 +17,10 @@ import { Checklist } from 'src/app/core/models/checklist.model';
 export class ChecklisteModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<ChecklisteModalComponent> | undefined;
   title: string = ''
+  allCheck: boolean = false
 
   checklistForm: FormGroup
+  checklist: FormGroup
   checklistKat: Checklistitem[] = []
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<ChecklisteModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
@@ -36,6 +38,9 @@ export class ChecklisteModalComponent implements OnInit {
       streife: [],
       status: [],
     })
+    this.checklist = this._formBuilder.group({
+
+    })
   }
 
   ngOnInit(): void {
@@ -49,6 +54,15 @@ export class ChecklisteModalComponent implements OnInit {
   changeCheck(item: Checklistitem) {
     this.checklistKat = this.checklistKat.filter(el => el.id != item.id)
     this.checklistKat.push(Object.assign({}, item, { checked: !item.checked }))
+  }
+
+  toggleCheck() {
+    this.allCheck = !this.allCheck
+    let items: Checklistitem[] = []
+    this.checklistKat.forEach(item => {
+      items.push(Object.assign({}, item, { checked: this.allCheck }))
+    })
+    this.checklistKat = items
   }
 
   create() {

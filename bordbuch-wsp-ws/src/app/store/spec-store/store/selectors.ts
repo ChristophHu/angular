@@ -46,6 +46,10 @@ export const selectReparaturFotosCount = createSelector(
     selectAllReparaturFotos,
     reparaturfotos => reparaturfotos?.length
 )
+export const selectReparaturFotosById = (id: string) => createSelector(
+    selectAllReparaturFotos,
+    reparaturfotos => reparaturfotos?.filter(el => el.id == id)
+)
 
 // laststandorte
 export const selectAllLastStandorte = createSelector(
@@ -71,6 +75,10 @@ export const selectAllStreifen = createSelector(
 export const selectStreifen = (status: string) => createSelector(
     selectAllStreifen,
     streifen => streifen?.filter(el => el.status == status)
+)
+export const selectStreifeById= (id_streife: string) => createSelector(
+    selectAllStreifen,
+    streifen => streifen?.find(el => el.id == id_streife)
 )
 
 // tanks

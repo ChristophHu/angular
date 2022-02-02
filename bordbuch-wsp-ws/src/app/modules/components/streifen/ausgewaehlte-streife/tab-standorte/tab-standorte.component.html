@@ -4,7 +4,7 @@
     </p>
   </header>
   <div class="content">
-    <div class="w-full overflow-x-scroll xl:overflow-x-hidden">
+    <div class="w-full overflow-x-hidden xl:overflow-x-hidden">
       <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
         <thead>
           <tr class="w-full h-12 border-gray-300 border-b py-8">
@@ -14,7 +14,7 @@
             </th>
             <th
               class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
-              Id
+              Set
             </th>
             <!-- <th class="px-2 w-8 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
               <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"/>
@@ -41,5 +41,11 @@
           </tr>
         </tbody>
       </table>
+      <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Position hinzufügen
+      </button>
     </div>
   </div>

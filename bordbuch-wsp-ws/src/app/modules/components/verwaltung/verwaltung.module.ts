@@ -27,6 +27,7 @@ import { PruefvermerkModalComponent } from './pruefvermerke/pruefvermerk-modal/p
 import { KatStatusComponent } from './kataloge/kat-status/kat-status.component';
 import { KatStatusModalComponent } from './kataloge/kat-status/kat-status-modal/kat-status-modal.component';
 import { TankModalComponent } from './schiffe/tank-modal/tank-modal.component';
+import { MotorModalComponent } from './schiffe/motor-modal/motor-modal.component';
 
 const routes: Routes = [
   { path: '', component: VerwaltungComponent,
@@ -65,7 +66,8 @@ const routes: Routes = [
     PruefvermerkModalComponent,
     KatStatusComponent,
     KatStatusModalComponent,
-    TankModalComponent
+    TankModalComponent,
+    MotorModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),
