@@ -160,6 +160,9 @@ export class SpecFacade {
     deleteZaehlerstand(id: string) {
         this.store.dispatch(SpecActions.deleteZaehlerstand({ id }))
     }
+    getZaehlerstaendeById(id: string): Observable<any> {
+        return this.store.pipe(select(SpecSelectors.selectZaehlerstaendeById(id)))
+    }
 }
 
 export { SpecState }

@@ -67,8 +67,12 @@ export class ReparaturModalComponent implements OnInit {
         console.log(`Fotos by id ${data.data.reparatur.id}`)
         this._specFacade.downloadReparaturFotos(data.data.reparatur.id)
         // this._specFacade.getReparaturFotosById(data.data.reparatur.id)
-        this._specFacade.allReparaturFotos$.subscribe(data => {
-          if (data != undefined) this.decodeImages(data)
+        // this._specFacade.allReparaturFotos$.subscribe(data => {
+        //   if (data != undefined) this.decodeImages(data)
+        // })
+        this._specFacade.getReparaturFotosById(data.data.reparatur.id).subscribe(fotos => {
+          console.log(`returned fotos: ${fotos}`)
+          if (fotos != undefined) this.decodeImages(fotos)
         })
       }
     })

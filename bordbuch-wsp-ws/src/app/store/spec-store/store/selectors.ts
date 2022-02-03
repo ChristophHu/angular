@@ -76,7 +76,7 @@ export const selectStreifen = (status: string) => createSelector(
     selectAllStreifen,
     streifen => streifen?.filter(el => el.status == status)
 )
-export const selectStreifeById= (id_streife: string) => createSelector(
+export const selectStreifeById = (id_streife: string) => createSelector(
     selectAllStreifen,
     streifen => streifen?.find(el => el.id == id_streife)
 )
@@ -91,4 +91,8 @@ export const selectTanks = createSelector(
 export const selectAllZaehlerstaende = createSelector(
     specState,
     state => state.zaehlerstaende
+)
+export const selectZaehlerstaendeById= (id: string) => createSelector(
+    selectAllZaehlerstaende,
+    zaehlerstaende => zaehlerstaende?.filter(el => el.id_schiff == id)
 )

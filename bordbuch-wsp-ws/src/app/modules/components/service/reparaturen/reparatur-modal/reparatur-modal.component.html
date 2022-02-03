@@ -87,19 +87,22 @@
               </td>
               <td class="pr-2 leading-4">
                 <button class="w-6 h-6">
+                  <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="eye" (click)="showGalerie = !showGalerie"></icons>
+                </button>
+                <button class="w-6 h-6">
                   <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="trash" (click)="deleteFoto(foto.id)"></icons>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
+        <!-- <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
           {{ reparaturFotoCount$ | async }} Fotos anzeigen
-        </button>
+        </button> -->
       </div>
 
       <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5 dark:bg-gray-800">
-        <h2 class="text-lg text-gray-800 dark:text-gray-100 font-bold">Bilder anzeigen/hinzufügen</h2>
+        <h2 class="text-lg text-gray-800 dark:text-gray-100 font-bold">Bilder hinzufügen</h2>
         <image-base64-upload (imageBase64)="uploadImage($event)"></image-base64-upload>
       </div>
     </form>

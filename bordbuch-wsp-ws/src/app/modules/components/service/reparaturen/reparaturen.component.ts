@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Reparatur } from 'src/app/core/models/reparatur.model';
@@ -12,12 +13,47 @@ import { ReparaturModalComponent } from './reparatur-modal/reparatur-modal.compo
   templateUrl: './reparaturen.component.html',
   styleUrls: ['./reparaturen.component.sass']
 })
-export class ReparaturenComponent implements OnInit {
+export class ReparaturenComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective
+
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject<any>()
 
-  status: string = ''
+  options: Object = {paging: true,
+    pagingType: 'full_numbers', 
+    pageLength: 10, 
+    responsive: true, 
+    // "ordering": false,
+    // "processing": true,
+    // "info"    : false,
+    autoWidth: true,
+    retrieve: true,
+    // data:this.dtUsers,
+    // columns: [{title: 'User ID', data: 'id'},
+    //       {title: 'First Name', data: 'firstName'},
+    //       {title: 'Last Name', data: 'lastName' }],
+    language: {
+      // "processing": "Procesando...",
+      "search": "Suche:",
+      "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
+      "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
+      // "infoEmpty": "Mostrando ningún elemento.",
+      // "infoFiltered": "(filtrado _MAX_ elementos total)",
+      // "infoPostFix": "",
+      // "loadingRecords": "Cargando registros...",
+      // "zeroRecords": "No se encontraron registros",
+      "emptyTable": "Keine Datensätze vorhanden",
+      "paginate": {
+        "first": "Erste",
+        "previous": "Vorherige",
+        "next": "Nächste",
+        "last": "Letzte"
+      },
+    }
+  }
+
+  status: string = 'alle'
   
   reparaturen$!: Observable<Reparatur[] | undefined>
   kat$: Observable<Kat[]>
@@ -28,51 +64,36 @@ export class ReparaturenComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers', 
-      pageLength: 10, 
-      responsive: true, 
-      // "paging"  : false,
-      // "ordering": false,
-      // "processing": true,
-      // "info"    : false,
-      "autoWidth": true,
-      // "retrieve": true,
-      // data:this.dtUsers,
-      // columns: [{title: 'User ID', data: 'id'},
-      //       {title: 'First Name', data: 'firstName'},
-      //       {title: 'Last Name', data: 'lastName' }],
-      "language": {
-        // "processing": "Procesando...",
-        "search": "Suche:",
-        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
-        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
-        // "infoEmpty": "Mostrando ningún elemento.",
-        // "infoFiltered": "(filtrado _MAX_ elementos total)",
-        // "infoPostFix": "",
-        // "loadingRecords": "Cargando registros...",
-        // "zeroRecords": "No se encontraron registros",
-        "emptyTable": "Keine Datensätze vorhanden",
-        "paginate": {
-          "first": "Erste",
-          "previous": "Vorherige",
-          "next": "Nächste",
-          "last": "Letzte"
-        },
-      }
+    this.dtOptions = this.options
+  }
+  ngAfterViewInit(): void {
+    this.dtTrigger.next({})
+  }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe()
+  }
+
+  rerenderTable() {
+    try {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy()
+        this.dtTrigger.next({})
+      })
+    } catch (err) {
+      console.log(err)
     }
 
-    this.toggleReparaturen('alle')
   }
 
   toggleReparaturen(status: string) {
     this.status = status
     this.reparaturen$ = this._specFacade.getReparaturen(status)
+    this.rerenderTable()
   }
 
   reload() {
     this._specFacade.loadAllReparaturen()
-    this.dtTrigger.next({})
+    this.rerenderTable()
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {
@@ -99,5 +120,4 @@ export class ReparaturenComponent implements OnInit {
   delete(id: string) {
     this._specFacade.deleteReparatur(id)
   }
-
 }

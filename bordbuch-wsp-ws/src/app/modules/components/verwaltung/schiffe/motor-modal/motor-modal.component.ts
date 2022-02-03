@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
+import { Schiff } from 'src/app/core/models/schiff.model';
+import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model';
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -16,20 +18,19 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 export class MotorModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<MotorModalComponent> | undefined;
   title: string = ''
-  allCheck: boolean = true
+  allCheck: boolean = false
 
   // motorTabForm: FormGroup
   motorForm: FormGroup
   item: Kat = { id: '', bezeichnung: '' }
 
-  // getFEM()
-  kat: Zaehlerstandstyp[] = []
-  // lastChecklist!: Checklist
-  // checklistKat: Checklistitem[] = []
+  schiff: Schiff
+  kat: any[] = []
+  zaehlerstandstypenKat: any[] = []
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<MotorModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     _katFacade.zaehlerstandstypen$.subscribe(kat => {
-      this.kat = kat
+      this.zaehlerstandstypenKat = kat
     })
 
     this.motorForm = this._formBuilder.group({
@@ -45,43 +46,67 @@ export class MotorModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
+      this.schiff = data.data.schiff
       this.motorForm.patchValue(data.data.schiff)
-      // this.load(data.data.schiff.id)
+
+      this.load(data.data.schiff.id)
+    })
+  }
+
+  load(id: string) {
+    this._specFacade.getZaehlerstaendeById(id).subscribe(zaehlerstaende => {
+      console.log(`zaehlerstaende: ${zaehlerstaende}`)
+
+      if (zaehlerstaende && zaehlerstaende.length > 0) {
+      
+        let zaehlerstandstypen: any[] = []
+        zaehlerstaende.forEach((zaehlerstand: Zaehlerstand) => {
+          zaehlerstandstypen.push(Object.assign({}, { id: zaehlerstand.id, zaehlerstandstyp: zaehlerstand.zaehlerstandstyp, checked: true, value: zaehlerstand.value }))
+        })
+
+        let zaehlerstandstypenKat: any[] = []
+        this.zaehlerstandstypenKat.forEach((zaehlerstandstyp: any) => {
+          zaehlerstandstypenKat.push(Object.assign({}, zaehlerstandstyp, { checked: false, value: 0 }))
+        })
+        
+        const key = 'zaehlerstandstyp'
+        let k: Zaehlerstandstyp[] = [...zaehlerstandstypen, ...zaehlerstandstypenKat]
+        this.kat = [...new Map(k.map(item => [item[key], item])).values()]
+      } else {
+        let zaehlerstandstypenKat: any[] = []
+        this.zaehlerstandstypenKat.forEach((zaehlerstandstyp: any) => {
+          zaehlerstandstypenKat.push(Object.assign({}, zaehlerstandstyp, { checked: false }))
+        })
+        this.kat = [...zaehlerstandstypenKat]
+      }
     })
   }
 
   toggleCheck() {
     this.allCheck = !this.allCheck
-    // this.kat.forEach(motor => {
-    //   motor.checked = this.allCheck
-    // })
+    this.kat.forEach(motor => {
+      motor.checked = this.allCheck
+    })
+  }
+  
+  changeCheck(item: { id: string, zaehlerstandstyp: string, checked: boolean, value: number }) {
+
+    if (item.checked == false) {
+      // insert
+      const insert = { id: '', id_schiff: this.schiff.id, id_zaehlerstandstyp: item.id, zaehlerstandstyp: item.zaehlerstandstyp, value: 0, date: new Date().toISOString(), betriebsstunden: 0 }
+      this._specFacade.insertZaehlerstand(insert)
+    } else {
+      // delete
+      if (item.value != 0) {
+        console.log(`Es existieren Zaehlerstände zu diesem Eintrag!`)
+      } else {
+        this._specFacade.deleteZaehlerstand(item.id)
+      }
+    }
+    this.kat = this.kat.filter(el => el.id != item.id)
+    this.kat.push(Object.assign({}, item, { checked: !item.checked }))
   }
 
-  // load(id: string) {
-  //   this._specFacade.getChecklistById(id).subscribe(checklist => {
-  //     console.log(checklist)
-  //     if (checklist && checklist.checklistItems!.length>0) {
-  //       this.lastChecklist = checklist!
-        
-  //       let checklistItems: Checklistitem[] = []
-  //       checklist.checklistItems!.forEach(item => {
-  //         checklistItems.push(Object.assign({}, item, { checked: true }))
-  //       })
-
-  //       const key = 'id'
-  //       let checkliste: Checklistitem[] = [...this.checklistKat, ...checklistItems]
-  //       this.kat = [...new Map(checkliste.map(item => [item[key], item])).values()]
-  //     } else {
-  //       this.kat = [...this.checklistKat]
-  //     }
-  //   })
-  // }
-
-  // loadItem(id: string) {
-  //   const item = this.kat.find(el => el.id == id)!
-  //   this.checklistitemForm.patchValue(item)
-  //   this.show = !this.show
-  // }
   // setItem() {
   //   const item: Checklistitem = this.checklistitemForm.value
   //   this.kat = this.kat.filter(el => el.id != item.id)
@@ -89,10 +114,7 @@ export class MotorModalComponent implements OnInit {
   //   this.show = !this.show
   // }
 
-  // changeCheck(item: Checklistitem) {
-  //   this.kat = this.kat.filter(el => el.id != item.id)
-  //   this.kat.push(Object.assign({}, item, { checked: !item.checked }))
-  // }
+
 
   create() {
     // const checklist: Checklist = { 
