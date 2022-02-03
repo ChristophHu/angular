@@ -61,6 +61,12 @@ export class AusgewaehlteStreifenModalComponent implements OnInit {
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe(id => this.streifeForm.patchValue({ id_schiff: id }))
   }
+  setStartDate() {
+    this.streifeForm.patchValue({ start: new Date().toISOString() })
+  }
+  setEndeDate() {
+    this.streifeForm.patchValue({ ende: new Date().toISOString() })
+  }
 
   update() {
     let update: Streife = this.streifeForm.value

@@ -57,14 +57,32 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Start Datum/Uhrzeit</mat-label>
         <input matInput type="datetime-local" formControlName="start" value="{{streifeForm.value.start | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
+      </mat-form-field> -->
+      <div class="flex flex-row items-center">
+        <mat-form-field appearance="fill">
+            <mat-label>Start Datum/Uhrzeit</mat-label>
+            <input matInput type="datetime-local" formControlName="start" value="{{streifeForm.value.start | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        </mat-form-field>
+        <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setStartDate()">
+            <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+        </button>
+      </div>
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Ende Datum/Uhrzeit</mat-label>
         <input matInput type="datetime-local" formControlName="ende" value="{{streifeForm.value.ende | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-      </mat-form-field>
+      </mat-form-field> -->
+      <div class="flex flex-row items-center">
+        <mat-form-field appearance="fill">
+            <mat-label>Ende Datum/Uhrzeit</mat-label>
+            <input matInput type="datetime-local" formControlName="ende" value="{{streifeForm.value.ende | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        </mat-form-field>
+        <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEndeDate()">
+            <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+        </button>
+      </div>
       <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
         <thead>
           <tr class="w-full h-12 border-gray-300 border-b py-8">

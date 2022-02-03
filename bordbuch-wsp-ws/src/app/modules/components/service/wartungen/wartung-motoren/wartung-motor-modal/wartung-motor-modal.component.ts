@@ -52,12 +52,14 @@ export class WartungMotorModalComponent implements OnInit {
     console.log(zaehlerstandstyp)
     this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
   }
-
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe(id => {
       this.zaehlerstandForm.patchValue({ id_schiff: id })
       this.zaehlerstandForm.value.value == '' ? this.zaehlerstandForm.value.value = 0 : null
     })
+  }
+  setDate() {
+    this.zaehlerstandForm.patchValue({ date: new Date().toISOString() })
   }
 
   create() {

@@ -55,6 +55,10 @@ export class ZaehlerstandModalComponent implements OnInit {
     this._katFacade.getIdByShip(name).subscribe(id => this.zaehlerstandForm.patchValue({ id_schiff: id }))
   }
 
+  setDate() {
+    this.zaehlerstandForm.patchValue({ date: new Date().toISOString() })
+  }
+
   create() {
     const insert: Zaehlerstand = this.zaehlerstandForm.value
     console.log(insert)
@@ -67,10 +71,10 @@ export class ZaehlerstandModalComponent implements OnInit {
     this._specFacade.updateZaehlerstand(update)
     this.modal?.close()
   }
-  // delete() {
-  //   this._specFacade.deleteZaehlerstand(this.zaehlerstandForm.value.id)
-  //   this.modal?.close()
-  // }
+  delete() {
+    this._specFacade.deleteZaehlerstand(this.zaehlerstandForm.value.id)
+    this.modal?.close()
+  }
 
   cancel() {
     this.modal?.close()

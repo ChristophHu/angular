@@ -102,6 +102,7 @@ export class AppService {
             case 'deleteStatus':
             case 'deleteStreife':
             case 'deleteTank':
+            case 'deleteZaehlerstand':
             case 'deleteZaehlerstandsTyp':
                 param = `id=${data}`
                 break
@@ -220,7 +221,7 @@ export class AppService {
                 console.log(data)
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
                 console.log(param)
-                break               
+                break 
 
             default:
                 console.error('There is no action to switch.')

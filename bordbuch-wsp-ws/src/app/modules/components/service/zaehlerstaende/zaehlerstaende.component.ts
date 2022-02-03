@@ -78,7 +78,7 @@ export class ZaehlerstaendeComponent implements OnInit {
       }
    }
 
-   // delete(id: string) {
-   //    this._specFacade.deleteZaehlerstand(id)
-   // }
+   delete(id: string) {
+      this._specFacade.deleteZaehlerstand(id)
+   }
 }

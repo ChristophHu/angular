@@ -7,7 +7,7 @@ import { Streife } from "src/app/core/models/streife.model"
 import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { clearReparaturen, deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
     checklists      : Checklist[]       | undefined
@@ -135,6 +135,12 @@ export const reducer = createReducer(
         return {
             ...state,
             reparaturen: clearedReparaturen
+        }
+    }),
+    on(clearReparaturen, (state, action) => {
+        return {
+            ...state,
+            reparaturen: undefined
         }
     }),
 

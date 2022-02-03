@@ -31,10 +31,19 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>Datum/Uhrzeit</mat-label>
         <input matInput type="datetime-local" formControlName="date" value="{{reparaturForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-      </mat-form-field>
+      </mat-form-field> -->
+      <div class="flex flex-row items-center">
+        <mat-form-field appearance="fill">
+            <mat-label>Datum/Uhrzeit</mat-label>
+            <input matInput type="datetime-local" formControlName="date" value="{{reparaturForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        </mat-form-field>
+        <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
+            <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+        </button>
+      </div>
       <mat-form-field appearance="fill">
           <mat-label>Kategorie</mat-label>
           <mat-select formControlName="kategorie" (selectionChange)="selectKategorie($event.value)">
@@ -96,9 +105,9 @@
             </tr>
           </tbody>
         </table>
-        <!-- <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
+        <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
           {{ reparaturFotoCount$ | async }} Fotos anzeigen
-        </button> -->
+        </button>
       </div>
 
       <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5 dark:bg-gray-800">

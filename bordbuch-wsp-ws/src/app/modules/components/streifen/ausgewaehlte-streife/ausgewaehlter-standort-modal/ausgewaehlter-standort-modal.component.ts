@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { Standort } from 'src/app/core/models/standort.model';
 import { Streife } from 'src/app/core/models/streife.model';
+import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
@@ -24,7 +25,13 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
   // id_streife: string
   streife$!: Observable<Streife | undefined>
 
-  constructor(private _route: ActivatedRoute, private _formBuilder: FormBuilder, private _katFacade: KatFacade, private _specFacade: SpecFacade , private _modalService: ModalService<AusgewaehlterStandortModalComponent>) {
+  constructor(
+    private _route: ActivatedRoute, 
+    private _formBuilder: FormBuilder, 
+    private _katFacade: KatFacade, 
+    private _specFacade: SpecFacade,
+    private locationService: LocationService, 
+    private _modalService: ModalService<AusgewaehlterStandortModalComponent>) {
     // this.id_streife = this._route.snapshot.paramMap.get('id')!
     // console.log(this.id_streife)
     
@@ -58,13 +65,21 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
       if (data.data.standort) {
         this.standortForm.patchValue(data.data.standort)
       } else {
-        this.standortForm.patchValue({ id_schiff: data.data.streife.id_schiff, id_streife: data.data.streife.id, name: data.data.streife.schiffsname, date: data.data.date  })
-      }      
+        this.standortForm.patchValue({ id_ship: data.data.streife.id_schiff, id_streife: data.data.streife.id, name: data.data.streife.schiffsname, date: data.data.date  })
+      }
     })
   }
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe(id => this.standortForm.patchValue({ id_ship: id }))
+  }
+  setCurrentLocation() {
+    this.locationService.getCurrentPosition().then(position => {
+      this.standortForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
+    })
+  }
+  setDate() {
+    this.standortForm.patchValue({ date: new Date().toISOString() })
   }
 
   create() {

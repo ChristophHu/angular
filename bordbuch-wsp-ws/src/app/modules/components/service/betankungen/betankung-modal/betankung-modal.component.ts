@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Betankung } from 'src/app/core/models/betankung';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
+import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
@@ -22,7 +23,13 @@ export class BetankungModalComponent implements OnInit {
   betriebsstoffe$: Observable<Kat[]>
   schiffe$: Observable<Schiff[]>
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<BetankungModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
+  constructor(
+    private _formBuilder: FormBuilder, 
+    private locationService: LocationService,
+    private _modalService: ModalService<BetankungModalComponent>, 
+    private _katFacade: KatFacade, 
+    private _specFacade: SpecFacade
+  ) {
     this.betriebsstoffe$ = _katFacade.betriebsstoffe$
     this.schiffe$ = _katFacade.schiffe$
 
@@ -52,6 +59,14 @@ export class BetankungModalComponent implements OnInit {
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe(id => this.betankungForm.patchValue({ id_ship: id }))
+  }
+  setCurrentLocation() {
+    this.locationService.getCurrentPosition().then(position => {
+      this.betankungForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
+    })
+  }
+  setDate() {
+    this.betankungForm.patchValue({ date: new Date().toISOString() })
   }
 
   create() {

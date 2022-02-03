@@ -77,11 +77,13 @@ export class SpecFacade {
     getReparaturen(status: string): Observable<Reparatur[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectReparaturen(status)))
     }
+    clearReparaturen() {
+        this.store.dispatch(SpecActions.clearReparaturen())
+    }
     getReparaturFotosById(id: string): Observable<any> {
         return this.store.pipe(select(SpecSelectors.selectReparaturFotosById(id)))
     }
     downloadReparaturFotos(id: string) {
-        console.log(id)
         this.store.dispatch(SpecActions.downloadReparaturFotos({ id }))
     }
     uploadReparaturFoto(upload: any) {

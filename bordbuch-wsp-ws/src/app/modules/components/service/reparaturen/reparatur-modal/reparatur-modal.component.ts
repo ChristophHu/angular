@@ -36,7 +36,7 @@ export class ReparaturModalComponent implements OnInit {
     this.pruefvermerkkategorien$ = _katFacade.pruefvermerkkategorien$
     this.status$ = _katFacade.status$
     this.schiffe$ = _katFacade.schiffe$
-    this.reparaturfotos$ = this._specFacade.allReparaturFotos$
+    // this.reparaturfotos$ = this._specFacade.allReparaturFotos$
     this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
 
     this.reparaturForm = this._formBuilder.group({
@@ -64,16 +64,12 @@ export class ReparaturModalComponent implements OnInit {
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
 
-        console.log(`Fotos by id ${data.data.reparatur.id}`)
-        this._specFacade.downloadReparaturFotos(data.data.reparatur.id)
-        // this._specFacade.getReparaturFotosById(data.data.reparatur.id)
-        // this._specFacade.allReparaturFotos$.subscribe(data => {
-        //   if (data != undefined) this.decodeImages(data)
-        // })
         this._specFacade.getReparaturFotosById(data.data.reparatur.id).subscribe(fotos => {
           console.log(`returned fotos: ${fotos}`)
-          if (fotos != undefined) this.decodeImages(fotos)
+          this.images = []
+          if (fotos && fotos.length > 0) this.decodeImages(fotos)
         })
+        this._specFacade.downloadReparaturFotos(data.data.reparatur.id)
       }
     })
   }
@@ -82,7 +78,6 @@ export class ReparaturModalComponent implements OnInit {
     this._katFacade.getIdByShip(name).subscribe(id => this.reparaturForm.patchValue({ id_ship: id }))
   }
   selectKategorie(kategorie: string) {
-    console.log(kategorie)
     this.items$ = this._katFacade.getItemByKategorie(kategorie)
   }
   selectStatus(status: string) {
@@ -90,9 +85,11 @@ export class ReparaturModalComponent implements OnInit {
       this.reparaturForm.patchValue({ id_status: id })
     })
   }
+  setDate() {
+    this.reparaturForm.patchValue({ date: new Date().toISOString() })
+  }
 
   decodeImages(data: any[]) {
-    this.images = []
     data.forEach(el => {
       // this.images.push(el)
       this.images.push(Object.assign({}, { path: el.foto }))

@@ -20,7 +20,8 @@ export class ReparaturenComponent implements OnInit, AfterViewInit, OnDestroy {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject<any>()
 
-  options: Object = {paging: true,
+  options: DataTables.Settings = {
+    paging: true,
     pagingType: 'full_numbers', 
     pageLength: 10, 
     responsive: true, 
@@ -77,21 +78,23 @@ export class ReparaturenComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy()
+        this.dtOptions = this.options
         this.dtTrigger.next({})
       })
     } catch (err) {
       console.log(err)
     }
-
   }
 
   toggleReparaturen(status: string) {
     this.status = status
     this.reparaturen$ = this._specFacade.getReparaturen(status)
+    
     this.rerenderTable()
   }
 
   reload() {
+    this._specFacade.clearReparaturen()
     this._specFacade.loadAllReparaturen()
     this.rerenderTable()
   }

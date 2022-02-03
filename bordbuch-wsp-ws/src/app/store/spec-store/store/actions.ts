@@ -72,6 +72,9 @@ export const deleteReparaturSuccess = createAction(
 	"[Modal Reparatur Dialog] Delete Reparatur Success",
 	props<{ id: string }>()
 )
+export const clearReparaturen = createAction(
+	"[Modal Reparatur Dialog] Clear Reparaturen"
+)
 
 // reparaturfoto
 export const downloadReparaturFotos = createAction(

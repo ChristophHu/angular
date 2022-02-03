@@ -48,6 +48,9 @@ export class WartungSchiffModalComponent implements OnInit {
   selectDienststelle(dienststelle: string) {
     this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
   }
+  setDate() {
+    this.schiffForm.patchValue({ date: new Date().toISOString() })
+  }
 
   create() {
     const insert: Schiff = this.schiffForm.value
