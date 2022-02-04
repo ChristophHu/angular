@@ -49,6 +49,13 @@ export class BesatzungComponent implements OnInit {
     })
   }
 
+  setAnBordDate() {
+    this.besatzungForm.patchValue({ an_bord: new Date().toISOString().substring(0,16) })
+  }
+  setVonBordDate() {
+    this.besatzungForm.patchValue({ von_bord: new Date().toISOString().substring(0,16) })
+  }
+
   create() {
     const insert: Besatzung = this.besatzungForm.value
     console.log(insert)

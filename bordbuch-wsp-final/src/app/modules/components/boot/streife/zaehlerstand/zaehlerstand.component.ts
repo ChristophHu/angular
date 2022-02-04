@@ -8,7 +8,6 @@ import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipAction } from 'src/app/store/ship-store';
 import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
 
 @Component({
@@ -42,9 +41,12 @@ export class ZaehlerstandComponent implements OnInit, OnDestroy {
       this.zaehlerstandForm.patchValue(data.data.zaehlerstand)
     })
   }
-
   ngOnDestroy(): void {
     this.zaehlerstandSubscription.unsubscribe()
+  }
+
+  setDate() {
+    this.zaehlerstandForm.patchValue({ date: new Date().toISOString().substring(0,16) })
   }
 
   update() {

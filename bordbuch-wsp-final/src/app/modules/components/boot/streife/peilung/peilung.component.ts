@@ -27,7 +27,7 @@ export class PeilungComponent {
     this.modalService.open(PeilungModalComponent, {
       data: {
         title: 'Peilung erstellen',
-        date: new Date().toISOString()
+        date: new Date().toISOString().substring(0,16)
       }
     })
   }

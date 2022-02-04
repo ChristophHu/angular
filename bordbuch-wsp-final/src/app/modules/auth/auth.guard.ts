@@ -36,7 +36,6 @@ export class AuthGuard implements CanActivate {
                     this._router.navigateByUrl('/login')
                 } else {
                     console.log('AuthGuard-canActivateChild: true')
-                    // this._router.navigateByUrl('/mobile')
                 }
             })
         )

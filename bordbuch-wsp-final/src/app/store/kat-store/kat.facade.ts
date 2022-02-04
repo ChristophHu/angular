@@ -28,6 +28,10 @@ export class KatFacade {
     constructor(private store: Store<RootStoreState>) {}
 
     // public dispatches
+    // betriebsstoffe
+    loadBetriebsstoffe() {
+        this.store.dispatch(KatAction.loadBetriebsstoffe())
+    }
     // dienststellen
     loadDienststellen() {
         this.store.dispatch(KatAction.loadDienststellen())

@@ -86,12 +86,6 @@ export class AktuellePositionenComponent implements OnInit, AfterViewInit, OnDes
     this.standort_marker_group.addTo(this._map)
   }
 
-  clearMarker() {
-    console.log(this._map.hasLayer(this.standort_marker_group))
-    if (this.standort_marker_group && this._map.hasLayer(this.standort_marker_group))
-      this._map.removeLayer(this.standort_marker_group);
-  }
-
   checked(e: Schiff[]) {
     const ids: string[] = e.map(schiff => {
       return schiff.id
@@ -141,8 +135,6 @@ export class AktuellePositionenComponent implements OnInit, AfterViewInit, OnDes
       this._map.panTo(new L.LatLng( position.latitude, position.longitude ))
     })
 	}
-
-
 
   mark_current_position() {
     var svgIcon = L.divIcon({

@@ -39,7 +39,6 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
     this._specFacade.allStandorte$.subscribe(standorte => {
       // if (standorte) {
         this.standorte = standorte
-        console.log(this.standorte)
         this.set_marker(this.standorte)
       // }
     })    
@@ -73,12 +72,6 @@ export class AusgewaehlteStreifeComponent implements OnInit, AfterViewInit, OnDe
     })
     this.standort_marker_group = L.layerGroup(this.standort_marker)
     this.standort_marker_group.addTo(this._map)
-  }
-
-  clearMarker() {
-    console.log(this._map.hasLayer(this.standort_marker_group))
-    if (this.standort_marker_group && this._map.hasLayer(this.standort_marker_group))
-      this._map.removeLayer(this.standort_marker_group);
   }
 
   createMap() {

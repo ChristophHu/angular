@@ -498,6 +498,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getKatBetriebsstoffe', {})
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

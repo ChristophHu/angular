@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
@@ -22,6 +23,10 @@ export class PositionsComponent implements OnInit {
   id_ship!: string | undefined
   name!: string | undefined
   id_streife!: string | undefined
+
+  allCheck: boolean = false
+
+  positions: PositionReport[] = []
 
   public isAllPositions: boolean = false
 
@@ -46,7 +51,8 @@ export class PositionsComponent implements OnInit {
         this._positionSubscription
         .add(
           this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).subscribe((data: any) => {
-            this.dataSource = data
+            console.log(data)
+            this.positions = data
           })
         )
       }
@@ -56,11 +62,18 @@ export class PositionsComponent implements OnInit {
   ngOnDestroy(): void {
     this._positionSubscription.unsubscribe()
   }
+  toggleCheck() {
+    this.allCheck = !this.allCheck
+    // let items: Checklistitem[] = []
+    // this.checklistKat.forEach(item => {
+    //   items.push(Object.assign({}, item, { checked: this.allCheck }))
+    // })
+    // this.checklistKat = items
+  }
 
   addPosition() {}
 
-  deletePosition(id: string) {
-    console.log(id)
+  delete(id: string) {
     this.store.dispatch(PositionActions.deleteData({ id }))
   }
 
@@ -68,17 +81,12 @@ export class PositionsComponent implements OnInit {
     this.store.dispatch(logout())
   }
 
-  async openPositionModal(id?: string) {
-    let position: PositionReport | undefined
-
+  async openModal(position?: PositionReport) {
     const { PositionComponent } = await import(
       './position/position.component'
     )
 
-    if (id) {
-      this.store.pipe(select(PositionSelectors.selectDataById(id))).subscribe(data => {
-        position = data
-      })
+    if (position) {
       this.modalService.open(PositionComponent, {
         data: {
           title: 'Position bearbeiten',

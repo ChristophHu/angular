@@ -32,11 +32,11 @@ export class BetankungComponent implements OnInit {
     private _formBuilder: FormBuilder, 
     private store: Store<ShipState.State>, 
     private modalService: ModalService<BetankungComponent>, 
-    private appService: AppService,
     private locationService: LocationService,
     private _katFacade: KatFacade) {
       // this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
       this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
+      this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)).subscribe(data => console.log(data))
       this.betankungForm = this._formBuilder.group({
         id: [],
         id_ship: [],
@@ -56,6 +56,15 @@ export class BetankungComponent implements OnInit {
     this.modalService.getData().then((data: any) => {
       this.title = data.data.title
       this.betankungForm.patchValue(data.data)
+    })
+  }
+
+  setDate() {
+    this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+  }
+  setCurrentLocation() {
+    this.locationService.getCurrentPosition().then(position => {
+      this.betankungForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
   }
 

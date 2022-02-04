@@ -1,34 +1,83 @@
 <div class="main_content">
-  <h4>Filter</h4>
-  <mat-checkbox class="ml-2" [(ngModel)]="isAllPositions">Alle Positionen</mat-checkbox>
-  <mat-checkbox class="ml-2" [(ngModel)]="!isAllPositions">Aktuelle Streife</mat-checkbox>
-
   <h4>Ausgabe</h4>
   <div class="w-full bg-white rounded-lg p-2 shadow-lg">
-    <table mat-table [dataSource]="dataSource" class="w-full bg-transparent">
-      <!-- Position Column -->
+    <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
+      <thead>
+        <tr class="w-full h-12 border-gray-300 border-b py-8">
+          <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
+            Id
+          </th>
+          <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+            <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+          </th>
+          <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+            Nr.
+          </th>
+          <th class="text-gray-600 dark:text-gray-400 font-normal pr-6 text-left text-md tracking-normal leading-4">
+            Datum
+          </th>
+          <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+            Beschreibung
+          </th>
+          <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of positions; let i = index">
+          <td class="text-sm px-2 whitespace-no-wrap tracking-normal leading-4 hidden">
+            {{ position.id }}
+          </td>
+          <td class="px-2 text-left whitespace-no-wrap text-sm tracking-normal leading-4">
+            <input type="checkbox" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+          </td>
+          <td class="text-sm pr-2 whitespace-no-wrap tracking-normal leading-4">
+            {{ i + 1 }}
+          </td>
+          <td class="w-12 text-sm pr-6 whitespace-no-wrap tracking-normal leading-4">
+            {{ position.date }}
+          </td>
+          <td class="text-sm pr-2 whitespace-no-wrap tracking-normal leading-4">
+            {{ position.description }}
+          </td>
+          <td class="flex flex-row justify-start text-gray-500">
+            <!-- <button class="dropdown w-6 h-6" appDropdown>
+                <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+            </button>
+            <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded"> -->
+              <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="openModal(position)">
+                <p>Bearbeiten</p>
+              </div>
+              <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(position.id!)">
+                <p>Löschen</p>
+              </div>
+            <!-- </div> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <table mat-table [dataSource]="dataSource" class="w-full bg-transparent">
+
       <ng-container matColumnDef="Nr.">
         <th mat-header-cell *matHeaderCellDef> Nr. </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{ i+1 }} </td>
       </ng-container>
-    
-      <!-- Name Column -->
+
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Datum/Uhrzeit </th>
         <td mat-cell *matCellDef="let element"> {{element.date}} </td>
       </ng-container>
     
-      <!-- Weight Column -->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> Beschreibung </th>
         <td mat-cell *matCellDef="let element"> {{element.description}} </td>
       </ng-container>
 
-      <!-- Action Column -->
       <ng-container matColumnDef="action">
         <th class="w-8" mat-header-cell *matHeaderCellDef> Aktion </th>
         <td mat-cell *matCellDef="let element">
-          
           <div class="flex flex-row">
             <a class="w-6 h-6 cursor-pointer">
               <icons class="w-6 h-6 stroke-1 stroke-current" name="dots-vertical"></icons>
@@ -48,8 +97,8 @@
         
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="openPositionModal()">
+    </table> -->
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="openModal()">
       <span class="h-6 w-6 mr-2">
           <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
       </span>

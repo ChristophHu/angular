@@ -6,6 +6,11 @@ export function checkStateForEmptyArrays(value: any): any[] {
     }
 }
 
+export function dateToLocalISOString(dt: Date): string {
+    dt.setHours(new Date().getHours()+2)
+    return dt.toISOString().substring(0,16)
+}
+
 export function isUndefined(value: any): value is undefined {
     return typeof value === 'undefined'
 }

@@ -40,7 +40,6 @@ export class TabStandorteComponent implements OnInit {
         }
       })
     } else {
-      console.log(`getStreifeById ${this.id_streife}`)
       this._specFacade.getStreifeById(this.id_streife).subscribe(streife => {
         this._modalService.open(AusgewaehlterStandortModalComponent, {
           data: {

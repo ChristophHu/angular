@@ -6,7 +6,6 @@ import { isArray } from '../../utils'
 })
 export class ToArrayPipe implements PipeTransform {
   transform(input: any): any {
-    console.log(input)
     if (isArray(input)) {
       if (input.length > 0) {
         return input

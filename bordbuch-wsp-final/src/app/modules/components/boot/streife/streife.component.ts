@@ -181,13 +181,13 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   initializePatrol(stepper: CdkStepper) {
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().slice(0, -1), status: 'vorbereitend', zweck: ''  }
+    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().substring(0,16), status: 'vorbereitend', zweck: ''  }
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-      const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: new Date().toISOString().slice(0, -1) })
+      const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: new Date().toISOString().substring(0,16) })
       this.store.dispatch(ShipAction.insertPatrol({ insert }))
     })
   }
@@ -199,20 +199,19 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       this.erstellePatrol()
     }
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-      console.log('update patrol')
       if (patrol?.id) {
         switch (status) {
           case 'aktiv':
             // startposition setzen
             this.locationService.getCurrentPosition().then(position => {
-              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `Start der Streife` }
+              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString().substring(0,16), location: { latitude: position.latitude, longitude: position.longitude}, description: `Start der Streife` }
               this.store.dispatch(PositionActions.insertData({ positionReport }))
             })
 
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: new Date().toISOString().slice(0, -1) })
+            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: new Date().toISOString().substring(0,16) })
             break
           case 'beendet':
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: new Date().toISOString().slice(0, -1) })
+            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: new Date().toISOString().substring(0,16) })
             break
           default:
             update = Object.assign({}, patrol, this.zweckFormGroup.value)
@@ -283,7 +282,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       data: {
         title: 'Prüfvermerk erstellen',
         id_ship: this.id_schiff,
-        date: new Date().toISOString()
+        date: new Date().toISOString().substring(0,16)
       }
     })
   }
@@ -300,7 +299,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
         data: {
           title: 'Betankung durchführen',
           id_ship: this.id_schiff,
-          date: new Date().toISOString(),
+          date: new Date().toISOString().substring(0,16),
           location: position
         }
       })

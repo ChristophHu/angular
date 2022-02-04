@@ -13,7 +13,6 @@ import { RootStoreState } from 'src/app/store/root-store.state';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 
-
 @Component({
   selector: 'app-pruefvermerk',
   templateUrl: './pruefvermerk.component.html',
@@ -72,9 +71,11 @@ export class PruefvermerkComponent implements OnInit {
   selectKategorie(kategorie: string) {
     this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerkeByKategorie(kategorie))) as Observable<Pruefvermerk[] | undefined>
   }
-
   onChange($event: Pruefvermerk) {
     this.pruefvermerkForm.controls.kategorie.setValue($event.kategorie)
+  }
+  setDate() {
+    this.pruefvermerkForm.patchValue({ date: new Date().toISOString().substring(0,16) })
   }
 
   uploadImage(imageBase64: string) {
