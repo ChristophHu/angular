@@ -13,46 +13,12 @@ import { ReparaturModalComponent } from './reparatur-modal/reparatur-modal.compo
   templateUrl: './reparaturen.component.html',
   styleUrls: ['./reparaturen.component.sass']
 })
-export class ReparaturenComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ReparaturenComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective
 
   // datatables
   dtOptions: DataTables.Settings = {}
-  dtTrigger: Subject<any> = new Subject<any>()
-
-  options: DataTables.Settings = {
-    paging: true,
-    pagingType: 'full_numbers', 
-    pageLength: 10, 
-    responsive: true, 
-    // "ordering": false,
-    // "processing": true,
-    // "info"    : false,
-    autoWidth: true,
-    retrieve: true,
-    // data:this.dtUsers,
-    // columns: [{title: 'User ID', data: 'id'},
-    //       {title: 'First Name', data: 'firstName'},
-    //       {title: 'Last Name', data: 'lastName' }],
-    language: {
-      // "processing": "Procesando...",
-      "search": "Suche:",
-      "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
-      "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
-      // "infoEmpty": "Mostrando ningún elemento.",
-      // "infoFiltered": "(filtrado _MAX_ elementos total)",
-      // "infoPostFix": "",
-      // "loadingRecords": "Cargando registros...",
-      // "zeroRecords": "No se encontraron registros",
-      "emptyTable": "Keine Datensätze vorhanden",
-      "paginate": {
-        "first": "Erste",
-        "previous": "Vorherige",
-        "next": "Nächste",
-        "last": "Letzte"
-      },
-    }
-  }
+  dtTrigger: Subject<any> = new Subject()
 
   status: string = 'alle'
   
@@ -65,38 +31,69 @@ export class ReparaturenComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dtOptions = this.options
-  }
-  ngAfterViewInit(): void {
-    this.dtTrigger.next({})
-  }
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe()
-  }
-
-  rerenderTable() {
-    try {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy()
-        this.dtOptions = this.options
-        this.dtTrigger.next({})
-      })
-    } catch (err) {
-      console.log(err)
+    this.dtOptions = {
+      pagingType: 'full_numbers', 
+      pageLength: 10, 
+      responsive: true, 
+      // "paging"  : false,
+      // "ordering": false,
+      // "processing": true,
+      // "info"    : false,
+      "autoWidth": true,
+      // "retrieve": true,
+      // data:this.dtUsers,
+      // columns: [{title: 'User ID', data: 'id'},
+      //       {title: 'First Name', data: 'firstName'},
+      //       {title: 'Last Name', data: 'lastName' }],
+      "language": {
+        // "processing": "Procesando...",
+        "search": "Suche:",
+        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
+        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
+        // "infoEmpty": "Mostrando ningún elemento.",
+        // "infoFiltered": "(filtrado _MAX_ elementos total)",
+        // "infoPostFix": "",
+        // "loadingRecords": "Cargando registros...",
+        // "zeroRecords": "No se encontraron registros",
+        "emptyTable": "Keine Datensätze vorhanden",
+        "paginate": {
+          "first": "Erste",
+          "previous": "Vorherige",
+          "next": "Nächste",
+          "last": "Letzte"
+        },
+      },
     }
   }
+  // ngAfterViewInit(): void {
+  //   this.dtTrigger.next({})
+  // }
+  // ngOnDestroy(): void {
+  //   this.dtTrigger.unsubscribe()
+  // }
+
+  // rerenderTable() {
+  //   try {
+  //     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //       dtInstance.destroy()
+  //       this.dtTrigger.next({})
+  //     })
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   toggleReparaturen(status: string) {
     this.status = status
     this.reparaturen$ = this._specFacade.getReparaturen(status)
     
-    this.rerenderTable()
+    // this.rerenderTable()
   }
 
   reload() {
     this._specFacade.clearReparaturen()
     this._specFacade.loadAllReparaturen()
-    this.rerenderTable()
+    // this.rerenderTable()
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

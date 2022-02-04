@@ -51,6 +51,9 @@ export class ChecklisteModalComponent implements OnInit {
     })
   }
 
+  setDate() {
+    this.checklistForm.patchValue({ datum: new Date().toISOString() })
+  }
   changeCheck(item: Checklistitem) {
     this.checklistKat = this.checklistKat.filter(el => el.id != item.id)
     this.checklistKat.push(Object.assign({}, item, { checked: !item.checked }))
