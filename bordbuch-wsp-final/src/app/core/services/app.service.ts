@@ -155,6 +155,7 @@ export class AppService {
             case 'getKatKennungen':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
+            case 'getStatustypen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
                 param = ``
@@ -657,6 +658,11 @@ export class AppService {
         // //     })
         // //     , (error: any) => observer.error(error)
         // })
+    }
+
+    // status
+    getStatus(): Observable<any> {
+        return this.get('getStatustypen')
     }
 
     checkPositionStart(patrol: Patrol) {

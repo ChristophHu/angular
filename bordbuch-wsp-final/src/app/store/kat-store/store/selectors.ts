@@ -56,6 +56,16 @@ export const selectAllKennungen = createSelector(
     state => state.kennungen
 )
 
+// status
+export const selectAllStatus = createSelector(
+    katState,
+    state => state.status
+)
+export const selectIdByStatus = (bezeichnung: string) => createSelector(
+    selectAllStatus,
+    status => status?.find(el => el.bezeichnung == bezeichnung)?.id
+)
+
 // zwecke
 export const selectAllZwecke = createSelector(
     katState,

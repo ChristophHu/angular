@@ -5,6 +5,7 @@ import { Funktion } from "src/app/core/model/funktion.model";
 import { Kennung } from "src/app/core/model/kennung.model";
 import { PruefvermerkKategorien } from "src/app/core/model/pruefvermerk-kategorie.model";
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model";
+import { Status } from "src/app/core/model/reparatur-status.model";
 import { ShipSelection } from "src/app/core/model/ship-selection.model";
 import { Zaehlerstandstyp } from "src/app/core/model/zaehlerstandstyp";
 import { Zweck } from "src/app/core/model/zwecke.model";
@@ -18,6 +19,7 @@ export interface State {
     checklistitems: Checklistitem[] | undefined
     betriebsstoffe: Betriebsstoff[] | undefined
     funktionen: Funktion[] | undefined
+    status: Status[] | undefined
     zwecke: Zweck[] | undefined
     kennungen: Kennung[] | undefined
     isAllDataLoaded: boolean

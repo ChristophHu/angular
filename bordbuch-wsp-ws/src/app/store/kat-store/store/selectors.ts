@@ -110,6 +110,7 @@ export const selectNameById = (id: string) => createSelector(
     selectAllSchiffe,
     schiffe => schiffe?.find(el => el.id == id)?.name
 )
+
 // status
 export const selectAllStatus = createSelector(
     katState,

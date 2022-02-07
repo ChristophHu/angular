@@ -8,11 +8,12 @@ import { Funktion } from 'src/app/core/model/funktion.model'
 import { Kennung } from 'src/app/core/model/kennung.model'
 import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model'
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model'
+import { Status } from 'src/app/core/model/reparatur-status.model'
 import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { Zweck } from 'src/app/core/model/zwecke.model'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen } from './actions'
+import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen, loadAllStatus, loadedAllStatus } from './actions'
  
 @Injectable()
 export class Effects {
@@ -73,6 +74,16 @@ export class Effects {
             map((kennungen: Kennung[]) => loadedKennungen({ kennungen }))
         )
     })
+    
+    // status
+    loadAllStatus$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadAllStatus),
+            concatMap(action => this.appService.getStatus()),
+            map((status: Status[]) => loadedAllStatus({ status }))
+        )
+    })
+
     loadZwecke$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadZwecke),

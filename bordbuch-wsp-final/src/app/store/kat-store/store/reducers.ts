@@ -1,19 +1,20 @@
 import { createReducer, on } from "@ngrx/store"
 import { Checklistitem } from "src/app/core/model/checklistitem.model"
-import { allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen } from "./actions"
+import { loadedAllStatus, allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen } from "./actions"
 import { State } from "../state"
 
 export const initialDataState: State = {
-    shipSelection: undefined,
-    pruefvermerke: undefined,
+    shipSelection       : undefined,
+    pruefvermerke       : undefined,
     pruefvermerkKategorien: undefined,
-    zaehlerstandstypen: undefined,
-    dienststellen: undefined,
-    checklistitems: undefined,
-    betriebsstoffe: undefined,
-    funktionen: undefined,
-    kennungen: undefined,
-    zwecke: undefined,
+    zaehlerstandstypen  : undefined,
+    dienststellen       : undefined,
+    checklistitems      : undefined,
+    betriebsstoffe      : undefined,
+    funktionen          : undefined,
+    kennungen           : undefined,
+    status              : undefined,
+    zwecke              : undefined,
     isAllDataLoaded: false
 }
 
@@ -67,6 +68,15 @@ export const reducer = createReducer(
             kennungen: action.kennungen
         }
     }),
+
+    // status
+    on(loadedAllStatus, (state, action) => {
+        return {
+            ...state,
+            status: action.status
+        }
+    }),
+
     on(loadedZwecke, (state, action) => {
         return {
             ...state,
