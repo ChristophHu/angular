@@ -54,7 +54,8 @@ export class TabStandorteComponent implements OnInit {
   }
 
   delete(id: string) {
-    this._specFacade.deleteStandort(id)
+    console.log(id)
+    // this._specFacade.deleteStandort(id)
   }
 
   hoverPosition(id: string) {

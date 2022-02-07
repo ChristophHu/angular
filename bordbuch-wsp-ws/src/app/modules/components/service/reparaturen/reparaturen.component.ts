@@ -14,7 +14,7 @@ import { ReparaturModalComponent } from './reparatur-modal/reparatur-modal.compo
   styleUrls: ['./reparaturen.component.sass']
 })
 export class ReparaturenComponent implements OnInit {
-  @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective
+  // @ViewChild(DataTableDirective, { static: false }) dtElement: DataTableDirective
 
   // datatables
   dtOptions: DataTables.Settings = {}
@@ -94,6 +94,7 @@ export class ReparaturenComponent implements OnInit {
     this._specFacade.clearReparaturen()
     this._specFacade.loadAllReparaturen()
     // this.rerenderTable()
+    this.ngOnInit();
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

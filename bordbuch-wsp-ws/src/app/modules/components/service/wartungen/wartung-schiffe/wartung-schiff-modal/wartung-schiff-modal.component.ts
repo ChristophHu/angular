@@ -49,7 +49,7 @@ export class WartungSchiffModalComponent implements OnInit {
     this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
   }
   setDate() {
-    this.schiffForm.patchValue({ date: new Date().toISOString() })
+    this.schiffForm.patchValue({ durchsicht: new Date().toISOString() })
   }
 
   create() {
