@@ -1,13 +1,14 @@
 import { createReducer, on } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
+import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
 import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { clearReparaturen, deleteBetankungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, updateBetankungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { clearReparaturen, deleteBetankungSuccess, deletePeilungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertPeilungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, loadPeilungenById, loadPeilungenSuccess, updateBetankungSuccess, updatePeilungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
     checklists      : Checklist[]       | undefined
@@ -15,6 +16,7 @@ export interface State {
     reparaturen     : Reparatur[]       | undefined
     reparaturfotos  : any[]             | undefined
     laststandorte   : Standort[]        | undefined
+    peilungen       : Peilung[]         | undefined
     standorte       : Standort[]        | undefined
     streifen        : Streife[]         | undefined
     tanks           : Tank[]            | undefined
@@ -28,6 +30,7 @@ export const initialDataState: State = {
     reparaturen     : undefined,
     reparaturfotos  : undefined,
     laststandorte   : undefined,
+    peilungen       : undefined,
     standorte       : undefined,
     streifen        : undefined,
     tanks           : undefined,
@@ -98,6 +101,43 @@ export const reducer = createReducer(
         return {
             ...state,
             checklists: clearedShipCheckliste
+        }
+    }),
+
+    // peilungen
+    on(loadPeilungenSuccess, (state, action) => {
+        return {
+            ...state,
+            peilungen: action.peilungen
+        }
+    }),
+    on(insertPeilungSuccess, (state, action) => {
+        let peilung: Peilung = Object.assign({}, action.action.insert, { id: action.id })
+        let cleared: Peilung[] | undefined = checkStateForEmptyArrays(state.peilungen)
+        cleared = cleared?.filter(el => el.id != action.action.insert.id)
+        cleared = [...cleared!, ...[peilung]]
+        return {
+            ...state,
+            peilungen: cleared
+        }
+    }),
+    on(updatePeilungSuccess, (state, action) => {
+        // let reparatur: Reparatur = Object.assign({}, action.action.update, { id: action.id })
+        let cleared: Peilung[] | undefined = checkStateForEmptyArrays(state.peilungen)
+        cleared = cleared?.filter(el => el.id != action.action.update.id)
+        cleared = [...cleared!, ...[action.action.update]]
+        return {
+            ...state,
+            peilungen: cleared
+        }
+    }),
+    on(deletePeilungSuccess, (state, action) => {
+        let cleared: Peilung[] | undefined = checkStateForEmptyArrays(state.peilungen)
+        cleared = cleared?.filter(el => el.id != action.id)
+        cleared = [...cleared!]
+        return {
+            ...state,
+            peilungen: cleared
         }
     }),
 

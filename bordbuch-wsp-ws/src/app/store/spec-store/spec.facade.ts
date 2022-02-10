@@ -14,6 +14,7 @@ import { Reparatur } from "src/app/core/models/reparatur.model";
 import { Streife } from "src/app/core/models/streife.model";
 import { Standort } from "src/app/core/models/standort.model";
 import { Tank } from "src/app/core/models/tank.model";
+import { Peilung } from "src/app/core/models/peilung.model";
 
 @Injectable()
 export class SpecFacade {
@@ -59,6 +60,20 @@ export class SpecFacade {
     }
     getChecklistById(id: string): Observable<Checklist | undefined> {
         return this.store.pipe(select(SpecSelectors.selectChecklistByIdSchiff(id)))
+    }
+
+    // peilungen
+    loadPeilungenById(id: string) {
+        this.store.dispatch(SpecActions.loadPeilungenById({ id }))
+    }
+    insertPeilung(insert: Peilung) {
+        this.store.dispatch(SpecActions.insertPeilung({ insert }))
+    }
+    updatePeilung(update: Peilung) {
+        this.store.dispatch(SpecActions.updatePeilung({ update }))
+    }
+    deletePeilung(id: string,) {
+        this.store.dispatch(SpecActions.deletePeilung({ id }))
     }
 
     // reparaturen

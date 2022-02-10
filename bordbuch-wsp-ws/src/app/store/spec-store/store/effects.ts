@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
+import { Peilung } from 'src/app/core/models/peilung.model'
 import { Reparatur } from 'src/app/core/models/reparatur.model'
 import { Standort } from 'src/app/core/models/standort.model'
 import { Streife } from 'src/app/core/models/streife.model'
@@ -16,7 +17,7 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess,
 } from './actions'
  
 @Injectable()
@@ -85,6 +86,45 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteShipChecklist(action.id, action.date).pipe(
                     map(() => deleteShipChecklistSuccess(action))
+                )
+            })
+        )
+    })
+
+    // peilungen
+    loadPeilungenById$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadPeilungenById),
+            concatMap(action => this.appService.getPeilungById(action.id)),
+            map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
+        )
+    }) 
+    insertPeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertPeilung),
+            switchMap(action => {
+                return this.appService.insertPeilung(action.insert).pipe(
+                    map(id => insertPeilungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updatePeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updatePeilung),
+            switchMap(action => {
+                return this.appService.updatePeilung(action.update).pipe(
+                    map((id: string) => updatePeilungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    deletePeilung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deletePeilung),
+            switchMap(action => {
+                return this.appService.deletePeilung(action.id).pipe(
+                    map(() => deletePeilungSuccess(action))
                 )
             })
         )

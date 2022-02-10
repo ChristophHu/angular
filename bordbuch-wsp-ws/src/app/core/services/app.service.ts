@@ -8,6 +8,7 @@ import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
 import { Dienststelle } from '../models/dienststelle.model';
 import { Kat } from '../models/kat.model';
+import { Peilung } from '../models/peilung.model';
 import { Status } from '../models/reparatur-status.model';
 import { Reparatur } from '../models/reparatur.model';
 import { Schiff } from '../models/schiff.model';
@@ -94,6 +95,7 @@ export class AppService {
             case 'deleteKatFunktion':
             case 'deleteKatKennung':
             case 'deleteKatZwecke':
+            case 'deletePeilung':
             case 'deletePruefvermerk':
             case 'deletePruefvermerkKat':
             case 'deleteReparatur':
@@ -178,6 +180,14 @@ export class AppService {
             case 'deleteCheckliste':
                 console.log(data)
                 param = `id_schiff=${data.id}&datum=${data.date}`
+                break
+
+            // peilungen
+            case 'insertPeilung':
+                param = `id_schiff=${data.id_schiff}&id_tank=${data.id_tank}&vol=${data.vol}&date=${data.date}`
+                break
+            case 'updatePeilung':
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&id_tank=${data.id_tank}&vol=${data.vol}&date=${data.date}`
                 break
 
             // pruefvermerk/reparatur
@@ -275,6 +285,10 @@ export class AppService {
                 param = `?id=${data}`
                 break
 
+            case 'getPeilung':
+                param = `?id_peilung=${data}`
+                break
+
             case 'getPositionenVonStreife':
                 param = `?id_streife=${data}`
                 break
@@ -287,7 +301,6 @@ export class AppService {
                 param = `?id_schiff=${data}`
                 break
             
-            // case 'getPeilungVonSchiff':
             case 'getPosition':
                 param = `?id_schiff=${data}&all=true`
                 break
@@ -348,11 +361,9 @@ export class AppService {
         return this.get('getBetankungenAll')
     }
     insertBetankung(betankung: Betankung): Observable<any> {
-        console.warn(betankung)
         return this.insert(betankung, 'insertBetankung')
     }
     updateBetankung(betankung: Betankung): Observable<any> {
-        console.log(betankung)
         return this.update(betankung, 'updateBetankung')
     }
     deleteBetankung(id: string): Observable<any> {
@@ -471,6 +482,27 @@ export class AppService {
     deleteFunktion(id: string): Observable<any> {
         return this.delete(id, 'deleteKatFunktion')
     }
+
+        // peilungen   
+        getPeilungById(id: string): Observable<any> {
+            return new Observable ((observer) => {
+                const source$ = this.getReducer('getPeilung', id)
+                source$.subscribe((data: any) => {
+                    observer.next(data)
+                }, (error: any) => observer.error(error))
+            })
+        }
+        insertPeilung(peilung: Peilung): Observable<any> {
+            console.warn(peilung)
+            return this.insert(peilung, 'insertPeilung')
+        }
+        updatePeilung(peilung: Peilung): Observable<any> {
+            console.log(peilung)
+            return this.update(peilung, 'updatePeilung')
+        }
+        deletePeilung(id: string): Observable<any> {
+            return this.delete(id, 'deletePeilung')
+        }
 
     // pruefvermerke
     getPruefvermerke(): Observable<any> {

@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
+import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
 import { Streife } from "src/app/core/models/streife.model"
@@ -37,6 +38,40 @@ export const deleteBetankung = createAction(
 )
 export const deleteBetankungSuccess = createAction(
 	"[Modal Betankung] Delete Betankung Success",
+	props<{ id: string }>()
+)
+
+// peilungen
+export const loadPeilungenById = createAction(
+	"[Kat Resolver] Load Peilungen By ID",
+	props<{ id: string }>()
+)
+export const loadPeilungenSuccess = createAction(
+	"[Load Spec Effect] Loaded Peilungen",
+	props<{ peilungen: Peilung[] }>()
+)
+export const insertPeilung = createAction(
+	"[Modal Peilung] Insert Peilung",
+	props<{ insert: Peilung }>()
+)
+export const insertPeilungSuccess = createAction(
+	"[Modal Peilung] Insert Peilung Success",
+	props<{ action: { insert: Peilung }, id: string }>()
+)
+export const updatePeilung = createAction(
+	"[Modal Peilung] Update Peilung",
+	props<{ update: Peilung }>()
+)
+export const updatePeilungSuccess = createAction(
+	"[Modal Peilung] Update Peilung Success",
+	props<{ action: { update: Peilung }, id: string }>()
+)
+export const deletePeilung = createAction(
+	"[Modal Peilung] Delete Peilung",
+	props<{ id: string }>()
+)
+export const deletePeilungSuccess = createAction(
+	"[Modal Peilung] Delete Peilung Success",
 	props<{ id: string }>()
 )
 
