@@ -27,6 +27,12 @@ export const selectChecklistByIdSchiff = (id: string) => createSelector(
     checklists => checklists?.find(el => el.id_schiff == id)
 )
 
+// peilungen
+export const selectAllPeilungen = createSelector(
+    specState,
+    state => state.peilungen
+)
+
 // reparaturen
 export const selectAllReparaturen = createSelector(
     specState,

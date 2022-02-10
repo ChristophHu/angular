@@ -96,6 +96,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadPeilungenById),
             concatMap(action => this.appService.getPeilungById(action.id)),
+            tap(peilungen => console.log(peilungen)),
             map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
         )
     }) 

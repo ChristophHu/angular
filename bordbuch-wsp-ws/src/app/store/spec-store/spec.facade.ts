@@ -19,14 +19,15 @@ import { Peilung } from "src/app/core/models/peilung.model";
 @Injectable()
 export class SpecFacade {
     // public selectors
-    allBetankungen$ = this.store.pipe(select(SpecSelectors.selectAllBetankungen)) as Observable<Betankung[]>
-    allChecklists$  = this.store.pipe(select(SpecSelectors.selectAllChecklists)) as Observable<Checklist[]>
-    allReparaturen$  = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
+    allBetankungen$     = this.store.pipe(select(SpecSelectors.selectAllBetankungen)) as Observable<Betankung[]>
+    allChecklists$      = this.store.pipe(select(SpecSelectors.selectAllChecklists)) as Observable<Checklist[]>
+    allPeilungen$       = this.store.pipe(select(SpecSelectors.selectAllPeilungen)) as Observable<Peilung[]>
+    allReparaturen$     = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
     allReparaturFotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
     allReparaturFotoCount$ = this.store.pipe(select(SpecSelectors.selectReparaturFotosCount)) as Observable<number>
-    allLastStandorte$ = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
-    allStandorte$ = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
-    allStreifen$  = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>
+    allLastStandorte$   = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
+    allStandorte$       = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
+    allStreifen$        = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>
     allTanks$           = this.store.pipe(select(SpecSelectors.selectTanks)) as Observable<Tank[]>
     allZaehlerstaende$  = this.store.pipe(select(SpecSelectors.selectAllZaehlerstaende)) as Observable<Zaehlerstand[]>
 

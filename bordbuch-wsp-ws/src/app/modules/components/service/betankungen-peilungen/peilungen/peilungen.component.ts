@@ -29,7 +29,7 @@ export class PeilungenComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<PeilungModalComponent>, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
     this.schiffe$ = _katFacade.schiffe$
-    // this.peilungen$ = this._specFacade.allBetankungen$
+    this.peilungen$ = this._specFacade.allPeilungen$
 
     this.filterForm = this._formBuilder.group({
       id_ship: [],
@@ -76,7 +76,10 @@ export class PeilungenComponent implements OnInit {
   }
 
   selectShip(name: string) {
-    this._katFacade.getIdByShip(name).subscribe((id: any) => this.filterForm.patchValue({ id_ship: id }))
+    this._katFacade.getIdByShip(name).subscribe((id: any) => {
+      this.filterForm.patchValue({ id_ship: id })
+      this._specFacade.loadPeilungenById(id)
+    })
   }
   setStartDate() {
     console.log(new Date().toISOString().substring(0,16))

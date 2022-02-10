@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { WsRoutingModule } from './ws-routing.module';
 import { WsComponent } from './ws.component';
 import { FormsModule } from '@angular/forms';
-import { VerticalNavModule } from 'src/app/core/navbar/vertical-nav/vertical-nav.module';
+// import { VerticalNavModule } from 'src/app/core/navbar/vertical-nav/vertical-nav.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { VerticalNavModule } from 'src/app/core/navbar/vertical-nav/vertical-nav
     CommonModule,
     FormsModule,
     WsRoutingModule,
-    VerticalNavModule
+    // VerticalNavModule
   ]
 })
 export class WsModule { }

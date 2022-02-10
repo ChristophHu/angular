@@ -27,6 +27,7 @@ import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-
 import { ProgressComponent } from './components/progress/progress.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
+import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.
     FormsModule,
     ReactiveFormsModule,
 
-    DataTablesModule
+    DataTablesModule,
+    InfoPopupModule
   ],
   exports: [
     // components
@@ -107,7 +109,8 @@ import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.
     ReactiveFormsModule,
 
     // datatables
-    DataTablesModule
+    DataTablesModule,
+    InfoPopupModule
   ]
 })
 export class SharedModule { }
