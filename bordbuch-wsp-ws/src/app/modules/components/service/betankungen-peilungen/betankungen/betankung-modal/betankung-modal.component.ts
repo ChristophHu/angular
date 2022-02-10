@@ -58,7 +58,7 @@ export class BetankungModalComponent implements OnInit {
   }
 
   selectShip(name: string) {
-    this._katFacade.getIdByShip(name).subscribe(id => this.betankungForm.patchValue({ id_ship: id }))
+    this._katFacade.getIdByShip(name).subscribe((id: any) => this.betankungForm.patchValue({ id_ship: id }))
   }
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {

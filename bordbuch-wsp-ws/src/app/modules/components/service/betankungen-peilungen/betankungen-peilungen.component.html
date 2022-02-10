@@ -1,0 +1,7 @@
+<div class="container mx-auto p-4 mb-8">
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(tab == 'betankungen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('betankungen')">Betankungen</button>
+    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(tab == 'peilungen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('peilungen')">Peilungen</button>
+</div>
+
+<app-betankungen *ngIf="tab == 'betankungen'"></app-betankungen>
+<app-peilungen *ngIf="tab == 'peilungen'"></app-peilungen>

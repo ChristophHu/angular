@@ -1,0 +1,76 @@
+<div class="container mx-auto p-4 mb-8">
+    <h2 class="text-lg text-gray-800 dark:text-gray-100 font-bold">Filter</h2>
+    <form [formGroup]="filterForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
+              <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
+                {{ schiff.name }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="flex flex-row items-center">
+            <mat-form-field appearance="fill">
+                <mat-label>Ab Datum</mat-label>
+                <input matInput type="datetime-local" formControlName="startDate" value="{{startDate | date:'yyyy-MM-dd':'+1:00'}}">
+            </mat-form-field>
+            <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setStartDate()">
+                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+            </button>
+        </div>
+        <div class="flex flex-row items-center">
+            <mat-form-field appearance="fill">
+                <mat-label>Bis Datum</mat-label>
+                <input matInput type="datetime-local" formControlName="endeDate" value="{{endeDate | date:'yyyy-MM-dd':'+1:00'}}">
+            </mat-form-field>
+            <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEndeDate()">
+                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="container mx-auto px-4">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+        <thead>
+            <tr>
+                <th class="w-28">Datum</th>
+                <th hidden>id</th>
+                <th hidden>id_schiff</th>
+                <th hidden>id_tank</th>
+                <th>Bezeichnung</th>
+                <th>Maß</th>
+                <th class="w-12"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let peilung of (peilungen$ | async | toArray)">
+                <td>{{ peilung.date | date: 'dd.MM.yyyy' }}</td>
+                <td hidden>{{ peilung.id }}</td>
+                <td hidden>{{ peilung.id_schiff }}</td>
+                <td hidden>{{ peilung.id_tank }}</td>
+                <td>{{ peilung.bezeichnung }}</td>
+                <td>{{ peilung.vol }}</td>
+                <td class="flex flex-row justify-start text-gray-500">
+                    <button class="dropdown w-6 h-6" appDropdown>
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    </button>
+                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(peilung)">
+                            <p>Bearbeiten</p>
+                        </div>
+                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(peilung.id)">
+                            <p>Löschen</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+        <span class="h-6 w-6 mr-2">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+        </span>
+        Peilung hinzufügen
+    </button>
+</div>

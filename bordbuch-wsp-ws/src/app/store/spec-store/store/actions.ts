@@ -46,7 +46,7 @@ export const loadPeilungenById = createAction(
 	"[Kat Resolver] Load Peilungen By ID",
 	props<{ id: string }>()
 )
-export const loadPeilungenSuccess = createAction(
+export const loadPeilungenByIdSuccess = createAction(
 	"[Load Spec Effect] Loaded Peilungen",
 	props<{ peilungen: Peilung[] }>()
 )
