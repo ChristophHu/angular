@@ -23,6 +23,7 @@ import { ImageBase64UploadModule } from './components/image-base64-upload/image-
 import { ImageSliderComponent } from './components/image-slider/image-slider.component'
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive'
 import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
+import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 
 @NgModule({
     declarations: [
@@ -56,6 +57,8 @@ import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
         MatFormFieldModule,
         MatTableModule,
         MatStepperModule,
+
+        InfoPopupModule
     ],
     exports: [
         // pipes
@@ -88,7 +91,9 @@ import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 
         ProgressBarComponent,
         ImageSliderComponent,
-        String2numberPipe
+        String2numberPipe,
+
+        InfoPopupModule
     ]
 })
 export class SharedModule {}
