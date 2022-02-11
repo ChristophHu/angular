@@ -84,7 +84,7 @@
       <button *ngIf="betankungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
     </div>
     <div>
-      <button *ngIf="!betankungForm.pristine && betankungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="betankungForm.dirty && betankungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
       <button *ngIf="!betankungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>

@@ -9,6 +9,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { RootStoreModule } from './store/root-store.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ConnectionService } from './core/services/connection.service';
+import { httpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,10 @@ import { ConnectionService } from './core/services/connection.service';
     MarkdownModule.forRoot(),
     StoreRouterConnectingModule.forRoot()
   ],
-  providers: [{ provide: ConnectionService }],
+  providers: [
+    httpInterceptorProviders, 
+    { provide: ConnectionService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

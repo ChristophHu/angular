@@ -30,6 +30,7 @@ export class PeilungenComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<PeilungModalComponent>, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
     this.schiffe$ = _katFacade.schiffe$
     this.peilungen$ = this._specFacade.allPeilungen$
+    this._specFacade.allPeilungen$.subscribe((data: any) => console.log(data))
 
     this.filterForm = this._formBuilder.group({
       id_schiff: [],

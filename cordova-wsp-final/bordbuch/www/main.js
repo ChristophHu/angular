@@ -3612,7 +3612,7 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function LoginComponent_Template_div_click_23_listener() {
         return ctx.openChangeLogModal();
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](24, "Aktualisierung 24.01.2022");
+      _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](24, "Aktualisierung 08.02.2022");
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     }
