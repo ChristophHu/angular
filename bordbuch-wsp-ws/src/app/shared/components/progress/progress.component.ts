@@ -26,6 +26,7 @@ export class ProgressComponent implements OnInit, OnChanges {
 
   private progress(value: number, maxvalue: number) {
     if (value < 0) value = 0
+    if (value == maxvalue) value = maxvalue 
     const progress = value/ maxvalue
     this.dashoffset = this.circumference * (1 - progress)
   }

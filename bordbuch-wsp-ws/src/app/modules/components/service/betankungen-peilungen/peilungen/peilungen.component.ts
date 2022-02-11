@@ -32,7 +32,7 @@ export class PeilungenComponent implements OnInit {
     this.peilungen$ = this._specFacade.allPeilungen$
 
     this.filterForm = this._formBuilder.group({
-      id_ship: [],
+      id_schiff: [],
       name: [],
       startDate: [],
       endeDate: []
@@ -77,7 +77,8 @@ export class PeilungenComponent implements OnInit {
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe((id: any) => {
-      this.filterForm.patchValue({ id_ship: id })
+      console.log(id)
+      this.filterForm.patchValue({ id_schiff: id })
       this._specFacade.loadPeilungenById(id)
     })
   }

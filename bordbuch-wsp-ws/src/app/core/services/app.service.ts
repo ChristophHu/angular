@@ -67,11 +67,6 @@ export class AppService {
                 param = `id=${data}`
                 break
 
-            // peilung
-            case 'insertPeilung':
-                param = `id_schiff=${data.id_schiff}&id_tank=${data.id_tank}&vol=${data.vol}&date=${data.date}`
-                break
-
             // betriebsstoffe, dienststellen, kennung, pruefvermerkkategorie, zaehlerstandstypen, zweck
             case 'inserteinsatzmittel':
             case 'insertKatBetriebsstoff':
@@ -483,26 +478,26 @@ export class AppService {
         return this.delete(id, 'deleteKatFunktion')
     }
 
-        // peilungen   
-        getPeilungById(id: string): Observable<any> {
-            return new Observable ((observer) => {
-                const source$ = this.getReducer('getPeilung', id)
-                source$.subscribe((data: any) => {
-                    observer.next(data)
-                }, (error: any) => observer.error(error))
-            })
-        }
-        insertPeilung(peilung: Peilung): Observable<any> {
-            console.warn(peilung)
-            return this.insert(peilung, 'insertPeilung')
-        }
-        updatePeilung(peilung: Peilung): Observable<any> {
-            console.log(peilung)
-            return this.update(peilung, 'updatePeilung')
-        }
-        deletePeilung(id: string): Observable<any> {
-            return this.delete(id, 'deletePeilung')
-        }
+    // peilungen   
+    getPeilungById(id: string): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getPeilungVonSchiff', id)
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertPeilung(peilung: Peilung): Observable<any> {
+        console.warn(peilung)
+        return this.insert(peilung, 'insertPeilung')
+    }
+    updatePeilung(peilung: Peilung): Observable<any> {
+        console.log(peilung)
+        return this.update(peilung, 'updatePeilung')
+    }
+    deletePeilung(id: string): Observable<any> {
+        return this.delete(id, 'deletePeilung')
+    }
 
     // pruefvermerke
     getPruefvermerke(): Observable<any> {

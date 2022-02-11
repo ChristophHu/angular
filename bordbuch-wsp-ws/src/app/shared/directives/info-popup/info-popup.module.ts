@@ -18,6 +18,7 @@ import { InfoButtonComponent } from './info-button/info-button.component'
   ],
   exports: [
     InfoComponent,
+    InfoButtonComponent,
     InfoPopupDirective
   ]
 })
