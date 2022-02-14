@@ -4604,10 +4604,6 @@ select {
 	margin-left: 0.75rem;
 }
 
-.mt-2 {
-	margin-top: 0.5rem;
-}
-
 .block {
 	display: block;
 }
@@ -4776,6 +4772,14 @@ select {
 	min-width: 100%;
 }
 
+.min-w-min {
+	min-width: min-content;
+}
+
+.max-w-md {
+	max-width: 28rem;
+}
+
 .flex-none {
 	flex: none;
 }
@@ -4826,6 +4830,10 @@ select {
 
 .place-items-center {
 	place-items: center;
+}
+
+.content-center {
+	align-content: center;
 }
 
 .items-start {
@@ -4915,6 +4923,10 @@ select {
 
 .whitespace-nowrap {
 	white-space: nowrap;
+}
+
+.break-words {
+	overflow-wrap: break-word;
 }
 
 .rounded {

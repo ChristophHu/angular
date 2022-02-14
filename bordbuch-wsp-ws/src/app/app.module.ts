@@ -25,8 +25,7 @@ import { httpInterceptorProviders } from './core/interceptors';
     StoreRouterConnectingModule.forRoot()
   ],
   providers: [
-    httpInterceptorProviders, 
-    { provide: ConnectionService }
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

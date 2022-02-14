@@ -158,7 +158,7 @@ export class AppService {
             case 'getStatustypen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
-                param = ``
+                param = `_`
                 break
 
             case 'getSchiff':

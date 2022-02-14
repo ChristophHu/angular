@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from "@angular/common/http"
-import { from, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { BackendResponse } from './model/backendresponse.model'
 import { environment } from '../../../environments/environment'
 
@@ -9,7 +8,7 @@ import { environment } from '../../../environments/environment'
 })
 export class AuthService {
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor() { }
 
   login(username: string, password: string): Observable<BackendResponse> {
     return this.auth_login(username, password)

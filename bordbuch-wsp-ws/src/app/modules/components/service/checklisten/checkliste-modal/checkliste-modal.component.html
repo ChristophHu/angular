@@ -3,10 +3,10 @@
       <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
         {{ title }}
       </p>
-      <div>
+      <div class="flex flex-row items-center">
         <div class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" #label>
           <app-info-button [appInfoPopup]="question" [label]="label">
-            <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="question-mark"></icons>
+            <icons class="w-6 h-6 stroke-current text-gray-500" name="question-mark"></icons>
           </app-info-button>
           <ng-template #question>
             <div class="p-2 min-w-min max-w-md bg-gray-100 border border-gray-400 break-words rounded shadow-lg">

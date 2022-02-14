@@ -9,14 +9,11 @@ import { paths } from "./const";
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor() {}
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    if (!req.url.includes(paths.error)) {
-      return next.handle(req);
-    }
-    console.warn("ErrorInterceptor");
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // if (!req.url.includes(paths.error)) {
+    //   return next.handle(req);
+    // }
 
     return next.handle(req).pipe(
       retry(2),
@@ -26,29 +23,32 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         switch(error.status) {
-            case 400:
-                console.log(`bad request`) 
-                break; 
+          case 400:
+              console.error(`bad request`) 
+              break; 
 
-            case 401: 
-                console.log(`unauthorized`) 
-                break; 
+          case 401: 
+              console.error(`unauthorized`) 
+              break; 
 
-            case 403: 
-                console.log(`forbidden`) 
-                break; 
+          case 403: 
+              console.error(`forbidden`) 
+              break; 
 
-            case 404: 
-                console.log(`not found`) 
-                break;
+          case 404: 
+              console.error(`not found`) 
+              break;
 
-            default: { 
-                console.log(`default error`) 
-                break; 
-            } 
-        } 
+          case 500:
+            console.error(`5xx-er`) 
+            break
 
-        return throwError(error);
+          default:
+            console.error(`default error`) 
+            break; 
+
+      }
+      return throwError(error)
       })
     );
   }

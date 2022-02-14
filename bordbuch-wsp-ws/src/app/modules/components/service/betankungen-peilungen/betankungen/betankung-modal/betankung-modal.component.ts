@@ -66,8 +66,8 @@ export class BetankungModalComponent implements OnInit {
     })
   }
   setDate() {
-    console.log(new Date().toISOString().substring(0,16))
     this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.betankungForm.dirty
   }
 
   create() {
