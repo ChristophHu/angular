@@ -11,10 +11,9 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.url.includes(paths.error)) {
-      return next.handle(req);
-    }
-    console.warn("ErrorInterceptor");
+    // if (!req.url.includes(paths.error)) {
+    //   return next.handle(req);
+    // }
 
     return next.handle(req).pipe(
       retry(2),

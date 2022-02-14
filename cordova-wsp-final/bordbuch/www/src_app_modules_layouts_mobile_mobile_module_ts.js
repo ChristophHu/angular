@@ -489,9 +489,9 @@ class KatFacade {
         this.store.dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_0__.loadAllShip());
     }
     // status
-    // loadAllStatus() {
-    //     this.store.dispatch(KatAction.loadAllStatus())
-    // }
+    loadAllStatus() {
+        this.store.dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_0__.loadAllStatus());
+    }
     // zaehlerstandstypen
     loadZaehlerstandstypen() {
         this.store.dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_0__.loadZaehlerstandstypen());
@@ -758,7 +758,7 @@ class Resolver {
                 this._katFacade.loadPruefvermerke();
                 this._katFacade.loadPruefvermerkkategorien();
                 this._katFacade.loadBetriebsstoffe();
-                // this._katFacade.loadAllStatus()
+                this._katFacade.loadAllStatus();
                 this._katFacade.loadZaehlerstandstypen();
                 this._katFacade.loadZwecke();
             }

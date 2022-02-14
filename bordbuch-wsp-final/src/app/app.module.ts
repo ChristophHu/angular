@@ -10,9 +10,7 @@ import { RootStoreModule } from './store/root-store.module'
 import { SharedModule } from './shared/shared.module'
 import { MarkdownModule } from 'ngx-markdown'
 import { ConnectionService } from './core/services/connection.service'
-// import { httpInterceptorProviders } from './core/interceptors'
-import { ErrorInterceptor } from './core/interceptors/error.interceptor'
-import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { httpInterceptorProviders } from './core/interceptors'
 
 @NgModule({
   declarations: [
@@ -30,7 +28,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http'
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: ConnectionService },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

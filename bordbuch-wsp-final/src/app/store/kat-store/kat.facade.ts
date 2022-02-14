@@ -63,9 +63,9 @@ export class KatFacade {
     } 
 
     // status
-    // loadAllStatus() {
-    //     this.store.dispatch(KatAction.loadAllStatus())
-    // }
+    loadAllStatus() {
+        this.store.dispatch(KatAction.loadAllStatus())
+    }
 
     // zaehlerstandstypen
     loadZaehlerstandstypen() {

@@ -26,7 +26,7 @@ export class Resolver implements Resolve<any> {
                     this._katFacade.loadPruefvermerke()
                     this._katFacade.loadPruefvermerkkategorien()
                     this._katFacade.loadBetriebsstoffe()
-                    // this._katFacade.loadAllStatus()
+                    this._katFacade.loadAllStatus()
                     this._katFacade.loadZaehlerstandstypen()
                     this._katFacade.loadZwecke()
                     
