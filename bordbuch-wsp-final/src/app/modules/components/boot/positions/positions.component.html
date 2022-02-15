@@ -4,6 +4,9 @@
     <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
       <thead>
         <tr class="w-full h-12 border-gray-300 border-b py-8">
+          <th class="text-gray-600 dark:text-gray-400 font-normal pr-6 text-left text-md tracking-normal leading-4 hidden">
+            Datum
+          </th>
           <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
             Id
           </th>
@@ -26,6 +29,9 @@
       </thead>
       <tbody>
         <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of positions; let i = index">
+          <td class="w-12 text-sm pr-6 whitespace-no-wrap tracking-normal leading-4 hidden">
+            {{ position.date }}
+          </td>
           <td class="text-sm px-2 whitespace-no-wrap tracking-normal leading-4 hidden">
             {{ position.id }}
           </td>
