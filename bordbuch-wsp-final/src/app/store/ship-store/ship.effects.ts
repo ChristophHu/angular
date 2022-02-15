@@ -12,7 +12,7 @@ import { Tank } from 'src/app/core/model/tank.model'
 import { AppService } from 'src/app/core/services/app.service'
 
 import { ShipAction } from '.'
-import { deleteReparaturFoto, deleteReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess } from './ship.actions'
+import { deleteReparaturFoto, deleteReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, updateReparaturSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess } from './ship.actions'
  
 @Injectable()
 export class ShipEffects {
@@ -85,6 +85,17 @@ export class ShipEffects {
             switchMap(action => {
                 return this.appService.insertReparatur(action.insert).pipe(
                     map(id => ShipAction.insertReparaturSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateReparatur$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updateReparatur),
+            switchMap(action => {
+                return this.appService.updateReparatur(action.update).pipe(
+                    tap(id => console.log(id)),
+                    map((id: string) => updateReparaturSuccess(action))
                 )
             })
         )

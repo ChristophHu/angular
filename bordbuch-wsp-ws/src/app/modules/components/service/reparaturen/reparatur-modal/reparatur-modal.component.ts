@@ -59,7 +59,6 @@ export class ReparaturModalComponent implements OnInit {
       this.reparaturForm.patchValue({ date: data.data.date })
       this.reparaturForm.patchValue(data.data.reparatur)
 
-      
       if (data.data.reparatur) {
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)

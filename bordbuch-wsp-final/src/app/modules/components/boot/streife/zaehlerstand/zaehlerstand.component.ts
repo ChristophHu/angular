@@ -47,6 +47,7 @@ export class ZaehlerstandComponent implements OnInit, OnDestroy {
 
   setDate() {
     this.zaehlerstandForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.zaehlerstandForm.controls['date'].markAsDirty()
   }
 
   update() {

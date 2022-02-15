@@ -25,7 +25,7 @@ import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { BetankungComponent } from './betankung/betankung.component';
-import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
+import { PruefvermerkModalComponent } from './pruefvermerk/pruefvermerk-modal/pruefvermerk-modal.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 
 @Component({
@@ -57,7 +57,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   patrolStatus$!: Observable<string | undefined>
   zaehlerstaende$!: Observable<Zaehlerstand[] | undefined>
   besatzung$!: Observable<Besatzung[] | undefined>
-  reparaturen$!: Observable<Reparatur[] | undefined>
   betankungen$!: Observable<Betankung[] | undefined>
 
   zaehlerstaende: Zaehlerstand[] | undefined
@@ -82,7 +81,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     private appService: AppService,
     private modalService: ModalService<BesatzungComponent>,
     private modalServiceZ: ModalService<ZaehlerstandComponent>,
-    private modalServiceP: ModalService<PruefvermerkComponent>,
     private modalServiceB: ModalService<BetankungComponent>,
     private locationService: LocationService) 
     {
@@ -96,7 +94,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
 
       this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
 
-      this.reparaturen$ = this.store.pipe(select(ShipSelectors.selectReparaturen))
       this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
 
       this.store.pipe(select(ShipSelectors.selectShipId))
@@ -270,19 +267,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
         title: 'Zählerstand aktualisieren',
         zaehlerstand
         // zaehlerstand: Object.assign(zaehlerstand, { id_ship: this.id_ship }) 
-      }
-    })
-  }
-
-  async openPruefvermerkModal() {
-    const { PruefvermerkComponent } = await import(
-      './pruefvermerk/pruefvermerk.component'
-    )
-    this.modalServiceP.open(PruefvermerkComponent, {
-      data: {
-        title: 'Prüfvermerk erstellen',
-        id_ship: this.id_schiff,
-        date: new Date().toISOString().substring(0,16)
       }
     })
   }

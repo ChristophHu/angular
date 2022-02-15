@@ -58,7 +58,6 @@ export class PeilungModalComponent implements OnInit {
   }
 
   setDate() {
-    console.log(new Date().toISOString().substring(0,16))
     this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
   }
 

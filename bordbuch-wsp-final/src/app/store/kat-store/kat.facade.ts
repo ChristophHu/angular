@@ -11,6 +11,7 @@ import { Ship } from "src/app/core/model/ship.model"
 import { Kat } from "src/app/core/model/kat.model"
 import { Dienststelle } from "src/app/core/model/dienststelle.model";
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model";
+import { Status } from "src/app/core/model/reparatur-status.model";
 
 
 @Injectable()
@@ -23,6 +24,7 @@ export class KatFacade {
     pruefvermerkskategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<Kat[]>
     pruefvermerke$      = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
     schiffe$            = this.store.pipe(select(KatSelectors.selectShips)) as Observable<Ship[]>
+    status$             = this.store.pipe(select(KatSelectors.selectAllStatus)) as Observable<Status[]>
     zweck$              = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Kat[]>
 
     constructor(private store: Store<RootStoreState>) {}
@@ -65,6 +67,9 @@ export class KatFacade {
     // status
     loadAllStatus() {
         this.store.dispatch(KatAction.loadAllStatus())
+    }
+    getIdByStatus(bezeichnung: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByStatus(bezeichnung)))
     }
 
     // zaehlerstandstypen

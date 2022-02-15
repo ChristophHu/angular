@@ -457,6 +457,7 @@ class KatFacade {
         this.pruefvermerkskategorien$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectpruefvermerkkategorien));
         this.pruefvermerke$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectpruefvermerke));
         this.schiffe$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectShips));
+        this.status$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectAllStatus));
         this.zweck$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectAllZwecke));
     }
     // public dispatches
@@ -491,6 +492,9 @@ class KatFacade {
     // status
     loadAllStatus() {
         this.store.dispatch(_store_actions__WEBPACK_IMPORTED_MODULE_0__.loadAllStatus());
+    }
+    getIdByStatus(bezeichnung) {
+        return this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_3__.select)(_store_selectors__WEBPACK_IMPORTED_MODULE_1__.selectIdByStatus(bezeichnung)));
     }
     // zaehlerstandstypen
     loadZaehlerstandstypen() {
@@ -825,6 +829,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "reparaturenLoaded": () => (/* binding */ reparaturenLoaded),
 /* harmony export */   "insertReparatur": () => (/* binding */ insertReparatur),
 /* harmony export */   "insertReparaturSuccess": () => (/* binding */ insertReparaturSuccess),
+/* harmony export */   "updateReparatur": () => (/* binding */ updateReparatur),
+/* harmony export */   "updateReparaturSuccess": () => (/* binding */ updateReparaturSuccess),
 /* harmony export */   "downloadReparaturFotos": () => (/* binding */ downloadReparaturFotos),
 /* harmony export */   "downloadReparaturFotosSuccess": () => (/* binding */ downloadReparaturFotosSuccess),
 /* harmony export */   "uploadReparaturFoto": () => (/* binding */ uploadReparaturFoto),
@@ -873,6 +879,8 @@ const loadReparaturen = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction
 const reparaturenLoaded = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Load Ship Effect] Reparaturen Loaded", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 const insertReparatur = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Edit Pruefvermerk Dialog] Reparatur Insert", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 const insertReparaturSuccess = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Edit Pruefvermerk Dialog] Reparatur Insert Success", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
+const updateReparatur = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Edit Pruefvermerk Dialog] Reparatur Update", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
+const updateReparaturSuccess = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Edit Pruefvermerk Dialog] Reparatur Update Success", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 // reparaturfoto
 const downloadReparaturFotos = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Ship Resolver] Download ReparaturFotos", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 const downloadReparaturFotosSuccess = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)("[Load Spec Effect] ReparaturFotos Download Success", (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());

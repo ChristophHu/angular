@@ -38,7 +38,7 @@ export class ImageBase64UploadComponent implements OnInit {
     }
 
     if (!allowed_types.includes(fileInput.target.files[0].type)) {
-        this.imageError = 'Es sind nud die Datei-Formate *.jpg/*.png erlaubt.';
+        this.imageError = 'Es sind nur die Datei-Formate *.jpg/*.png erlaubt.'
         return false;
     }
 

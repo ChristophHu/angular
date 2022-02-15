@@ -130,6 +130,15 @@ export const shipReducer = createReducer(
             reparaturen: clearedPruefvermerk
         }
     }),
+    on(ShipAction.updateReparaturSuccess, (state, action) => {
+        let cleared: Reparatur[] = state.reparaturen?.filter(el => el.id != action.update.id)!
+        let pruefvermerk: Reparatur = Object.assign({}, action.update)
+        cleared = [...cleared!, ...[pruefvermerk]]
+        return {
+            ...state,
+            reparaturen: cleared
+        }
+    }),
     //peilungen
     on(ShipAction.loadedPeilung, (state, action) => {
         return {

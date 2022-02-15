@@ -102,7 +102,10 @@ export class AppService {
 
             // pruefvermerk/reparatur
             case 'insertReparatur':
-                param = `id_schiff=${data.id_ship}&id_status=12af8c55-7726-4431-abaa-2c6dd44ba5dd&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                param = `id_schiff=${data.id_ship}&id_status=${data.id_status}&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
+                break
+            case 'updateReparatur':
+                param = `id=${data.id}&id_schiff=${data.id_ship}&id_status=${data.id_status}&date=${data.date}&kategorie=${data.kategorie}&item=${data.item}&description=${data.description}`
                 break
 
             // reparaturFoto
@@ -335,6 +338,9 @@ export class AppService {
             })
             // , (error: any) => observer.error(error)
         })
+    }
+    updateReparatur(reparatur: Reparatur): Observable<any> {
+        return this.update(reparatur, 'updateReparatur')
     }
 
     // position

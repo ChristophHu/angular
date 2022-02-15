@@ -75,6 +75,14 @@ export const insertReparaturSuccess = createAction(
 	"[Edit Pruefvermerk Dialog] Reparatur Insert Success",
 	props<{ action: { insert: Reparatur }, id: string }>()
 )
+export const updateReparatur = createAction(
+	"[Edit Pruefvermerk Dialog] Reparatur Update",
+	props<{ update: Reparatur }>()
+)
+export const updateReparaturSuccess = createAction(
+	"[Edit Pruefvermerk Dialog] Reparatur Update Success",
+	props<{ update: Reparatur }>()
+)
 
 // reparaturfoto
 export const downloadReparaturFotos = createAction(

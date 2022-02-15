@@ -51,9 +51,7 @@ export class PeilungModalComponent implements OnInit {
 
   setDate() {
     this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
-  }
-  show(val: any) {
-    console.log(val)
+    this.peilungForm.controls['date'].markAsDirty()
   }
 
   selectTank(id_tank: string) {

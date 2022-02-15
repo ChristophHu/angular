@@ -55,6 +55,7 @@ export class PositionComponent implements OnInit {
   }
   setDate() {
     this.positionForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.positionForm.controls['date'].markAsDirty()
   }
 
   create() {

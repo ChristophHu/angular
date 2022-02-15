@@ -61,6 +61,7 @@ export class BetankungComponent implements OnInit {
 
   setDate() {
     this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.betankungForm.controls['date'].markAsDirty()
   }
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {

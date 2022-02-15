@@ -44,16 +44,21 @@ export class BesatzungComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalService.getData().then((data) => {
-      this.title = data.data.title      
+      this.title = data.data.title   
+      console.log(data.data.besatzung)   
       this.besatzungForm.patchValue(data.data.besatzung)
+      console.log(this.besatzungForm.value)
+      // this.besatzungForm.value.an_bord = data.data.besatzung.an_bord
     })
   }
 
   setAnBordDate() {
     this.besatzungForm.patchValue({ an_bord: new Date().toISOString().substring(0,16) })
+    this.besatzungForm.controls['an_bord'].markAsDirty()
   }
   setVonBordDate() {
     this.besatzungForm.patchValue({ von_bord: new Date().toISOString().substring(0,16) })
+    this.besatzungForm.controls['von_bord'].markAsDirty()
   }
 
   create() {

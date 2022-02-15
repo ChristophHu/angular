@@ -1,0 +1,121 @@
+<app-modal #modalComponent>
+  <header class="h-16 p-8 flex items-center justify-between border-b">
+    <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+      {{ title }}
+    </p>
+    <button (click)="cancel()"
+      class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+      <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+    </button>
+  </header>
+  <div class="content">
+    <form [formGroup]="pruefvermerkForm">
+      <div class="">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_ship</mat-label>
+          <input matInput type="text" formControlName="id_ship" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_status</mat-label>
+          <input matInput type="text" formControlName="id_status" readonly>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Kategorie</mat-label>
+        <mat-select (selectionChange)="selectKategorie($event.value)" formControlName="kategorie">
+          <mat-option *ngFor="let kategorie of kategorien$ | async" [value]="kategorie.bezeichnung">
+            {{ kategorie.bezeichnung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Bestandteil</mat-label>
+        <mat-select formControlName="item">
+          <mat-option *ngFor="let pruefvermerk of pruefvermerke$ | async" [value]="pruefvermerk.item">
+            {{ pruefvermerk.item }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="flex flex-row items-center">
+        <mat-form-field appearance="fill">
+            <mat-label>Datum/Uhrzeit</mat-label>
+            <input matInput type="datetime-local" formControlName="date" value="{{pruefvermerkForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        </mat-form-field>
+        <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
+            <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+        </button>
+      </div>
+      <!-- <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input matInput type="text" formControlName="status" readonly>
+      </mat-form-field> -->
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" (selectionChange)="selectStatus($event.value)">
+          <mat-option *ngFor="let status of (status$ | async | toArray)" [value]="status.bezeichnung">
+            {{ status.bezeichnung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Beschreibung</mat-label>
+        <textarea  matInput type="text" rows="5" formControlName="description"></textarea>
+      </mat-form-field>
+      <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5 dark:bg-gray-800">
+        <h2 class="text-lg text-gray-800 dark:text-gray-100 font-bold">Bilder</h2>
+        <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%">
+          <thead>
+            <tr class="w-full h-12 border-gray-300 border-b py-8">
+              <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+                Nr.
+              </th>
+              <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+                Bezeichnung
+              </th>
+              <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let foto of (reparaturfotos$ | async | toArray); index as i">
+              <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                {{ i + 1 }}.
+              </td>
+              <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                {{ foto.id }}
+              </td>
+              <td class="pr-2 leading-4">
+                <button class="w-6 h-6">
+                  <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="trash" (click)="deleteFoto(foto.id)"></icons>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="p-1 m-1 bg-gray-800 text-white rounded" *ngIf="(reparaturFotoCount$ | async | toArray) != null" (click)="showGalerie = !showGalerie">
+          {{ reparaturFotoCount$ | async }} Fotos anzeigen
+        </button>
+      </div>
+      <div class="xl:w-full border-b border-gray-300 dark:border-gray-700 py-5 dark:bg-gray-800">
+        <h2 class="text-lg text-gray-800 dark:text-gray-100 font-bold">Bilder anzeigen/hinzufügen</h2>
+        <image-base64-upload (imageBase64)="uploadImage($event)"></image-base64-upload>
+      </div>
+    </form>
+  </div>
+  <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+    <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+  </footer>
+</app-modal>
+
+<ng-template #toolbar>
+  <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+  <button *ngIf="!pruefvermerkForm.pristine && pruefvermerkForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+  <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+</ng-template>
+
+<!-- image-slider-galerie -->
+<app-image-slider *ngIf="showGalerie" [images]="images"></app-image-slider>
