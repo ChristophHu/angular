@@ -19,13 +19,17 @@
     "cordova-plugin-geolocation": "^4.1.0"
   },
   "cordova": {
-    "plugins": {
-      "cordova-plugin-cors": {},
-      "cordova-plugin-camera": {},
-      "cordova-plugin-geolocation": {}
-    },
     "platforms": [
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-cors": {},
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      }
+    }
   }
 }
