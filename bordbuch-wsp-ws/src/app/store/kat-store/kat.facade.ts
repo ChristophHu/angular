@@ -13,6 +13,7 @@ import { Zaehlerstandstyp } from "src/app/core/models/zaehlerstandstyp.model";
 import { Dienststelle } from "src/app/core/models/dienststelle.model";
 import { Schiff } from "src/app/core/models/schiff.model";
 import { Status } from "src/app/core/models/reparatur-status.model";
+import { Tank } from "src/app/core/models/tank.model";
 
 @Injectable()
 export class KatFacade {

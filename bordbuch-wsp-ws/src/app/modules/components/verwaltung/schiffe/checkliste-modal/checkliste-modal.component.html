@@ -89,9 +89,25 @@
         <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
           Gegenstand bearbeiten
         </p>
-        <button (click)="show = !show" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
-          <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="arrow-right"></icons>
-        </button>
+        <div class="flex flex-row content-center">
+          <div class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" #label>
+            <app-info-button [appInfoPopup]="question" [label]="label">
+              <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="question-mark"></icons>
+            </app-info-button>
+            <ng-template #question>
+              <div class="p-2 ml-5 mt-3 min-w-min max-w-md bg-gray-100 border border-gray-400 break-words rounded shadow-lg">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
+                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa,
+                varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non
+                fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.
+                Pellentesque congue.
+              </div>
+            </ng-template>
+          </div>
+          <button (click)="show = !show" class="w-6 h-6 ml-3 focus:outline-none rounded-md cursor-pointer">
+            <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="arrow-right"></icons>
+          </button>
+        </div>
       </header>
       <div class="content">
         <form [formGroup]="checklistitemForm">

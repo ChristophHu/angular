@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Peilung } from 'src/app/core/models/peilung.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
+import { Tank } from 'src/app/core/models/tank.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -22,6 +23,7 @@ export class PeilungModalComponent implements OnInit {
 
   betriebsstoffe$: Observable<Kat[]>
   schiffe$: Observable<Schiff[]>
+  tank$: Observable<Tank[]>
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -31,6 +33,8 @@ export class PeilungModalComponent implements OnInit {
   ) {
     this.betriebsstoffe$ = _katFacade.betriebsstoffe$
     this.schiffe$ = _katFacade.schiffe$
+    this.tank$ = _specFacade.allTanks$
+    _specFacade.allTanks$.subscribe(data => console.log(data))
 
     this.peilungForm = this._formBuilder.group({
       id: [],
@@ -50,11 +54,19 @@ export class PeilungModalComponent implements OnInit {
 
       this.peilungForm.patchValue({ date: data.data.date })
       this.peilungForm.patchValue(data.data.peilung)
+      console.log(data.data.peilung)
     })
   }
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe((id: any) => this.peilungForm.patchValue({ id_schiff: id }))
+  }
+  selectTank(bezeichnung: string) {
+    console.log(bezeichnung)
+    this._specFacade.getIdByTank(bezeichnung).subscribe((id: any) => {
+      this.peilungForm.patchValue({ id_tank: id })
+      console.log(id)
+    })
   }
 
   setDate() {

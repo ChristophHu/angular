@@ -41,8 +41,12 @@
           </button>
         </div>
         <mat-form-field appearance="fill">
-          <mat-label>Bezeichnung</mat-label>
-          <input matInput type="text" formControlName="bezeichnung">
+          <mat-label>Tank</mat-label>
+          <mat-select formControlName="bezeichnung" (selectionChange)="selectTank($event.value)">
+            <mat-option *ngFor="let tank of (tank$ | async | toArray)" [value]="tank.bezeichnung">
+              {{ tank.bezeichnung }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Maß</mat-label>

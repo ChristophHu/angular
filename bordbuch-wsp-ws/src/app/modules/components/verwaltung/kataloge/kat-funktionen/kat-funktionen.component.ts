@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Kat } from 'src/app/core/models/kat.model';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
-import { KatFunktionModalComponent } from './kat-funktion-modal/kat-funktion-modal.component';
+import { Component, OnInit } from '@angular/core'
+import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api'
+import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
+import { Observable, Subject, take } from 'rxjs'
+import { Kat } from 'src/app/core/models/kat.model'
+import { ModalService } from 'src/app/shared/components/modal/modal.service'
+import { KatFacade } from 'src/app/store/kat-store/kat.facade'
+import { KatFunktionModalComponent } from './kat-funktion-modal/kat-funktion-modal.component'
 
 @Component({
   selector: 'app-kat-funktionen',
@@ -17,7 +19,7 @@ export class KatFunktionenComponent implements OnInit {
   
   funktionen$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatFunktionModalComponent>, private _katFacade: KatFacade) {
+  constructor(private _modalService: ModalService<KatFunktionModalComponent>, private _katFacade: KatFacade, private _RxjsNotificationService: RxjsNotificationsService) {
     this.funktionen$ = _katFacade.funktionen$
   }
 
@@ -78,6 +80,12 @@ export class KatFunktionenComponent implements OnInit {
   }
 
   delete(id: string) {
-    this._katFacade.deleteFunktion(id)
+    console.log(id)
+    const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
+    console.log(notification)
+    this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
+      console.log(response)
+      if (response) this._katFacade.deleteFunktion(id)
+    })
   }
 }

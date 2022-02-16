@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Features } from "src/app/core/models/feature";
-import { Status } from "src/app/core/models/reparatur-status.model";
 import { State } from "./reducers";
 
 export const specState = createFeatureSelector<State>(Features.Spec)
@@ -91,6 +90,10 @@ export const selectStreifeById = (id_streife: string) => createSelector(
 export const selectTanks = createSelector(
     specState,
     state => state.tanks
+)
+export const selectIdByTank = (bezeichnung: string) => createSelector(
+    selectTanks,
+    tanks => tanks?.find(el => el.bezeichnung == bezeichnung)?.id
 )
 
 // zaehlerstaende

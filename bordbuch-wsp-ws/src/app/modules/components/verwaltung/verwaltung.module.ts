@@ -28,13 +28,15 @@ import { KatStatusComponent } from './kataloge/kat-status/kat-status.component';
 import { KatStatusModalComponent } from './kataloge/kat-status/kat-status-modal/kat-status-modal.component';
 import { TankModalComponent } from './schiffe/tank-modal/tank-modal.component';
 import { MotorModalComponent } from './schiffe/motor-modal/motor-modal.component';
+import { PageNotFoundComponent } from 'src/app/shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: VerwaltungComponent,
     children: [
       { path: 'kataloge', component: KatalogeComponent },
       { path: 'pruefvermerke', component: PruefvermerkeComponent },
-      { path: 'schiffe', component: SchiffeComponent }
+      { path: 'schiffe', component: SchiffeComponent },
+      { path: '**', component: PageNotFoundComponent }
     ]
   }
 ]

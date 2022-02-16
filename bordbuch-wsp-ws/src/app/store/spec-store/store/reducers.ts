@@ -180,7 +180,7 @@ export const reducer = createReducer(
     on(clearReparaturen, (state, action) => {
         return {
             ...state,
-            reparaturen: undefined
+            reparaturen: []
         }
     }),
 

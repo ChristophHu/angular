@@ -78,9 +78,9 @@ export class PeilungenComponent implements OnInit {
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe((id: any) => {
-      console.log(id)
       this.filterForm.patchValue({ id_schiff: id })
       this._specFacade.loadPeilungenById(id)
+      this._specFacade.loadTanks(id)
     })
   }
   setStartDate() {

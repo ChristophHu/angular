@@ -24,27 +24,27 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         switch(error.status) {
           case 400:
-              console.error(`bad request`) 
+              console.error(`bad request`)
               break; 
 
           case 401: 
-              console.error(`unauthorized`) 
+              console.error(`unauthorized`)
               break; 
 
           case 403: 
-              console.error(`forbidden`) 
+              console.error(`forbidden`)
               break; 
 
           case 404: 
-              console.error(`not found`) 
+              console.error(`not found`)
               break;
 
           case 500:
-            console.error(`5xx-er`) 
+            console.error(`5xx-er`)
             break
 
           default:
-            console.error(`default error`) 
+            console.error(`default error`)
             break; 
 
       }
