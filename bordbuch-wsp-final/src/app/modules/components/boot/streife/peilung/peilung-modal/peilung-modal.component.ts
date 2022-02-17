@@ -58,7 +58,6 @@ export class PeilungModalComponent implements OnInit {
     this.peilungForm.controls.id_tank.setValue(id_tank)
     this.store.pipe(select(ShipSelectors.selectTankById(id_tank))).subscribe(data => {
       this.peilungForm.patchValue({ max_vol: data?.max_vol, bezeichnung: data?.bezeichnung })
-      console.log(data)
     })
   }
 

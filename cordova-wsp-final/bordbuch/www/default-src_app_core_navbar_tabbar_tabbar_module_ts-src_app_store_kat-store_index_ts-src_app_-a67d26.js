@@ -410,11 +410,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/effects */ 85322);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 43190);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 88002);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 68307);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 94612);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 94612);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ 28903);
 /* harmony import */ var _ship_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship.actions */ 97641);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/app.service */ 84382);
 
 
@@ -467,12 +466,12 @@ class ShipEffects {
         });
         this.updateReparatur$ = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(___WEBPACK_IMPORTED_MODULE_0__.ShipAction.updateReparatur), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.switchMap)(action => {
-                return this.appService.updateReparatur(action.update).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.tap)(id => console.log(id)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((id) => (0,_ship_actions__WEBPACK_IMPORTED_MODULE_1__.updateReparaturSuccess)(action)));
+                return this.appService.updateReparatur(action.update).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((id) => (0,_ship_actions__WEBPACK_IMPORTED_MODULE_1__.updateReparaturSuccess)(action)));
             }));
         });
         // reparaturfotos
         this.downloadReparaturFotos$ = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_ship_actions__WEBPACK_IMPORTED_MODULE_1__.downloadReparaturFotos), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.concatMap)(action => this.appService.downloadReparaturFoto(action.id)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((fotos) => (0,_ship_actions__WEBPACK_IMPORTED_MODULE_1__.downloadReparaturFotosSuccess)({ fotos })));
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_ship_actions__WEBPACK_IMPORTED_MODULE_1__.downloadReparaturFotos), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.concatMap)(action => this.appService.downloadReparaturFoto(action.id)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((fotos) => (0,_ship_actions__WEBPACK_IMPORTED_MODULE_1__.downloadReparaturFotosSuccess)({ fotos })));
         });
         this.uploadReparaturFoto$ = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_ship_actions__WEBPACK_IMPORTED_MODULE_1__.uploadReparaturFoto), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.switchMap)(action => {
@@ -554,8 +553,8 @@ class ShipEffects {
         });
     }
 }
-ShipEffects.ɵfac = function ShipEffects_Factory(t) { return new (t || ShipEffects)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.Actions), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵinject"](src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_2__.AppService)); };
-ShipEffects.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjectable"]({ token: ShipEffects, factory: ShipEffects.ɵfac });
+ShipEffects.ɵfac = function ShipEffects_Factory(t) { return new (t || ShipEffects)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.Actions), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_2__.AppService)); };
+ShipEffects.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({ token: ShipEffects, factory: ShipEffects.ɵfac });
 
 
 /***/ }),
@@ -702,7 +701,6 @@ const shipReducer = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createReducer)(i
     return Object.assign(Object.assign({}, state), { checklist: action.checklist });
 }), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(___WEBPACK_IMPORTED_MODULE_1__.ShipAction.updateChecklist, (state, action) => {
     let checklist = Object.assign({}, action.update);
-    console.log(checklist);
     // let cleared: Checklist | undefined = state.checklist
     // if (cleared) {
     //     cleared.checklistItems = cleared.checklistItems?.filter(el => el.id != action.updateItem.id)

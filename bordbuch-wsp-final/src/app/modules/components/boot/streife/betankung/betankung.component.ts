@@ -36,7 +36,6 @@ export class BetankungComponent implements OnInit {
     private _katFacade: KatFacade) {
       // this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
       this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
-      this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)).subscribe(data => console.log(data))
       this.betankungForm = this._formBuilder.group({
         id: [],
         id_ship: [],

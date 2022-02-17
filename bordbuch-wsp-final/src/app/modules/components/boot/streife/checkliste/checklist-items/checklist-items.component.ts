@@ -47,10 +47,6 @@ export class ChecklistItemsComponent implements OnInit {
     this.store.pipe(select(ShipSelectors.selectChecklist)).subscribe((checklist: any) => {
       this.checklist = checklist
     })
-
-    this.store.pipe(select(ShipSelectors.selectChecklist)).subscribe(data => {
-      console.log(data)
-    })
   }
 
   toggleCheck() {
@@ -90,6 +86,16 @@ export class ChecklistItemsComponent implements OnInit {
         }
     })
     return status
+  }
+
+  benachrichtigen(item: Checklistitem) {
+    let message: string
+    let address: string[] = item.benachrichtigen.split(',')
+
+    message = `Das Checklistenelement ${item.bezeichnung} ist defekt/verbraucht und muss erneuert/ausgetauscht werden.`
+    
+    message = `mailto:${address.join('; ')}?subject=Information: Checkliste zu ${this.checklist.name}&body=${message}`
+    window.location.href = message
   }
 
   create() {

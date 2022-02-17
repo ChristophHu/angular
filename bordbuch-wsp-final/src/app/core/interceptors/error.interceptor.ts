@@ -4,11 +4,12 @@ import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
 
 import { paths } from "./const";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private _router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // if (!req.url.includes(paths.error)) {
@@ -18,8 +19,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       retry(2),
       catchError((error: HttpErrorResponse) => {
-        console.log(`error found`)
-        console.log(error.status)
         if (error.status !== 401) {
           // 401 handled in auth.interceptor
         }
@@ -30,7 +29,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                 break; 
 
             case 401: 
-                console.log(`unauthorized`) 
+                console.log(`unauthorized`)
+                this._router.navigateByUrl('/login')
                 break; 
 
             case 403: 
@@ -39,9 +39,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             case 404: 
                 console.log(`not found`) 
+                this._router.navigateByUrl('/login')
                 break;
 
             case 500:
+            case 501:
+            case 502:
+            case 503:
               console.log(`5xx-er`) 
               break
 

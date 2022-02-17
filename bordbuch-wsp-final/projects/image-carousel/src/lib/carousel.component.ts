@@ -27,7 +27,7 @@ export class CarouselComponent implements OnDestroy {
     landscapeMode: any;
     minTimeout = 30;
     isVideoPlaying: boolean = false;
-    _isCounter: boolean = false;
+    _isCounter: boolean = true;
     _width!: number;
     _cellWidth: number | '100%' = 200;
     _loop: boolean = false;

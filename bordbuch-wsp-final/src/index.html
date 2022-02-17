@@ -13,49 +13,103 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
   </head>
-  <body class="">
+  <body class="" onload="onLoad()" onunload="onUnload()">
     <app-root></app-root>
     <script type="text/javascript" src="cordova.js"></script>
     <script>
-      document.addEventListener('deviceready', onDeviceReady, false);
+      function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+      function onUnload() {
+        cordova.plugins.foregroundService.stop();
+        console.log('foregroundservice stop');
+      }
 
       function onDeviceReady() {
-        /**
-        * This callback will be executed every time a geolocation is recorded in the background.
-        */
-        var callbackFn = function(location) {
-            console.log('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
+        document.addEventListener('pause', onPause, false);
+        document.addEventListener('resume', onResume, false);
+        document.addEventListener("menubutton", onMenuKeyDown, false);
+        document.addEventListener('backbutton', onBackKeyDown, false);
 
-            // Do your HTTP request here to POST location to your server.
-            // jQuery.post(url, JSON.stringify(location));
+        // cordova.plugins.foregroundService.start('Notification Title', 'Notification Text', 'drawable-icon-name', [notification importance], [notification id]);
 
-            /*
-            IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-            and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-            IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-            */
-            backgroundGeoLocation.finish();
-        };
+        // High priority with notification id 10
+        // ('myicon.png' is in the 'res/drawable' folder)
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon', 3, 10);
 
-        var failureFn = function(error) {
-            console.log('BackgroundGeoLocation error');
-        };
+        // Notification id is optional
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon', 3);
 
-        // BackgroundGeoLocation is highly configurable. See platform specific configuration options
-        backgroundGeoLocation.configure(callbackFn, failureFn, {
-            desiredAccuracy: 10,
-            stationaryRadius: 20,
-            distanceFilter: 30,
-            debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-            stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates
-        });
+        // Notification importance is optional, the default is 1 - Low (no sound or vibration)
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon');
 
-        // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-        backgroundGeoLocation.start();
+        // Icon is optional, but will use a 'star' icon as the default
+        // cordova.plugins.foregroundService.start('Bordbuch WSP', 'Background Service');
+        // setTimeout(function() {
+        //   cordova.plugins.foregroundService.stop();
+        //   console.log('foregroundservice stop');
+        // }, 10*60*1000);
 
-        // If you wish to turn OFF background-tracking, call the #stop method.
-        // backgroundGeoLocation.stop();
+        // /**
+        // * This callback will be executed every time a geolocation is recorded in the background.
+        // */
+        // var callbackFn = function(location) {
+        //     console.log('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
+
+        //     // Do your HTTP request here to POST location to your server.
+        //     // jQuery.post(url, JSON.stringify(location));
+
+        //     /*
+        //     IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        //     and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        //     IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        //     */
+        //     backgroundGeoLocation.finish();
+        // };
+
+        // var failureFn = function(error) {
+        //     console.log('BackgroundGeoLocation error');
+        // };
+
+        // // BackgroundGeoLocation is highly configurable. See platform specific configuration options
+        // backgroundGeoLocation.configure(callbackFn, failureFn, {
+        //     desiredAccuracy: 10,
+        //     stationaryRadius: 20,
+        //     distanceFilter: 30,
+        //     debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+        //     stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates
+        // });
+
+        // // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
+        // backgroundGeoLocation.start();
+
+        // // If you wish to turn OFF background-tracking, call the #stop method.
+        // // backgroundGeoLocation.stop();
       }
+
+      function onPause() {
+        console.log('paused');
+        cordova.plugins.foregroundService.start('Bordbuch WSP', 'Background Service');
+        console.log('foregroundservice started')
+      }
+
+      function onResume() {
+        console.log('resumed');
+        cordova.plugins.foregroundService.stop();
+        console.log('foregroundservice stop');
+      }
+
+      function onMenuKeyDown() {
+        console.log('menu key deactivated');
+      }
+      function onBackKeyDown() {
+        console.log('back key deactivated');
+      }
+
+      window.addEventListener("cordovacallbackerror", function (event) {
+        // event.error contains the original error object
+        console.log(error);
+      });
     </script>
   </body>
 </html>

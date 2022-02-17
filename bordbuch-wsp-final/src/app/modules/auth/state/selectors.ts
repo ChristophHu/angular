@@ -8,7 +8,6 @@ export const isLoggedIn = createSelector(
     selectAuthState,
     (auth) => {
         if(!!auth.backendResponse) {
-            console.log(auth.backendResponse)
             return true
         } else {
             return false

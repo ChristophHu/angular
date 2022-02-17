@@ -3,9 +3,9 @@
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
     <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 tex-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
-    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')">Streife beenden</button>
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" [disabled]="checkKontrolle()" [ngClass]="checkKontrolle() ? 'text-gray-400' : ''" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('aktiv')">Streife starten</button>
+    <button *ngIf="(patrolStatus$ | async)=='aktiv'" [disabled]="checkKontrolle()" [ngClass]="checkKontrolle() ? 'text-gray-400' : ''" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="updatePatrol('beendet')">Streife beenden</button>
   </div>
 </tabbar>
   
@@ -192,10 +192,16 @@
               </div>
             </div>
             <div class="p-4 border-b hover:bg-gray-50">
+              <form [formGroup]="kontrollFormGroup">
+                <div class="flex flex-row items-center">
+                  <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+                  <mat-label>Kontrolle aller Eingaben durchgeführt.</mat-label>
+                </div>
+              </form>
               <!-- <label class="relative" for="kontrolle">Kontrolle aller Eingaben erfolgt: </label>
               <input type="checkbox" name="kontrolle"> -->
-              <input type="checkbox" name="kontrolle">
-              <mat-label for="kontrolle"> Kontrolle aller Eingaben durchgeführt.</mat-label>
+              <!-- <input type="checkbox" name="kontrolle">
+              <mat-label for="kontrolle"> Kontrolle aller Eingaben durchgeführt.</mat-label> -->
             </div>
           </div>
         </cdk-step>

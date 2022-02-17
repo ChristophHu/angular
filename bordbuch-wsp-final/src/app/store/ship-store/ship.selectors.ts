@@ -124,3 +124,7 @@ export const selectReparaturFotosCount = createSelector(
     selectAllReparaturFotos,
     reparaturfotos => reparaturfotos?.length
 )
+export const selectReparaturFotosById = (id_reparatur: string) => createSelector(
+    selectAllReparaturFotos,
+    reparaturfotos => reparaturfotos?.filter(el => el.id_reparatur == id_reparatur)
+)

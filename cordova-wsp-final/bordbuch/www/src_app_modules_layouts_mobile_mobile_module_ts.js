@@ -215,7 +215,6 @@ class TopnavComponent {
     this.id$ = rxjs__WEBPACK_IMPORTED_MODULE_7__.EMPTY;
     this.name$ = rxjs__WEBPACK_IMPORTED_MODULE_7__.EMPTY;
     this.id$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_8__.select)(src_app_store_ship_store__WEBPACK_IMPORTED_MODULE_3__.ShipSelectors.selectShipId));
-    this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_8__.select)(src_app_store_ship_store__WEBPACK_IMPORTED_MODULE_3__.ShipSelectors.selectShipId)).subscribe(id => console.log(id));
     this.name$ = this.store.pipe((0,_ngrx_store__WEBPACK_IMPORTED_MODULE_8__.select)(src_app_store_ship_store__WEBPACK_IMPORTED_MODULE_3__.ShipSelectors.selectShipName));
   }
 
@@ -254,7 +253,7 @@ TopnavComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__[
   selectors: [["topnav"]],
   decls: 12,
   vars: 6,
-  consts: [[1, "absolute", "w-full", "p-5", "flex", "justify-between", "items-center", "bg-gray-200", "bg-opacity-50", "shadow-lg", "z-40"], ["aria-label", "toggler", 1, "flex", "justify-center", "items-center"], ["id", "open", "aria-label", "open", 1, "w-8", "h-8", "focus:outline-none", 3, "ngClass", "click"], ["name", "menu", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["aria-label", "close", "class", "w-8 h-8 focus:outline-none ", 3, "click", 4, "ngIf"], [1, "text-base"], [1, "flex", "justify-between", "items-center", "space-x-3"], ["name", "bordbuch-boot", 1, "h-8"], ["class", "sidebar z-50", 4, "ngIf"], ["aria-label", "close", 1, "w-8", "h-8", "focus:outline-none", 3, "click"], ["name", "menu-off", 1, "w-8", "h-8", "stroke-1", "stroke-current"], [1, "sidebar", "z-50"], [1, "mt-5", "flex", "flex-col", "justify-start", "items-center", "px-4", "w-full", "space-y-3", "pb-5"], [1, "w-8", "h-8", "block", "focus:outline-none", 3, "click"], ["routerLinkActive", "active-link", 1, "btn", 3, "routerLink", "routerLinkActiveOptions", "click"], ["name", "refresh", 1, "w-8", "h-8", "stroke-1", "stroke-current"], [1, "text-base", "leading-4"], ["class", "btn", "routerLinkActive", "active-link", 3, "routerLink", "routerLinkActiveOptions", "click", 4, "ngIf"], ["class", "btn", "routerLinkActive", "active-link", 3, "routerLink", "click", 4, "ngIf"], [1, "flex", "flex-col", "justify-between", "items-center", "h-full", "space-y-80", "w-full"], [1, "space-y-3", "flex", "pt-8", "border-gray-200", "border-t", "justify-start", "pb-6", "px-4", "pl-4", "flex-col", "items-center", "w-full"], [1, "btn", 3, "click"], ["name", "logout", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["name", "ship", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["routerLinkActive", "active-link", 1, "btn", 3, "routerLink", "click"], ["name", "map", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["name", "location-marker", 1, "w-8", "h-8", "stroke-1", "stroke-current"]],
+  consts: [[1, "absolute", "w-full", "p-5", "flex", "justify-between", "items-center", "bg-gray-200", "bg-opacity-75", "shadow-lg", "z-40"], ["aria-label", "toggler", 1, "flex", "justify-center", "items-center"], ["id", "open", "aria-label", "open", 1, "w-8", "h-8", "focus:outline-none", 3, "ngClass", "click"], ["name", "menu", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["aria-label", "close", "class", "w-8 h-8 focus:outline-none ", 3, "click", 4, "ngIf"], [1, "text-base"], [1, "flex", "justify-between", "items-center", "space-x-3"], ["name", "bordbuch-boot", 1, "h-8"], ["class", "sidebar z-50", 4, "ngIf"], ["aria-label", "close", 1, "w-8", "h-8", "focus:outline-none", 3, "click"], ["name", "menu-off", 1, "w-8", "h-8", "stroke-1", "stroke-current"], [1, "sidebar", "z-50"], [1, "mt-5", "flex", "flex-col", "justify-start", "items-center", "px-4", "w-full", "space-y-3", "pb-5"], [1, "w-8", "h-8", "block", "focus:outline-none", 3, "click"], ["routerLinkActive", "active-link", 1, "btn", 3, "routerLink", "routerLinkActiveOptions", "click"], ["name", "refresh", 1, "w-8", "h-8", "stroke-1", "stroke-current"], [1, "text-base", "leading-4"], ["class", "btn", "routerLinkActive", "active-link", 3, "routerLink", "routerLinkActiveOptions", "click", 4, "ngIf"], ["class", "btn", "routerLinkActive", "active-link", 3, "routerLink", "click", 4, "ngIf"], [1, "flex", "flex-col", "justify-between", "items-center", "h-full", "space-y-80", "w-full"], [1, "space-y-3", "flex", "pt-8", "border-gray-200", "border-t", "justify-start", "pb-6", "px-4", "pl-4", "flex-col", "items-center", "w-full"], [1, "btn", 3, "click"], ["name", "logout", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["name", "ship", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["routerLinkActive", "active-link", 1, "btn", 3, "routerLink", "click"], ["name", "map", 1, "w-8", "h-8", "stroke-1", "stroke-current"], ["name", "location-marker", 1, "w-8", "h-8", "stroke-1", "stroke-current"]],
   template: function TopnavComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 0);
@@ -1017,7 +1016,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "selectCheckedChecklistItems": () => (/* binding */ selectCheckedChecklistItems),
 /* harmony export */   "selectUncheckedChecklistItems": () => (/* binding */ selectUncheckedChecklistItems),
 /* harmony export */   "selectAllReparaturFotos": () => (/* binding */ selectAllReparaturFotos),
-/* harmony export */   "selectReparaturFotosCount": () => (/* binding */ selectReparaturFotosCount)
+/* harmony export */   "selectReparaturFotosCount": () => (/* binding */ selectReparaturFotosCount),
+/* harmony export */   "selectReparaturFotosById": () => (/* binding */ selectReparaturFotosById)
 /* harmony export */ });
 /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ 86710);
 /* harmony import */ var src_app_core_model_feature__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/core/model/feature */ 97845);
@@ -1057,6 +1057,7 @@ const selectUncheckedChecklistItems = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1_
 // reparaturfotos
 const selectAllReparaturFotos = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectShipState, state => state.reparaturfotos);
 const selectReparaturFotosCount = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectAllReparaturFotos, reparaturfotos => reparaturfotos === null || reparaturfotos === void 0 ? void 0 : reparaturfotos.length);
+const selectReparaturFotosById = (id_reparatur) => (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectAllReparaturFotos, reparaturfotos => reparaturfotos === null || reparaturfotos === void 0 ? void 0 : reparaturfotos.filter(el => el.id_reparatur == id_reparatur));
 
 
 /***/ }),

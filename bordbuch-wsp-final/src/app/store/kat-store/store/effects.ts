@@ -56,7 +56,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadBetriebsstoffe),
             concatMap(action => this.appService.getBetriebsstoffe()),
-            tap(data => console.log(data)),
             map((betriebsstoffe: Betriebsstoff[]) => loadedBetriebsstoffe({ betriebsstoffe }))
         )
     })

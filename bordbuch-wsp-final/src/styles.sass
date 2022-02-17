@@ -51,10 +51,20 @@ mat-label
     @apply bg-transparent
     // background-color: rgba(0, 0, 0, 0)
 
+.mat-form-field-appearance-fill .mat-form-field-infix
+    padding: 0
+
 .mat-input-element,
 .mat-select-value
     // @apply text-4xl
     font-size: large !important
+
+    &::after
+        content: ''
+
+input .mat-input-element
+    margin-top: 10px
+    margin-bottom: 5px
 
 mat-form-field
     @apply w-full 

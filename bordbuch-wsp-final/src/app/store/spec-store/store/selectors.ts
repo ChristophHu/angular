@@ -5,11 +5,11 @@ import { State } from "./reducers";
 export const specState = createFeatureSelector<State>(Features.Spec)
 
 // reparaturfotos
-export const selectAllReparaturFotos = createSelector(
-    specState,
-    state => state.reparaturfotos
-)
-export const selectReparaturFotosCount = createSelector(
-    selectAllReparaturFotos,
-    reparaturfotos => reparaturfotos?.length
-)
+// export const selectAllReparaturFotos = createSelector(
+//     specState,
+//     state => state.reparaturfotos
+// )
+// export const selectReparaturFotosCount = createSelector(
+//     selectAllReparaturFotos,
+//     reparaturfotos => reparaturfotos?.length
+// )

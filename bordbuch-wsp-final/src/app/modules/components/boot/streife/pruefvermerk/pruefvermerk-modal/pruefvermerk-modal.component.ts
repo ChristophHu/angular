@@ -37,6 +37,7 @@ export class PruefvermerkModalComponent implements OnInit {
   // image-slider
   showGalerie: boolean = false
   images: any[] = []
+  id: string = ''
 
   constructor(
     private store: Store<RootStoreState>, 
@@ -48,8 +49,6 @@ export class PruefvermerkModalComponent implements OnInit {
 
     this.kategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<PruefvermerkKategorien[]>
     this.status$ = this._katFacade.status$
-    // this.reparaturfotos$ = _specFacade.allReparaturFotos$
-    // this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
     
     this.reparaturfotos$ = this.store.pipe(select(ShipSelectors.selectAllReparaturFotos)) as Observable<any[]>
     this.reparaturFotoCount$ = this.store.pipe(select(ShipSelectors.selectReparaturFotosCount)) as Observable<any>
@@ -74,16 +73,20 @@ export class PruefvermerkModalComponent implements OnInit {
       this.pruefvermerkForm.patchValue(data.data.reparatur)
 
       if (data.data.reparatur) {
+        this.id = data.data.reparatur.id
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
 
-        // this._specFacade.getReparaturFotosById(data.data.reparatur.id).subscribe(fotos => {
-        //   console.log(`returned fotos: ${fotos}`)
-        //   this.images = []
-        //   if (fotos && fotos.length > 0) this.decodeImages(fotos)
-        // })
-        // this._specFacade.downloadReparaturFotos(data.data.reparatur.id)
+        this.store.pipe(select(ShipSelectors.selectReparaturFotosById(data.data.reparatur.id))).subscribe(fotos => {
+          console.log(`returned fotos: ${fotos}`)
+          this.images = []
+          if (fotos && fotos.length > 0) this.decodeImages(fotos)
+        })
+        console.log(this.id)
+        this.store.dispatch(ShipAction.downloadReparaturFotos({ id: this.id }))
       }
+
+      this.store.pipe(select(ShipSelectors.selectAllReparaturFotos)).subscribe(data => console.log(data))
     })
   }
 
@@ -103,17 +106,20 @@ export class PruefvermerkModalComponent implements OnInit {
     this.pruefvermerkForm.controls['date'].markAsDirty()
   }
 
+  decodeImages(data: any[]) {
+    console.log(data)
+    data.forEach(el => {
+      this.images.push(Object.assign({}, { path: el.foto }))
+    })
+  }
   uploadImage(imageBase64: string) {
     const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.pruefvermerkForm.value.id, foto: imageBase64 }
     console.log(upload)
-    // this._specFacade.uploadReparaturFoto(upload)
     this.store.dispatch(ShipAction.uploadReparaturFoto({ upload }))
   }
 
   deleteFoto(id: string) {
-    // this._specFacade.deleteReparaturFoto(id)
     this.store.dispatch(ShipAction.deleteReparaturFoto({ id }))
-    this.modal?.close()
   }
 
   create() {
@@ -125,7 +131,6 @@ export class PruefvermerkModalComponent implements OnInit {
     let update: Reparatur = this.pruefvermerkForm.value
     console.log(update)
     this.store.dispatch(ShipAction.updateReparatur({ update }))
-    // this._specFacade.updateReparatur(update)
     this.modal?.close()
   }
 

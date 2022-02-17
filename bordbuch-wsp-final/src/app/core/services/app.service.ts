@@ -96,7 +96,6 @@ export class AppService {
 
             // checkliste
             case 'insertCheckliste':
-                console.log(data)
                 param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
                 break
 
@@ -129,8 +128,7 @@ export class AppService {
                 break
         }
 
-        console.info(`backendurl: '${baseURL}', param: ${param}`)
-        
+        // console.info(`backendurl: '${baseURL}', param: ${param}`)
         return this.httpClient.post(
             baseURL, 
             param, 
@@ -376,28 +374,24 @@ export class AppService {
 
     // reparaturfotos
     downloadReparaturFoto(id: string): Observable<any> {
-        // return EMPTY
+        console.log(id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getFotosVonReparatur', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
     }
     uploadReparaturFoto(upload: any): Observable<any> {
-        // return EMPTY
         return this.update(upload, 'insertReparaturFoto')
     }
     deleteReparaturFoto(id: string): Observable<any> {
-        // return EMPTY
         return this.delete(id, 'deleteReparaturFoto')
     }
 
     // get
     getSchiffe(): Observable<any> {
         return new Observable ((observer) => {
-            // const source$ = this.getReducer('getSchiffe', {})
             this.getReducer('getSchiffe', {}).subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
@@ -505,7 +499,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getKatBetriebsstoffe', {})
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -563,7 +556,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getLastChecklist', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 data.forEach((checklist: Checklist) => {
                     checklist.checklistItems = JSON.parse(checklist.gbookdaten!)
                     delete checklist.gbookdaten
@@ -576,7 +568,6 @@ export class AppService {
                     //     checklist.status = 'vollständig'
                     // }
                 })
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

@@ -51,7 +51,6 @@ export class PositionsComponent implements OnInit {
         this._positionSubscription
         .add(
           this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).subscribe((data: any) => {
-            console.log(data)
             this.positions = data
           })
         )

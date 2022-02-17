@@ -67,6 +67,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   besatzungFormGroup!: FormGroup
   bootFormGroup!: FormGroup
   checkFormGroup!: FormGroup
+  kontrollFormGroup!: FormGroup
 
   kennung = ''
   zweck = ''
@@ -104,7 +105,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     }
 
   ngAfterViewInit(): void {
-    console.log(this.patrol)
+    // console.log(this.patrol)
   }
 
   ngOnInit(): void {
@@ -112,13 +113,15 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       kennung: ['', Validators.required],
       zweck: ['', Validators.required],
     })
+    this.kontrollFormGroup = this._formBuilder.group({
+      kontrolle: [false]
+    })
 
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
       this.name = ship?.name
     })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      console.log(patrol)
       if (patrol) {
         this.zweckFormGroup.patchValue(patrol!)
         this.patrol = patrol!
@@ -176,6 +179,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   initializePatrol(stepper: CdkStepper) {
+    this.kontrollFormGroup.value.kontrolle = false
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().substring(0,16), status: 'vorbereitend', zweck: ''  }
@@ -189,11 +193,12 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     })
   }
   updatePatrol(status?: string) {
-    console.log(status)
+    this.kontrollFormGroup.value.kontrolle = false
     let update: Patrol
     // update zum eigentlichen Start oder beenden der Streife
     if (this.patrol.id == '' || this.patrol.id == undefined) {
       this.erstellePatrol()
+      
     }
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       if (patrol?.id) {
@@ -222,6 +227,11 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     const id: string = this.id!
     this.store.dispatch(ShipAction.deletePatrol({ id }))
     this.id = ''
+  }
+
+  checkKontrolle(): boolean {
+    console.log(!this.kontrollFormGroup.value.kontrolle)
+    return !this.kontrollFormGroup.value.kontrolle
   }
 
   logout() {

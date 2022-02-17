@@ -94,7 +94,6 @@ export class ShipEffects {
             ofType(ShipAction.updateReparatur),
             switchMap(action => {
                 return this.appService.updateReparatur(action.update).pipe(
-                    tap(id => console.log(id)),
                     map((id: string) => updateReparaturSuccess(action))
                 )
             })

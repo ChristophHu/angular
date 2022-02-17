@@ -176,7 +176,6 @@ export const shipReducer = createReducer(
     }),
     on(ShipAction.updateChecklist, (state, action) => {
         let checklist: Checklist = Object.assign({}, action.update)
-        console.log(checklist)
 
         // let cleared: Checklist | undefined = state.checklist
         // if (cleared) {

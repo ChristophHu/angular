@@ -6,7 +6,7 @@
     <div class="flex flex-row content-center">
       <div class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" #label>
         <app-info-button [appInfoPopup]="question" [label]="label">
-          <icons class="w-6 h-6 stroke-1 stroke-current text-gray-500" name="question-mark"></icons>
+          <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="question-mark"></icons>
         </app-info-button>
         <ng-template #question>
           <div class="p-2 ml-5 mt-3 min-w-min max-w-md bg-gray-100 border border-gray-400 break-words rounded shadow-lg">
@@ -24,47 +24,61 @@
     </div>
   </header>
   <div class="content">
-    <div class="ml-5">
-      <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
-        <thead>
-          <tr class="w-full h-12 border-gray-300 border-b py-8">
-            <th
-              class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
-              Id
-            </th>
-            <th class="px-2 w-8 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
-              <!-- <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"/> -->
-            </th>
-            <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
-              Bezeichnung
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let item of (unchecked$ | async)">
-            <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
-              {{ item.id }}
-            </td>
-            <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
-              <input type="checkbox" [checked]="item.checked" (change)="toggleitem(item)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-            </td>
-            <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
-              {{ item.bezeichnung }}
-            </td>
-          </tr>
-          <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let item of (checked$ | async)">
-            <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
-              {{ item.id }}
-            </td>
-            <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
-              <input type="checkbox" [checked]="item.checked" (change)="toggleitem(item)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-            </td>
-            <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
-              {{ item.bezeichnung }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <h2 class="text-lg m-3">Checkliste {{ checklist.name }}</h2>
+    <div class="w-full bg-white rounded-lg py-2 shadow-lg">
+      <!-- <div class="ml-5"> -->
+        <table class="min-w-full bg-white dark:bg-gray-800" style="width: 100%;">
+          <thead>
+            <tr class="w-full h-12 border-gray-300 border-b py-8">
+              <th
+                class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
+                Id
+              </th>
+              <th class="px-2 w-8 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+                <!-- <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"/> -->
+              </th>
+              <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+                Bezeichnung
+              </th>
+              <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+                
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="h-12 bg-gray-100 border-b border-gray-300" *ngFor="let item of (unchecked$ | async)">
+              <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
+                {{ item.id }}
+              </td>
+              <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                <input type="checkbox" [checked]="item.checked" (change)="toggleitem(item)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+              </td>
+              <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4" [ngClass]="item.relevant ? 'underline' : ''">
+                {{ item.bezeichnung }}
+              </td>
+              <td class="pr-2 leading-4">
+                <button class="w-6 h-6">
+                  <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="mail" (click)="benachrichtigen(item)"></icons>
+                </button>
+              </td>
+            </tr>
+            <tr class="h-12 bg-gray-50 border-b border-gray-300" *ngFor="let item of (checked$ | async)">
+              <td class="text-sm px-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4 hidden">
+                {{ item.id }}
+              </td>
+              <td class="px-2 text-left whitespace-no-wrap text-sm text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                <input type="checkbox" [checked]="item.checked" (change)="toggleitem(item)" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+              </td>
+              <td class="text-sm pr-2 whitespace-no-wrap text-gray-800 dark:text-gray-100 tracking-normal leading-4">
+                {{ item.bezeichnung }}
+              </td>
+              <td class="pr-2 leading-4">
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<!-- </div> -->
     </div>
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">

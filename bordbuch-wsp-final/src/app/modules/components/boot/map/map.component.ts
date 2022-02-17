@@ -123,8 +123,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     //   )
     //   .add(
     //     this.lastPositions$.subscribe((data: any) => {
-    //       console.log(`lastpositions:`)
-    //       console.log(data)
+    //   
     //       this.allShips.length = 0
     //       data.forEach((ship: any) => {
     //         console.log(ship)

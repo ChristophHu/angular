@@ -145,7 +145,8 @@ const icons = {
     'messages': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M15 10L11 14L17 20L21 4L3 11L7 13L9 19L12 15" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     'notification': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M10 6H7C6.46957 6 5.96086 6.21071 5.58579 6.58579C5.21071 6.96086 5 7.46957 5 8V17C5 17.5304 5.21071 18.0391 5.58579 18.4142C5.96086 18.7893 6.46957 19 7 19H16C16.5304 19 17.0391 18.7893 17.4142 18.4142C17.7893 18.0391 18 17.5304 18 17V14" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 10C18.6569 10 20 8.65685 20 7C20 5.34314 18.6569 4 17 4C15.3431 4 14 5.34314 14 7C14 8.65685 15.3431 10 17 10Z" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     'qrcode': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>`,
-    'question-mark': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+    'question-mark': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4" /><line x1="12" y1="19" x2="12" y2="19.01" /></svg>`,
+    'question-mark-round': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
     'refresh': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>`,
     'scan': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7v-1a2 2 0 0 1 2 -2h2" /><path d="M4 17v1a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v1" /><path d="M16 20h2a2 2 0 0 0 2 -2v-1" /><line x1="5" y1="12" x2="19" y2="12" /></svg>`,
     'security': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M8 19C10.2091 19 12 17.2091 12 15C12 12.7909 10.2091 11 8 11C5.79086 11 4 12.7909 4 15C4 17.2091 5.79086 19 8 19Z" troke-linecap="round" stroke-linejoin="round"/><path d="M10.85 12.15L19 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 5L20 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8L17 10" stroke-linecap="round" stroke-linejoin="round"/></svg>  `,
@@ -311,7 +312,7 @@ class CarouselComponent {
         this.ref = ref;
         this.minTimeout = 30;
         this.isVideoPlaying = false;
-        this._isCounter = false;
+        this._isCounter = true;
         this._cellWidth = 200;
         this._loop = false;
         this._lightDOM = false;
@@ -2385,18 +2386,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ 74945);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 5304);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 39895);
+
 
 
 
 class ErrorInterceptor {
-    constructor() { }
+    constructor(_router) {
+        this._router = _router;
+    }
     intercept(req, next) {
         // if (!req.url.includes(paths.error)) {
         //   return next.handle(req);
         // }
         return next.handle(req).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_0__.retry)(2), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.catchError)((error) => {
-            console.log(`error found`);
-            console.log(error.status);
             if (error.status !== 401) {
                 // 401 handled in auth.interceptor
             }
@@ -2406,14 +2409,19 @@ class ErrorInterceptor {
                     break;
                 case 401:
                     console.log(`unauthorized`);
+                    this._router.navigateByUrl('/login');
                     break;
                 case 403:
                     console.log(`forbidden`);
                     break;
                 case 404:
                     console.log(`not found`);
+                    this._router.navigateByUrl('/login');
                     break;
                 case 500:
+                case 501:
+                case 502:
+                case 503:
                     console.log(`5xx-er`);
                     break;
                 default: {
@@ -2425,7 +2433,7 @@ class ErrorInterceptor {
         }));
     }
 }
-ErrorInterceptor.ɵfac = function ErrorInterceptor_Factory(t) { return new (t || ErrorInterceptor)(); };
+ErrorInterceptor.ɵfac = function ErrorInterceptor_Factory(t) { return new (t || ErrorInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__.Router)); };
 ErrorInterceptor.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ token: ErrorInterceptor, factory: ErrorInterceptor.ɵfac });
 
 
@@ -2570,7 +2578,6 @@ class AppService {
                 break;
             // checkliste
             case 'insertCheckliste':
-                console.log(data);
                 param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`;
                 break;
             // pruefvermerk/reparatur
@@ -2598,7 +2605,7 @@ class AppService {
                 console.error('There is no action to switch.');
                 break;
         }
-        console.info(`backendurl: '${baseURL}', param: ${param}`);
+        // console.info(`backendurl: '${baseURL}', param: ${param}`)
         return this.httpClient.post(baseURL, param, { headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': token
@@ -2822,27 +2829,23 @@ class AppService {
     }
     // reparaturfotos
     downloadReparaturFoto(id) {
-        // return EMPTY
+        console.log(id);
         return new rxjs__WEBPACK_IMPORTED_MODULE_8__.Observable((observer) => {
             const source$ = this.getReducer('getFotosVonReparatur', id);
             source$.subscribe((data) => {
-                console.log(data);
                 observer.next(data);
             }, (error) => observer.error(error));
         });
     }
     uploadReparaturFoto(upload) {
-        // return EMPTY
         return this.update(upload, 'insertReparaturFoto');
     }
     deleteReparaturFoto(id) {
-        // return EMPTY
         return this.delete(id, 'deleteReparaturFoto');
     }
     // get
     getSchiffe() {
         return new rxjs__WEBPACK_IMPORTED_MODULE_8__.Observable((observer) => {
-            // const source$ = this.getReducer('getSchiffe', {})
             this.getReducer('getSchiffe', {}).subscribe((data) => {
                 observer.next(data);
             }, (error) => observer.error(error));
@@ -2949,7 +2952,6 @@ class AppService {
         return new rxjs__WEBPACK_IMPORTED_MODULE_8__.Observable((observer) => {
             const source$ = this.getReducer('getKatBetriebsstoffe', {});
             source$.subscribe((data) => {
-                console.log(data);
                 observer.next(data);
             }, (error) => observer.error(error));
         });
@@ -3006,7 +3008,6 @@ class AppService {
         return new rxjs__WEBPACK_IMPORTED_MODULE_8__.Observable((observer) => {
             const source$ = this.getReducer('getLastChecklist', id);
             source$.subscribe((data) => {
-                console.log(data);
                 data.forEach((checklist) => {
                     checklist.checklistItems = JSON.parse(checklist.gbookdaten);
                     delete checklist.gbookdaten;
@@ -3018,7 +3019,6 @@ class AppService {
                     //     checklist.status = 'vollständig'
                     // }
                 });
-                console.log(data);
                 observer.next(data);
             }, (error) => observer.error(error));
         });
@@ -3701,7 +3701,7 @@ LoginComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function LoginComponent_Template_div_click_23_listener() {
         return ctx.openChangeLogModal();
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](24, "Aktualisierung 08.02.2022");
+      _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](24, "Aktualisierung 18.02.2022");
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     }
@@ -3850,7 +3850,6 @@ __webpack_require__.r(__webpack_exports__);
 const selectAuthState = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createFeatureSelector)(src_app_core_model_feature__WEBPACK_IMPORTED_MODULE_0__.Features.Auth);
 const isLoggedIn = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectAuthState, (auth) => {
     if (!!auth.backendResponse) {
-        console.log(auth.backendResponse);
         return true;
     }
     else {
@@ -4609,31 +4608,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class ImageSliderComponent {
-    // images = [
-    //   {p: '/assets/photo-1548625149-9129dad5eef7.jpg'},
-    //   {p: '/assets/photo-1548625149-d37da68f9a7f.jpg'},
-    //   // {path: '/assets/photo-1489365091240-6a18fc761ec2.jpg'},
-    //   // {path: '/assets/photo-1547691889-841a6f1c5ca6.jpg'},
-    //   // {path: '/assets/photo-1595433562696-a8b1cb8bdad1.jpg'},
-    //   // {path: '/assets/photo-1495563381401-ecfbcaaa60f2.jpg'},
-    //   // {path: '/assets/photo-1534801022022-6e319a11f249.jpg'},
-    //   // {path: '/assets/photo-1524324463413-57e3d8392df1.jpg'},
-    //   // {path: '/assets/photo-1506086679524-493c64fdfaa6.jpg'},
-    //   // {path: '/assets/photo-1569749450723-1836b067fb64.jpg'}
-    // ];   
-    // imagesForSlider = [
-    //     {p: '/assets/photo-1444065707204-12decac917e8.jfif'},
-    //     {p: '/assets/photo-1445452916036-9022dfd33aa8.jfif'},
-    //     // {path: '/assets/photo-1443996104801-80c82e789b18.jfif'},
-    //     // {path: '/assets/photo-1505839673365-e3971f8d9184.jfif'},
-    //     // {path: '/assets/photo-1545420333-23a22b18b8fa.jfif'}
-    // ];
     constructor(el) {
         this.el = el;
         this.element = el.nativeElement;
     }
     ngOnInit() {
-        // console.log(this.images)
+        console.log(this.images);
     }
     ngOnDestroy() {
         this.element.remove();
@@ -4651,7 +4631,7 @@ ImageSliderComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODUL
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](2, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](3, "header", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](4, "p", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](5, " Titel ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](5, " Pr\u00FCfvermerk Bilder ");
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](6, "button", 5);
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function ImageSliderComponent_Template_button_click_6_listener() { return ctx.close(); });
@@ -5662,9 +5642,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/effects */ 85322);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 94612);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 88002);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 68307);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ 19502);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 37716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 37716);
 /* harmony import */ var src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/core/services/app.service */ 84382);
 
 
@@ -5692,7 +5671,7 @@ class Effects {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.ofType)(_actions__WEBPACK_IMPORTED_MODULE_0__.loadDienststellen), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.concatMap)(action => this.appService.getDienststellen()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((dienststellen) => (0,_actions__WEBPACK_IMPORTED_MODULE_0__.dienststellenLoaded)({ dienststellen })));
         });
         this.loadBetriebsstoffe$ = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.ofType)(_actions__WEBPACK_IMPORTED_MODULE_0__.loadBetriebsstoffe), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.concatMap)(action => this.appService.getBetriebsstoffe()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.tap)(data => console.log(data)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((betriebsstoffe) => (0,_actions__WEBPACK_IMPORTED_MODULE_0__.loadedBetriebsstoffe)({ betriebsstoffe })));
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.ofType)(_actions__WEBPACK_IMPORTED_MODULE_0__.loadBetriebsstoffe), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.concatMap)(action => this.appService.getBetriebsstoffe()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((betriebsstoffe) => (0,_actions__WEBPACK_IMPORTED_MODULE_0__.loadedBetriebsstoffe)({ betriebsstoffe })));
         });
         this.loadFunktionen$ = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.ofType)(_actions__WEBPACK_IMPORTED_MODULE_0__.loadFunktionen), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.concatMap)(action => this.appService.getFunktionen()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((funktionen) => (0,_actions__WEBPACK_IMPORTED_MODULE_0__.loadedFunktionen)({ funktionen })));
@@ -5709,8 +5688,8 @@ class Effects {
         });
     }
 }
-Effects.ɵfac = function Effects_Factory(t) { return new (t || Effects)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵinject"](_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.Actions), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵinject"](src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_1__.AppService)); };
-Effects.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjectable"]({ token: Effects, factory: Effects.ɵfac });
+Effects.ɵfac = function Effects_Factory(t) { return new (t || Effects)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__.Actions), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵinject"](src_app_core_services_app_service__WEBPACK_IMPORTED_MODULE_1__.AppService)); };
+Effects.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({ token: Effects, factory: Effects.ɵfac });
 
 
 /***/ }),
