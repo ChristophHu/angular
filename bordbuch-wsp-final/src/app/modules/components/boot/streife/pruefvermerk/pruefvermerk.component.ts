@@ -13,7 +13,7 @@ import { PruefvermerkModalComponent } from './pruefvermerk-modal/pruefvermerk-mo
   styleUrls: ['./pruefvermerk.component.sass']
 })
 export class PruefvermerkComponent implements OnInit {
-
+  
   id_schiff!: string | undefined
   reparaturen$!: Observable<Reparatur[] | undefined>
   

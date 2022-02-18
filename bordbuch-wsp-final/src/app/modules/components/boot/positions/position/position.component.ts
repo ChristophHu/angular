@@ -53,8 +53,10 @@ export class PositionComponent implements OnInit {
       this.positionForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
   }
+  
   setDate() {
-    this.positionForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.positionForm.patchValue({ date: dateToLocalISOString(new Date()) })
+    // this.positionForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.positionForm.controls['date'].markAsDirty()
   }
 

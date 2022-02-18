@@ -8,6 +8,7 @@ import { Tank } from 'src/app/core/model/tank.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { dateToLocalISOString } from 'src/app/shared/utils';
 import { ShipAction, ShipSelectors, ShipState } from 'src/app/store/ship-store';
 
 @Component({
@@ -50,7 +51,8 @@ export class PeilungModalComponent implements OnInit {
   }
 
   setDate() {
-    this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.peilungForm.patchValue({ date: dateToLocalISOString(new Date()) })
+    // this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.peilungForm.controls['date'].markAsDirty()
   }
 

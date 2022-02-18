@@ -8,6 +8,7 @@ import { Funktion } from 'src/app/core/model/funktion.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { dateToLocalISOString } from 'src/app/shared/utils';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
@@ -53,11 +54,13 @@ export class BesatzungComponent implements OnInit {
   }
 
   setAnBordDate() {
-    this.besatzungForm.patchValue({ an_bord: new Date().toISOString().substring(0,16) })
+    this.besatzungForm.patchValue({ an_bord: dateToLocalISOString(new Date()) })
+    // this.besatzungForm.patchValue({ an_bord: new Date().toISOString().substring(0,16) })
     this.besatzungForm.controls['an_bord'].markAsDirty()
   }
   setVonBordDate() {
-    this.besatzungForm.patchValue({ von_bord: new Date().toISOString().substring(0,16) })
+    this.besatzungForm.patchValue({ von_bord: dateToLocalISOString(new Date()) })
+    // this.besatzungForm.patchValue({ von_bord: new Date().toISOString().substring(0,16) })
     this.besatzungForm.controls['von_bord'].markAsDirty()
   }
 

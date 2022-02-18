@@ -10,6 +10,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { dateToLocalISOString } from 'src/app/shared/utils';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
@@ -59,7 +60,8 @@ export class BetankungComponent implements OnInit {
   }
 
   setDate() {
-    this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.betankungForm.patchValue({ date: dateToLocalISOString(new Date()) })
+    // this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.betankungForm.controls['date'].markAsDirty()
   }
   setCurrentLocation() {

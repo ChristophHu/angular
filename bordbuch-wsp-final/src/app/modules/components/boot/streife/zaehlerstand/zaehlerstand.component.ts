@@ -7,6 +7,7 @@ import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { dateToLocalISOString } from 'src/app/shared/utils';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
 
@@ -46,7 +47,8 @@ export class ZaehlerstandComponent implements OnInit, OnDestroy {
   }
 
   setDate() {
-    this.zaehlerstandForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.zaehlerstandForm.patchValue({ date: dateToLocalISOString(new Date()) })
+    // this.zaehlerstandForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.zaehlerstandForm.controls['date'].markAsDirty()
   }
 

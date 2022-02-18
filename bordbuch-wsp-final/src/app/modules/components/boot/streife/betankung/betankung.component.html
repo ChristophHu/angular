@@ -20,10 +20,6 @@
           <input matInput type="text" formControlName="id_ship" readonly>
         </mat-form-field>
       </div>
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Datum/Uhrzeit</mat-label>
-        <input matInput type="datetime-local" formControlName="date" value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-      </mat-form-field> -->
       <div class="flex flex-row items-center">
         <mat-form-field appearance="fill">
             <mat-label>Datum/Uhrzeit</mat-label>
@@ -64,49 +60,6 @@
         <mat-label>Menge (in Liter)</mat-label>
         <input matInput type="number" formControlName="fuelfillingquantity">
       </mat-form-field>
-      <!-- <div class="relative my-5">
-        <input type="datetime-local" formControlName="date"
-          value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}" required>
-        <span class="bar"></span>
-        <label class="text-black">Datum/Uhrzeit</label>
-      </div> -->
-      <!-- <div class="flex flex-row items-center"> -->
-        <!-- <div class="grid grid-cols-2 gap-3" formGroupName="location">
-          <div class="relative my-5">
-            <input type="text" formControlName="latitude"
-              value="{{betankungForm.value.location.latitude | number: '2.2-6'}}" required>
-            <span class="bar"></span>
-            <label class="text-black">Latitude</label>
-          </div>
-          <div class="relative my-5">
-            <input type="text" formControlName="longitude"
-              value="{{betankungForm.value.location.longitude | number: '2.2-6'}}" required>
-            <span class="bar"></span>
-            <label class="text-black">Longitude</label>
-          </div>
-        </div> -->
-        <!-- <div class="mx-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-          </svg>
-        </div>
-      </div> -->
-      <!-- <div class="relative my-5">
-        <input type="text" formControlName="ort" required>
-        <span class="bar"></span>
-        <label class="text-black">Ortsbezeichnung</label>
-      </div> -->
-      <!-- <div class="relative my-5">
-        <input type="text" formControlName="fuel" required>
-        <span class="bar"></span>
-        <label class="text-black">Was wurde getankt</label>
-      </div> -->
-      <!-- <div class="relative my-5">
-        <input type="number" formControlName="fuelfillingquantity" required>
-        <span class="bar"></span>
-        <label class="text-black">Menge (in Liter)</label>
-      </div> -->
     </form>
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">

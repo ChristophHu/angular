@@ -1,0 +1,24 @@
+<div class="w-full mt-4 bg-white rounded-lg shadow-lg" *ngIf="besatzung">
+    <div class="flex flex-row p-4 justify-between border-b">
+      <div>
+        <h2 class="text-lg font-medium">Besatzung</h2>
+        <p class="mt-3 text-sm text-gray-500">
+          Es wurden keine Besatzungsmitglieder für diese Streife hinterlegt.
+        </p>
+      </div>
+    </div>
+</div>
+
+<div class="w-full mt-4 bg-white rounded-lg shadow-lg" *ngIf="checkliste">
+    <div class="flex flex-row p-4 justify-between border-b">
+      <div>
+        <h2 class="text-lg font-medium">Checkliste</h2>
+        <p class="mt-3 text-sm text-gray-500">
+          Die folgenden Gegenstände sind verbraucht oder nicht vorhanden und müssen ersetzt werden.
+        </p>
+      </div>
+    </div>
+    <div *ngFor="let item of unchecked" class="p-4 border-b hover:bg-gray-50 text-red-600">
+      {{ item.bezeichnung }}
+    </div>
+</div>

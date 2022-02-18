@@ -13,7 +13,8 @@ import { ChecklistItemsComponent } from './checkliste/checklist-items/checklist-
 import { PeilungComponent } from './peilung/peilung.component'
 import { PeilungModalComponent } from './peilung/peilung-modal/peilung-modal.component'
 import { WartungComponent } from './wartung/wartung.component'
-import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component'
+import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
+import { KontrolleComponent } from './kontrolle/kontrolle.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component'
     PeilungModalComponent,
     WartungComponent,
     PruefvermerkComponent,
-    PruefvermerkModalComponent
+    PruefvermerkModalComponent,
+    KontrolleComponent
   ],
   imports: [
     SharedModule,

@@ -179,7 +179,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   initializePatrol(stepper: CdkStepper) {
-    this.kontrollFormGroup.value.kontrolle = false
+    this.kontrollFormGroup.patchValue({ kontrolle: false })
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().substring(0,16), status: 'vorbereitend', zweck: ''  }
@@ -193,7 +193,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     })
   }
   updatePatrol(status?: string) {
-    this.kontrollFormGroup.value.kontrolle = false
+    this.kontrollFormGroup.patchValue({ kontrolle: false })
     let update: Patrol
     // update zum eigentlichen Start oder beenden der Streife
     if (this.patrol.id == '' || this.patrol.id == undefined) {
@@ -230,8 +230,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   checkKontrolle(): boolean {
-    console.log(!this.kontrollFormGroup.value.kontrolle)
-    return !this.kontrollFormGroup.value.kontrolle
+    return this.kontrollFormGroup.value.kontrolle
   }
 
   logout() {

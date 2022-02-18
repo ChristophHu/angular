@@ -5,6 +5,6 @@ export const environment = {
   base_href: '/polwspweb/',
   loginServerUrl: 'https://map-appiis-1-v.int.polizei.berlin.de/login/Login.asmx/login',
   packageid: 'de.berlin.polizei.polwsp',
-  positionLogInterval: 5,
+  positionLogInterval: 30,
   currentPositionLogInterval: 1
 };

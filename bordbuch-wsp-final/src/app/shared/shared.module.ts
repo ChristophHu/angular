@@ -24,12 +24,14 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive'
 import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
+import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive'
 
 @NgModule({
     declarations: [
         ProgressBarComponent,
         ImageSliderComponent,
-        CarouselItemDirective,
+        CarouselItemDirective, // check!
+        StickyThingDirective,
         Number2stringPipe,
         String2numberPipe,
         DiffDateToTodayPipe,
@@ -61,6 +63,9 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
         InfoPopupModule
     ],
     exports: [
+        // directives
+        StickyThingDirective,
+
         // pipes
         DiffDateToTodayPipe,
         DaysAgoPipe,

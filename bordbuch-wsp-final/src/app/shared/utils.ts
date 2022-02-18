@@ -7,7 +7,7 @@ export function checkStateForEmptyArrays(value: any): any[] {
 }
 
 export function dateToLocalISOString(dt: Date): string {
-    dt.setHours(new Date().getHours()+2)
+    dt.setHours(new Date().getHours()+1)
     return dt.toISOString().substring(0,16)
 }
 

@@ -42,7 +42,7 @@ export class LoginComponent {
 		private modalService: ModalService<ChangelogComponent>
 		) {
 		this.loginForm = this._formBuilder.group({
-			username: ['24225132', [Validators.required]],
+			username: ['', [Validators.required]],
 			password: ['', [Validators.required]]
 		})
 	}

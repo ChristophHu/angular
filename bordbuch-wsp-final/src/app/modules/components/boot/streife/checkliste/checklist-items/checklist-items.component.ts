@@ -101,8 +101,8 @@ export class ChecklistItemsComponent implements OnInit {
   create() {
     const status: string = this.getChecklistStatus(this.checklist.checklistItems)
     const insert: Checklist = Object.assign({}, this.checklist, { id: this.patrolId, datum: new Date().toISOString().substring(0,16), status })
-    // console.log(insert)
     this.store.dispatch(ShipAction.insertChecklist({ insert }))
+    this.modal?.close()
   }
 
   cancel() {
