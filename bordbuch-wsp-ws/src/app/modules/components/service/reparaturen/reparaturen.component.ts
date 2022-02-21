@@ -55,7 +55,7 @@ export class ReparaturenComponent implements OnInit {
         // "infoFiltered": "(filtrado _MAX_ elementos total)",
         // "infoPostFix": "",
         // "loadingRecords": "Cargando registros...",
-        // "zeroRecords": "No se encontraron registros",
+        "zeroRecords": "No se encontraron registros",
         "emptyTable": "Keine Datensätze vorhanden",
         "paginate": {
           "first": "Erste",
@@ -140,7 +140,7 @@ export class ReparaturenComponent implements OnInit {
       })
     } catch(error) {
       console.error(error)
-      this.setOptions()
+      // this.setOptions()
     }
     console.log(this.dtOptions)
     console.log(this.dtTrigger)
