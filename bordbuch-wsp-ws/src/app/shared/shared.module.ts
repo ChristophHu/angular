@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatTableModule } from '@angular/material/table'
 import { MatStepperModule } from '@angular/material/stepper'
 import { MatSelectModule } from '@angular/material/select'
+import { MatMenuModule } from '@angular/material/menu'
 import { DropdownDirective } from './directives/dropdown/dropdown.directive'
 import { ModalModule } from './components/modal/modal.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -28,6 +29,7 @@ import { ProgressComponent } from './components/progress/progress.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
+import { TooltipModule } from './directives/tooltip/tooltip.module'
 
 @NgModule({
   declarations: [
@@ -57,9 +59,10 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
     IvyCarouselModule,
 
     // mat
-    MatInputModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
     MatTableModule,
     MatStepperModule,
     MatSelectModule,
@@ -68,7 +71,8 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
     ReactiveFormsModule,
 
     DataTablesModule,
-    InfoPopupModule
+    InfoPopupModule,
+    TooltipModule
   ],
   exports: [
     // components
@@ -97,9 +101,10 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
     RxjsNotificationsModule,
 
     // mat
-    MatInputModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
     MatTableModule,
     MatStepperModule,
     MatSelectModule,
@@ -110,7 +115,8 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 
     // datatables
     DataTablesModule,
-    InfoPopupModule
+    InfoPopupModule,
+    TooltipModule
   ]
 })
 export class SharedModule { }
