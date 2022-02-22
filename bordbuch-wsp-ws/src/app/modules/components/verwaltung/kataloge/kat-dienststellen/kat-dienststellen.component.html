@@ -22,7 +22,18 @@
                 <td>{{ dienststelle.adresse.ort }}</td>
                 <td>{{ dienststelle.mailadresse }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
-                    <button class="dropdown w-6 h-6" appDropdown>
+                    <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                    </button>
+                    <mat-menu #editMenu="matMenu">
+                        <button mat-menu-item (click)="showModal(dienststelle)">
+                            Bearbeiten
+                        </button>
+                        <button mat-menu-item (click)="delete(dienststelle.id)">
+                            Löschen
+                        </button>
+                    </mat-menu>
+                    <!-- <button class="dropdown w-6 h-6" appDropdown>
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                     </button>
                     <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
@@ -32,7 +43,7 @@
                         <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(dienststelle.id)">
                             <p>Löschen</p>
                         </div>
-                    </div>
+                    </div> -->
                 </td>
             </tr>
         </tbody>

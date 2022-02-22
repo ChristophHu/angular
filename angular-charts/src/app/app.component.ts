@@ -11,6 +11,12 @@ export class AppComponent {
   data: {name: string, series: { name: string, value: number }[] }[];
   barColor = ['#a9ce97', '#a5b5de'];
   domain = [100, 1000];
+
+  checklistStatus: any[] = [
+    { value: 15, description: 'vollständig' },
+    { value: 5, description: 'unvollständig' },
+    { value: 3, description: 'relevant' },
+  ]
  
   constructor() {
     this.data = [

@@ -18,7 +18,6 @@ export class ReparaturenComponent implements OnInit {
 
   // datatables
   dtOptions: DataTables.Settings = {}
-  dtTrigger: Subject<any> = new Subject()
 
   status: string = 'alle'
   
@@ -28,7 +27,6 @@ export class ReparaturenComponent implements OnInit {
   constructor(private _modalService: ModalService<ReparaturModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this.reparaturen$ = this._specFacade.allReparaturen$
     this.kat$ = this._katFacade.status$
-    this.dtTrigger.next({})
   }
 
   ngOnInit(): void {
@@ -47,103 +45,20 @@ export class ReparaturenComponent implements OnInit {
       //       {title: 'First Name', data: 'firstName'},
       //       {title: 'Last Name', data: 'lastName' }],
       "language": {
-        // "processing": "Procesando...",
-        "search": "Suche:",
-        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
-        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
-        // "infoEmpty": "Mostrando ningún elemento.",
-        // "infoFiltered": "(filtrado _MAX_ elementos total)",
-        // "infoPostFix": "",
-        // "loadingRecords": "Cargando registros...",
-        "zeroRecords": "No se encontraron registros",
-        "emptyTable": "Keine Datensätze vorhanden",
-        "paginate": {
-          "first": "Erste",
-          "previous": "Vorherige",
-          "next": "Nächste",
-          "last": "Letzte"
-        },
-      },
+        "url": "/assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+      }
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.dtTrigger.next({})
-    this.rerender()
-  }
-
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe()
   }
 
   toggleReparaturen(status: string) {
     this.status = status
     this.reparaturen$ = this._specFacade.getReparaturen(status)
     this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
-    // this.rerender()
-  }
-
-  test() {
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      console.log(dtInstance)
-      dtInstance.draw();
-      console.log(dtInstance)
-    })
   }
 
   reload() {
     this._specFacade.clearReparaturen()
     this._specFacade.loadAllReparaturen()
-    this.rerender()
-  }
-  setOptions() {
-    this.dtOptions = {
-      pagingType: 'full_numbers', 
-      pageLength: 10, 
-      responsive: true, 
-      // "paging"  : false,
-      // "ordering": false,
-      // "processing": true,
-      // "info"    : false,
-      "autoWidth": true,
-      // "retrieve": true,
-      // data:this.dtUsers,
-      // columns: [{title: 'User ID', data: 'id'},
-      //       {title: 'First Name', data: 'firstName'},
-      //       {title: 'Last Name', data: 'lastName' }],
-      "language": {
-        // "processing": "Procesando...",
-        "search": "Suche:",
-        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
-        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
-        // "infoEmpty": "Mostrando ningún elemento.",
-        // "infoFiltered": "(filtrado _MAX_ elementos total)",
-        // "infoPostFix": "",
-        // "loadingRecords": "Cargando registros...",
-        // "zeroRecords": "No se encontraron registros",
-        "emptyTable": "Keine Datensätze vorhanden",
-        "paginate": {
-          "first": "Erste",
-          "previous": "Vorherige",
-          "next": "Nächste",
-          "last": "Letzte"
-        },
-      },
-    }
-  }
-
-  rerender() {
-    try {
-      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy()
-        this.dtTrigger.next({})
-      })
-    } catch(error) {
-      console.error(error)
-      // this.setOptions()
-    }
-    console.log(this.dtOptions)
-    console.log(this.dtTrigger)
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

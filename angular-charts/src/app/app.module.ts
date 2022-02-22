@@ -12,7 +12,7 @@ import { BrushZoomComponent } from './brush-zoom/brush-zoom.component';
 import { BarChartVerticalComponent } from './bar-chart-vertical/bar-chart-vertical.component';
 import { DottedLineChartComponent } from './dotted-line-chart/dotted-line-chart.component';
 import { LineChartTwoComponent } from './line-chart-two/line-chart-two.component';
-import { ParallelSetChartComponent } from './parallel-set-chart/parallel-set-chart.component';
+// import { ParallelSetChartComponent } from './parallel-set-chart/parallel-set-chart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { ParallelSetChartComponent } from './parallel-set-chart/parallel-set-cha
     BarChartVerticalComponent,
     DottedLineChartComponent,
     LineChartTwoComponent,
-    ParallelSetChartComponent
+    // ParallelSetChartComponent
   ],
   imports: [
     BrowserModule

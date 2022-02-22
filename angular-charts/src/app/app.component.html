@@ -1,4 +1,32 @@
 <!-- <app-brush-zoom></app-brush-zoom> -->
+<!-- <app-donut-chart></app-donut-chart> -->
 <!-- <app-dotted-line-chart></app-dotted-line-chart> -->
-<app-line-chart-two></app-line-chart-two>
+<!-- <app-line-chart-two></app-line-chart-two> -->
 <!-- <app-bar-chart-vertical [data]="data" [domain]="domain" [barColors]="barColor"></app-bar-chart-vertical> -->
+<div class="w-96 h-96">
+    <app-pie-chart [data]="checklistStatus" [label]="false" [colors]="['#2792a5', '#67b2c0', '#a8d3db']"></app-pie-chart>
+</div>
+
+
+
+<div class='p-3 pt-6 border border-t-0 border-black mt-12 relative'>
+    <div class="flex absolute w-full -top-3 left-0 right-0 items-center">
+      <span class="block border-t border-black flex-0 w-3" ></span>
+      <h2>Legende</h2>
+      <span class="block border-t border-black flex-1" ></span>
+    </div>
+    <ul class="flex flex-col m-auto">
+        <li class="flex items-center">
+            <div class="w-4 h-4 mr-3 rounded" style="background-color: #2792a5;"></div>
+            Vollständig
+        </li>
+        <li class="flex items-center">
+            <div class="w-4 h-4 mr-3 rounded" style="background-color: #67b2c0;"></div>
+            Unvollständig
+        </li>
+        <li class="flex items-center">
+            <div class="w-4 h-4 mr-3 rounded" style="background-color: #a8d3db;"></div>
+            In Bearbeitung
+        </li>
+    </ul>
+</div>
