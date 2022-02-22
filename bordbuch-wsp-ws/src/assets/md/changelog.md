@@ -19,4 +19,10 @@ Kennwort: 'Abc123!'
 &nbsp;
 # Änderungen
 
+## <u>0.9.2x003</u>
+<ul>
+    <li>- Aufnahme von Tooltips</li>
+    <li>- 'matMenu' als DropdownModule von Angular Materials</li>
+    <li>- Modularisierung des Sprachpaketes i18n</li>
+</ul>
 &nbsp;

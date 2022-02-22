@@ -85,11 +85,11 @@ export class PeilungenComponent implements OnInit {
   }
   setStartDate() {
     console.log(new Date().toISOString().substring(0,16))
-    this.filterForm.patchValue({ startDate: '23.02.2022'}) //new Date().toISOString().substring(0,16) })
+    this.filterForm.patchValue({ startDate: new Date().toISOString().substring(0,16) })
   }
   setEndeDate() {
     console.log(new Date().toISOString().substring(0,16))
-    this.filterForm.patchValue({ endeDate: '23.02.2022'}) //new Date().toISOString().substring(0,16) })
+    this.filterForm.patchValue({ endeDate: new Date().toISOString().substring(0,16) })
   }
 
   async showModal(peilung?: Peilung): Promise<void> {

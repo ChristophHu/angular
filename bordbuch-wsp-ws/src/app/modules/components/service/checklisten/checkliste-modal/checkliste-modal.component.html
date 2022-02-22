@@ -6,7 +6,7 @@
       <div class="flex flex-row items-center">
         <div class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" #label>
           <app-info-button [appInfoPopup]="question" [label]="label">
-            <icons class="w-6 h-6 stroke-current text-gray-500" name="question-mark"></icons>
+            <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="question-mark"></icons>
           </app-info-button>
           <ng-template #question>
             <div class="p-2 min-w-min max-w-md bg-gray-100 border border-gray-400 break-words rounded shadow-lg">
@@ -14,18 +14,13 @@
               <ul class="ml-3 list-disc">
                 <li>Alle aufgeführten Elemente sind dem Schiff zugeordnet</li>
                 <li>
-                  <u>unterstrichene</u> Elemente sind streifenrelevant.
+                  <u>unterstrichene</u> Elemente sind streifenrelevant
                 </li>
               </ul>
-              <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
-              dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa,
-              varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non
-              fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.
-              Pellentesque congue. -->
             </div>
           </ng-template>
         </div>
-        <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+        <button (click)="cancel()" class="w-6 h-6 ml-2 focus:outline-none rounded-md cursor-pointer">
           <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
         </button>
       </div>

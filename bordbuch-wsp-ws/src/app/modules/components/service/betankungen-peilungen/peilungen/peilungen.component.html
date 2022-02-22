@@ -21,7 +21,7 @@
             <div class="max-w-sm mr-2 flex flex-row items-center">
                 <mat-form-field appearance="fill">
                     <mat-label>Ab Datum</mat-label>
-                    <input matInput type="date" formControlName="startDate" value="{{startDate}}">
+                    <input matInput type="date" formControlName="startDate" value="{{startDate | date: 'dd.MM.yyyy'}}">
                 </mat-form-field>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setStartDate()">
                     <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -30,7 +30,7 @@
             <div class="max-w-sm mr-2 flex flex-row items-center">
                 <mat-form-field appearance="fill">
                     <mat-label>Bis Datum</mat-label>
-                    <input matInput type="date" formControlName="endeDate" value="{{endeDate}}">
+                    <input matInput type="date" formControlName="endeDate" value="{{endeDate | date: 'dd.MM.yyyy'}}">
                 </mat-form-field>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEndeDate()">
                     <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
