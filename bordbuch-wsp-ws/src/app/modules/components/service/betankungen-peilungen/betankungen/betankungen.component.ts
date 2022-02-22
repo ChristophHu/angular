@@ -4,6 +4,7 @@ import { Betankung } from 'src/app/core/models/betankung';
 import { BetankungService } from 'src/app/core/services/betankung.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
+import { environment } from 'src/environments/environment';
 import { BetankungModalComponent } from './betankung-modal/betankung-modal.component';
 
 @Component({
@@ -38,7 +39,7 @@ export class BetankungenComponent implements OnInit {
       //       {title: 'First Name', data: 'firstName'},
       //       {title: 'Last Name', data: 'lastName' }],
       "language": {
-        "url": "/assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+        "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
   }

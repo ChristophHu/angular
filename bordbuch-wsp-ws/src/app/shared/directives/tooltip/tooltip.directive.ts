@@ -32,7 +32,6 @@ export interface TooltipOptions {
 })
 
 export class TooltipDirective {
-
     showTimeoutId!: number
     componentRef: any
     elementPosition: any

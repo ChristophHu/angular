@@ -34,10 +34,8 @@ export const selectToken = createSelector(
     selectBackendresponse,
     backendResponse => {
         if(!!backendResponse) {
-            // console.log(`backendresponse: ${backendResponse.token}`)
             return backendResponse.token
         } else {
-            // console.log('no backendresponse')
             return ''
         }
     }
@@ -47,16 +45,12 @@ export const selectBackendUrl = createSelector(
     selectBackendresponse,
     backendResponse => {
         if(!!backendResponse) {
-            // console.log(`backendresponse: ${backendResponse.backendUrl}`)
             return backendResponse.backendUrl
         } else {
-            // console.log('no backendresponse')
             return ''
         }
     }
 )
-
-
 
 export const selectRole = createSelector(
     selectBackendresponse,

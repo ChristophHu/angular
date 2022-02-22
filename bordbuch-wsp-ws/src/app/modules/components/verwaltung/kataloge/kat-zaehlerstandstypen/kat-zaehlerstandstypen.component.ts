@@ -4,6 +4,7 @@ import { Kat } from 'src/app/core/models/kat.model';
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { environment } from 'src/environments/environment';
 import { KatZaehlerstandstypModalComponent } from './kat-zaehlerstandstyp-modal/kat-zaehlerstandstyp-modal.component';
 
 @Component({
@@ -45,22 +46,7 @@ export class KatZaehlerstandstypenComponent implements OnInit {
       //       {title: 'First Name', data: 'firstName'},
       //       {title: 'Last Name', data: 'lastName' }],
       "language": {
-        // "processing": "Procesando...",
-        "search": "Suche:",
-        "lengthMenu": "Anzeigen von _MENU_ Elementen pro Seite",
-        "info": "Anzeige von _START_ bis _END_ von _TOTAL_ Elementen",
-        // "infoEmpty": "Mostrando ningún elemento.",
-        // "infoFiltered": "(filtrado _MAX_ elementos total)",
-        // "infoPostFix": "",
-        // "loadingRecords": "Cargando registros...",
-        // "zeroRecords": "No se encontraron registros",
-        "emptyTable": "Keine Datensätze vorhanden",
-        "paginate": {
-          "first": "Erste",
-          "previous": "Vorherige",
-          "next": "Nächste",
-          "last": "Letzte"
-        },
+        "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
     // this._betankungService.getBetankungen()
