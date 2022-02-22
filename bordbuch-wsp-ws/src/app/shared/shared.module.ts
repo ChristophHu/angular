@@ -30,6 +30,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 import { TooltipModule } from './directives/tooltip/tooltip.module'
+import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TooltipModule } from './directives/tooltip/tooltip.module'
     CarouselItemDirective,
     ToArrayPipe,
     BarChartVerticalComponent,
+    PieChartComponent,
     ProgressComponent,
     PageNotFoundComponent,
     DiffDateToTodayPipe
@@ -78,6 +80,7 @@ import { TooltipModule } from './directives/tooltip/tooltip.module'
     // components
     ImageSliderComponent,
     BarChartVerticalComponent,
+    PieChartComponent,
     ProgressComponent,
     PageNotFoundComponent,
 

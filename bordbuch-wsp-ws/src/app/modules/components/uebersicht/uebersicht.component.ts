@@ -12,6 +12,12 @@ export class UebersichtComponent implements OnInit {
   barColor = ['#f0f8ff', '#add8e6'];
   domain = [100, 1000];
  
+  checklistStatus: any[] = [
+    { value: 15, description: 'vollständig' },
+    { value: 5, description: 'unvollständig' },
+    { value: 3, description: 'relevant' },
+  ]
+  
   constructor() {
     this.data = [
       {
