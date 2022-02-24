@@ -5,7 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Reparatur } from 'src/app/core/models/reparatur.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { getLocalISO } from 'src/app/shared/utils';
+import { getLocalISO, timezoneoffset } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
@@ -61,7 +61,7 @@ export class ReparaturenComponent implements OnInit {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
-    
+
     this.filterForm.value.enddate = getLocalISO('')
   }
 
@@ -78,7 +78,10 @@ export class ReparaturenComponent implements OnInit {
     console.log(getLocalISO(filter))
     const startdate = getLocalISO(filter)
     const enddate = getLocalISO('')
-    this._specFacade.loadAllReparaturen({ startdate, enddate})
+    this._specFacade.loadAllReparaturen({ startdate, enddate })
+
+    this.filterForm.value.startdate = startdate
+    this.filterForm.value.enddate = enddate
   }
 
   reload() {
@@ -86,6 +89,13 @@ export class ReparaturenComponent implements OnInit {
     const startdate = ''
     const enddate = ''
     this._specFacade.loadAllReparaturen({ startdate, enddate})
+  }
+
+  setStartDate() {
+    this.filterForm.value.enddate.patchValue({ startdate: new Date(new Date().getTime() - timezoneoffset()).toISOString() })
+  }
+  setEndDate() {
+    this.filterForm.value.enddate.patchValue({ enddate: new Date(new Date().getTime() - timezoneoffset()).toISOString() })
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

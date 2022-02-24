@@ -105,6 +105,10 @@ export function getLocalISO(val: string = ''): string {
         date = new Date(tomorrow() - timezoneoffset())
         break
 
+    case 'now':
+        date = new Date(now() - timezoneoffset())
+        break
+
     default:
         date = new Date()
     }
@@ -113,7 +117,7 @@ export function getLocalISO(val: string = ''): string {
     return result
 }
 
-function timezoneoffset(): any {
+export function timezoneoffset(): any {
     return new Date().getTimezoneOffset() * 60000
 }
 function lastyear(): any {
@@ -149,6 +153,9 @@ function yesterday(): number {
 }
 function today(): number {
     return new Date().setHours(0,0,0,0)
+}
+function now(): number {
+    return new Date().getTime()
 }
 function tomorrow(): number {
     return new Date().setHours(24,0,0,0)
