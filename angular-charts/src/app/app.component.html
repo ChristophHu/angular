@@ -62,14 +62,21 @@
                 </svg>
             </button>
         </div>
-        <div class="flex flex-row mt-3">
-            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Jahr</button>
-            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Monat</button>
-            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Woche</button>
-            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Heute</button>
+        <div class="flex flex-row mt-3 justify-between">
+            <div>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-gray-200' : ''" (click)="toggleFilter('year')">Jahr</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-gray-200' : ''" (click)="toggleFilter('month')">Monat</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-gray-200' : ''" (click)="toggleFilter('week')">Woche</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-gray-200' : ''" (click)="toggleFilter('today')">Heute</button>
+            </div>
+            <div>
+                <input type="text">
+                <span>-</span>
+                <input type="text">
+            </div>
         </div>
-        <div class="flex flex-row mt-3">
+        <!-- <div class="flex flex-row mt-3">
 
-        </div>
+        </div> -->
     </div>
 </div>

@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Observable, Subject } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Reparatur } from 'src/app/core/models/reparatur.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
@@ -21,13 +23,23 @@ export class ReparaturenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
 
   status: string = 'alle'
+
+  filterForm: FormGroup
+  filter: string = 'year'
+  showfilter: boolean = false
   
   reparaturen$!: Observable<Reparatur[] | undefined>
   kat$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<ReparaturModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<ReparaturModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this.reparaturen$ = this._specFacade.allReparaturen$
     this.kat$ = this._katFacade.status$
+
+    
+    this.filterForm = this._formBuilder.group({
+      startdate: [],
+      enddate: []
+    })
   }
 
   ngOnInit(): void {
@@ -49,6 +61,8 @@ export class ReparaturenComponent implements OnInit {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
+    
+    this.filterForm.value.enddate = getLocalISO('')
   }
 
   toggleReparaturen(status: string) {
@@ -57,29 +71,21 @@ export class ReparaturenComponent implements OnInit {
     this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
   }
 
-  reload() {
-    this._specFacade.clearReparaturen()
-    const startdate = this.setStartDate(new Date('2022-02-01'))
-    console.log(startdate)
-    const enddate = this.setEndDate(new Date())
-    console.log(enddate)
+  toggleFilter(filter: string) {
+    this.filter = filter
+    // this.reparaturen$ = this._specFacade.getReparaturen(status)
+    // this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
+    console.log(getLocalISO(filter))
+    const startdate = getLocalISO(filter)
+    const enddate = getLocalISO('')
     this._specFacade.loadAllReparaturen({ startdate, enddate})
   }
 
-  setStartDate(dt: Date): string {
-    dt.setHours(-6)
-    dt.setMinutes(0)
-    dt.setSeconds(0)
-    dt.setMilliseconds(0)
-    return dt.toISOString().substring(0,16)
-  }
-  
-  setEndDate(ds: Date): string {
-    ds.setHours(17)
-    ds.setMinutes(59)
-    ds.setSeconds(59)
-    ds.setMilliseconds(999)
-    return ds.toISOString().substring(0,16)
+  reload() {
+    this._specFacade.clearReparaturen()
+    const startdate = ''
+    const enddate = ''
+    this._specFacade.loadAllReparaturen({ startdate, enddate})
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

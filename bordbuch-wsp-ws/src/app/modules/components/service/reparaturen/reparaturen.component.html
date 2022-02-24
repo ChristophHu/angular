@@ -4,6 +4,49 @@
     <button class="w-6 h-6 mt-2 mr-2 p-1 bg-gray-300 text-black rounded-full" (click)="reload()">
         <icons class="w-4 h-4 stroke-1 stroke-current" name="refresh"></icons>
     </button>
+    <button class="w-6 h-6 mt-2 mr-2 p-1 bg-gray-300 text-black rounded-full" (click)="showfilter=!showfilter">
+        <icons class="w-4 h-4 stroke-1 stroke-current" name="filter"></icons>
+    </button>
+</div>
+<div class="container mx-auto flex flex-row items-center p-4 mb-8" *ngIf="showfilter">
+    <div class="w-full bg-gray-100 p-4 rounded">
+        <div class="flex flex-row justify-between">
+            <div class="flex flex-row">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <span class="ml-2 font-bold">Filter</span>
+            </div>
+            <button class="hover:text-gray-400 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-row mt-3 justify-between">
+            <div>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-gray-200' : ''" (click)="toggleFilter('year')">Jahr</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-gray-200' : ''" (click)="toggleFilter('month')">Monat</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-gray-200' : ''" (click)="toggleFilter('week')">Woche</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-gray-200' : ''" (click)="toggleFilter('today')">Heute</button>
+            </div>
+            <div>
+                <form [formGroup]="filterForm">
+                    <mat-form-field appearance="fill">
+                        <mat-label>von</mat-label>
+                        <input matInput type="datetime-local" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-ddTHH:mm'}}">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>bis</mat-label>
+                        <input matInput type="datetime-local" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-ddTHH:mm'}}">
+                    </mat-form-field>
+                </form>
+                <!-- <input type="text">
+                <span>-</span>
+                <input type="text"> -->
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container mx-auto flex flex-row items-center p-4 mb-8">
