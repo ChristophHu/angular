@@ -15,6 +15,7 @@ import { Streife } from "src/app/core/models/streife.model";
 import { Standort } from "src/app/core/models/standort.model";
 import { Tank } from "src/app/core/models/tank.model";
 import { Peilung } from "src/app/core/models/peilung.model";
+import { Filter } from "src/app/core/models/filter.model";
 
 @Injectable()
 export class SpecFacade {
@@ -78,8 +79,9 @@ export class SpecFacade {
     }
 
     // reparaturen
-    loadAllReparaturen() {
-        this.store.dispatch(SpecActions.loadAllReparaturen())
+    loadAllReparaturen(filter: Filter) {
+        console.log(filter)
+        this.store.dispatch(SpecActions.loadAllReparaturen({ filter }))
     }
     insertReparatur(insert: Reparatur) {
         this.store.dispatch(SpecActions.insertReparatur({ insert }))

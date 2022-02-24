@@ -136,13 +136,10 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllReparaturen),
             switchMap(action => {
-                return this.appService.getAllReparaturen().pipe(
+                return this.appService.getAllReparaturen(action.filter).pipe(
                     map((reparaturen: Reparatur[]) => loadedAllReparaturen({ reparaturen }))
                 )
             })
-            // concatMap(action => this.appService.getAllReparaturen()),
-            // tap(rep => console.log(`reload reparaturen: ${rep}`)),
-            // map((reparaturen: Reparatur[]) => loadedAllReparaturen({ reparaturen }))
         )
     })
     insertReparatur$ = createEffect(() => {

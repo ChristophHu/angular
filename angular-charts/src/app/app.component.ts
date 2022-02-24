@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-charts';
 
   data: {name: string, series: { name: string, value: number }[] }[];
@@ -41,6 +41,30 @@ export class AppComponent {
           {name: 'Bar2', value: 1000}
         ],
       }
-    ];
+    ]
+  }
+  ngOnInit(): void {
+    console.log(this.setStartDate(new Date('2022-02-01')))
+    console.log(this.setEndeDate(new Date()))
+  }
+
+  
+
+  setStartDate(dt: Date): string {
+    dt.setMonth(3)
+    dt.setDate(2)
+    dt.setHours(-6)
+    dt.setMinutes(0)
+    dt.setSeconds(0)
+    dt.setMilliseconds(0)
+    return dt.toISOString().substring(0,16)
+  }
+  
+  setEndeDate(ds: Date): string {
+    ds.setHours(17)
+    ds.setMinutes(59)
+    ds.setSeconds(59)
+    ds.setMilliseconds(999)
+    return ds.toISOString().substring(0,16)
   }
 }

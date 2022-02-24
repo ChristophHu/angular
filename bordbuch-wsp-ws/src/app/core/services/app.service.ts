@@ -7,6 +7,7 @@ import { Betankung } from '../models/betankung';
 import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
 import { Dienststelle } from '../models/dienststelle.model';
+import { Filter } from '../models/filter.model';
 import { Kat } from '../models/kat.model';
 import { Peilung } from '../models/peilung.model';
 import { Status } from '../models/reparatur-status.model';
@@ -249,6 +250,8 @@ export class AppService {
         const backendUrl: string = this._connectionService.getBackendUrl()
         const token     : string = this._connectionService.getToken()
 
+        const placeholder: string = '' 
+
         console.info(`getreducer | action: '${action}', data: `, data)
 
         const baseURL = `${backendUrl}/${action}`
@@ -263,13 +266,16 @@ export class AppService {
             case 'getKatKennungen':
             case 'getLastChecklistAll':
             case 'getLastPositionsFromAllShips':
-            case 'getReparaturen':
             case 'getSchiffe':
             case 'getStatustypen':
             case 'getStreifen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
                 param = ``
+                break
+
+            case 'getReparaturen':
+                param = `?startdate=${data.startdate}&enddate=${data.enddate}`
                 break
 
             case 'getFotosVonReparatur':
@@ -320,6 +326,14 @@ export class AppService {
     get(reducer_func: string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer(reducer_func, {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getWithParam(reducer_func: string, kat: any): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer(reducer_func, kat)
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
@@ -584,9 +598,14 @@ export class AppService {
     }
 
     // reparaturen   
-    getAllReparaturen(): Observable<any> {
-        return this.get('getReparaturen')
+    // getAllReparaturen(): Observable<any> {
+    //     return this.get('getReparaturen')
+    // }
+    getAllReparaturen(filter: Filter): Observable<any> {
+        console.log(filter)
+        return this.getWithParam('getReparaturen', filter)
     }
+    
     insertReparatur(reparatur: Reparatur): Observable<any> {
         return this.insert(reparatur, 'insertReparatur')
     }

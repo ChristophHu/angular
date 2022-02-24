@@ -1,42 +1,17 @@
+<!-- <app-bar-chart></app-bar-chart> -->
 <!-- <app-brush-zoom></app-brush-zoom> -->
 <!-- <app-donut-chart></app-donut-chart> -->
 <!-- <app-dotted-line-chart></app-dotted-line-chart> -->
 <!-- <app-line-chart-two></app-line-chart-two> -->
 <!-- <app-bar-chart-vertical [data]="data" [domain]="domain" [barColors]="barColor"></app-bar-chart-vertical> -->
-<!-- <div class="w-96 h-96">
-    <app-pie-chart [data]="checklistStatus" [label]="false" [colors]="['#2792a5', '#67b2c0', '#a8d3db']"></app-pie-chart>
-</div> -->
 
-
-
-<!-- <div class='p-3 pt-6 border border-t-0 border-black mt-12 relative'>
-    <div class="flex absolute w-full -top-3 left-0 right-0 items-center">
-      <span class="block border-t border-black flex-0 w-3" ></span>
-      <h2>Legende</h2>
-      <span class="block border-t border-black flex-1" ></span>
-    </div>
-    <ul class="flex flex-col m-auto">
-        <li class="flex items-center">
-            <div class="w-4 h-4 mr-3 rounded" style="background-color: #2792a5;"></div>
-            Vollständig
-        </li>
-        <li class="flex items-center">
-            <div class="w-4 h-4 mr-3 rounded" style="background-color: #67b2c0;"></div>
-            Unvollständig
-        </li>
-        <li class="flex items-center">
-            <div class="w-4 h-4 mr-3 rounded" style="background-color: #a8d3db;"></div>
-            In Bearbeitung
-        </li>
-    </ul>
-</div> -->
-
-<div class="container mx-auto pt-5">
+<!-- <div class="container mx-auto pt-5">
     <div class="flex items-center justify-between w-full">
         <div class="flex flex-col lg:flex-row w-full items-start lg:items-center rounded bg-white shadow">
             <h2 class="w-full text-center text-3xl">Reparaturstatus</h2>
             <div class="w-full lg:w-2/3 h-64 dark:bg-gray-800">
-                <div class="w-60 h-60 mx-auto">
+                <div class="w-60 h-60 mx-auto" #parent>
+                    <app-bar-chart [widthx]="#parent.offsetWidth"></app-bar-chart>
                     <app-pie-chart [data]="checklistStatus" [label]="false" [colors]="['#2792a5', '#67b2c0', '#a8d3db']"></app-pie-chart>
                 </div>
             </div>
@@ -57,6 +32,44 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+</div> -->
+
+<button class="w-6 h-6 mt-2 mr-2 p-1 bg-gray-300 text-black rounded-full">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+    </svg>
+</button>
+<button class="w-6 h-6 mt-2 mr-2 p-1 bg-gray-300 text-black rounded-full">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+    </svg>
+</button>
+
+<div class="container mx-auto flex flex-row items-center p-4 mb-8">
+    <div class="w-full bg-gray-100 p-4 rounded">
+        <div class="flex flex-row justify-between">
+            <div class="flex flex-row">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <span class="ml-2 font-bold">Filter</span>
+            </div>
+            <button class="hover:text-gray-400 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-row mt-3">
+            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Jahr</button>
+            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Monat</button>
+            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Woche</button>
+            <button class="px-3 mt-2 mr-2 bg-gray-300 text-black hover:bg-gray-200 hover:text-gray-500 hover:shadow-inner shadow rounded-full">Heute</button>
+        </div>
+        <div class="flex flex-row mt-3">
+
         </div>
     </div>
 </div>

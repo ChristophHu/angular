@@ -59,7 +59,27 @@ export class ReparaturenComponent implements OnInit {
 
   reload() {
     this._specFacade.clearReparaturen()
-    this._specFacade.loadAllReparaturen()
+    const startdate = this.setStartDate(new Date('2022-02-01'))
+    console.log(startdate)
+    const enddate = this.setEndDate(new Date())
+    console.log(enddate)
+    this._specFacade.loadAllReparaturen({ startdate, enddate})
+  }
+
+  setStartDate(dt: Date): string {
+    dt.setHours(-6)
+    dt.setMinutes(0)
+    dt.setSeconds(0)
+    dt.setMilliseconds(0)
+    return dt.toISOString().substring(0,16)
+  }
+  
+  setEndDate(ds: Date): string {
+    ds.setHours(17)
+    ds.setMinutes(59)
+    ds.setSeconds(59)
+    ds.setMilliseconds(999)
+    return ds.toISOString().substring(0,16)
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

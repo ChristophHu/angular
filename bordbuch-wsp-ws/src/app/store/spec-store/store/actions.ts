@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
+import { Filter } from "src/app/core/models/filter.model"
 import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
@@ -77,7 +78,8 @@ export const deletePeilungSuccess = createAction(
 
 // reparaturen
 export const loadAllReparaturen = createAction(
-	"[Ship Resolver] Load Reparaturen"
+	"[Ship Resolver] Load Reparaturen",
+	props<{ filter: Filter }>()
 )
 export const loadedAllReparaturen = createAction(
 	"[Load Spec Effect] Reparaturen Loaded",
