@@ -261,12 +261,17 @@ export class AppService {
             case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false?startdate=${null}&enddate=${null}`
                 break
+            case 'getPeilungenAllRange':
+                param = `?startdate=${data.startdate}&enddate=${data.enddate}`
+                break
             case 'getReparaturen':
                 param = `?startdate=${data.startdate}&enddate=${data.enddate}`
                 break
             case 'getPositionenVonStreife':
                 param = `?id_streife=${data}&startdate=${null}&enddate=${null}`
                 break
+
+            
 
             case 'getBetankungenAll':
             case 'getDienststellen':
@@ -493,9 +498,26 @@ export class AppService {
         return this.delete(id, 'deleteKatFunktion')
     }
 
+    // kennungen
+    getKennungen(): Observable<any> {
+        return this.get('getKatKennungen')
+    }
+    insertKennung(kennung: Kat): Observable<any> {
+        return this.insert(kennung, 'insertKatKennung')
+    }
+    updateKennung(kennung: Kat): Observable<any> {
+        return this.update(kennung, 'updateKatKennung')
+    }
+    deleteKennung(id: string): Observable<any> {
+        return this.delete(id, 'deleteKatKennung')
+    }
+
     // peilungen   
     getPeilungById(id: string): Observable<any> {
         return this.getWithParam('getPeilungVonSchiff', id)
+    }
+    getPeilungenAll(filter: Filter): Observable<any> {
+        return this.getWithParam('getPeilungenAllRange', filter)
     }
     insertPeilung(peilung: Peilung): Observable<any> {
         return this.insert(peilung, 'insertPeilung')
@@ -519,20 +541,6 @@ export class AppService {
     }
     deletePruefvermerk(id: string): Observable<any> {
         return this.delete(id, 'deletePruefvermerk')
-    }
-
-    // kennungen
-    getKennungen(): Observable<any> {
-        return this.get('getKatKennungen')
-    }
-    insertKennung(kennung: Kat): Observable<any> {
-        return this.insert(kennung, 'insertKatKennung')
-    }
-    updateKennung(kennung: Kat): Observable<any> {
-        return this.update(kennung, 'updateKatKennung')
-    }
-    deleteKennung(id: string): Observable<any> {
-        return this.delete(id, 'deleteKatKennung')
     }
 
     // pruefvermerkkategorien

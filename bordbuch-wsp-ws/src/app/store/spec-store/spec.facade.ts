@@ -68,6 +68,10 @@ export class SpecFacade {
     loadPeilungenById(id: string) {
         this.store.dispatch(SpecActions.loadPeilungenById({ id }))
     }
+    loadAllPeilungen(filter: Filter) {
+        console.log(filter)
+        this.store.dispatch(SpecActions.loadPeilungen({ filter }))
+    }
     insertPeilung(insert: Peilung) {
         this.store.dispatch(SpecActions.insertPeilung({ insert }))
     }

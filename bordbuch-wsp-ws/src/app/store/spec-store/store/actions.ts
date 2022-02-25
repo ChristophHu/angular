@@ -48,6 +48,14 @@ export const loadPeilungenById = createAction(
 	props<{ id: string }>()
 )
 export const loadPeilungenByIdSuccess = createAction(
+	"[Load Spec Effect] Loaded Peilungen By ID",
+	props<{ peilungen: Peilung[] }>()
+)
+export const loadPeilungen = createAction(
+	"[Kat Resolver] Load Peilungen",
+	props<{ filter: Filter }>()
+)
+export const loadPeilungenSuccess = createAction(
 	"[Load Spec Effect] Loaded Peilungen",
 	props<{ peilungen: Peilung[] }>()
 )

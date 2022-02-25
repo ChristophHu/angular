@@ -33,6 +33,7 @@ export class Resolver implements Resolve<any> {
                     
                     this._specFacade.loadAllChecklists()
                     this._specFacade.loadAllBetankungen()
+                    this._specFacade.loadAllPeilungen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllZaehlerstaende()
                     this._specFacade.loadAllReparaturen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllLastStandorte()

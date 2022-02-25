@@ -31,6 +31,10 @@ export const selectAllPeilungen = createSelector(
     specState,
     state => state.peilungen
 )
+export const selectAllPeilungenById = (id: string) => createSelector(
+    selectAllPeilungen,
+    peilungen => peilungen?.find(el => el.id_schiff == id)
+)
 
 // reparaturen
 export const selectAllReparaturen = createSelector(

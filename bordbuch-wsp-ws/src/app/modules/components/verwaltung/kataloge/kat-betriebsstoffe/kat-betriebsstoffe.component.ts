@@ -70,11 +70,8 @@ export class KatBetriebsstoffeComponent implements OnInit {
   }
 
   delete(id: string) {
-    console.log(id)
     const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
-    console.log(notification)
     this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
-      console.log(response)
       if (response) this._katFacade.deleteBetriebsstoffe(id)
     })
   }

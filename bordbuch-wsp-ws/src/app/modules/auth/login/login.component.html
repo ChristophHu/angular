@@ -1,8 +1,8 @@
 <!-- <app-splash-screen></app-splash-screen> -->
 <div class="h-screen w-screen grid place-items-center overflow-hidden z-0">
   <div class="absolute w-full h-full grid place-items-center z-20">
-
-    <div class="w-96 p-10 bg-white rounded-lg shadow-lg z-20">
+    <div class="w-96 p-10 bg-gray-100 rounded-lg shadow-lg z-20">
+      <!-- <h1 class="my-10 text-3xl text-gray-800">Bordbuch</h1> -->
       <h1 class="my-10 text-3xl text-gray-800">Bordbuch</h1>
       <form [formGroup]="loginForm" autocomplete="off">
 
@@ -15,14 +15,15 @@
         <mat-form-field appearance="fill">
           <mat-label>Kennwort</mat-label>
           <input type="password" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-          <!-- <a class="w-6" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <a class="w-6" mat-icon-button matSuffix (click)="hide = !hide">
+            <!-- [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" -->
             <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
-          </a> -->
+          </a>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Die Eingabe eines Kennworts ist erforderlich!</mat-error>
         </mat-form-field>
         
         <div class="flex">
-          <button class="w-full p-3 mt-3 bg-gray-800 text-white rounded-md shadow-lg" (click)="login()">Login</button>
+          <button class="w-full p-3 mt-3 bg-gray-800 text-white rounded-md shadow-lg" (click)="login()" (keyup.enter)="login()">Login</button>
         </div>
       </form>
     </div>

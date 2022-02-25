@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { take } from 'rxjs';
 import { Kat } from 'src/app/core/models/kat.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
+import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api';
 
 @Component({
   selector: 'app-kat-betriebsstoffe-modal',
@@ -15,7 +18,12 @@ export class KatBetriebsstoffeModalComponent implements OnInit {
   title: string = ''
   katForm: FormGroup
   
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<KatBetriebsstoffeModalComponent>, private _katFacade: KatFacade) {
+  constructor(
+    private _formBuilder: FormBuilder, 
+    private _modalService: ModalService<KatBetriebsstoffeModalComponent>, 
+    private _katFacade: KatFacade,
+    private _RxjsNotificationService: RxjsNotificationsService
+  ) {
     this.katForm = this._formBuilder.group({
       id: [],
       bezeichnung: []
@@ -40,8 +48,11 @@ export class KatBetriebsstoffeModalComponent implements OnInit {
     this.modal?.close()
   }
   delete() {
-    this._katFacade.deleteBetriebsstoffe(this.katForm.value.id)
-    this.modal?.close()
+    const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
+    this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
+      if (response) this._katFacade.deleteBetriebsstoffe(this.katForm.value.id)
+      this.modal?.close()
+    })
   }
 
   cancel() {

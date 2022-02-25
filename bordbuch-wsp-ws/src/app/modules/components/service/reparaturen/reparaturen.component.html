@@ -1,5 +1,9 @@
-<div class="container mx-auto flex flex-row items-center p-4" >
-    <div class="w-full bg-gray-100 p-4 rounded">
+<div class="container mx-auto" >
+    <div class="w-full bg-gray-200 p-4 rounded">
+        <div class="flex flex-row mb-3">
+            <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
+            <span class="ml-2 text-lg font-bold">Filter</span>
+        </div>
         <div class="flex flex-row items-center mb-4">
             <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(status == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen('alle')">Alle</button>
             <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let kat of (kat$ | async)" [ngClass]="(status == kat.bezeichnung) ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen(kat.bezeichnung)">{{ kat.bezeichnung }}</button>
@@ -11,9 +15,9 @@
             </button>
         </div>
         <div *ngIf="showfilter">
-            <div class="flex flex-row justify-between">
+            <!-- <div class="flex flex-row justify-between">
                 <div class="flex flex-row">
-                    <icons class="w-6 h-6 stroke-1 stroke-current" name="filter"></icons>
+                    <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
                     <span class="ml-2 font-bold">Filter</span>
                 </div>
                 <button class="hover:text-gray-400 cursor-pointer">
@@ -21,20 +25,20 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
-            </div>
+            </div> -->
             <div class="flex flex-row mt-3 justify-between">
                 <div class="mt-3">
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-gray-300' : ''" (click)="toggleFilter('year')">Jahr</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-gray-300' : ''" (click)="toggleFilter('month')">Monat</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-gray-300' : ''" (click)="toggleFilter('week')">Woche</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-gray-300' : ''" (click)="toggleFilter('today')">Heute</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
                 </div>
                 <div>
                     <form [formGroup]="filterForm">
                         <div class="grid grid-cols-2 gap-3">
                             <div class="flex flex-row items-center">
                                 <mat-form-field appearance="fill">
-                                    <input matInput type="datetime-local" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-ddTHH:mm'}}">
+                                    <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
                                 </mat-form-field>
                             </div>
                             <div class="flex flex-row items-center">

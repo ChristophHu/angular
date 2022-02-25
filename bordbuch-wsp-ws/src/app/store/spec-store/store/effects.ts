@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap, tap } from 'rxjs'
+import { concatMap, map, switchMap, take, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
 import { Peilung } from 'src/app/core/models/peilung.model'
@@ -11,13 +11,16 @@ import { Tank } from 'src/app/core/models/tank.model'
 import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model'
 import { AppService } from 'src/app/core/services/app.service'
 
+import { RxjsNotificationsService } from "projects/rxjs-notifications/src/public-api"
+import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
+
 import {
     loadAllShipChecklists, loadedAllShipChecklists, insertShipChecklist, insertShipChecklistSuccess, deleteShipChecklist, deleteShipChecklistSuccess,
     loadAllBetankungen, loadedAllBetankungen, insertBetankung, updateBetankung, deleteBetankung, insertBetankungSuccess, updateBetankungSuccess, deleteBetankungSuccess,
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess,
 } from './actions'
  
 @Injectable()
@@ -28,7 +31,8 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllBetankungen),
             concatMap(action => this.appService.getAllBetankungen()),
-            map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen }))
+            map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen })),
+            tap(() => this.success())
         )
     })
     insertBetankung$ = createEffect(() => {
@@ -36,7 +40,8 @@ export class Effects {
             ofType(insertBetankung),
             switchMap(action => {
                 return this.appService.insertBetankung(action.insert).pipe(
-                    map((id: string) => insertBetankungSuccess({ action, id }))
+                    map((id: string) => insertBetankungSuccess({ action, id })),
+                    tap(() => this.success())
                 )
             })
         )
@@ -46,7 +51,8 @@ export class Effects {
             ofType(updateBetankung),
             switchMap(action => {
                 return this.appService.updateBetankung(action.update).pipe(
-                    map((id: string) => updateBetankungSuccess({ action, id }))
+                    map((id: string) => updateBetankungSuccess({ action, id })),
+                    tap(() => this.success())
                 )
             })
         )
@@ -96,10 +102,18 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadPeilungenById),
             concatMap(action => this.appService.getPeilungById(action.id)),
-            tap(peilungen => console.log(peilungen)),
+            // tap(peilungen => console.log(peilungen)),
             map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
         )
-    }) 
+    })
+    loadPeilungen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadPeilungen),
+            concatMap(action => this.appService.getPeilungenAll(action.filter)),
+            tap(peilungen => console.log(peilungen)),
+            map((peilungen: Peilung[]) => loadPeilungenSuccess({ peilungen }))
+        )
+    })
     insertPeilung$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(insertPeilung),
@@ -367,5 +381,12 @@ export class Effects {
         )
     })
 
-    constructor(private actions$: Actions, private appService: AppService ) {}
+    constructor(private actions$: Actions, private appService: AppService, private _RxjsNotificationsService: RxjsNotificationsService ) {}
+
+    success() {
+        const notification: Notification = { content: 'Aktion erfolgreich durchgeführt!', title: 'Erfolgreich', type: NotificationType.Success, exception: ExceptionType.OK }
+        this._RxjsNotificationsService.addAndResponseNotification(notification).pipe(take(1)).subscribe(data => {
+          console.log(data)
+        })
+    }
 }
