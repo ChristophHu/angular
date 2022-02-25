@@ -7,6 +7,7 @@ import { Animations } from 'src/app/shared/animations'
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { Checklist } from 'src/app/core/models/checklist.model';
+import { getLocalISO } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-checkliste-modal',
@@ -52,7 +53,8 @@ export class ChecklisteModalComponent implements OnInit {
   }
 
   setDate() {
-    this.checklistForm.patchValue({ datum: new Date().toISOString() })
+    this.checklistForm.patchValue({ datum: getLocalISO('now') })
+    this.checklistForm.dirty
   }
   changeCheck(item: Checklistitem) {
     this.checklistKat = this.checklistKat.filter(el => el.id != item.id)

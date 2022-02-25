@@ -8,6 +8,7 @@ import { Streife } from 'src/app/core/models/streife.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
@@ -79,7 +80,8 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
     })
   }
   setDate() {
-    this.standortForm.patchValue({ date: new Date().toISOString() })
+    this.standortForm.patchValue({ date: getLocalISO('now') })
+    this.standortForm.dirty
   }
 
   create() {

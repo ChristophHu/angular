@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Streife } from 'src/app/core/models/streife.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
 import { AusgewaehlteStreifenModalComponent } from './ausgewaehlte-streifen-modal/ausgewaehlte-streifen-modal.component';
@@ -12,12 +14,16 @@ import { AusgewaehlteStreifenModalComponent } from './ausgewaehlte-streifen-moda
   styleUrls: ['./ausgewaehlte-streifen.component.sass']
 })
 export class AusgewaehlteStreifenComponent implements OnInit {
-  filter: string = 'alle'
+  filterStreife: string = 'alle'
   status$: string[] = ['vorbereitend', 'aktiv', 'beendet']
 
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
+
+  filterForm: FormGroup
+  filterZeit: string = 'year'
+  showfilter: boolean = false
 
   streifen$: Observable<Streife[]>
 
@@ -47,7 +53,7 @@ export class AusgewaehlteStreifenComponent implements OnInit {
   }
 
   toggle(status: string) {
-    this.filter = status
+    this.filterStreife = status
     if (status == 'alle') {
       this.streifen$ = this._specFacade.allStreifen$
     } else {
@@ -55,9 +61,22 @@ export class AusgewaehlteStreifenComponent implements OnInit {
     }
   }
 
+  toggleFilter(filter: string) {
+    this.filterZeit = filter
+    // this.reparaturen$ = this._specFacade.getReparaturen(status)
+    // this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
+    console.log(getLocalISO(filter))
+    const startdate = getLocalISO(filter)
+    const enddate = getLocalISO('')
+    this._specFacade.loadAllReparaturen({ startdate, enddate })
+
+    this.filterForm.value.startdate = startdate
+    this.filterForm.value.enddate = enddate
+  }
+
   reload() {
     console.log(`reload streifen`)
-    this._specFacade.loadAllStreifen()
+    this._specFacade.loadAllStreifen({ startdate: '', enddate: ''})
   }
 
   async showModal(streife: Streife): Promise<void> {

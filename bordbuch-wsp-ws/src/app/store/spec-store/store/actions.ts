@@ -11,7 +11,8 @@ import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 
 // betankungen
 export const loadAllBetankungen = createAction(
-	"[Kat Resolver] Load Betankungen"
+	"[Kat Resolver] Load Betankungen",
+	props<{ filter: Filter }>()
 )
 export const loadedAllBetankungen = createAction(
 	"[Load Spec Effect] Loaded Betankungen",
@@ -217,7 +218,8 @@ export const deleteStandortSuccess = createAction(
 
 // streifen
 export const loadAllStreifen = createAction(
-	"[Ship Resolver] Load Streifen"
+	"[Ship Resolver] Load Streifen",
+	props<{ filter: Filter }>()
 )
 export const loadedAllStreifen = createAction(
 	"[Load Spec Effect] Streifen Loaded",

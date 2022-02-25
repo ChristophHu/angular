@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Peilung } from 'src/app/core/models/peilung.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
@@ -70,12 +71,10 @@ export class PeilungenComponent implements OnInit {
     })
   }
   setStartDate() {
-    console.log(new Date().toISOString().substring(0,16))
-    this.filterForm.patchValue({ startDate: new Date().toISOString().substring(0,16) })
+    this.filterForm.patchValue({ startDate: getLocalISO('now') })
   }
   setEndeDate() {
-    console.log(new Date().toISOString().substring(0,16))
-    this.filterForm.patchValue({ endeDate: new Date().toISOString().substring(0,16) })
+    this.filterForm.patchValue({ endeDate: getLocalISO('now') })
   }
 
   async showModal(peilung?: Peilung): Promise<void> {

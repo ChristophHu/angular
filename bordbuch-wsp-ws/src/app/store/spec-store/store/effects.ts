@@ -11,9 +11,6 @@ import { Tank } from 'src/app/core/models/tank.model'
 import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model'
 import { AppService } from 'src/app/core/services/app.service'
 
-import { RxjsNotificationsService } from "projects/rxjs-notifications/src/public-api"
-import { Notification, NotificationType, ExceptionType } from 'projects/rxjs-notifications/src/lib/model/notification.model'
-
 import {
     loadAllShipChecklists, loadedAllShipChecklists, insertShipChecklist, insertShipChecklistSuccess, deleteShipChecklist, deleteShipChecklistSuccess,
     loadAllBetankungen, loadedAllBetankungen, insertBetankung, updateBetankung, deleteBetankung, insertBetankungSuccess, updateBetankungSuccess, deleteBetankungSuccess,
@@ -30,9 +27,8 @@ export class Effects {
     loadAllBetankungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllBetankungen),
-            concatMap(action => this.appService.getAllBetankungen()),
-            map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen })),
-            tap(() => this.success())
+            concatMap(action => this.appService.getAllBetankungen(action.filter)),
+            map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen }))
         )
     })
     insertBetankung$ = createEffect(() => {
@@ -40,8 +36,7 @@ export class Effects {
             ofType(insertBetankung),
             switchMap(action => {
                 return this.appService.insertBetankung(action.insert).pipe(
-                    map((id: string) => insertBetankungSuccess({ action, id })),
-                    tap(() => this.success())
+                    map((id: string) => insertBetankungSuccess({ action, id }))
                 )
             })
         )
@@ -51,8 +46,7 @@ export class Effects {
             ofType(updateBetankung),
             switchMap(action => {
                 return this.appService.updateBetankung(action.update).pipe(
-                    map((id: string) => updateBetankungSuccess({ action, id })),
-                    tap(() => this.success())
+                    map((id: string) => updateBetankungSuccess({ action, id }))
                 )
             })
         )
@@ -102,7 +96,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadPeilungenById),
             concatMap(action => this.appService.getPeilungById(action.id)),
-            // tap(peilungen => console.log(peilungen)),
             map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
         )
     })
@@ -110,7 +103,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadPeilungen),
             concatMap(action => this.appService.getPeilungenAll(action.filter)),
-            tap(peilungen => console.log(peilungen)),
             map((peilungen: Peilung[]) => loadPeilungenSuccess({ peilungen }))
         )
     })
@@ -268,7 +260,7 @@ export class Effects {
     loadAllStreifen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllStreifen),
-            concatMap(action => this.appService.getAllStreifen()),
+            concatMap(action => this.appService.getAllStreifen(action.filter)),
             map((streifen: Streife[]) => loadedAllStreifen({ streifen }))
         )
     })
@@ -381,12 +373,5 @@ export class Effects {
         )
     })
 
-    constructor(private actions$: Actions, private appService: AppService, private _RxjsNotificationsService: RxjsNotificationsService ) {}
-
-    success() {
-        const notification: Notification = { content: 'Aktion erfolgreich durchgeführt!', title: 'Erfolgreich', type: NotificationType.Success, exception: ExceptionType.OK }
-        this._RxjsNotificationsService.addAndResponseNotification(notification).pipe(take(1)).subscribe(data => {
-          console.log(data)
-        })
-    }
+    constructor(private actions$: Actions, private appService: AppService) {}
 }

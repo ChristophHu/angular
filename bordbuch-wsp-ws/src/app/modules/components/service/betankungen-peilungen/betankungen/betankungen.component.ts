@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Betankung } from 'src/app/core/models/betankung';
 import { BetankungService } from 'src/app/core/services/betankung.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
 import { BetankungModalComponent } from './betankung-modal/betankung-modal.component';
@@ -17,10 +19,18 @@ export class BetankungenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
+  filterForm: FormGroup
+  filter: string = 'year'
+
   betankungen$!: Observable<Betankung[]>
 
-  constructor(private _modalService: ModalService<BetankungModalComponent>, private _specFacade: SpecFacade) {
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<BetankungModalComponent>, private _specFacade: SpecFacade) {
     this.betankungen$ = this._specFacade.allBetankungen$
+
+    this.filterForm = this._formBuilder.group({
+      startdate: [],
+      enddate: []
+    })
   }
 
   ngOnInit(): void {
@@ -42,6 +52,17 @@ export class BetankungenComponent implements OnInit {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
+  }
+
+  toggleFilter(filter: string) {
+    this.filter = filter
+    console.log(getLocalISO(filter))
+    const startdate = getLocalISO(filter)
+    const enddate = getLocalISO('')
+    this._specFacade.loadAllReparaturen({ startdate, enddate })
+
+    this.filterForm.value.startdate = startdate
+    this.filterForm.value.enddate = enddate
   }
 
   async showModal(betankung?: Betankung): Promise<void> {

@@ -37,8 +37,8 @@ export class SpecFacade {
     // public dispatches
 
     // betankungen
-    loadAllBetankungen() {
-        this.store.dispatch(SpecActions.loadAllBetankungen())
+    loadAllBetankungen(filter: Filter) {
+        this.store.dispatch(SpecActions.loadAllBetankungen({ filter }))
     }
     insertBetankung(insert: Betankung) {
         this.store.dispatch(SpecActions.insertBetankung({ insert }))
@@ -69,7 +69,6 @@ export class SpecFacade {
         this.store.dispatch(SpecActions.loadPeilungenById({ id }))
     }
     loadAllPeilungen(filter: Filter) {
-        console.log(filter)
         this.store.dispatch(SpecActions.loadPeilungen({ filter }))
     }
     insertPeilung(insert: Peilung) {
@@ -84,7 +83,6 @@ export class SpecFacade {
 
     // reparaturen
     loadAllReparaturen(filter: Filter) {
-        console.log(filter)
         this.store.dispatch(SpecActions.loadAllReparaturen({ filter }))
     }
     insertReparatur(insert: Reparatur) {
@@ -135,8 +133,8 @@ export class SpecFacade {
     }
 
     // streifen
-    loadAllStreifen() {
-        this.store.dispatch(SpecActions.loadAllStreifen())
+    loadAllStreifen(filter: Filter) {
+        this.store.dispatch(SpecActions.loadAllStreifen({ filter }))
     }
     insertStreife(insert: Streife) {
         this.store.dispatch(SpecActions.insertStreife({ insert }))

@@ -37,6 +37,8 @@ export class RxjsNotificationsService {
           }
         })
       })
+      console.log(this.dataStore.notifications)
+      console.log(this.dataStore.response)
     })
   }
 

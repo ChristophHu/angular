@@ -5,6 +5,7 @@ import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 
 @Component({
@@ -46,7 +47,8 @@ export class SchiffModalComponent implements OnInit {
     this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
   }
   setDate() {
-    this.schiffForm.patchValue({ durchsicht: new Date().toISOString() })
+    this.schiffForm.patchValue({ durchsicht: getLocalISO('now') })
+    this.schiffForm.dirty
   }
 
   create() {

@@ -32,12 +32,12 @@ export class Resolver implements Resolve<any> {
                     this._katFacade.loadZweck()
                     
                     this._specFacade.loadAllChecklists()
-                    this._specFacade.loadAllBetankungen()
+                    this._specFacade.loadAllBetankungen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllPeilungen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllZaehlerstaende()
                     this._specFacade.loadAllReparaturen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllLastStandorte()
-                    this._specFacade.loadAllStreifen()
+                    this._specFacade.loadAllStreifen({ startdate: '', enddate: ''})
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

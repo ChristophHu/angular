@@ -39,8 +39,8 @@ export class AppService {
         const backendUrl: string = this._connectionService.getBackendUrl()
         const token     : string = this._connectionService.getToken()
 
-        console.info(`reducer | action: '${action}', data: ${data}`)
-        console.table(`data: ${data}`)
+        // console.info(`reducer | action: '${action}', data: ${data}`)
+        // console.table(`data: ${data}`)
 
         const baseURL = `${backendUrl}/${action}`
         let param = ``
@@ -175,7 +175,6 @@ export class AppService {
                 param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
                 break
             case 'deleteCheckliste':
-                console.log(data)
                 param = `id_schiff=${data.id}&datum=${data.date}`
                 break
 
@@ -226,7 +225,6 @@ export class AppService {
                 break
             case 'updateZaehlerstand':
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
-                console.log(param)
                 break 
 
             default:
@@ -252,7 +250,7 @@ export class AppService {
 
         const placeholder: string = '' 
 
-        console.info(`getreducer | action: '${action}', data: `, data)
+        // console.info(`getreducer | action: '${action}', data: `, data)
 
         const baseURL = `${backendUrl}/${action}`
         let param = ``
@@ -261,19 +259,19 @@ export class AppService {
             case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false?startdate=${null}&enddate=${null}`
                 break
+
+            case 'getBetankungenAllRange':
             case 'getPeilungenAllRange':
-                param = `?startdate=${data.startdate}&enddate=${data.enddate}`
-                break
             case 'getReparaturen':
+            case 'getStreifenRange':
                 param = `?startdate=${data.startdate}&enddate=${data.enddate}`
                 break
+
             case 'getPositionenVonStreife':
                 param = `?id_streife=${data}&startdate=${null}&enddate=${null}`
                 break
 
-            
-
-            case 'getBetankungenAll':
+            // case 'getBetankungenAll':
             case 'getDienststellen':
             case 'getPruefvermerke':
             case 'getPruefvermerksKategorien':
@@ -284,7 +282,7 @@ export class AppService {
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getStatustypen':
-            case 'getStreifen':
+            // case 'getStreifen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
                 param = ``
@@ -373,8 +371,8 @@ export class AppService {
     }
 
     // betankungen   
-    getAllBetankungen(): Observable<any> {
-        return this.get('getBetankungenAll')
+    getAllBetankungen(filter: Filter): Observable<any> {
+        return this.getWithParam('getBetankungenAllRange', filter)
     }
     insertBetankung(betankung: Betankung): Observable<any> {
         return this.insert(betankung, 'insertBetankung')
@@ -562,7 +560,6 @@ export class AppService {
     //     return this.get('getReparaturen')
     // }
     getAllReparaturen(filter: Filter): Observable<any> {
-        console.log(filter)
         return this.getWithParam('getReparaturen', filter)
     }
     
@@ -592,11 +589,9 @@ export class AppService {
         return this.get('getSchiffe')
     }
     insertSchiff(schiff: Schiff): Observable<any> {
-        console.log(schiff)
         return this.insert(schiff, 'insertSchiff')
     }
     updateSchiff(schiff: Schiff): Observable<any> {
-        console.log(schiff)
         return this.update(schiff, 'updateSchiff')
     }
     deleteSchiff(id: string): Observable<any> {
@@ -608,11 +603,9 @@ export class AppService {
         return this.get('getStatustypen')
     }
     insertStatus(schiff: Status): Observable<any> {
-        console.log(schiff)
         return this.insert(schiff, 'insertKatStatus')
     }
     updateStatus(schiff: Status): Observable<any> {
-        console.log(schiff)
         return this.update(schiff, 'updateKatStatus')
     }
     deleteStatus(id: string): Observable<any> {
@@ -639,8 +632,8 @@ export class AppService {
     }
 
     // streifen   
-    getAllStreifen(): Observable<any> {
-        return this.get('getStreifen')
+    getAllStreifen(filter: Filter): Observable<any> {
+        return this.getWithParam('getStreifenRange', filter)
     }
     insertStreife(streife: Streife): Observable<any> {
         return this.insert(streife, 'insertStreife')

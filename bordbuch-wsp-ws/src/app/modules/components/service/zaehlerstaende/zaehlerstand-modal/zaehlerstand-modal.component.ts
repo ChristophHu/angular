@@ -6,6 +6,7 @@ import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model';
 import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
@@ -58,7 +59,8 @@ export class ZaehlerstandModalComponent implements OnInit {
   }
 
   setDate() {
-    this.zaehlerstandForm.patchValue({ date: new Date().toISOString() })
+    this.zaehlerstandForm.patchValue({ date: getLocalISO('now') })
+    this.zaehlerstandForm.dirty
   }
 
   create() {

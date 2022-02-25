@@ -8,6 +8,7 @@ import { Tank } from 'src/app/core/models/tank.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
@@ -70,7 +71,8 @@ export class PeilungModalComponent implements OnInit {
   }
 
   setDate() {
-    this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
+    this.peilungForm.patchValue({ date: getLocalISO('now') })
+    this.peilungForm.dirty
   }
 
   create() {

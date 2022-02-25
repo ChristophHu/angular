@@ -8,6 +8,7 @@ import { Reparatur } from 'src/app/core/models/reparatur.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
@@ -85,7 +86,8 @@ export class ReparaturModalComponent implements OnInit {
     })
   }
   setDate() {
-    this.reparaturForm.patchValue({ date: new Date().toISOString() })
+    this.reparaturForm.patchValue({ date: getLocalISO('now') })
+    this.reparaturForm.dirty
   }
 
   decodeImages(data: any[]) {
