@@ -91,11 +91,8 @@ export class ReparaturenComponent implements OnInit {
     this._specFacade.loadAllReparaturen({ startdate, enddate})
   }
 
-  setStartDate() {
-    this.filterForm.value.enddate.patchValue({ startdate: new Date(new Date().getTime() - timezoneoffset()).toISOString() })
-  }
   setEndDate() {
-    this.filterForm.value.enddate.patchValue({ enddate: new Date(new Date().getTime() - timezoneoffset()).toISOString() })
+    this.filterForm.value.enddate.patchValue({ enddate: getLocalISO('tomorrow') })
   }
 
   async showModal(reparatur?: Reparatur): Promise<void> {

@@ -51,7 +51,9 @@ export class RxjsNotificationsService {
 
   response(response: Response) {
     this.removeNotification(response.id)
-    this.dataStore.response.push(response)
-    this._response$.next(Object.assign({}, this.dataStore).response)
+    if (response.reply != null) {
+      this.dataStore.response.push(response)
+      this._response$.next(Object.assign({}, this.dataStore).response)
+    }
   }
 }
