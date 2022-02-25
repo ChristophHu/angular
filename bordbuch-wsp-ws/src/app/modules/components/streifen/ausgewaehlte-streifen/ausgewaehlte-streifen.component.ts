@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Streife } from 'src/app/core/models/streife.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -27,8 +27,13 @@ export class AusgewaehlteStreifenComponent implements OnInit {
 
   streifen$: Observable<Streife[]>
 
-  constructor(private _specFacade: SpecFacade, private _modalService: ModalService<AusgewaehlteStreifenModalComponent>) {
+  constructor(private _formBuilder: FormBuilder, private _specFacade: SpecFacade, private _modalService: ModalService<AusgewaehlteStreifenModalComponent>) {
     this.streifen$ = this._specFacade.allStreifen$
+
+    this.filterForm = this._formBuilder.group({
+      startdate: [],
+      enddate: []
+    })
   }
 
   ngOnInit(): void {

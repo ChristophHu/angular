@@ -1,5 +1,5 @@
 <div class="container mx-auto p-4">
-    <div class="w-full bg-gray-100 p-4 rounded">
+    <div class="w-full bg-blue-200 p-4 rounded">
         <div class="flex flex-row mb-3">
             <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
             <span class="ml-2 text-lg font-bold">Filter</span>
@@ -24,12 +24,14 @@
                 </div>
                 <div>
                     <form [formGroup]="filterForm">
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="flex flex-row items-center">
-                                <mat-form-field class="w-48" appearance="fill">
+                        <div class="flex flex-row">
+                            <div class="w-48 mr-2">
+                                <mat-form-field appearance="fill">
                                     <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
                                 </mat-form-field>
-                                <mat-form-field class="w-48" appearance="fill">
+                            </div>
+                            <div class="w-48">
+                                <mat-form-field appearance="fill">
                                     <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
                                 </mat-form-field>
                             </div>
@@ -42,6 +44,10 @@
 </div>
 
 <div class="container mx-auto px-4">
+    <div class="flex flex-row mb-3">
+        <icons class="w-6 h-6 stroke-2 stroke-current" name="table"></icons>
+        <span class="ml-2 text-lg font-bold">Ergebnisse</span>
+    </div>
     <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
         <thead>
             <tr>
