@@ -73,15 +73,15 @@ export class ReparaturenComponent implements OnInit {
 
   toggleFilter(filter: string) {
     this.filter = filter
-    // this.reparaturen$ = this._specFacade.getReparaturen(status)
-    // this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
-    console.log(getLocalISO(filter))
-    const startdate = getLocalISO(filter)
-    const enddate = getLocalISO('')
-    this._specFacade.loadAllReparaturen({ startdate, enddate })
-
-    this.filterForm.value.startdate = startdate
-    this.filterForm.value.enddate = enddate
+    if (filter != '') {
+      const startdate = getLocalISO(filter)
+      const enddate = getLocalISO('')
+      this.filterForm.value.startdate = startdate
+      this.filterForm.value.enddate = enddate
+      this._specFacade.loadAllReparaturen({ startdate, enddate })
+    } else {
+      this._specFacade.loadAllReparaturen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
+    }
   }
 
   reload() {

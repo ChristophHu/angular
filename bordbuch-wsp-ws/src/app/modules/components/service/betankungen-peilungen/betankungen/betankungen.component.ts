@@ -41,7 +41,6 @@ export class BetankungenComponent implements OnInit {
       // "paging"  : false,
       // "ordering": false,
       // "processing": true,
-      // "info"    : false,
       "autoWidth": true,
       // "retrieve": true,
       // data:this.dtUsers,
@@ -63,9 +62,9 @@ export class BetankungenComponent implements OnInit {
 
       this.filterForm.value.startdate = startdate
       this.filterForm.value.enddate = enddate
-      this._specFacade.loadAllReparaturen({ startdate, enddate })
+      this._specFacade.loadAllBetankungen({ startdate, enddate })
     } else {
-      this._specFacade.loadAllReparaturen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
+      this._specFacade.loadAllBetankungen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
     }
   }
 

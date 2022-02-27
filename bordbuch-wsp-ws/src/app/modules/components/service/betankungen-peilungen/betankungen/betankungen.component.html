@@ -1,6 +1,6 @@
 <div class="container mx-auto p-4">
-    <div class="w-full bg-gray-200 p-4 rounded">
-        <div class="flex flex-row mb-3">
+    <!-- <div class="w-full bg-gray-100 p-4 rounded"> -->
+        <div class="flex flex-row py-3">
             <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
             <span class="ml-2 text-lg font-bold">Filter</span>
         </div>
@@ -14,8 +14,8 @@
                 <icons class="w-4 h-4 stroke-1 stroke-current" name="filter"></icons>
             </button>
         </div> -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-1 py-3">
-            <div class="flex h-8 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 py-3 border-b">
+            <div class="h-8 flex items-center">
                 <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
                 <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
                 <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
@@ -23,7 +23,7 @@
             </div>
             <div class="lg:justify-self-end">
                 <form [formGroup]="filterForm">
-                    <div class="flex flex-row items-center">
+                    <div class="h-8 flex flex-row items-center">
                         <div class="w-48 mr-2">
                             <mat-form-field appearance="fill">
                                 <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
@@ -34,17 +34,17 @@
                                 <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
                             </mat-form-field>
                         </div>
-                        <button class="p-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded" (click)="toggleFilter('')">
-                            <icons class="w-4 h-4 stroke-2 stroke-current" name="search"></icons>
+                        <button (click)="toggleFilter('')" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" [ngClass]="(filter == '') ? 'bg-blue-600 text-white' : ''">
+                            <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="search"></icons>
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 </div>
 
-<div class="container mx-auto px-4">
+<div class="container mx-auto mt-4 px-4">
     <div class="flex flex-row mb-3">
         <icons class="w-6 h-6 stroke-2 stroke-current" name="table"></icons>
         <span class="ml-2 text-lg font-bold">Ergebnisse</span>
