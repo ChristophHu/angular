@@ -48,6 +48,7 @@ export class BetankungenComponent implements OnInit {
       // columns: [{title: 'User ID', data: 'id'},
       //       {title: 'First Name', data: 'firstName'},
       //       {title: 'Last Name', data: 'lastName' }],
+      info: false,
       "language": {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
@@ -56,13 +57,16 @@ export class BetankungenComponent implements OnInit {
 
   toggleFilter(filter: string) {
     this.filter = filter
-    console.log(getLocalISO(filter))
-    const startdate = getLocalISO(filter)
-    const enddate = getLocalISO('')
-    this._specFacade.loadAllReparaturen({ startdate, enddate })
+    if (filter != '') {
+      const startdate = getLocalISO(filter)
+      const enddate = getLocalISO('')
 
-    this.filterForm.value.startdate = startdate
-    this.filterForm.value.enddate = enddate
+      this.filterForm.value.startdate = startdate
+      this.filterForm.value.enddate = enddate
+      this._specFacade.loadAllReparaturen({ startdate, enddate })
+    } else {
+      this._specFacade.loadAllReparaturen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
+    }
   }
 
   async showModal(betankung?: Betankung): Promise<void> {

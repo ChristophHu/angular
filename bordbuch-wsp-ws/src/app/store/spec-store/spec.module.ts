@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { RxjsNotificationsService } from 'projects/rxjs-notifications/src/public-api'
 import { Features } from 'src/app/core/models/feature'
 import { Effects } from './store/effects'
 import { reducer } from './store/reducers'
