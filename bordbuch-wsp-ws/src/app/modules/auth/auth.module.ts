@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { IconLibraryModule } from 'projects/icon-library/src/lib/icon-library.module';
 import { ChangelogComponent } from './login/changelog/changelog.component'
 import { ModalModule } from 'src/app/shared/components/modal/modal.module'
+import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { ModalModule } from 'src/app/shared/components/modal/modal.module'
     StoreModule.forFeature(Features.Auth, authReducer),
     EffectsModule.forFeature([AuthEffects]),
     MatInputModule,
+    MatButtonModule,
     MatFormFieldModule,
     IconLibraryModule,
     ModalModule

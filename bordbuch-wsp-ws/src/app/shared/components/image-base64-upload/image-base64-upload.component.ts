@@ -45,11 +45,10 @@ export class ImageBase64UploadComponent implements OnInit {
     let reader = new FileReader()
     reader.onload = () => {
       const res = btoa(reader.result as string)
-      console.log(res)
       this.imageBase64.emit(res)
     }
     reader.onerror = function (error) {
-      console.log('Error: ', error)
+      console.error('Error: ', error)
     }
     reader.readAsDataURL(file)
   }

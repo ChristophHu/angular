@@ -55,7 +55,6 @@ export class MotorModalComponent implements OnInit {
 
   load(id: string) {
     this._specFacade.getZaehlerstaendeById(id).subscribe(zaehlerstaende => {
-      console.log(zaehlerstaende)
 
       if (zaehlerstaende && zaehlerstaende.length > 0) {
       
@@ -63,25 +62,21 @@ export class MotorModalComponent implements OnInit {
         zaehlerstaende.forEach((zaehlerstand: Zaehlerstand) => {
           zaehlerstandstypen.push(Object.assign({}, { id: zaehlerstand.id, zaehlerstandstyp: zaehlerstand.zaehlerstandstyp, checked: true, value: zaehlerstand.value }))
         })
-        console.log(zaehlerstandstypen)
 
         let zaehlerstandstypenKat: any[] = []
         this.zaehlerstandstypenKat.forEach((zaehlerstandstyp: any) => {
           zaehlerstandstypenKat.push(Object.assign({}, zaehlerstandstyp, { checked: false, value: 0 }))
         })
-        console.log(zaehlerstandstypenKat)
         
         const key = 'zaehlerstandstyp'
         let k: Zaehlerstandstyp[] = [...zaehlerstandstypenKat, ...zaehlerstandstypen]
         this.kat = [...new Map(k.map(item => [item[key], item])).values()]
-        console.log(this.kat)
       } else {
         let zaehlerstandstypenKat: any[] = []
         this.zaehlerstandstypenKat.forEach((zaehlerstandstyp: any) => {
           zaehlerstandstypenKat.push(Object.assign({}, zaehlerstandstyp, { checked: false }))
         })
         this.kat = [...zaehlerstandstypenKat]
-        console.log(this.kat)
       }
     })
   }
@@ -102,7 +97,7 @@ export class MotorModalComponent implements OnInit {
     } else {
       // delete
       if (item.value != 0) {
-        console.log(`Es existieren Zaehlerstände zu diesem Eintrag!`)
+        // console.log(`Es existieren Zaehlerstände zu diesem Eintrag!`)
       } else {
         this._specFacade.deleteZaehlerstand(item.id)
       }

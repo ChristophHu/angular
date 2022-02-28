@@ -29,7 +29,6 @@ export class AuthGuard implements CanActivate {
         return this.store.pipe(
             select(isLoggedIn),
             tap(loggedIn => {
-                console.log(loggedIn)
                 if (!loggedIn) {
                     console.log('AuthGuard-canActivateChild: false')
                     this._router.navigateByUrl('/login')

@@ -104,13 +104,11 @@ export class ReparaturModalComponent implements OnInit {
 
   create() {
     const insert: Reparatur = this.reparaturForm.value
-    console.log(insert)
     this._specFacade.insertReparatur(insert)
     this.modal?.close()
   }
   update() {
     let update: Reparatur = this.reparaturForm.value
-    console.log(update)
     this._specFacade.updateReparatur(update)
     this.modal?.close()
   }

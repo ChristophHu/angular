@@ -74,7 +74,6 @@ export class ChecklisteModalComponent implements OnInit {
 
   load(id: string) {
     this._specFacade.getChecklistById(id).subscribe(checklist => {
-      console.log(checklist)
       if (checklist && checklist.checklistItems!.length>0) {
         this.lastChecklist = checklist!
         

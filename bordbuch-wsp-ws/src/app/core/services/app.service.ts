@@ -232,7 +232,7 @@ export class AppService {
                 break
         }
 
-        console.log(`request: ${baseURL} + ${param}`)
+        // console.log(`request: ${baseURL} + ${param}`)
         
         return this.httpClient.post(
             baseURL, 

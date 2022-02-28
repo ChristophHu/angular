@@ -20,8 +20,6 @@ export class ClickOutsideDirective {
       const clickedInside = this._elementRef.nativeElement.contains(targetElement);
       if (!clickedInside) {
         this._renderer.removeClass(targetElement, 'open')
-        console.log(targetElement)
-        console.log('outside')
         this.clickOutside.emit(event)
       }
   }

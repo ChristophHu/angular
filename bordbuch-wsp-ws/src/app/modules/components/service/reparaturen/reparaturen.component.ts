@@ -64,7 +64,6 @@ export class ReparaturenComponent implements OnInit {
   toggleReparaturen(status: string) {
     this.status = status
     this.reparaturen$ = this._specFacade.getReparaturen(status)
-    this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
   }
 
   toggleFilter(filter: string) {

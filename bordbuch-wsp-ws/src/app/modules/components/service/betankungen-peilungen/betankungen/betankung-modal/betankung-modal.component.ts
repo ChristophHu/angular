@@ -78,7 +78,6 @@ export class BetankungModalComponent implements OnInit {
   }
   update() {
     let update: Betankung = this.betankungForm.value
-    console.log(update)
     this._specFacade.updateBetankung(update)
     this.modal?.close()
   }

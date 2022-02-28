@@ -2,10 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Peilung } from 'src/app/core/models/peilung.model';
-import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
 import { PeilungModalComponent } from './peilung-modal/peilung-modal.component';
@@ -17,28 +15,22 @@ import { PeilungModalComponent } from './peilung-modal/peilung-modal.component';
 })
 export class PeilungenComponent implements OnInit {
   @Input() showfilter: boolean = false
-  filterForm: FormGroup
 
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  schiffe$: Observable<Schiff[]>
   peilungen$!: Observable<Peilung[]>
 
-  startDate: Date = new Date()
-  endeDate: Date = new Date()
+  filterForm: FormGroup
+  filter: string = 'year'
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<PeilungModalComponent>, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
-    this.schiffe$ = _katFacade.schiffe$
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<PeilungModalComponent>, private _specFacade: SpecFacade) {
     this.peilungen$ = this._specFacade.allPeilungen$
-    this._specFacade.allPeilungen$.subscribe((data: any) => console.log(data))
 
     this.filterForm = this._formBuilder.group({
-      id_schiff: [],
-      name: [],
-      startDate: [],
-      endeDate: []
+      startdate: [],
+      enddate: []
     })
   }
 
@@ -59,18 +51,18 @@ export class PeilungenComponent implements OnInit {
     }
   }
 
-  selectShip(name: string) {
-    this._katFacade.getIdByShip(name).subscribe((id: any) => {
-      this.filterForm.patchValue({ id_schiff: id })
-      this._specFacade.loadPeilungenById(id)
-      this._specFacade.loadTanks(id)
-    })
-  }
-  setStartDate() {
-    this.filterForm.patchValue({ startDate: getLocalISO('now') })
-  }
-  setEndeDate() {
-    this.filterForm.patchValue({ endeDate: getLocalISO('now') })
+  toggleFilter(filter: string) {
+    this.filter = filter
+    if (filter != '') {
+      const startdate = getLocalISO(filter)
+      const enddate = getLocalISO('')
+
+      this.filterForm.value.startdate = startdate
+      this.filterForm.value.enddate = enddate
+      this._specFacade.loadAllPeilungen({ startdate, enddate })
+    } else {
+      this._specFacade.loadAllPeilungen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
+    }
   }
 
   async showModal(peilung?: Peilung): Promise<void> {

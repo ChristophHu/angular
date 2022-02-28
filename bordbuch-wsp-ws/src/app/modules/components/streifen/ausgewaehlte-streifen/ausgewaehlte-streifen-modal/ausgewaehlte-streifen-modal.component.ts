@@ -46,11 +46,9 @@ export class AusgewaehlteStreifenModalComponent implements OnInit {
 
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
-      console.log(data.data.streife)
       this.title = data.data.title
       this.streifeForm.patchValue(data.data.streife)
       this.besatzung = data.data.streife.besatzung
-      console.log(this.besatzung)
 
       if (data.data.streife) {
         this.selectShip(data.data.streife.schiffsname)
@@ -71,7 +69,6 @@ export class AusgewaehlteStreifenModalComponent implements OnInit {
   update() {
     let update: Streife = this.streifeForm.value
     this._specFacade.updateStreife(update)
-    console.log(update)
     this.modal?.close()
   }
   delete() {

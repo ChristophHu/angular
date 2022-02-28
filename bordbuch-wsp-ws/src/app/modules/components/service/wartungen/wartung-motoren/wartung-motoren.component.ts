@@ -40,7 +40,6 @@ export class WartungMotorenComponent implements OnInit {
   }
 
   async showModal(zaehlerstand?: Zaehlerstand): Promise<void> {
-    console.log(zaehlerstand)
     const { WartungMotorModalComponent } = await import(
       './wartung-motor-modal/wartung-motor-modal.component'
     )

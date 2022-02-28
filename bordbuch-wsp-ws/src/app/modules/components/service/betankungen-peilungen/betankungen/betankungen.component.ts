@@ -15,14 +15,15 @@ import { BetankungModalComponent } from './betankung-modal/betankung-modal.compo
 })
 export class BetankungenComponent implements OnInit {
   @Input() showfilter: boolean = false
+
   // datatables
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
+  betankungen$!: Observable<Betankung[]>
+
   filterForm: FormGroup
   filter: string = 'year'
-
-  betankungen$!: Observable<Betankung[]>
 
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<BetankungModalComponent>, private _specFacade: SpecFacade) {
     this.betankungen$ = this._specFacade.allBetankungen$

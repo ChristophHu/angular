@@ -23,7 +23,6 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
   standortForm: FormGroup
   
   schiffe$ : Observable<Schiff[]>
-  // id_streife: string
   streife$!: Observable<Streife | undefined>
 
   constructor(
@@ -33,8 +32,6 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
     private _specFacade: SpecFacade,
     private locationService: LocationService, 
     private _modalService: ModalService<AusgewaehlterStandortModalComponent>) {
-    // this.id_streife = this._route.snapshot.paramMap.get('id')!
-    // console.log(this.id_streife)
     
     this.schiffe$ = this._katFacade.schiffe$
     
@@ -53,13 +50,6 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (this.id_streife) {
-    //   this._specFacade.getStreifeById(this.id_streife).subscribe(streife => {
-    //     console.log(`load streife: ${streife}`)
-    //     this.standortForm.patchValue(streife!)
-    //   })
-    // }
-
     this._modalService.getData().then((data) => {
       this.title = data.data.title
 
@@ -86,7 +76,6 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
 
   create() {
     let insert: Standort = this.standortForm.value
-    console.log(`insert Standort ${insert}`)
     this._specFacade.insertStandort(insert)
     this.modal?.close()
   }
@@ -94,11 +83,9 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
   update() {
     let update: Standort = this.standortForm.value
     this._specFacade.updateStandort(update)
-    console.log(update)
     this.modal?.close()
   }
   delete() {
-    console.log(`delete: ${this.standortForm.value.id}`)
     this._specFacade.deleteStandort(this.standortForm.value.id)
     this.modal?.close()
   }

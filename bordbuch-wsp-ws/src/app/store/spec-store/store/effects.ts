@@ -27,8 +27,11 @@ export class Effects {
     loadAllBetankungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllBetankungen),
-            concatMap(action => this.appService.getAllBetankungen(action.filter)),
-            map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen }))
+            switchMap(action => {
+                return this.appService.getAllBetankungen(action.filter).pipe(
+                    map((betankungen: Betankung[]) => loadedAllBetankungen({ betankungen }))
+                )
+            })
         )
     })
     insertBetankung$ = createEffect(() => {
@@ -102,8 +105,11 @@ export class Effects {
     loadPeilungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadPeilungen),
-            concatMap(action => this.appService.getPeilungenAll(action.filter)),
-            map((peilungen: Peilung[]) => loadPeilungenSuccess({ peilungen }))
+            switchMap(action => {
+                return this.appService.getPeilungenAll(action.filter).pipe(
+                    map((peilungen: Peilung[]) => loadPeilungenSuccess({ peilungen }))
+                )
+            })
         )
     })
     insertPeilung$ = createEffect(() => {
@@ -260,9 +266,11 @@ export class Effects {
     loadAllStreifen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllStreifen),
-            concatMap(action => this.appService.getAllStreifen(action.filter)),
-            tap(data => console.log(data)),
-            map((streifen: Streife[]) => loadedAllStreifen({ streifen }))
+            switchMap(action => {
+                return this.appService.getAllStreifen(action.filter).pipe(
+                    map((streifen: Streife[]) => loadedAllStreifen({ streifen }))
+                )
+            })
         )
     })
     insertStreife$ = createEffect(() => {

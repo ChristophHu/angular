@@ -207,7 +207,6 @@ export const reducer = createReducer(
         }
     }),
     on(insertKennungSuccess, (state, action) => {
-        console.log(action)
         let kennung: Kat = Object.assign({}, action.action.insert, { id: action.id })
         let clearedKennungen: Kat[] | undefined = checkStateForEmptyArrays(state.kennungen)
         // clearedKennungen = clearedKennungen?.filter(el => el.bezeichnung != action.action.insert.bezeichnung)
@@ -419,7 +418,6 @@ export const reducer = createReducer(
         }
     }),
     on(insertZweckSuccess, (state, action) => {
-        console.log(action)
         let zweck: Kat = Object.assign({}, action.action.insert, { id: action.id })
         let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = [...clearedZweck!, ...[zweck]]
@@ -429,7 +427,6 @@ export const reducer = createReducer(
         }
     }),
     on(updateZweckSuccess, (state, action) => {
-        console.log(action)
         let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = clearedZweck?.filter(el => el.id != action.update.id)
         clearedZweck = [...clearedZweck!, ...[action.update]]
@@ -439,7 +436,6 @@ export const reducer = createReducer(
         }
     }),
     on(deleteZweckSuccess, (state, action) => {
-        console.log(action)
         let clearedZweck: Kat[] | undefined = checkStateForEmptyArrays(state.zweck)
         clearedZweck = clearedZweck?.filter(el => el.id != action.id)
         clearedZweck = [...clearedZweck!]

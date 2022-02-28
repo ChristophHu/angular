@@ -35,7 +35,6 @@ export class PeilungModalComponent implements OnInit {
     this.betriebsstoffe$ = _katFacade.betriebsstoffe$
     this.schiffe$ = _katFacade.schiffe$
     this.tank$ = _specFacade.allTanks$
-    _specFacade.allTanks$.subscribe(data => console.log(data))
 
     this.peilungForm = this._formBuilder.group({
       id: [],
@@ -53,9 +52,12 @@ export class PeilungModalComponent implements OnInit {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
 
-      this.peilungForm.patchValue({ date: data.data.date })
-      this.peilungForm.patchValue(data.data.peilung)
-      console.log(data.data.peilung)
+      if(data.data) {
+        this.peilungForm.patchValue({ date: data.data.date })
+        this.peilungForm.patchValue(data.data.peilung)
+  
+        this._specFacade.loadTanks(data.data.peilung.id_schiff)
+      }
     })
   }
 
@@ -63,10 +65,8 @@ export class PeilungModalComponent implements OnInit {
     this._katFacade.getIdByShip(name).subscribe((id: any) => this.peilungForm.patchValue({ id_schiff: id }))
   }
   selectTank(bezeichnung: string) {
-    console.log(bezeichnung)
     this._specFacade.getIdByTank(bezeichnung).subscribe((id: any) => {
       this.peilungForm.patchValue({ id_tank: id })
-      console.log(id)
     })
   }
 

@@ -15,13 +15,11 @@
         <mat-form-field appearance="fill">
           <mat-label>Kennwort</mat-label>
           <input type="password" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-          <!-- <a class="w-6" mat-icon-button matSuffix (click)="hide = !hide">
-            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
-            <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
-          </a> -->
-          <a (click)="hide = !hide" class="w-6 h-6 focus:outline-none cursor-pointer" mat-icon-button matSuffix>
-            <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
-          </a>
+          <!-- <button class="w-4 h-4" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Passwort verstecken'" [attr.aria-pressed]="'verstecken'"> -->
+            <div class="absolute right-2 top-4 w-6 h-6" (click)="hide = !hide">
+              <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
+            </div>
+          <!-- </button> -->
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Die Eingabe eines Kennworts ist erforderlich!</mat-error>
         </mat-form-field>
         

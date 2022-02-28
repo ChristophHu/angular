@@ -71,7 +71,6 @@ export class WartungMotorModalComponent implements OnInit {
   }
   update() {
     let update: Zaehlerstand = this.zaehlerstandForm.value
-    console.log(update)
     this._specFacade.updateZaehlerstand(update)
     this.modal?.close()
   }

@@ -244,7 +244,6 @@ export const reducer = createReducer(
         }
     }),
     on(updateStandortSuccess, (state, action) => {
-        // let standort: Standort = Object.assign({}, action.action.update, { id: action.id })
         let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.standorte)
         cleared = cleared?.filter(el => el.id != action.action.update.id)
         cleared = [...cleared!, ...[action.action.update]]
@@ -254,7 +253,7 @@ export const reducer = createReducer(
         }
     }),
     on(deleteStandortSuccess, (state, action) => {
-        let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.laststandorte)
+        let cleared: Standort[] | undefined = checkStateForEmptyArrays(state.standorte)
         cleared = cleared?.filter(el => el.id != action.id)
         cleared = [...cleared!]
         return {
