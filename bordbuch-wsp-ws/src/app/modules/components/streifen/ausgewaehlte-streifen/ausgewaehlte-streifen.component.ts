@@ -64,19 +64,18 @@ export class AusgewaehlteStreifenComponent implements OnInit {
 
   toggleFilter(filter: string) {
     this.filterZeit = filter
-    // this.reparaturen$ = this._specFacade.getReparaturen(status)
-    // this._specFacade.getReparaturen(status).subscribe(data => console.log(data))
-    console.log(getLocalISO(filter))
-    const startdate = getLocalISO(filter)
-    const enddate = getLocalISO('')
-    this._specFacade.loadAllReparaturen({ startdate, enddate })
-
-    this.filterForm.value.startdate = startdate
-    this.filterForm.value.enddate = enddate
+    if (filter != '') {
+      const startdate = getLocalISO(filter)
+      const enddate = getLocalISO('')
+      this.filterForm.value.startdate = startdate
+      this.filterForm.value.enddate = enddate
+      this._specFacade.loadAllStreifen({ startdate, enddate })
+    } else {
+      this._specFacade.loadAllStreifen({ startdate: this.filterForm.value.startdate, enddate: this.filterForm.value.enddate })
+    }
   }
 
   reload() {
-    console.log(`reload streifen`)
     this._specFacade.loadAllStreifen({ startdate: '', enddate: ''})
   }
 

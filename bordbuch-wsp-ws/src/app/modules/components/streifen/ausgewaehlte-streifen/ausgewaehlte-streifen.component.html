@@ -10,57 +10,47 @@
 </div>
 <div class="absolute top-20 right-0 bottom-0 left-0">
     <div class="container mx-auto p-4">
-        <div class="w-full bg-blue-200 p-4 rounded">
-            <div class="flex flex-row mb-3">
-                <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
-                <span class="ml-2 text-lg font-bold">Filter</span>
-            </div>
-            <div class="flex flex-row items-center mb-4">
-                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filterStreife == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggle('alle')">Alle</button>
-                <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let status of status$" [ngClass]="(filterStreife == status) ? 'bg-blue-600 text-white' : ''" (click)="toggle(status)">{{ status }}</button>
-                <button class="w-6 h-6 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="reload()">
-                    <icons class="w-4 h-4 stroke-1 stroke-current" name="refresh"></icons>
-                </button>
-                <button class="w-6 h-6 mt-2 mr-2 p-1 bg-gray-300 text-black rounded-full" (click)="showfilter=!showfilter">
-                    <icons class="w-4 h-4 stroke-1 stroke-current" name="filter"></icons>
-                </button>
-            </div>
+        <div class="flex flex-row py-3">
+            <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
+            <span class="ml-2 text-lg font-bold">Filter</span>
+        </div>
+        <div class="h-8 flex items-center">
+            <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(filterStreife == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggle('alle')">Alle</button>
+            <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let status of status$" [ngClass]="(filterStreife == status) ? 'bg-blue-600 text-white' : ''" (click)="toggle(status)">{{ status }}</button>
+            <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="reload()">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="refresh"></icons>
+            </button>
+            <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="showfilter=!showfilter">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="filter"></icons>
+            </button>
+        </div>
 
-            <div *ngIf="showfilter">
-                <!-- <div class="flex flex-row justify-between">
-                    <div class="flex flex-row">
-                        <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
-                        <span class="ml-2 font-bold">Filter</span>
-                    </div>
-                    <button class="hover:text-gray-400 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div> -->
-                <div class="flex flex-row mt-3 justify-between">
-                    <div class="mt-3">
-                        <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
-                        <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
-                        <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
-                        <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
-                    </div>
-                    <div>
-                        <form [formGroup]="filterForm">
-                            <div class="flex flex-row">
-                                <div class="w-48 mr-2">
-                                    <mat-form-field appearance="fill">
-                                        <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
-                                    </mat-form-field>
-                                </div>
-                                <div class="w-48">
-                                    <mat-form-field appearance="fill">
-                                        <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
-                                    </mat-form-field>
-                                </div>
+        <div *ngIf="showfilter">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 py-3 border-b">
+                <div class="h-8 flex items-center">
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
+                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filterZeit == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
+                </div>
+                <div class="lg:justify-self-end">
+                    <form [formGroup]="filterForm">
+                        <div class="h-8 flex flex-row items-center">
+                            <div class="w-48 mr-2">
+                                <mat-form-field appearance="fill">
+                                    <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
+                                </mat-form-field>
                             </div>
-                        </form>
-                    </div>
+                            <div class="w-48">
+                                <mat-form-field appearance="fill">
+                                    <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
+                                </mat-form-field>
+                            </div>
+                            <button (click)="toggleFilter('')" class="w-8 h-8 p-1 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded cursor-pointer" [ngClass]="(filterZeit == '') ? 'bg-blue-600 text-white' : ''">
+                                <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="search"></icons>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -90,7 +80,21 @@
                     <td>{{ streife.zweck }}</td>
                     <td>{{ streife.status }}</td>
                     <td class="flex flex-row justify-start text-gray-500">
-                        <button class="dropdown w-6 h-6" [routerLink]="['/streifen', streife.id]">
+                        <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <mat-menu #editMenu="matMenu">
+                            <button mat-menu-item [routerLink]="['/streifen', streife.id]">
+                                Positionen
+                            </button>
+                            <button mat-menu-item (click)="showModal(streife)">
+                                Bearbeiten
+                            </button>
+                            <button mat-menu-item (click)="delete(streife.id)">
+                                Löschen
+                            </button>
+                        </mat-menu>
+                        <!-- <button class="dropdown w-6 h-6" [routerLink]="['/streifen', streife.id]">
                             <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="location-marker"></icons>
                         </button>
                         <button class="dropdown w-6 h-6" appDropdown>
@@ -103,7 +107,7 @@
                             <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(streife.id)">
                                 <p>Löschen</p>
                             </div>
-                        </div>
+                        </div> -->
                     </td>
                 </tr>
             </tbody>

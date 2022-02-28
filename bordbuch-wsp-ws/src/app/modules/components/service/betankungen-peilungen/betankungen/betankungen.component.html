@@ -14,7 +14,7 @@
                 <icons class="w-4 h-4 stroke-1 stroke-current" name="filter"></icons>
             </button>
         </div> -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 py-3 border-b">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 py-3 border-b">
             <div class="h-8 flex items-center">
                 <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
                 <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
