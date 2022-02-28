@@ -49,6 +49,7 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
   });
 
   this.qrScannerComponent.capturedQr.subscribe((result: any) => {
+      console.log(result)
       let QRCode: QRCodeJSON = JSON.parse(result)
       this.modal?.close()
       this.router.navigate(['/mobile', 'boot', QRCode.id])
