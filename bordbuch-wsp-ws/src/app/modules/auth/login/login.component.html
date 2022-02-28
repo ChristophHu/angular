@@ -19,7 +19,7 @@
             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"
             <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
           </a> -->
-          <a (click)="hide = !hide" class="w-6 h-6 focus:outline-none cursor-pointer">
+          <a (click)="hide = !hide" class="w-6 h-6 focus:outline-none cursor-pointer" mat-icon-button matSuffix>
             <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
           </a>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Die Eingabe eines Kennworts ist erforderlich!</mat-error>

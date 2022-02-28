@@ -25,23 +25,18 @@ export class KatKennungenComponent implements OnInit {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers', 
-      pageLength: 10, 
-      responsive: true, 
-      // "paging"  : false,
-      // "ordering": false,
-      // "processing": true,
-      // "info"    : false,
-      "autoWidth": true,
-      // "retrieve": true,
-      // data:this.dtUsers,
-      // columns: [{title: 'User ID', data: 'id'},
-      //       {title: 'First Name', data: 'firstName'},
-      //       {title: 'Last Name', data: 'lastName' }],
-      "language": {
+      pageLength: 10,     // Anzahl von Elementen pro Seite
+      paging    : true,   // (default: true)
+      responsive: true,   // (default: true)
+      ordering  : true,   // Sortierung (default: true)
+      processing: true,   // (default: true)
+      autoWidth : true,   // (default: true)
+      retrieve  : true,   // (default: true)
+      info      : false,  // Anzahl von Elementen (default: true)
+      language  : {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
-    // this._betankungService.getBetankungen()
   }
   
   async showModal(kat?: Kat): Promise<void> {
