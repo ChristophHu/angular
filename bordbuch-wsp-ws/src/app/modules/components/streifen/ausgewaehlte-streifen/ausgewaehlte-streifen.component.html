@@ -41,13 +41,13 @@
                                     <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
                                 </mat-form-field>
                             </div>
-                            <div class="w-48">
+                            <div class="w-48 mr-2">
                                 <mat-form-field appearance="fill">
                                     <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
                                 </mat-form-field>
                             </div>
                             <button (click)="toggleFilter('')" class="w-8 h-8 p-1 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded cursor-pointer" [ngClass]="(filterZeit == '') ? 'bg-blue-600 text-white' : ''">
-                                <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="search"></icons>
+                                <icons class="w-6 h-6 stroke-2 stroke-current" name="search"></icons>
                             </button>
                         </div>
                     </form>

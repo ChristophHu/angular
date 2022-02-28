@@ -261,6 +261,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllStreifen),
             concatMap(action => this.appService.getAllStreifen(action.filter)),
+            tap(data => console.log(data)),
             map((streifen: Streife[]) => loadedAllStreifen({ streifen }))
         )
     })

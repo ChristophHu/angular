@@ -248,9 +248,7 @@ export class AppService {
         const backendUrl: string = this._connectionService.getBackendUrl()
         const token     : string = this._connectionService.getToken()
 
-        const placeholder: string = '' 
-
-        // console.info(`getreducer | action: '${action}', data: `, data)
+        console.info(`getreducer | action: '${action}', data: `, data)
 
         const baseURL = `${backendUrl}/${action}`
         let param = ``

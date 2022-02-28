@@ -1,49 +1,47 @@
 <div class="container mx-auto p-4">
-    <!-- <div class="w-full bg-blue-200 p-4 rounded"> -->
-        <div class="flex flex-row py-3">
-            <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
-            <span class="ml-2 text-lg font-bold">Filter</span>
-        </div>
-        <div class="h-8 flex items-center">
-            <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(status == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen('alle')">Alle</button>
-            <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let kat of (kat$ | async)" [ngClass]="(status == kat.bezeichnung) ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen(kat.bezeichnung)">{{ kat.bezeichnung }}</button>
-            <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="reload()">
-                <icons class="w-6 h-6 stroke-1 stroke-current" name="refresh"></icons>
-            </button>
-            <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="showfilter=!showfilter">
-                <icons class="w-6 h-6 stroke-1 stroke-current" name="clock"></icons>
-            </button>
-        </div>
-        <div *ngIf="showfilter">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 py-3 border-b">
-                <div class="h-8 flex items-center">
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
-                    <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
-                </div>
-                <div class="lg:justify-self-end">
-                    <form [formGroup]="filterForm">
-                        <div class="h-8 flex flex-row items-center">
-                            <div class="w-48 mr-2">
-                                <mat-form-field appearance="fill">
-                                    <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
-                                </mat-form-field>
-                            </div>
-                            <div class="w-48">
-                                <mat-form-field appearance="fill">
-                                    <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
-                                </mat-form-field>
-                            </div>
-                            <button (click)="toggleFilter('')" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" [ngClass]="(filter == '') ? 'bg-blue-600 text-white' : ''">
-                                <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="search"></icons>
-                            </button>
+    <div class="flex flex-row py-3">
+        <icons class="w-6 h-6 stroke-2 stroke-current" name="filter"></icons>
+        <span class="ml-2 text-lg font-bold">Filter</span>
+    </div>
+    <div class="h-8 flex items-center">
+        <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(status == 'alle') ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen('alle')">Alle</button>
+        <button class="px-3 mr-2 bg-gray-300 text-black rounded-full" *ngFor="let kat of (kat$ | async)" [ngClass]="(status == kat.bezeichnung) ? 'bg-blue-600 text-white' : ''" (click)="toggleReparaturen(kat.bezeichnung)">{{ kat.bezeichnung }}</button>
+        <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="reload()">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="refresh"></icons>
+        </button>
+        <button class="w-8 h-8 p-1 mr-2 bg-gray-300 text-black rounded-full" (click)="showfilter=!showfilter">
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="clock"></icons>
+        </button>
+    </div>
+    <div *ngIf="showfilter">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 py-3 border-b">
+            <div class="h-8 flex items-center">
+                <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
+                <button class="px-3 mt-2 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
+            </div>
+            <div class="lg:justify-self-end">
+                <form [formGroup]="filterForm">
+                    <div class="h-8 flex flex-row items-center">
+                        <div class="w-48 mr-2">
+                            <mat-form-field appearance="fill">
+                                <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
+                            </mat-form-field>
                         </div>
-                    </form>
-                </div>
+                        <div class="w-48 mr-2">
+                            <mat-form-field appearance="fill">
+                                <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
+                            </mat-form-field>
+                        </div>
+                        <button (click)="toggleFilter('')" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" [ngClass]="(filter == '') ? 'bg-blue-600 text-white' : ''">
+                            <icons class="w-6 h-6 stroke-2 stroke-current" name="search"></icons>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    <!-- </div> -->
+    </div>
 </div>
 
 <div class="container mx-auto mt-4 px-4">
