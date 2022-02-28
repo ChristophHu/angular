@@ -39,7 +39,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             case 404: 
                 console.log(`not found`) 
-                this._router.navigateByUrl('/login')
                 break;
 
             case 500:

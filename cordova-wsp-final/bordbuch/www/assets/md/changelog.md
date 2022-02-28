@@ -17,6 +17,7 @@
 
 ## <u>ToDo</u>
 <ul>
+    <li>- Swipe/Touch zum vor/zurück springen integrieren</li>
     <li>- Streifenstatus fixieren</li>
     <li>- Tabellen-header und -footer fixieren</li>
     <li></li>

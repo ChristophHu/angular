@@ -302,7 +302,6 @@ export class AppService {
             case 'getReparaturenVonSchiff':
             case 'getStreifeVonSchiff':
             case 'getTanksVonSchiff':
-            case 'getZaehlerstaende':
                 param = `?id_schiff=${data}`
                 break
             

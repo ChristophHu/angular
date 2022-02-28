@@ -6,6 +6,7 @@ import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { environment } from 'src/environments/environment';
 import { ChecklisteModalComponent } from './checkliste-modal/checkliste-modal.component';
 import { MotorModalComponent } from './motor-modal/motor-modal.component';
+import { QrcodeModalComponent } from './qrcode-modal/qrcode-modal.component';
 import { SchiffModalComponent } from './schiff-modal/schiff-modal.component';
 import { TankModalComponent } from './tank-modal/tank-modal.component';
 
@@ -25,6 +26,7 @@ export class SchiffeComponent implements OnInit {
     private _modalService: ModalService<SchiffModalComponent>,
     private _modalServiceChecklist: ModalService<ChecklisteModalComponent>,
     private _modalServiceMotor: ModalService<MotorModalComponent>,
+    private _modalServiceQRCode: ModalService<QrcodeModalComponent>,
     private _modalServiceTank: ModalService<TankModalComponent>,
     private _katFacade: KatFacade) {
       this.schiffe$ = _katFacade.schiffe$
@@ -88,6 +90,19 @@ export class SchiffeComponent implements OnInit {
     this._modalServiceMotor.open(MotorModalComponent, {
       data: {
         title: 'Motoren',
+        schiff
+      }
+    })
+  }
+
+  async showQRCodeModal(schiff: Schiff): Promise<void> {
+    const { QrcodeModalComponent } = await import(
+      './qrcode-modal/qrcode-modal.component'
+    )
+
+    this._modalServiceQRCode.open(QrcodeModalComponent, {
+      data: {
+        title: 'QR-Code',
         schiff
       }
     })

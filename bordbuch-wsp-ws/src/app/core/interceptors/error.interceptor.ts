@@ -33,6 +33,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
           case 401: 
             const notification_401: Notification = { content: 'Sie sind nicht autorisiert.', title: 'Authentication', type: NotificationType.Alert, exception: ExceptionType.OK }
+            this._RxjsNotificationService.addAndResponseNotification(notification_401).pipe(take(1)).subscribe(data => console.log(data))
             console.error(`unauthorized`)
             this.logout()
             break; 

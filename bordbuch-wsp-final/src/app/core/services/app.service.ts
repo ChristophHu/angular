@@ -148,6 +148,15 @@ export class AppService {
         const baseURL = `${backendUrl}/${action}`
         let param = ``
         switch (action) {
+            // filter
+            case 'getBetankungen':
+                param = `?id_schiff=${data}&all=false&startdate=${null}&enddate=${null}`
+                break
+
+            case 'getZaehlerstaende':
+                param = `?id_schiff=${data}&startdate=${null}&enddate=${null}`
+                break
+
             case 'getDienststellen':
             case 'getPruefvermerke':
             case 'getPruefvermerksKategorien':
@@ -174,7 +183,6 @@ export class AppService {
             case 'getReparaturenVonSchiff':
             case 'getStreifeVonSchiff':
             case 'getTanksVonSchiff':
-            case 'getZaehlerstaende':
                 param = `?id_schiff=${data}`
                 break
             
@@ -185,7 +193,6 @@ export class AppService {
                 break
 
             case 'getPeilungVonSchiff':
-            case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false`
                 break
 
