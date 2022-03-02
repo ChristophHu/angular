@@ -44,6 +44,7 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
         latitude: [],
         longitude: []
       }),
+      ort: [],
       description : [],
       name        : []
     })

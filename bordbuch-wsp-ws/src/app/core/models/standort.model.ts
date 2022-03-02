@@ -6,6 +6,7 @@ export interface Standort {
     id_streife  : string
     date        : string
     location    : Position
+    ort         : string
     description : string
     name        : string
 }

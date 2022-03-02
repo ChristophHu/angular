@@ -128,7 +128,6 @@ export class AppService {
                 break
         }
 
-        // console.info(`backendurl: '${baseURL}', param: ${param}`)
         return this.httpClient.post(
             baseURL, 
             param, 

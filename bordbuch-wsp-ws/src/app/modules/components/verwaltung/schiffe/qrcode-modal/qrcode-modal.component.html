@@ -24,8 +24,9 @@
                 <input matInput type="text" formControlName="name">
             </mat-form-field>
             <div class="flex content-center justify-center">
-                <qrcode [qrdata]="'{{ id | json }}'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-                <p>{{ id | json }}</p>
+                <qrcode [qrdata]="id" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+                <br>
+                <p>id</p>
             </div>
         </form>
     </div>

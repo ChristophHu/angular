@@ -32,6 +32,7 @@ export class QrcodeModalComponent implements OnInit {
       this.title = data.data.title
       this.schiffForm.patchValue(data.data.schiff)
       this.id = data.data.schiff.id
+      console.log(this.id)
     })
   }
 
