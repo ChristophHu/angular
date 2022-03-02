@@ -24,7 +24,8 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive'
 import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
-import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive'
+import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive';
+import { ErrorComponent } from './components/error/error.component'
 
 @NgModule({
     declarations: [

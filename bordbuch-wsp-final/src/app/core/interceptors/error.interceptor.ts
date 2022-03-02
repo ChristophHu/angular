@@ -19,39 +19,53 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       retry(2),
       catchError((error: HttpErrorResponse) => {
+        let errorObj: any
+        if (errorObj instanceof HttpErrorResponse) {
+          if (errorObj.status === 0) {
+            return throwError('Unable to Connect to the Server')
+          }
+        }
+
         if (error.status !== 401) {
           // 401 handled in auth.interceptor
         }
 
         switch(error.status) {
-            case 400:
-                console.log(`bad request`) 
-                break; 
+          case 0:
+            console.error('status: 0')
+            // ERR_CONNECTION_TIMED_OUT, ERR_CONNECTION_REFUSED, ERR_NAME_NOT_RESOLVED, ERR_EMPTY_RESPONSE
+            console.log('Gerätefehler, Neustart durchführen, ggf. keine Verbindung')
+            alert('Fehler: Gerät neustarten')
+            break
 
-            case 401: 
-                console.log(`unauthorized`)
-                this._router.navigateByUrl('/login')
-                break; 
+          case 400:
+            console.log(`bad request`)
+            break
 
-            case 403: 
-                console.log(`forbidden`) 
-                break; 
+          case 401: 
+            console.log(`unauthorized`)
+            alert('Autorisierung fehlt!')
+            this._router.navigateByUrl('/login')
+            break
 
-            case 404: 
-                console.log(`not found`) 
-                break;
+          case 403:
+            console.log(`forbidden`)
+            break
 
-            case 500:
-            case 501:
-            case 502:
-            case 503:
-              console.log(`5xx-er`) 
-              break
+          case 404:
+            console.log(`not found`)
+            break
 
-            default: { 
-                console.log(`default error`) 
-                break; 
-            }
+          case 500:
+          case 501:
+          case 502:
+          case 503:
+            console.log(`5xx-er`) 
+            break
+
+          default:
+            console.log(`default error`)
+            break
         } 
 
         return throwError(error);

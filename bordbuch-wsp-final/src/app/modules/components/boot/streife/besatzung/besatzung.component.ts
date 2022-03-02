@@ -64,6 +64,13 @@ export class BesatzungComponent implements OnInit {
     this.besatzungForm.controls['von_bord'].markAsDirty()
   }
 
+  searchUser(e: any) {
+    console.log(e)
+    this.appService.getSearchUser(e).subscribe((data: any) => {
+      console.log(data)
+    })
+  }
+
   create() {
     const insert: Besatzung = this.besatzungForm.value
     console.log(insert)

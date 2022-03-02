@@ -50,9 +50,9 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
 
   this.qrScannerComponent.capturedQr.subscribe((result: any) => {
       console.log(result)
-      let QRCode: QRCodeJSON = JSON.parse(result)
+      // let QRCode: QRCodeJSON = JSON.parse(result)
       this.modal?.close()
-      this.router.navigate(['/mobile', 'boot', QRCode.id])
+      this.router.navigate(['/boot', result])
   });
   }
 
@@ -63,9 +63,9 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
   }
 
   onCodeResult(result: string) {
-    let QRCode: QRCodeJSON = JSON.parse(result)
+    // let QRCode: QRCodeJSON = JSON.parse(result)
     this.modal?.close()
-    this.router.navigate(['/mobile', 'boot', QRCode.id])
+    this.router.navigate(['/boot', result])
   }
 
   cancel() {

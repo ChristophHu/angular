@@ -126,12 +126,12 @@ export class StreifeComponent implements OnInit, AfterViewInit {
         this.zweckFormGroup.patchValue(patrol!)
         this.patrol = patrol!
       }
-      if (patrol?.status == 'aktiv') {
-        // auslagern und in den Store mit aufnehmen
-        this.appService.checkPositionStart(patrol)
-      } else {
-        this.appService.checkPositionStop()
-      }
+      // if (patrol?.status == 'aktiv') {
+      //   // auslagern und in den Store mit aufnehmen
+      //   this.appService.checkPositionStart(patrol)
+      // } else {
+      //   this.appService.checkPositionStop()
+      // }
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
@@ -206,7 +206,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
           case 'aktiv':
             // startposition setzen
             this.locationService.getCurrentPosition().then(position => {
-              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString().substring(0,16), location: { latitude: position.latitude, longitude: position.longitude}, description: `Start der Streife` }
+              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString().substring(0,16), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
               this.store.dispatch(PositionActions.insertData({ positionReport }))
             })
 

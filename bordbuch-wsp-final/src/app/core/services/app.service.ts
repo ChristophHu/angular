@@ -114,10 +114,10 @@ export class AppService {
 
             // position
             case 'insertPosition':
-                param = `id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
+                param = `id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&ort=${data.ort}&date=${data.date}&beschreibung=${data.description}`
                 break
             case 'updatePosition':
-                param = `id=${data.id}&id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&beschreibung=${data.description}`
+                param = `id=${data.id}&id_schiff=${data.id_ship}&id_streife=${data.id_streife}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&ort=${data.ort}&date=${data.date}&beschreibung=${data.description}`
                 break
             case 'deletePosition':
                 param = `id=${data}`
@@ -150,10 +150,11 @@ export class AppService {
             // filter
             case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false&startdate=${null}&enddate=${null}`
+                console.log(param)
                 break
 
-            case 'getZaehlerstaende':
-                param = `?id_schiff=${data}&startdate=${null}&enddate=${null}`
+            case 'getZaehlerstaendeRange':
+                param = `?id_schiff=${data}&startdate=&enddate=`
                 break
 
             case 'getDienststellen':
@@ -195,6 +196,10 @@ export class AppService {
                 param = `?id_schiff=${data}&all=false`
                 break
 
+            case 'searchUser':
+                param = `?search=${data}`
+                break
+
             default:
                 break
         }
@@ -206,6 +211,14 @@ export class AppService {
     get(reducer_func: string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer(reducer_func, {})
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    getWithParam(reducer_func: string, kat: any): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = this.getReducer(reducer_func, kat)
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
@@ -421,7 +434,7 @@ export class AppService {
     }
     getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getZaehlerstaende', id)
+            const source$ = this.getReducer('getZaehlerstaendeRange', id)
             source$.subscribe((data: any) => {
                 observer.next(data)
             }, (error: any) => observer.error(error))
@@ -668,17 +681,22 @@ export class AppService {
         return this.get('getStatustypen')
     }
 
-    checkPositionStart(patrol: Patrol) {
-        if (this._positionSubscription.closed) {
-            this._positionSubscription = this.positionLogInterval.subscribe((data: number) => {
-                this.locationService.getCurrentPosition().then(position => {
-                    const positionReport: PositionReport = { id_streife: patrol.id, id_ship: patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, description: `${data+1} Autom. gesetzte Position` }
-                    this.store.dispatch(PositionActions.insertData({ positionReport }))
-                })
-            })
-        }
+    // searchUser
+    getSearchUser(searchString: string): Observable<any> {
+        return this.getWithParam('searchUser', searchString)
     }
-    checkPositionStop() {
-        this._positionSubscription.unsubscribe()
-    }
+
+    // checkPositionStart(patrol: Patrol) {
+    //     if (this._positionSubscription.closed) {
+    //         this._positionSubscription = this.positionLogInterval.subscribe((data: number) => {
+    //             this.locationService.getCurrentPosition().then(position => {
+    //                 const positionReport: PositionReport = { id_streife: patrol.id, id_ship: patrol.id_schiff, date: new Date().toISOString(), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `${data+1} Autom. gesetzte Position` }
+    //                 this.store.dispatch(PositionActions.insertData({ positionReport }))
+    //             })
+    //         })
+    //     }
+    // }
+    // checkPositionStop() {
+    //     this._positionSubscription.unsubscribe()
+    // }
 }

@@ -8,27 +8,28 @@
       </button>
     </header>
     <div class="content">
-        <form [formGroup]="schiffForm">
-            <div class="hidden">
-              <mat-form-field appearance="fill">
-                <mat-label>id</mat-label>
-                <input matInput type="text" formControlName="id" readonly>
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>id_dienststelle</mat-label>
-                <input matInput type="text" formControlName="id_dienststelle">
-              </mat-form-field>
-            </div>
+      <p class="p-2 dark:text-gray-50 focus:outline-none text-lg font-semibold leading-6 text-gray-600">
+        Schiff
+      </p>
+      <form [formGroup]="schiffForm">
+          <div class="hidden">
             <mat-form-field appearance="fill">
-                <mat-label>Name</mat-label>
-                <input matInput type="text" formControlName="name">
+              <mat-label>id</mat-label>
+              <input matInput type="text" formControlName="id" readonly>
             </mat-form-field>
-            <div class="flex content-center justify-center">
-                <qrcode [qrdata]="id" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-                <br>
-                <p>id</p>
-            </div>
-        </form>
+            <mat-form-field appearance="fill">
+              <mat-label>id_dienststelle</mat-label>
+              <input matInput type="text" formControlName="id_dienststelle" readonly>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" formControlName="name" readonly>
+          </mat-form-field>
+          <div class="flex content-center justify-center">
+              <qrcode [qrdata]="id" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+          </div>
+      </form>
     </div>
     <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
       <ng-container *ngTemplateOutlet="toolbar"></ng-container>

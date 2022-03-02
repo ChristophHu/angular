@@ -15,7 +15,6 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positions/position/position.component';
 import { ShipSelectors } from 'src/app/store/ship-store';
 import { tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-map',
@@ -335,7 +334,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     )
 
     this.locationService.getCurrentPosition().then((data: any) => {
-      position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
+      position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, ort: '', description: ''}
       this.modalService.open(PositionComponent, {
         data: {
           title: 'Position hinzufügen',

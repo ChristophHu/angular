@@ -95,7 +95,7 @@ export class PositionsComponent implements OnInit {
     } else {
       this.locationService.getCurrentPosition().then((data: any) => {
         console.info(`currentPosition | latitude: ${data.latitude}, longitude: ${data.longitude}`)
-        position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, description: ''}
+        position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, ort: '', description: ''}
         this.modalService.open(PositionComponent, {
           data: {
             title: 'Position hinzufügen',
