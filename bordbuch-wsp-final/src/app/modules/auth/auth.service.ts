@@ -56,7 +56,7 @@ export class AuthService {
                 break
 
               default:
-                observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Bitte führen sie einen Neustart durch.' })
+                observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Kontrollieren sie ihre Verbindung und führen sie ggf. einen Neustart durch.' })
             }
             // observer.error(xmlhttp)
           }

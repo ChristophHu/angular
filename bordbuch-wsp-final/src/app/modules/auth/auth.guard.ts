@@ -16,10 +16,10 @@ export class AuthGuard implements CanActivate {
             select(isLoggedIn),
             tap(loggedIn => {
                 if (!loggedIn) {
-                    console.log('AuthGuard-canActivate: false')
+                    // console.log('AuthGuard-canActivate: false')
                     this._router.navigateByUrl('/login')
                 } else {
-                    console.log(`AuthGuard-canActivate: true - ${loggedIn}`)
+                    // console.log(`AuthGuard-canActivate: true - ${loggedIn}`)
                     // this._router.navigateByUrl('/mobile')
                 }
             })
@@ -32,10 +32,10 @@ export class AuthGuard implements CanActivate {
             tap(loggedIn => {
                 console.log(loggedIn)
                 if (!loggedIn) {
-                    console.log('AuthGuard-canActivateChild: false')
+                    // console.log('AuthGuard-canActivateChild: false')
                     this._router.navigateByUrl('/login')
                 } else {
-                    console.log('AuthGuard-canActivateChild: true')
+                    // console.log('AuthGuard-canActivateChild: true')
                 }
             })
         )
