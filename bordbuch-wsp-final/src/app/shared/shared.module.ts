@@ -7,16 +7,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatTableModule } from '@angular/material/table'
 import { MatStepperModule } from '@angular/material/stepper'
+import { MatDialogModule } from '@angular/material/dialog'
 import { ModalModule } from './components/modal/modal.module'
 import { CardModule } from './components/card/card.module'
 import { IconLibraryModule } from 'projects/icon-library/src/public-api'
 import { NgSelectModule } from '@ng-select/ng-select'
-import { MatSelectModule } from '@angular/material/select';
-import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module';
-import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
-import { Number2stringPipe } from './pipes/number2string/number2string.pipe';
-import { String2numberPipe } from './pipes/string2number/string2number.pipe';
-import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe';
+import { MatSelectModule } from '@angular/material/select'
+import { HeadlineStepperModule } from './components/headline-stepper/headline-stepper.module'
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component'
+import { Number2stringPipe } from './pipes/number2string/number2string.pipe'
+import { String2numberPipe } from './pipes/string2number/string2number.pipe'
+import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
 import { DaysAgoPipe } from './pipes/daysAgo/days-ago.pipe'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
 import { ImageBase64UploadModule } from './components/image-base64-upload/image-base64-upload.module'
@@ -24,8 +25,8 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive'
 import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
-import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive';
-import { ErrorComponent } from './components/error/error.component'
+import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive'
+import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ErrorComponent } from './components/error/error.component'
         String2numberPipe,
         DiffDateToTodayPipe,
         DaysAgoPipe,
-        ToArrayPipe
+        ToArrayPipe,
+        OrderByPipe
     ],
     imports: [
         CommonModule,
@@ -60,6 +62,7 @@ import { ErrorComponent } from './components/error/error.component'
         MatFormFieldModule,
         MatTableModule,
         MatStepperModule,
+        MatDialogModule,
 
         InfoPopupModule
     ],
@@ -71,6 +74,7 @@ import { ErrorComponent } from './components/error/error.component'
         DiffDateToTodayPipe,
         DaysAgoPipe,
         ToArrayPipe,
+        OrderByPipe,
         
         CommonModule,
         FormsModule,
@@ -94,6 +98,7 @@ import { ErrorComponent } from './components/error/error.component'
         MatTableModule,
         MatStepperModule,
         MatSelectModule,
+        MatDialogModule,
 
         ProgressBarComponent,
         ImageSliderComponent,

@@ -8,7 +8,7 @@ import { Funktion } from 'src/app/core/model/funktion.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { dateToLocalISOString } from 'src/app/shared/utils';
+import { dateToLocalISOString, isNumber } from 'src/app/shared/utils';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipState } from 'src/app/store/ship-store';
 
@@ -25,6 +25,7 @@ export class BesatzungComponent implements OnInit {
   edit: boolean = false
   
   funktionen$: Observable<Funktion[]>
+  namen$!: Observable<any>
 
   constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BesatzungComponent>, private appService: AppService) {
     this.funktionen$ = this.store.pipe(select(KatSelectors.selectAllFunktionen)) as Observable<Funktion[]>
@@ -35,7 +36,8 @@ export class BesatzungComponent implements OnInit {
       persnr: [],
       name: [],
       an_bord: [''],
-      von_bord: ['']
+      von_bord: [''],
+      search: []
     })
   }
 
@@ -65,10 +67,19 @@ export class BesatzungComponent implements OnInit {
   }
 
   searchUser(e: any) {
-    console.log(e)
-    this.appService.getSearchUser(e).subscribe((data: any) => {
-      console.log(data)
-    })
+    console.log(e.target.value)
+    if (isNumber(e.target.value.length) && e.target.value.length > 5 && e.target.value.length < 9) {
+      this.namen$ = this.appService.getSearchUser(e.target.value)
+      this.appService.getSearchUser(e.target.value).subscribe((data: any) => {
+        console.log(data)
+      })
+    }
+    if (!isNumber(e.target.value) && e.target.value.length > 5) {
+      this.namen$ = this.appService.getSearchUser(e.target.value)
+      this.appService.getSearchUser(e.target.value).subscribe((data: any) => {
+        console.log(data)
+      })
+    }
   }
 
   create() {

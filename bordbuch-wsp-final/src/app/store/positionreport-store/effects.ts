@@ -1,20 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, switchMap, tap } from 'rxjs/operators';
-import { PositionReport } from 'src/app/core/model/positionreport.model';
-import { AppService } from 'src/app/core/services/app.service';
-import { PositionActions } from '.';
-import { allDataLoaded, loadAllData } from './actions';
+import { Injectable } from '@angular/core'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { concatMap, map, switchMap, tap } from 'rxjs/operators'
+import { PositionReport } from 'src/app/core/model/positionreport.model'
+import { AppService } from 'src/app/core/services/app.service'
+import { PositionActions } from '.'
+import { allDataLoaded, loadAllData } from './actions'
  
 @Injectable()
 export class Effects {
     loadData$ = createEffect( 
         () => this.actions$.pipe(
             ofType(loadAllData),
-            concatMap(action => 
-                this.appService.getPosition(action.id_ship)
-            ),
-            map((positionReport: PositionReport[]) => allDataLoaded({ positionReport }))
+            switchMap(action => {
+                return this.appService.getPosition(action.id_ship).pipe(
+                    map((positionReport: PositionReport[]) => 
+                        PositionActions.allDataLoaded({ positionReport })
+                    )
+                )
+            })
         )
     )
     insertDate$ = createEffect(() => {
@@ -22,17 +25,11 @@ export class Effects {
             ofType(PositionActions.insertData),
             switchMap(action => {
                 return this.appService.insertPosition(action.positionReport).pipe(
-                    tap(data => console.log(`insertPosition - ${data}`)),
                     map(positionReport => 
                         PositionActions.insertDataSuccess({ positionReport })
                     )
                 )
             })
-            // switchMap(action => {
-            //     return this.appService.insertPeilung(action.insert).pipe(
-            //         map(id => ShipAction.insertPeilungSuccess({ action, id }))
-            //     )
-            // })
         )
     })
     updateDate$ = createEffect(

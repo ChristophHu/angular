@@ -72,10 +72,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (id_streife) {
         this.id_streife = id_streife
 
-        this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!)))
-        this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectDataWithoutPatrol(this.id_streife!))).pipe(
-          tap(data => console.log(`lastPositions - data: ${data}`))
+        this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).pipe(
+          tap(data => console.log(data))
         )
+        this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectDataWithoutPatrol(this.id_streife!)))
       }
     })
     
@@ -325,15 +325,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 	  })
 	}
 
-  async openPositionModal() {
-    console.log('open')
-    let position: PositionReport | undefined
-
+  async openModal() {
+    let position: PositionReport
     const { PositionComponent } = await import(
       '../positions/position/position.component'
     )
 
     this.locationService.getCurrentPosition().then((data: any) => {
+      console.info(`currentPosition | latitude: ${data.latitude}, longitude: ${data.longitude}`)
       position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, ort: '', description: ''}
       this.modalService.open(PositionComponent, {
         data: {

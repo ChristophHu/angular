@@ -24,10 +24,26 @@
               <mat-label>Name</mat-label>
               <input matInput type="text" formControlName="name">
             </mat-form-field> -->
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
               <input matInput type="text" formControlName="persnr" (keyup)="searchUser($event)">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <mat-select formControlName="persnr">
+                <input matInput class="" placeholder="Person suchen..." (keyup)="searchUser($event)" #name autofocus>
+                <mat-select-search formControlName="search"></mat-select-search>
+                <!-- <mat-option>
+                  <input type="text" class="p-2" (keyup)="searchUser($event)" #name>
+                </mat-option> -->
+                <mat-option *ngIf="!name.value">Keine Person zur Auswahl...</mat-option>
+                <mat-option *ngFor="let name of (namen$ | async | orderBy)" [value]="name.name">
+                  {{ name.name }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="fill">
               <mat-label>Funktion</mat-label>
               <mat-select formControlName="funktion">

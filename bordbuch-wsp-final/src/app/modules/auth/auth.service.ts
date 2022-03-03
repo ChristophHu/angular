@@ -11,10 +11,6 @@ export class AuthService {
   constructor() { }
 
   login(username: string, password: string): Observable<BackendResponse> {
-    return this.auth_login(username, password)
-  }
-
-  auth_login(username: string, password: string): Observable<BackendResponse> {
     const auth      = btoa(`${username}:${password}`)
     const baseUrl   = environment.loginServerUrl
     const packageid = environment.packageid
@@ -45,11 +41,26 @@ export class AuthService {
                     token: jwt_token,
                     backendUrl: backendUrl
                   })
-                  }, error => observer.error(error)
+                  }, error => observer.error(`backend: ${error}`)
                 )
               }
             })
           }
+          else {
+            switch (xmlhttp.status) {
+              case 403:
+                observer.error({ code: 403, message: 'Eine Authentifizierung ist nicht möglich. Der Benutzername oder das Kennwort ist nicht korrekt.' })
+                break
+              case 404:
+                observer.error({ code: 404, message: 'Die Anfrage wurde abgewiesen. Vergewissern sie sich, dass sie verbunden sind und die benötigten Berechtigungen besitzen.' })
+                break
+
+              default:
+                observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Bitte führen sie einen Neustart durch.' })
+            }
+            // observer.error(xmlhttp)
+          }
+
         }
       }
 
@@ -82,9 +93,7 @@ export class AuthService {
   myatob(payload: string): string {
     try {
       return atob(payload);
-      }
-      catch(e)
-      {
+    } catch(e) {
       return atob(this.base64UrlDecode(payload));
     }
   }

@@ -150,11 +150,10 @@ export class AppService {
             // filter
             case 'getBetankungen':
                 param = `?id_schiff=${data}&all=false&startdate=${null}&enddate=${null}`
-                console.log(param)
                 break
 
             case 'getZaehlerstaendeRange':
-                param = `?id_schiff=${data}&startdate=&enddate=`
+                param = `?id_schiff=${data}&startdate=${null}&enddate=${null}`
                 break
 
             case 'getDienststellen':
