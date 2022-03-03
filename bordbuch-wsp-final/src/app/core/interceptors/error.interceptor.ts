@@ -36,7 +36,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             // ERR_CONNECTION_TIMED_OUT, ERR_CONNECTION_REFUSED, ERR_EMPTY_RESPONSE, ERR_PROXY_CONNECTION_FAILED
             // ERR_NAME_NOT_RESOLVED nicht!!!
             console.log('Gerätefehler, Neustart durchführen, ggf. keine Verbindung')
-            alert('Fehler: Gerät neustarten')
             break
 
           case 400:
