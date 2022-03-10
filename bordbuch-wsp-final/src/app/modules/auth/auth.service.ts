@@ -16,57 +16,64 @@ export class AuthService {
     const packageid = environment.packageid
 
     return new Observable((observer) => {
-      let xmlhttp = new XMLHttpRequest()
-
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState == 4) {
-          if (xmlhttp.status == 200) {
-            const jwt_token         = xmlhttp.getResponseHeader('Authorization')!.toString()
-            const backend_token     = jwt_token.split(' ')[1]
-            const json_jwt_payload  = JSON.parse(this.myatob(jwt_token.split('.')[1]))
-            const allowed_apps_arr  = JSON.parse(json_jwt_payload.allowed_apps)
-  
-            // check for backend and login
-            allowed_apps_arr.forEach((el: any) => {
-              if (el.packageid == packageid) {
-                const backendUrl = JSON.parse(el.config_json).backendurl
-                this.backend_login(backendUrl, backend_token).subscribe(data => {
-                  observer.next({
-                    sub: json_jwt_payload.sub, 
-                    exp: json_jwt_payload.exp, 
-                    email: json_jwt_payload.email, 
-                    given_name: json_jwt_payload.given_name, 
-                    family_name: json_jwt_payload.family_name,
-                    role: JSON.parse(data).rolle,
-                    token: jwt_token,
-                    backendUrl: backendUrl
-                  })
-                  }, error => observer.error(`backend: ${error}`)
-                )
-              }
-            })
-          }
-          else {
-            switch (xmlhttp.status) {
-              case 403:
-                observer.error({ code: 403, message: 'Eine Authentifizierung ist nicht möglich. Der Benutzername oder das Kennwort ist nicht korrekt.' })
-                break
-              case 404:
-                observer.error({ code: 404, message: 'Die Anfrage wurde abgewiesen. Vergewissern sie sich, dass sie verbunden sind und die benötigten Berechtigungen besitzen.' })
-                break
-
-              default:
-                observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Kontrollieren sie ihre Verbindung und führen sie ggf. einen Neustart durch.' })
-            }
-            // observer.error(xmlhttp)
-          }
-
-        }
+      const rejectWithError = () => {
+        observer.error('Cannot convert')
       }
 
-      xmlhttp.open('GET', `${baseUrl}`, true)
-      xmlhttp.setRequestHeader('Authorization', `Basic ${auth}`)
-      xmlhttp.send()
+      try {
+        let xmlhttp = new XMLHttpRequest()
+        xmlhttp.onreadystatechange = () => {
+          if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+              const jwt_token         = xmlhttp.getResponseHeader('Authorization')!.toString()
+              const backend_token     = jwt_token.split(' ')[1]
+              const json_jwt_payload  = JSON.parse(this.myatob(jwt_token.split('.')[1]))
+              const allowed_apps_arr  = JSON.parse(json_jwt_payload.allowed_apps)
+    
+              // check for backend and login
+              allowed_apps_arr.forEach((el: any) => {
+                if (el.packageid == packageid) {
+                  const backendUrl = JSON.parse(el.config_json).backendurl
+                  this.backend_login(backendUrl, backend_token).subscribe(data => {
+                    observer.next({
+                      sub: json_jwt_payload.sub,
+                      exp: json_jwt_payload.exp,
+                      email: json_jwt_payload.email,
+                      given_name: json_jwt_payload.given_name,
+                      family_name: json_jwt_payload.family_name,
+                      role: JSON.parse(data).rolle,
+                      token: jwt_token,
+                      backendUrl: backendUrl
+                    })
+                    }, error => observer.error(`backend: ${error}`)
+                  )
+                }
+              })
+            }
+            else {
+              switch (xmlhttp.status) {
+                case 403:
+                  observer.error({ code: 403, message: 'Eine Authentifizierung ist nicht möglich. Der Benutzername oder das Kennwort ist nicht korrekt.' })
+                  break
+                case 404:
+                  observer.error({ code: 404, message: 'Die Anfrage wurde abgewiesen. Vergewissern sie sich, dass sie verbunden sind und die benötigten Berechtigungen besitzen.' })
+                  break
+  
+                default:
+                  observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Kontrollieren sie ihre Verbindung und führen sie ggf. einen Neustart durch.' })
+              }
+              rejectWithError()
+            }
+          }
+        }
+  
+        xmlhttp.open('GET', `${baseUrl}`, true)
+        xmlhttp.setRequestHeader('Authorization', `Basic ${auth}`)
+        xmlhttp.onerror = rejectWithError
+        xmlhttp.send()
+      } catch(err) {
+        rejectWithError()
+      }
     })
   }
 

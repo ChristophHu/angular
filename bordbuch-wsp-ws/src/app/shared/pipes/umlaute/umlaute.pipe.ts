@@ -23,6 +23,7 @@ export class UmlautePipe implements PipeTransform {
         value.replace('ÃŸ', 'ß')
         break
     }
+    console.log(value)
     return value
   }
 

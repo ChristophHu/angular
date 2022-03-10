@@ -27,7 +27,7 @@
               <input matInput type="text" formControlName="name" readonly>
           </mat-form-field>
           <div class="flex content-center justify-center">
-              <qrcode [qrdata]="id" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+              <qrcode [qrdata]="id" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true"></qrcode>
           </div>
       </form>
     </div>
