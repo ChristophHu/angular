@@ -44,7 +44,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
           case 401: 
             console.log(`unauthorized`)
-            alert('Autorisierung fehlt!')
+            // alert('Autorisierung fehlt!')
             this._router.navigateByUrl('/login')
             break
 

@@ -1,3 +1,10 @@
+## <u>1.0.3x001</u>
+<ul>
+    <li>- Performance-Anpassungen</li>
+</ul>
+
+&nbsp;
+
 ## <u>1.0.2x001</u>
 <ul>
     <li>- [Login] Fehlerausgabe im Login konkretisiert</li>
