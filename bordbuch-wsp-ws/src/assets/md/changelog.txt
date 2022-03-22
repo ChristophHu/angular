@@ -21,7 +21,15 @@ Kennwort: 'Abc123!'
 ## <u>1.0.0x001</u>
 <ul>
     <li>- Logout -> Abmelden</li>
-    <li>- Umlaute - test der Kodierung</li>
+    <li>- Umlaute - Test der Kodierung</li>
+    <li>- XMLHttp-Interceptor aufgenommen</li>
+</ul>
+&nbsp;
+
+## <u>1.0.0x001</u>
+<ul>
+    <li>- Logout -> Abmelden</li>
+    <li>- Umlaute - Test der Kodierung</li>
     <li>- XMLHttp-Interceptor aufgenommen</li>
 </ul>
 &nbsp;

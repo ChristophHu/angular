@@ -1,69 +1,53 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { Component, OnInit } from '@angular/core';
 
-import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import * as PlotlyJS from 'plotly.js-dist-min';
 
 @Component({
   selector: 'app-uebersicht',
   templateUrl: './uebersicht.component.html',
   styleUrls: ['./uebersicht.component.sass']
 })
-export class UebersichtComponent {
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+export class UebersichtComponent implements OnInit {
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 0
-      }
-    },
-    plugins: {
-      legend: {
-        display: true,
-      },
-      datalabels: {
-        anchor: 'end',
-        align: 'end'
-      }
-    }
-  };
-  public barChartType: ChartType = 'bar';
-  public barChartPlugins = [
-    DataLabelsPlugin
-  ];
+  ngOnInit(): void {
+    this.basicChart()
+  }
 
-  public barChartData: ChartData<'bar'> = {
-    labels: [ 'WSP West', 'WSP Mitte', 'WSP Ost' ],
-    datasets: [
-      { data: [ 2, 4, 3, ], label: 'Boots-Typ A' },
-      { data: [ 3, 3, 3, ], label: 'Boots-Typ B' }
+  basicChart() {
+    const data: any = [
+      {
+        type: "sunburst",
+        labels: [
+          'WSP Ost', 'WSP Mitte', 'WSP West',
+          'WSP30 Sturmmöve', 'WSP32 Eisvogel', 'WSP33 Dahme', 'WSP34 Seeschwalbe', 'WSP50 RIB',
+          'WSP20 Lietze', 'WSP22 Spree', 'WSP23 Seeadler', 'WSP24 Schwanenwerder',
+          'WSP10 Wannsee', 'WSP11 Mollymauk', 'WSP12 Graureiher', 'WSP15 Alk', 'WSP16 Kormoran'
+        ],
+        parents: ['', '', '',
+          'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost',
+          'WSP Mitte', 'WSP Mitte', 'WSP Mitte', 'WSP Mitte',
+          'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West'
+        ],
+        values: [5, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        // labels: ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
+        // parents: ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve" ],
+        // values:  [65, 14, 12, 10, 2, 6, 6, 4, 4],
+        leaf: {"opacity": 0.4},
+        marker: {"line": {"width": 2}},
+        branchvalues: 'total'
+      }
     ]
-  };
 
-  // events
-  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    console.log(event, active);
-  }
+    const layout: any = {
+      margin: {
+        t: 0, 
+        l: 0, 
+        r: 0, 
+        b: 0
+      },
+      sunburstcolorway:["#636efa","#ef553b","#00cc96"]
+    }
 
-  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.round(Math.random() * 100),
-      56,
-      Math.round(Math.random() * 100),
-      40 ];
-
-    this.chart?.update();
+    PlotlyJS.newPlot('c', data, layout);
   }
 }

@@ -1,6 +1,7 @@
 ## <u>1.0.3x001</u>
 <ul>
     <li>- Performance-Anpassungen</li>
+    <li>- Logout -> Abmelden</li>
 </ul>
 
 &nbsp;

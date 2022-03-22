@@ -16,7 +16,7 @@
           <mat-label>Kennwort</mat-label>
           <input type="password" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
           <button class="w-6" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye' : 'eye-off'}}"></icons>
+            <icons class="w-6 h-6 stroke-1 stroke-current" name="{{hide ? 'eye-off' : 'eye'}}"></icons>
           </button>
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Die Eingabe eines Kennworts ist erforderlich!</mat-error>
         </mat-form-field>

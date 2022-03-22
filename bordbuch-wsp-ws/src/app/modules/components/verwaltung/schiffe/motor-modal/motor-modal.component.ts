@@ -98,6 +98,7 @@ export class MotorModalComponent implements OnInit {
       // delete
       if (item.value != 0) {
         // console.log(`Es existieren Zaehlerstände zu diesem Eintrag!`)
+        this._specFacade.deleteZaehlerstand(item.id)
       } else {
         this._specFacade.deleteZaehlerstand(item.id)
       }
@@ -106,26 +107,8 @@ export class MotorModalComponent implements OnInit {
     this.kat.push(Object.assign({}, item, { checked: !item.checked }))
   }
 
-  // setItem() {
-  //   const item: Checklistitem = this.checklistitemForm.value
-  //   this.kat = this.kat.filter(el => el.id != item.id)
-  //   this.kat.push(item)
-  //   this.show = !this.show
-  // }
-
-
-
   create() {
-    // const checklist: Checklist = { 
-    //   id_schiff: this.checklistForm.value.id, 
-    //   name: this.checklistForm.value.name,
-    //   status: 'Liste neu gesetzt',
-    //   streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', 
-    //   datum: new Date().toISOString(),
-    //   checklistItems: this.kat.filter(el => el.checked == true), 
-    //   gbookdaten: JSON.stringify(this.kat.filter(el => el.checked == true))
-    // }
-    // this._specFacade.insertChecklist(checklist)
+
     this.modal?.close()
   }
 

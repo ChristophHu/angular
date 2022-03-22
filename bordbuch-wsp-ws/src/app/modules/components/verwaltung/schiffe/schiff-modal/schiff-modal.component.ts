@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Checklist } from 'src/app/core/models/checklist.model';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-schiff-modal',
@@ -20,7 +22,7 @@ export class SchiffModalComponent implements OnInit {
 
   dienststellen$: Observable<Kat[]>
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<SchiffModalComponent>, private _katFacade: KatFacade) {
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<SchiffModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this.dienststellen$ = _katFacade.dienststellen$
 
     this.schiffForm = this._formBuilder.group({
@@ -54,8 +56,28 @@ export class SchiffModalComponent implements OnInit {
   create() {
     const insert: Schiff = this.schiffForm.value
     this._katFacade.insertSchiff(insert)
+    this._katFacade.schiffe$.subscribe((schiffe: Schiff[])=> {
+      console.log(schiffe)
+      this._katFacade.getIdByShip(insert.name).subscribe(id => {
+        if (id) this.createFirstChecklist(id, insert)
+      })
+    })
     this.modal?.close()
   }
+
+  createFirstChecklist(id: string, schiff: Schiff) {
+    const checklist: Checklist = { 
+      id_schiff: id, 
+      name: schiff.name,
+      status: 'Liste neu gesetzt',
+      streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', 
+      datum: new Date().toISOString(),
+      checklistItems: [], 
+      gbookdaten: JSON.stringify([])
+    }
+    this._specFacade.insertChecklist(checklist)
+  }
+
   update() {
     let update: Schiff = this.schiffForm.value
     this._katFacade.updateSchiff(update)

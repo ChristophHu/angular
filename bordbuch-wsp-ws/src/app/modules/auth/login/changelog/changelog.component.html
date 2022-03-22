@@ -9,10 +9,44 @@
       </button>
     </header>
     <div class="content p-4">
-        <markdown [src]="'assets/md/changelog.txt'"></markdown>
+        <!-- <markdown [src]="'assets/md/changelog.txt'"></markdown> -->
+        <h2 class="text-xl mb-3">Kontakt</h2>
+        <p>Dir ZS PG MIKT</p>
+        <p>Platz der Luftbrücke 6,</p>
+        <p>12101 Berlin</p>
+
+        <h2 class="text-xl mb-3">Rollen und Rechte</h2>
+        24225001 = User, <br>
+        24225002 = Administration, <br>
+        24225003 = Leitung, <br>
+        24225004 = Controlling, <br>
+        24225005 = Service <br>
+        Kennwort: 'Abc123!'
+
+        <h2 class="text-xl mb-3">Änderungen</h2>
+        <h3 class="text-lg">1.0.0x003</h3>
+        <ul>
+            <li>- Controlling -> Auswertung</li>
+            <li>- [Login] Markdown-Module zur einfachen Darstellung von Markdowns</li>
+            <li>- [Übersicht] Verteilung von Schiffen nach Dienststelle (vorbereitung der Ansicht für den Zustand der Schiffe nach Dienststelle)</li>
+        </ul>
+
+        <h3 class="text-lg">1.0.0x002</h3>
+        <ul>
+            <li>- Logout -> Abmelden</li>
+            <li>- [Navigation] - Überarbeitung der Kodierung des Benutzernamens</li>
+            <li>- XMLHttp-Interceptor aufgenommen</li>
+        </ul>
+
+        <h3 class="text-lg">1.0.0x001</h3>
+        <ul>
+            <li>- Logout -> Abmelden</li>
+            <li>- Umlaute - Test der Kodierung</li>
+            <li>- XMLHttp-Interceptor aufgenommen</li>
+        </ul>
     </div>
     <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
-        <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+      <ng-container *ngTemplateOutlet="toolbar"></ng-container>
     </footer>
 </app-modal>
 
