@@ -1,6 +1,7 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -10,11 +11,9 @@ import { Kennung } from 'src/app/core/model/kennung.model';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
-import { Reparatur } from 'src/app/core/model/reparatur';
 import { Ship } from 'src/app/core/model/ship.model';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { Zweck } from 'src/app/core/model/zwecke.model';
-import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -25,7 +24,6 @@ import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { BetankungComponent } from './betankung/betankung.component';
-import { PruefvermerkModalComponent } from './pruefvermerk/pruefvermerk-modal/pruefvermerk-modal.component';
 import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 
 @Component({
@@ -34,7 +32,8 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
   styleUrls: ['./streife.component.sass']
 })
 export class StreifeComponent implements OnInit, AfterViewInit {
-
+  @ViewChild('headlineStepper') stepper: CdkStepper | undefined
+  
   name!: string | undefined
   id_schiff!: string | undefined
   id!: string | undefined
@@ -79,7 +78,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   constructor(
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
-    private appService: AppService,
+    private _router: Router,
     private modalService: ModalService<BesatzungComponent>,
     private modalServiceZ: ModalService<ZaehlerstandComponent>,
     private modalServiceB: ModalService<BetankungComponent>,
@@ -209,11 +208,12 @@ export class StreifeComponent implements OnInit, AfterViewInit {
               const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString().substring(0,16), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
               this.store.dispatch(PositionActions.insertData({ positionReport }))
             })
-
             update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: new Date().toISOString().substring(0,16) })
             break
           case 'beendet':
             update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: new Date().toISOString().substring(0,16) })
+            // this.stepperReset(this.stepper!)
+            this._router.navigateByUrl('/')
             break
           default:
             update = Object.assign({}, patrol, this.zweckFormGroup.value)

@@ -39,6 +39,8 @@ export class UebersichtComponent implements OnInit {
     ]
 
     const layout: any = {
+      width: 384,
+      height: 384,
       margin: {
         t: 0, 
         l: 0, 

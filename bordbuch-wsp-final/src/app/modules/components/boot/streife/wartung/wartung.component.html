@@ -16,9 +16,9 @@
       <h2 class="mb-2 text-xl">{{ ship.name }}</h2>
       <div class="my-2 flex flex-wrap overflow-hidden">
         <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Vorführdatum: </p>
-        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ ship.durchsicht | date:'dd.MM.yyyy' }}</p>
+        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ ship.durchsicht }}</p>
         <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Tage bis zur Wartung: </p>
-        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ ship.durchsicht | diffDateToToday }}</p>
+        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ ship.durchsicht }}</p>
       </div>
       <!-- <progress-bar [value]="yesterday | date:'d' | string2number" [maxvalue]=20></progress-bar> -->
     </div>
