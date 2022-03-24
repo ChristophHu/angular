@@ -5,9 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SliceArrayByPropertyPipe implements PipeTransform {
 
-  transform(input: any, byProperty: string = 'bezeichnung', value: string = ''): any {
+  transform(input: any, byProperty: string, value: string = ''): any {
+    console.log(input)
+    console.log(value)
     if (Array.isArray(input)) {
       let result = input.filter(el => el[byProperty] != value)
+      console.log(result)
       return result
     }
     return input

@@ -28,7 +28,7 @@ export class AuthService {
           if (xmlhttp.status == 200) {
             const jwt_token         = xmlhttp.getResponseHeader('Authorization')!.toString()
             const backend_token     = jwt_token.split(' ')[1]
-            const json_jwt_payload  = JSON.parse(this.myatob(jwt_token.split('.')[1]))
+            const json_jwt_payload  = JSON.parse(this.b64DecodeUnicode(jwt_token.split('.')[1]))
             const allowed_apps_arr  = JSON.parse(json_jwt_payload.allowed_apps)
   
             // check for backend and login
@@ -79,31 +79,37 @@ export class AuthService {
     })
   }
 
-  myatob(payload: string): string {
-    try {
-      return atob(payload);
-      }
-      catch(e)
-      {
-      return atob(this.base64UrlDecode(payload));
-    }
+  b64DecodeUnicode(str: string) {
+    return decodeURIComponent(Array.prototype.map.call(atob(str), (c) => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join('')) 
   }
 
-  base64UrlDecode(input: string): string {
-    // Replace non-url compatible chars with base64 standard chars
-    input = input
-        .replace(/-/g, '+')
-        .replace(/_/g, '/')
+  // myatob(payload: string): string {
+  //   try {
+  //     return atob(payload);
+  //     }
+  //     catch(e)
+  //     {
+  //     return atob(this.base64UrlDecode(payload));
+  //   }
+  // }
 
-    // Pad out with standard base64 required padding characters
-    var pad = input.length % 4;
-    if(pad) {
-      if(pad === 1) {
-        throw new Error('InvalidLengthError: Input base64url string is the wrong length to determine padding');
-      }
-      input += new Array(5-pad).join('=');
-    }
+  // base64UrlDecode(input: string): string {
+  //   // Replace non-url compatible chars with base64 standard chars
+  //   input = input
+  //       .replace(/-/g, '+')
+  //       .replace(/_/g, '/')
 
-    return input;
-  }
+  //   // Pad out with standard base64 required padding characters
+  //   var pad = input.length % 4;
+  //   if(pad) {
+  //     if(pad === 1) {
+  //       throw new Error('InvalidLengthError: Input base64url string is the wrong length to determine padding');
+  //     }
+  //     input += new Array(5-pad).join('=');
+  //   }
+
+  //   return input;
+  // }
 }

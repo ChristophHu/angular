@@ -31,7 +31,6 @@ import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 import { TooltipModule } from './directives/tooltip/tooltip.module'
 import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
-import { UmlautePipe } from './pipes/umlaute/umlaute.pipe'
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 
 @NgModule({
@@ -49,8 +48,7 @@ import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArra
     ProgressComponent,
     PageNotFoundComponent,
     DiffDateToTodayPipe,
-    SliceArrayByPropertyPipe,
-    UmlautePipe
+    SliceArrayByPropertyPipe
   ],
   imports: [
     CommonModule,
@@ -99,7 +97,6 @@ import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArra
     SliceArrayByPropertyPipe,
     ToArrayPipe,
     DiffDateToTodayPipe,
-    UmlautePipe,
     
     CommonModule,
     ModalModule,
