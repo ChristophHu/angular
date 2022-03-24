@@ -51,7 +51,11 @@ export class ZaehlerstandModalComponent implements OnInit {
   }
 
   selectZaehlerstandstyp(zaehlerstandstyp: string) {
-    this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
+    if (zaehlerstandstyp == 'Boot') {
+      this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: '909e5100-f4b1-494d-a679-e728f7e0bd5f' })
+    } else {
+      this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
+    }
   }
 
   selectShip(name: string) {

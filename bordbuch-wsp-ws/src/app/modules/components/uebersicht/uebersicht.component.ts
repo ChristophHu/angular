@@ -19,16 +19,16 @@ export class UebersichtComponent implements OnInit {
         type: "sunburst",
         labels: [
           'WSP Ost', 'WSP Mitte', 'WSP West',
-          'WSP30 Sturmmöve', 'WSP32 Eisvogel', 'WSP33 Dahme', 'WSP34 Seeschwalbe', 'WSP50 RIB',
+          'WSP30 Sturmmöve', 'WSP31 Albatros', 'WSP32 Eisvogel', 'WSP33 Dahme', 'WSP34 Seeschwalbe', 'WSP50 RIB',
           'WSP20 Lietze', 'WSP22 Spree', 'WSP23 Seeadler', 'WSP24 Schwanenwerder',
-          'WSP10 Wannsee', 'WSP11 Mollymauk', 'WSP12 Graureiher', 'WSP15 Alk', 'WSP16 Kormoran'
+          'WSP10 Wannsee', 'WSP11 Mollymauk', 'WSP12 Graureiher', 'WSP14 Pelikan', 'WSP15 Alk', 'WSP16 Kormoran'
         ],
         parents: ['', '', '',
-          'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost',
+          'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost',
           'WSP Mitte', 'WSP Mitte', 'WSP Mitte', 'WSP Mitte',
-          'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West'
+          'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West'
         ],
-        values: [5, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        values: [6, 4, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         // labels: ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
         // parents: ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve" ],
         // values:  [65, 14, 12, 10, 2, 6, 6, 4, 4],

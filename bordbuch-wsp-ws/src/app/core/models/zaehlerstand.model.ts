@@ -1,6 +1,6 @@
 export interface Zaehlerstand {
     betriebsstunden : number
-    id             : string
+    id              : string
     id_schiff       : string
     name?           : string
     zaehlerstandstyp: string

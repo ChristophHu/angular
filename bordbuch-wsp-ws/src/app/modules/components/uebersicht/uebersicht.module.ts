@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
 
-import { PlotlyModule, PlotlyViaCDNModule } from 'projects/plotly/src/public-api';
+import { PlotlyModule } from 'projects/plotly/src/public-api';
 import * as PlotlyJS from 'plotly.js-dist-min';
 
 import { SharedModule } from 'src/app/shared/shared.module';

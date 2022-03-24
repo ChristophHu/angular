@@ -34,6 +34,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Typ</mat-label>
               <mat-select formControlName="zaehlerstandstyp" (selectionChange)="selectZaehlerstandstyp($event.value)">
+                <mat-option [value]="'Boot'">Boot</mat-option>
                 <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)" [value]="zaehlerstandstyp.zaehlerstandstyp">
                   {{ zaehlerstandstyp.zaehlerstandstyp }}
                 </mat-option>

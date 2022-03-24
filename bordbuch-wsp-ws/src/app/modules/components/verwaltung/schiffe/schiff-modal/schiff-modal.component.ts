@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Checklist } from 'src/app/core/models/checklist.model';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
+import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
@@ -48,10 +49,10 @@ export class SchiffModalComponent implements OnInit {
   selectDienststelle(dienststelle: string) {
     this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
   }
-  setDate() {
-    this.schiffForm.patchValue({ durchsicht: getLocalISO('now') })
-    this.schiffForm.dirty
-  }
+  // setDate() {
+  //   this.schiffForm.patchValue({ durchsicht: getLocalISO('now') })
+  //   this.schiffForm.dirty
+  // }
 
   create() {
     const insert: Schiff = this.schiffForm.value
@@ -59,7 +60,10 @@ export class SchiffModalComponent implements OnInit {
     this._katFacade.schiffe$.subscribe((schiffe: Schiff[])=> {
       console.log(schiffe)
       this._katFacade.getIdByShip(insert.name).subscribe(id => {
-        if (id) this.createFirstChecklist(id, insert)
+        if (id) {
+          this.createFirstChecklist(id, insert)
+          this.createFirstZaehlerstand(id, insert)
+        }
       })
     })
     this.modal?.close()
@@ -76,6 +80,18 @@ export class SchiffModalComponent implements OnInit {
       gbookdaten: JSON.stringify([])
     }
     this._specFacade.insertChecklist(checklist)
+  }
+  createFirstZaehlerstand(id: string, schiff: Schiff) {
+    const zaehlerstand: Zaehlerstand = {
+      id: '',
+      id_schiff: id, 
+      name: schiff.name,
+      zaehlerstandstyp: '909e5100-f4b1-494d-a679-e728f7e0bd5f',
+      date: new Date().toISOString(),
+      value: 0,
+      betriebsstunden: this.schiffForm.value.betriebsstunden
+    }
+    this._specFacade.insertZaehlerstand(zaehlerstand)
   }
 
   update() {
