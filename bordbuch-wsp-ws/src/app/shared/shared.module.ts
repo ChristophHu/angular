@@ -32,6 +32,7 @@ import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 import { TooltipModule } from './directives/tooltip/tooltip.module'
 import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
 import { UmlautePipe } from './pipes/umlaute/umlaute.pipe'
+import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { UmlautePipe } from './pipes/umlaute/umlaute.pipe'
     ProgressComponent,
     PageNotFoundComponent,
     DiffDateToTodayPipe,
+    SliceArrayByPropertyPipe,
     UmlautePipe
   ],
   imports: [
@@ -94,6 +96,7 @@ import { UmlautePipe } from './pipes/umlaute/umlaute.pipe'
     // pipes
     SanitizeHtmlPipe,
     TitlecasePipe,
+    SliceArrayByPropertyPipe,
     ToArrayPipe,
     DiffDateToTodayPipe,
     UmlautePipe,

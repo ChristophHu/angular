@@ -82,11 +82,12 @@ export class SchiffModalComponent implements OnInit {
     this._specFacade.insertChecklist(checklist)
   }
   createFirstZaehlerstand(id: string, schiff: Schiff) {
+    // const Zaehlerstandstyp = { id: 'c682fe26-5cba-45bc-a028-ccc0ab787f63', bezeichnung: 'Boot'}
     const zaehlerstand: Zaehlerstand = {
       id: '',
       id_schiff: id, 
       name: schiff.name,
-      zaehlerstandstyp: '909e5100-f4b1-494d-a679-e728f7e0bd5f',
+      zaehlerstandstyp: 'c682fe26-5cba-45bc-a028-ccc0ab787f63',
       date: new Date().toISOString(),
       value: 0,
       betriebsstunden: this.schiffForm.value.betriebsstunden

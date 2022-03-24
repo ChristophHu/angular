@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)">
+            <tr *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray | sliceArrayByProperty:'bezeichnung':'Boot')">
                 <td>{{ zaehlerstandstyp.zaehlerstandstyp }}</td>
                 <td hidden>{{ zaehlerstandstyp.id }}</td>
                 <td class="flex flex-row justify-start text-gray-500">
