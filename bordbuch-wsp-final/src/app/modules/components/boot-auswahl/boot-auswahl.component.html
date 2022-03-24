@@ -33,7 +33,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Schiff</mat-label>
               <mat-select (selectionChange)="selectSchiff($event.value)">
-                <mat-option *ngFor="let ship of ships$ | async" [value]="ship.id">
+                <mat-option *ngFor="let ship of ships$ | async | orderBy:'name'" [value]="ship.id">
                   {{ ship.name }}
                 </mat-option>
               </mat-select>

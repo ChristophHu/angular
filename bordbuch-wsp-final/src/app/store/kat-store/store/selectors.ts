@@ -17,7 +17,6 @@ export const selectShips = createSelector(
 )
 export const selectShipByDienststelle = (dienststelle: string) => createSelector(
     selectShips,
-    
     ship => ship!.filter(el => {
         if (dienststelle == '') return el
         if (el.dienststelle == dienststelle) return el

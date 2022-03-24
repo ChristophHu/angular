@@ -35,6 +35,10 @@ export class BootAuswahlComponent {
 
   selectDienststelle(dienststelle: string) {
     this.ships$ = this.store.pipe(select(KatSelectors.selectShipByDienststelle(dienststelle))) as Observable<ShipSelection[] | undefined>
+    this.ships$.subscribe(data => {
+      console.log(data?.length)
+      if (data?.length == 0) this.ships$ = this.store.pipe(select(KatSelectors.selectShips)) as Observable<ShipSelection[]>
+    })
   }
 
   selectSchiff(id_ship: string) {

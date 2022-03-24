@@ -1,8 +1,9 @@
-## <u>1.0.3x002</u>
+## <u>1.0.4x001</u>
 <ul>
-    <li>- WSP Dienststellen ohne Boote werden alle Boote angezeigt.</li>
-    <li>- Nach Beenden der Streife wird zum Schritt 1 zurückgesetzt</li>
-    <li>- Map -> Karte</li>
+    <li>- [Auswahl] WSP Dienststellen ohne zugewiesene Boote werden alle Boote angezeigt.</li>
+    <li>- [Auswahl] Alle Boote werden nach Namen sortiert.</li>
+    <li>- [Streife] Nach Beenden der Streife wird zur Bootsauswahl zurückgesetzt</li>
+    <li>- [Menü] Map -> Karte</li>
 </ul>
 
 &nbsp;
@@ -10,7 +11,7 @@
 ## <u>1.0.3x001</u>
 <ul>
     <li>- Performance-Anpassungen</li>
-    <li>- Logout -> Abmelden</li>
+    <li>- [Menü] Logout -> Abmelden</li>
 </ul>
 
 &nbsp;

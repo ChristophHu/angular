@@ -5,16 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class OrderByPipe implements PipeTransform {
 
-  transform(input: any): any {
+  transform(input: any, byProperty: string): any {
+    console.log(input.length)
+    if (input.length == 0) return []
     if (Array.isArray(input)) {
-      input.sort((a, b) => (a.name < b.name ? -1 : 1))
-      return input
+      let result = [...input]
+      result.sort((a, b) => (a[byProperty] < b[byProperty] ? -1 : 1))
+      return result
     }
     return input
   }
-
-  isObject(value: any): boolean {
-    return value !== null && typeof value === 'object'
-  }
-
 }

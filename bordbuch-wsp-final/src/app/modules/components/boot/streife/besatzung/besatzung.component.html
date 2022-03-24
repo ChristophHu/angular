@@ -38,7 +38,7 @@
                   <input type="text" class="p-2" (keyup)="searchUser($event)" #name>
                 </mat-option> -->
                 <mat-option *ngIf="!name.value">Keine Person zur Auswahl...</mat-option>
-                <mat-option *ngFor="let name of (namen$ | async | orderBy)" [value]="name.name">
+                <mat-option *ngFor="let name of (namen$ | async | orderBy:'name')" [value]="name.name">
                   {{ name.name }}
                 </mat-option>
               </mat-select>
