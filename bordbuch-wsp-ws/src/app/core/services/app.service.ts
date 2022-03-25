@@ -222,6 +222,7 @@ export class AppService {
             // zaehlerstaende
             case 'insertZaehlerstand':
                 param = `id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
+                console.log(param)
                 break
             case 'updateZaehlerstand':
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
