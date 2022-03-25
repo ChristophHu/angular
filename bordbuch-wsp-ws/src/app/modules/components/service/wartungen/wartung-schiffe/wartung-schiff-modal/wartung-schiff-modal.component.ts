@@ -86,13 +86,13 @@ export class WartungSchiffModalComponent implements OnInit {
   // }
   update() {
     let update: Zaehlerstand = this.zaehlerstandForm.value
-    this._katFacade.getShipById(this.zaehlerstandForm.value.id).subscribe(schiff => {
-      if (schiff) {
-        let update: Schiff = Object.assign({}, schiff, { durchsicht: this.zaehlerstandForm.value.betriebsstunden })
-        console.log(update)
-        this._katFacade.updateSchiff(update)
-      }
-    })
+    // this._katFacade.getShipById(this.zaehlerstandForm.value.id).subscribe(schiff => {
+    //   if (schiff) {
+    //     let update: Schiff = Object.assign({}, schiff, { durchsicht: this.zaehlerstandForm.value.betriebsstunden })
+    //     console.log(update)
+    //     this._katFacade.updateSchiff(update)
+    //   }
+    // })
     this._specFacade.updateZaehlerstand(update)
     this.modal?.close()
   }

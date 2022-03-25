@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
+            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray | sliceArrayByProperty:'zaehlerstandstyp':'Boot')">
                 <td>{{ zaehlerstand.name }}</td>
                 <td hidden>{{ zaehlerstand.id }}</td>
                 <td hidden>{{ zaehlerstand.id_schiff }}</td>

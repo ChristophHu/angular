@@ -91,7 +91,7 @@ export class SchiffModalComponent implements OnInit {
       zaehlerstandstyp: 'Boot',
       date: new Date().toISOString(),
       value: 0,
-      betriebsstunden: this.schiffForm.value.durchsicht
+      betriebsstunden: 0
     }
     this._specFacade.insertZaehlerstand(zaehlerstand)
   }
