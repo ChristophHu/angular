@@ -159,6 +159,9 @@ export class KatFacade {
     getNameById(id: string): Observable<string | undefined> {
         return this.store.pipe(select(KatSelectors.selectNameById(id)))
     }
+    getDurchsichtByName(name: string): Observable<any> {
+        return this.store.pipe(select(KatSelectors.getDurchsichtByName(name)))
+    }
 
     // status
     loadAllStatus() {

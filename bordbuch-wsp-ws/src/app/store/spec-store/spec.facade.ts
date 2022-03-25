@@ -188,6 +188,9 @@ export class SpecFacade {
     getZaehlerstaendeById(id: string): Observable<any> {
         return this.store.pipe(select(SpecSelectors.selectZaehlerstaendeById(id)))
     }
+    getDurchsichtByNameZaehlerstandstyp(name: string, zaehlerstandstyp: string): Observable<any> {
+        return this.store.pipe(select(SpecSelectors.selectDurchsichtByNameZaehlerstandstyp(name, zaehlerstandstyp)))
+    }
 }
 
 export { SpecState }

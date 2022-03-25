@@ -110,6 +110,10 @@ export const selectNameById = (id: string) => createSelector(
     selectAllSchiffe,
     schiffe => schiffe?.find(el => el.id == id)?.name
 )
+export const getDurchsichtByName = (name: string) => createSelector(
+    selectAllSchiffe,
+    schiffe => schiffe?.find(el => el.name == name)?.durchsicht
+)
 
 // status
 export const selectAllStatus = createSelector(

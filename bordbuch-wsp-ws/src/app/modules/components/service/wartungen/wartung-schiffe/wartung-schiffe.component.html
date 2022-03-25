@@ -6,8 +6,8 @@
                 <th hidden>ID</th>
                 <th>Typ</th>
                 <th>Durchsicht</th>
-                <th>Tage</th>
-                <th class="w-12"></th>
+                <!-- <th>Tage</th> -->
+                <!-- <th class="w-12"></th> -->
                 <th class="w-12"></th>
             </tr>
         </thead>
@@ -16,13 +16,13 @@
                 <td>{{ schiff.name }}</td>
                 <td hidden>{{ schiff.id }}</td>
                 <td>{{ schiff.typ }}</td>
-                <td>{{ schiff.durchsicht | date: 'dd.MM.yyyy' }}</td>
-                <td>
+                <td>{{ schiff.durchsicht }}</td>
+                <!-- <td>
                     {{ schiff.durchsicht | diffDateToToday }}
-                </td>
-                <td>
+                </td> -->
+                <!-- <td>
                     <progress-circle [value]="30 - (schiff.durchsicht | diffDateToToday)" [maxvalue]="30"></progress-circle>
-                </td>
+                </td> -->
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" (click)="showModal(schiff)">
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>

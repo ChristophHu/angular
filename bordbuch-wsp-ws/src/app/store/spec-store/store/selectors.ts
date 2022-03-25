@@ -105,7 +105,12 @@ export const selectAllZaehlerstaende = createSelector(
     specState,
     state => state.zaehlerstaende
 )
-export const selectZaehlerstaendeById= (id: string) => createSelector(
+export const selectZaehlerstaendeById = (id: string) => createSelector(
     selectAllZaehlerstaende,
     zaehlerstaende => zaehlerstaende?.filter(el => el.id_schiff == id)
+)
+
+export const selectDurchsichtByNameZaehlerstandstyp = (name: string, zaehlerstandstyp: string) => createSelector(
+    selectAllZaehlerstaende,
+    zaehlerstaende => zaehlerstaende?.filter(el => el.name == name && el.zaehlerstandstyp == zaehlerstandstyp)
 )

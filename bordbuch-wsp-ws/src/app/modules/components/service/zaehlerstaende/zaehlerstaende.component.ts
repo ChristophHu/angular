@@ -20,7 +20,6 @@ export class ZaehlerstaendeComponent implements OnInit {
 
    constructor(private _modalService: ModalService<ZaehlerstandModalComponent>, private _specFacade: SpecFacade) {
       this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
-      this._specFacade.allZaehlerstaende$.subscribe(data => console.log(data))
    }
 
    ngOnInit(): void {
