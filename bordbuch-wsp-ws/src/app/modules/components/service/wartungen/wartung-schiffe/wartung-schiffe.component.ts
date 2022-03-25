@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Schiff } from 'src/app/core/models/schiff.model';
+import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
 import { WartungSchiffModalComponent } from './wartung-schiff-modal/wartung-schiff-modal.component';
 
@@ -16,10 +16,12 @@ export class WartungSchiffeComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  schiffe$!: Observable<Schiff[]>
+  // schiffe$!: Observable<Schiff[]>
+  zaehlerstaende$!: Observable<Zaehlerstand[]>
 
-  constructor(private _modalService: ModalService<WartungSchiffModalComponent>, private _katFacade: KatFacade) {
-    this.schiffe$ = this._katFacade.schiffe$
+  constructor(private _modalService: ModalService<WartungSchiffModalComponent>,  private _specFacade: SpecFacade) {
+    // this.schiffe$ = this._katFacade.schiffe$
+    this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
   }
 
   ngOnInit(): void {
@@ -39,15 +41,15 @@ export class WartungSchiffeComponent implements OnInit {
     }
   }
 
-  async showModal(schiff?: Schiff): Promise<void> {
+  async showModal(zaehlerstand?: Zaehlerstand): Promise<void> {
     const { WartungSchiffModalComponent } = await import(
       './wartung-schiff-modal/wartung-schiff-modal.component'
     )
-    if (schiff) {
+    if (zaehlerstand) {
       this._modalService.open(WartungSchiffModalComponent, {
         data: {
           title: 'Wartung durchführen',
-          schiff
+          zaehlerstand
         }
       })
     } else {

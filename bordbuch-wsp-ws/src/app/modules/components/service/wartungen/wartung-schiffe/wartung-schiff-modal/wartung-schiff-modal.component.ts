@@ -19,53 +19,83 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 export class WartungSchiffModalComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<WartungSchiffModalComponent> | undefined;
   title: string = ''
-  schiffForm: FormGroup
+  zaehlerstandForm: FormGroup
+  // schiffForm: FormGroup
 
-  dienststellen$: Observable<Kat[]>
+  zaehlerstandstypen$: Observable<Zaehlerstandstyp[]>
+  schiffe$: Observable<Schiff[]>
+  // dienststellen$: Observable<Kat[]>
 
-  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<WartungSchiffModalComponent>, private _katFacade: KatFacade) {
-    this.dienststellen$ = _katFacade.dienststellen$
+  constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<WartungSchiffModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
+    this.zaehlerstandstypen$ = _katFacade.zaehlerstandstypen$
+    this.schiffe$ = _katFacade.schiffe$
+    // this.dienststellen$ = _katFacade.dienststellen$
 
-    this.schiffForm = this._formBuilder.group({
+    this.zaehlerstandForm = this._formBuilder.group({
       id: [],
-      id_dienststelle: [],
+      id_schiff: [],
+      id_zaehlerstandstyp: [],
       name: [],
-      marke: [],
-      typ: [],
-      identifikationsnummer: [],
-      dienststelle: [],
-      durchsicht: []
+      zaehlerstandstyp: [],
+      date: [],
+      value: [],
+      betriebsstunden: []
     })
+    // this.schiffForm = this._formBuilder.group({
+    //   id: [],
+    //   id_dienststelle: [],
+    //   name: [],
+    //   marke: [],
+    //   typ: [],
+    //   identifikationsnummer: [],
+    //   dienststelle: [],
+    //   durchsicht: []
+    // })
   }
 
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.schiffForm.patchValue(data.data.schiff)
-      if (data.data.schiff) this.selectDienststelle(data.data.schiff.dienststelle)
+      
+      this.zaehlerstandForm.patchValue({ date: data.data.date })
+      this.zaehlerstandForm.patchValue(data.data.zaehlerstand)
+      this.selectZaehlerstandstyp(data.data.zaehlerstand.zaehlerstandstyp)
     })
   }
 
-  selectDienststelle(dienststelle: string) {
-    this._katFacade.getIdByDienststelle(dienststelle).subscribe(id => this.schiffForm.patchValue({ id_dienststelle: id }))
+  selectZaehlerstandstyp(zaehlerstandstyp: string) {
+    console.log(zaehlerstandstyp)
+    this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
+  }
+  selectShip(name: string) {
+    this._katFacade.getIdByShip(name).subscribe(id => {
+      this.zaehlerstandForm.patchValue({ id_schiff: id })
+      this.zaehlerstandForm.value.value == '' ? this.zaehlerstandForm.value.value = 0 : null
+    })
+
   }
   setDate() {
-    this.schiffForm.patchValue({ durchsicht: getLocalISO('now') })
-    this.schiffForm.dirty
+    this.zaehlerstandForm.patchValue({ date: getLocalISO('now') })
+    this.zaehlerstandForm.dirty
   }
 
-  create() {
-    const insert: Schiff = this.schiffForm.value
-    this._katFacade.insertSchiff(insert)
-    this.modal?.close()
-  }
+  // create() {
+  //   const insert: Zaehlerstand = this.zaehlerstandForm.value
+  //   this._specFacade.insertZaehlerstand(insert)
+  //   this.modal?.close()
+  // }
   update() {
-    let update: Schiff = this.schiffForm.value
-    this._katFacade.updateSchiff(update)
+    let update: Zaehlerstand = this.zaehlerstandForm.value
+    this._katFacade.getShipById(this.zaehlerstandForm.value.id).subscribe(schiff => {
+      let update: Schiff = Object.assign({}, schiff, { durchsicht: this.zaehlerstandForm.value.betriebsstunden })
+      console.log(update)
+      this._katFacade.updateSchiff(update)
+    })
+    this._specFacade.updateZaehlerstand(update)
     this.modal?.close()
   }
   // delete() {
-  //   this._katFacade.deleteSchiff(this.schiffForm.value.id)
+  //   this._specFacade.deleteZaehlerstand(this.zaehlerstandForm.value.id)
   //   this.modal?.close()
   // }
 

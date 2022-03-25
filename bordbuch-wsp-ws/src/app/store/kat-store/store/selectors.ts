@@ -102,6 +102,10 @@ export const selectAllSchiffe = createSelector(
     katState,
     state => state.schiffe
 )
+export const selectShipById = (id: string) => createSelector(
+    selectAllSchiffe,
+    schiffe => schiffe?.find(el => el.id == id)
+)
 export const selectIdByShip = (name: string) => createSelector(
     selectAllSchiffe,
     schiffe => schiffe?.find(el => el.name == name)?.id

@@ -44,9 +44,10 @@ export class ZaehlerstandModalComponent implements OnInit {
       this.title = data.data.title
       
       this.zaehlerstandForm.patchValue({ date: data.data.date })
-      this.zaehlerstandForm.patchValue(data.data.zaehlerstand)
-
-      this.selectZaehlerstandstyp(data.data.zaehlerstand.zaehlerstandstyp)
+      if (data.data.zaehlerstand) {
+        this.zaehlerstandForm.patchValue(data.data.zaehlerstand)
+        this.selectZaehlerstandstyp(data.data.zaehlerstand.zaehlerstandstyp)
+      }
     })
   }
 

@@ -112,5 +112,5 @@ export const selectZaehlerstaendeById = (id: string) => createSelector(
 
 export const selectDurchsichtByNameZaehlerstandstyp = (name: string, zaehlerstandstyp: string) => createSelector(
     selectAllZaehlerstaende,
-    zaehlerstaende => zaehlerstaende?.filter(el => el.name == name && el.zaehlerstandstyp == zaehlerstandstyp)
+    zaehlerstaende => zaehlerstaende?.find(el => el.name == name && el.zaehlerstandstyp == zaehlerstandstyp)?.betriebsstunden
 )

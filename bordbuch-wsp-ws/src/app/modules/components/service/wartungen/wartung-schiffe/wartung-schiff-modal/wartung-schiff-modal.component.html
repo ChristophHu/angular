@@ -8,55 +8,83 @@
     </button>
   </header>
   <div class="content">
-      <form [formGroup]="schiffForm">
-          <div class="hidden">
-            <mat-form-field appearance="fill">
-              <mat-label>id</mat-label>
-              <input matInput type="text" formControlName="id" readonly>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-              <mat-label>id_dienststelle</mat-label>
-              <input matInput type="text" formControlName="id_dienststelle" readonly>
-            </mat-form-field>
-          </div>
-          <mat-form-field appearance="fill">
-              <mat-label>Name</mat-label>
-              <input matInput type="text" formControlName="name" readonly>
-            </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Marke</mat-label>
-            <input matInput type="text" formControlName="marke" readonly>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-              <mat-label>Typ</mat-label>
-              <input matInput type="text" formControlName="typ" readonly>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-              <mat-label>Identifikationsnummer</mat-label>
-              <input matInput type="text" formControlName="identifikationsnummer" readonly>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Dienststelle</mat-label>
-            <input matInput type="text" formControlName="dienststelle" readonly>
-          </mat-form-field>
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Durchsicht</mat-label>
-            <input matInput type="date" formControlName="durchsicht" value="{{schiffForm.value.durchsicht | date:'yyyy-MM-dd':'+1:00'}}">
-          </mat-form-field> -->
-          <mat-form-field appearance="fill">
-            <mat-label>Durchsicht</mat-label>
-            <input matInput type="text" formControlName="durchsicht" value="{{ schiffForm.value.durchsicht }}">
-          </mat-form-field>
-          <!-- <div class="flex flex-row items-center">
-            <mat-form-field appearance="fill">
-                <mat-label>Datum/Uhrzeit</mat-label>
-                <input matInput type="datetime-local" formControlName="durchsicht" value="{{schiffForm.value.durchsicht | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
-            </mat-form-field>
-            <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
-                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
-            </button>
-          </div> -->
-        </form>
+    <form [formGroup]="zaehlerstandForm">
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_schiff</mat-label>
+          <input matInput type="text" formControlName="id_schiff" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_zaehlerstandstyp</mat-label>
+          <input matInput type="text" formControlName="id_zaehlerstandstyp" readonly>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Typ</mat-label>
+        <input matInput type="text" formControlName="zaehlerstandstyp" readonly>
+      </mat-form-field>
+      <div class="flex flex-row items-center">
+        <mat-form-field appearance="fill">
+            <mat-label>Datum/Uhrzeit</mat-label>
+            <input matInput type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+        </mat-form-field>
+        <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
+            <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+        </button>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Betriebsstunden</mat-label>
+        <input matInput type="text" formControlName="value">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nächste Durchsicht bei</mat-label>
+        <input matInput type="text" formControlName="betriebsstunden">
+      </mat-form-field>
+    </form>
+    <!-- <form [formGroup]="schiffForm">
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id" readonly>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_dienststelle</mat-label>
+          <input matInput type="text" formControlName="id_dienststelle" readonly>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" formControlName="name" readonly>
+        </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Marke</mat-label>
+        <input matInput type="text" formControlName="marke" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+          <mat-label>Typ</mat-label>
+          <input matInput type="text" formControlName="typ" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+          <mat-label>Identifikationsnummer</mat-label>
+          <input matInput type="text" formControlName="identifikationsnummer" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Dienststelle</mat-label>
+        <input matInput type="text" formControlName="dienststelle" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Durchsicht</mat-label>
+        <input matInput type="text" formControlName="durchsicht" value="{{ schiffForm.value.durchsicht }}">
+      </mat-form-field>
+    </form> -->
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
@@ -66,10 +94,10 @@
 <ng-template #toolbar>
   <div>
     <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-    <!-- <button *ngIf="schiffForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button> -->
+    <!-- <button *ngIf="zaehlerstandForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button> -->
   </div>
   <div>
-    <button *ngIf="!schiffForm.pristine && schiffForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-    <!-- <button *ngIf="!schiffForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+    <button *ngIf="!zaehlerstandForm.pristine && zaehlerstandForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+    <!-- <button *ngIf="!zaehlerstandForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
   </div>
 </ng-template>

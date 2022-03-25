@@ -18,7 +18,7 @@ Kennwort: 'Abc123!'
 
 &nbsp;
 # Änderungen
-## <u>1.0.0x001</u>
+## <u>1.0.0x002</u>
 <ul>
     <li>- Logout -> Abmelden</li>
     <li>- Umlaute - Test der Kodierung</li>

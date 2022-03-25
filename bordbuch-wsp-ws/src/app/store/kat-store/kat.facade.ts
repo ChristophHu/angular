@@ -153,6 +153,9 @@ export class KatFacade {
     deleteSchiff(id: string) {
         this.store.dispatch(KatAction.deleteSchiff({ id }))
     }
+    getShipById(id: string): Observable<any> {
+        return this.store.pipe(select(KatSelectors.selectShipById(id)))
+    }
     getIdByShip(name: string): Observable<string | undefined> {
         return this.store.pipe(select(KatSelectors.selectIdByShip(name)))
     }
