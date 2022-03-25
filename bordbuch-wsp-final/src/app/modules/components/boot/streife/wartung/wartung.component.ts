@@ -24,6 +24,7 @@ export class WartungComponent implements OnInit {
   constructor(private store: Store<RootStoreState>) {
     this.ship$ = this.store.pipe(select(ShipSelectors.selectShip))
     this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+    this.store.pipe(select(ZaehlerstandSelectors.selectAllData)).subscribe(data => console.log(data))
   }
 
   ngOnInit(): void {

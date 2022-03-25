@@ -12,7 +12,7 @@
         </button>
       </div> -->
     </div>
-    <div class="p-4 border-b hover:bg-gray-50" *ngIf="(ship$ | async) as ship">
+    <!-- <div class="p-4 border-b hover:bg-gray-50" *ngIf="(ship$ | async) as ship">
       <h2 class="mb-2 text-xl">{{ ship.name }}</h2>
       <div class="my-2 flex flex-wrap overflow-hidden">
         <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Vorführdatum: </p>
@@ -20,8 +20,8 @@
         <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Tage bis zur Wartung: </p>
         <p class="my-1 px-1 w-1/3 overflow-hidden">{{ ship.durchsicht }}</p>
       </div>
-      <!-- <progress-bar [value]="yesterday | date:'d' | string2number" [maxvalue]=20></progress-bar> -->
-    </div>
+      <progress-bar [value]="yesterday | date:'d' | string2number" [maxvalue]=20></progress-bar>
+    </div> -->
     <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
       <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
       <!-- <div class="mb-3 flex flex-row justify-between"> -->
