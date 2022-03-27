@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { Features } from 'src/app/core/model/feature'
+import { SpecFacade } from './spec.facade'
 // import { AppService } from 'src/app/core/services/app.service'
 import { Effects } from './store/effects'
 import { reducer } from './store/reducers'
@@ -12,7 +13,7 @@ import { reducer } from './store/reducers'
     EffectsModule.forFeature([Effects])
   ],
   providers: [
-    // AppService
+    SpecFacade
   ]
 })
 export class SpecModule { }

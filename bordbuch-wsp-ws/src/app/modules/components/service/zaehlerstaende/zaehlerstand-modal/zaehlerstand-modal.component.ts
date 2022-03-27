@@ -79,11 +79,11 @@ export class ZaehlerstandModalComponent implements OnInit {
     this.zaehlerstandForm.dirty
   }
 
-  create() {
-    const insert: Zaehlerstand = this.zaehlerstandForm.value
-    this._specFacade.insertZaehlerstand(insert)
-    this.modal?.close()
-  }
+  // create() {
+  //   const insert: Zaehlerstand = this.zaehlerstandForm.value
+  //   this._specFacade.insertZaehlerstand(insert)
+  //   this.modal?.close()
+  // }
   update() {
     let update: Zaehlerstand = this.zaehlerstandForm.value
     this._specFacade.updateZaehlerstand(update)

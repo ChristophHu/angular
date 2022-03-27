@@ -17,6 +17,7 @@ import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-sel
 import { MapModule } from './map/map.module';
 import { PositionsModule } from './positions/positions.module';
 import { SpecModule } from 'src/app/store/spec-store/spec.module';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, data: { param: 'id'}, resolve: { data: ShipResolver },

@@ -3,6 +3,7 @@
     <li>- [Auswahl] WSP Dienststellen ohne zugewiesene Boote werden alle Boote angezeigt.</li>
     <li>- [Auswahl] Alle Boote werden nach Namen sortiert.</li>
     <li>- [Streife] Nach Beenden der Streife wird zur Bootsauswahl zurückgesetzt</li>
+    <li>- [Streife] Update von Zählerständen überarbeitet.</li>
     <li>- [Menü] Map -> Karte</li>
 </ul>
 

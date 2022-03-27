@@ -5,11 +5,13 @@ import { AuthState } from "../modules/auth/model/authstate.model"
 import { KatState } from "./kat-store"
 import { ShipSelectionState } from "./ship-selection-store"
 import { ShipState } from "./ship-store"
+import { SpecState } from "./spec-store"
 
 export interface RootStoreState {
     auth: AuthState
     shipSelection: ShipSelectionState.State
     ship: ShipState.State
+    spec: SpecState.State
     kat: KatState.State
 }
 

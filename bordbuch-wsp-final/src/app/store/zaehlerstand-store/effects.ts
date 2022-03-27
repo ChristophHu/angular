@@ -7,30 +7,30 @@ import { AppService } from '../../core/services/app.service'
  
 @Injectable()
 export class Effects {
-    loadData$ = createEffect( 
-        () => this.actions$.pipe(
-            ofType(loadAllData),
-            switchMap(action => {
-                return this.appService.getZaehlerstaende(action.id_ship).pipe(
-                    map((zaehlerstand: Zaehlerstand[]) => allDataLoaded({ zaehlerstand })
-                    )
-                )
-            })
-            // concatMap(action => 
-            //     this.appService.getZaehlerstaende(action.id_ship)
-            // ),
-            // map((zaehlerstand: Zaehlerstand[]) => allDataLoaded({ zaehlerstand }))
-        )
-    )
+    // loadData$ = createEffect( 
+    //     () => this.actions$.pipe(
+    //         ofType(loadAllData),
+    //         switchMap(action => {
+    //             return this.appService.getZaehlerstaende(action.id_ship).pipe(
+    //                 map((zaehlerstand: Zaehlerstand[]) => allDataLoaded({ zaehlerstand })
+    //                 )
+    //             )
+    //         })
+    //         // concatMap(action => 
+    //         //     this.appService.getZaehlerstaende(action.id_ship)
+    //         // ),
+    //         // map((zaehlerstand: Zaehlerstand[]) => allDataLoaded({ zaehlerstand }))
+    //     )
+    // )
 
-    updateData$ = createEffect(
-        () => this.actions$.pipe(
-            ofType(dataUpdate),
-            switchMap(action => {
-                return this.appService.updateZaehlerstand(action.update.id, action.update.changes)
-            })
-        ), { dispatch: false }
-    )
+    // updateData$ = createEffect(
+    //     () => this.actions$.pipe(
+    //         ofType(dataUpdate),
+    //         switchMap(action => {
+    //             return this.appService.updateZaehlerstand(action.update)
+    //         })
+    //     ), { dispatch: false }
+    // )
 
     constructor(private actions$: Actions, private appService: AppService ) {}
 }

@@ -85,8 +85,11 @@ export class AppService {
                 param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
 
+            // case 'updateZaehlerstand':
+            //     param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
+            //     break
             case 'updateZaehlerstand':
-                param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
                 break
 
             // peilung
@@ -335,14 +338,18 @@ export class AppService {
     }
 
     // zaehlerstaende
-    updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('updateZaehlerstand', changes)
-            source$.subscribe((status: any) => {
-                // observer.next(data)
-            })
-            // , (error: any) => observer.error(error)
-        })
+    // updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
+    //     return new Observable ((observer) => {
+    //         console.log(changes)
+    //         const source$ = this.reducer('updateZaehlerstand', changes)
+    //         source$.subscribe((status: any) => {
+    //             // observer.next(data)
+    //         })
+    //         // , (error: any) => observer.error(error)
+    //     })
+    // }
+    updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
+        return this.update(zaehlerstand, 'updateZaehlerstand')
     }
 
     // pruefvermerk
@@ -435,6 +442,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstaendeRange', id)
             source$.subscribe((data: any) => {
+                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })

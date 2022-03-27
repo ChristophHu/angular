@@ -7,7 +7,7 @@ import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { dateToLocalISOString } from 'src/app/shared/utils';
+import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 
@@ -56,8 +56,8 @@ export class PositionComponent implements OnInit {
   }
   
   setDate() {
-    this.positionForm.patchValue({ date: dateToLocalISOString(new Date()) })
-    this.positionForm.controls['date'].markAsDirty()
+    this.positionForm.patchValue({ date: getLocalISO('now') })
+    this.positionForm.dirty
   }
 
   create() {

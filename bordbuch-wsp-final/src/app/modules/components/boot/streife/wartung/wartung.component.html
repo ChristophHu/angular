@@ -38,8 +38,8 @@
       <div class="my-2 flex flex-wrap overflow-hidden">
         <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Betriebsstunden: </p>
         <p class="my-1 px-1 w-1/3 overflow-hidden">{{ zaehlerstand.value }}</p>
-        <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Durchsicht bei: </p>
-        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ zaehlerstand.betriebsstunden - zaehlerstand.value + 300 }}</p>
+        <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Durchsicht in: </p>
+        <p class="my-1 px-1 w-1/3 overflow-hidden">{{ zaehlerstand.betriebsstunden - zaehlerstand.value }} Stunden</p>
       </div>
       <progress-bar [value]="zaehlerstand.value" [maxvalue]="zaehlerstand.betriebsstunden"></progress-bar>
     </div>

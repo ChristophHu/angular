@@ -76,6 +76,9 @@ export class KatFacade {
     loadZaehlerstandstypen() {
         this.store.dispatch(KatAction.loadZaehlerstandstypen())
     }
+    getIdByZaehlerstandstyp(zaehlerstandstyp: string): Observable<string | undefined> {
+        return this.store.pipe(select(KatSelectors.selectIdByZaehlerstandstyp(zaehlerstandstyp)))
+    }
 
     // zweck
     loadZwecke() {

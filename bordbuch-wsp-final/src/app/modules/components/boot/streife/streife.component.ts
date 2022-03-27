@@ -21,6 +21,7 @@ import { KatSelectors } from 'src/app/store/kat-store';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 import { BesatzungComponent } from './besatzung/besatzung.component';
 import { BetankungComponent } from './betankung/betankung.component';
@@ -82,7 +83,8 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     private modalService: ModalService<BesatzungComponent>,
     private modalServiceZ: ModalService<ZaehlerstandComponent>,
     private modalServiceB: ModalService<BetankungComponent>,
-    private locationService: LocationService) 
+    private locationService: LocationService,
+    private _specFacade: SpecFacade) 
     {
       this.kennungen$ = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kennung[]>
       this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
@@ -92,7 +94,8 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))
       this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
 
-      this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+      // this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
+      this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
 
       this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
 
@@ -141,9 +144,9 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       if (id_streife) this.id = id_streife
     })
 
-    this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
-      this.zaehlerstaende = zaehlerstaende
-    })
+    // this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
+    //   this.zaehlerstaende = zaehlerstaende
+    // })
   }
 
   // list of tabs
@@ -262,12 +265,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async openZaehlerstandModal(id: string | undefined) {
-    let zaehlerstand: Zaehlerstand | undefined
-  
-    this.store.pipe(select(ZaehlerstandSelectors.selectDataById(id))).subscribe(data => {
-      zaehlerstand = data
-    })
+  async openZaehlerstandModal(zaehlerstand: Zaehlerstand) {
     const { ZaehlerstandComponent } = await import(
       './zaehlerstand/zaehlerstand.component'
     )
@@ -275,7 +273,6 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       data: {
         title: 'Zählerstand aktualisieren',
         zaehlerstand
-        // zaehlerstand: Object.assign(zaehlerstand, { id_ship: this.id_ship }) 
       }
     })
   }

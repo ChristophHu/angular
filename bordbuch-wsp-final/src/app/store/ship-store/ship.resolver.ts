@@ -7,6 +7,8 @@ import { RootStoreState } from "src/app/store/root-store.state"
 import { ShipAction } from "."
 import { LastPositionActions } from "../lastposition-store"
 import { PositionActions } from "../positionreport-store"
+import { SpecFacade } from "../spec-store/spec.facade"
+import { loadAllZaehlerstaende } from "../spec-store/store/actions"
 
 import { ZaehlerstandAction } from "../zaehlerstand-store"
 
@@ -30,7 +32,11 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(ShipAction.loadPeilung({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadChecklist({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(PositionActions.loadAllData({ id_ship: route.params[route.data.param] }))
-                    this.store.dispatch(ZaehlerstandAction.loadAllData({ id_ship: route.params[route.data.param] }))
+                    // this.store.dispatch(ZaehlerstandAction.loadAllData({ id_ship: route.params[route.data.param] }))
+                    console.log(`before zaehlerstand, id: ${route.params[route.data.param]}`)
+                    this.store.dispatch(loadAllZaehlerstaende({ id: route.params[route.data.param]}))
+                    // this._specFacade.loadAllZaehlerstaende(route.params[route.data.param])
+                    console.log(`after zaehlerstand`)
                     this.store.dispatch(LastPositionActions.loadData())
                 }
             }),

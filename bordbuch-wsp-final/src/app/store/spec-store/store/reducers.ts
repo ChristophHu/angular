@@ -1,44 +1,35 @@
 import { createReducer, on } from "@ngrx/store"
+import { Zaehlerstand } from "src/app/core/model/zaehlerstand"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-// import { deleteReparaturFotoSuccess, downloadReparaturFotosSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { loadedAllZaehlerstaende, updateZaehlerstandSuccess } from "./actions"
 
 export interface State {
-    reparaturfotos  : any[]             | undefined
+    zaehlerstaende  : Zaehlerstand[]    | undefined
     isAllDataLoaded : boolean
 }
 
 export const initialDataState: State = {
-    reparaturfotos  : undefined,
+    zaehlerstaende  : undefined,
     isAllDataLoaded : false
 }
 
 export const reducer = createReducer(
     initialDataState,
 
-    // reparaturfotos
-    // on(downloadReparaturFotosSuccess, (state, action) => {
-    //     return {
-    //         ...state,
-    //         reparaturfotos: action.fotos
-    //     }
-    // }),
-    // on(uploadReparaturFotoSuccess, (state, action) => {
-    //     let reparaturfoto: any = Object.assign({}, action.action.upload, { id: action.id })
-    //     let cleared: any[] | undefined = checkStateForEmptyArrays(state.reparaturfotos)
-    //     cleared = cleared?.filter(el => el.id != action.action.upload.id)
-    //     cleared = (cleared) ? [...cleared!, ...[reparaturfoto]] : [reparaturfoto]
-    //     return {
-    //         ...state,
-    //         reparaturfotos: cleared
-    //     }
-    // }),
-    // on(deleteReparaturFotoSuccess, (state, action) => {
-    //     let cleared: any[] | undefined = checkStateForEmptyArrays(state.reparaturfotos)
-    //     cleared = cleared?.filter(el => el.id != action.id)
-    //     cleared = [...cleared!]
-    //     return {
-    //         ...state,
-    //         reparaturfotos: cleared
-    //     }
-    // })
+    // zaehlerstaende
+    on(loadedAllZaehlerstaende, (state, action) => {
+        return {
+            ...state,
+            zaehlerstaende: action.zaehlerstaende
+        }
+    }),
+    on(updateZaehlerstandSuccess, (state, action) => {
+        let clearedZaehlerstaende: Zaehlerstand[] | undefined = checkStateForEmptyArrays(state.zaehlerstaende)
+        clearedZaehlerstaende = clearedZaehlerstaende?.filter(el => el.id != action.action.update.id)
+        clearedZaehlerstaende = [...clearedZaehlerstaende!, ...[action.action.update]]
+        return {
+            ...state,
+            zaehlerstaende: clearedZaehlerstaende
+        }
+    })
 )

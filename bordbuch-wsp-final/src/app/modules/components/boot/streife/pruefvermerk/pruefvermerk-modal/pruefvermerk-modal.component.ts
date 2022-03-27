@@ -14,7 +14,7 @@ import { KatSelectors } from 'src/app/store/kat-store';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { Status } from 'src/app/core/model/reparatur-status.model';
-import { dateToLocalISOString } from 'src/app/shared/utils';
+import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-pruefvermerk',
@@ -103,9 +103,9 @@ export class PruefvermerkModalComponent implements OnInit {
     })
   }
   setDate() {
-    this.pruefvermerkForm.patchValue({ date: dateToLocalISOString(new Date()) })
+    this.pruefvermerkForm.patchValue({ date: getLocalISO('now') })
     // this.pruefvermerkForm.patchValue({ date: new Date().toISOString().substring(0,16) })
-    this.pruefvermerkForm.controls['date'].markAsDirty()
+    this.pruefvermerkForm.dirty
   }
 
   decodeImages(data: any[]) {

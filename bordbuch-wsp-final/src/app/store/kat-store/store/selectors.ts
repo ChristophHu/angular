@@ -70,6 +70,15 @@ export const selectIdByStatus = (bezeichnung: string) => createSelector(
     status => status?.find(el => el.bezeichnung == bezeichnung)?.id
 )
 
+export const selectAllZaehlerstandstypen = createSelector(
+    katState,
+    state => state.zaehlerstandstypen
+)
+export const selectIdByZaehlerstandstyp = (zaehlerstandstyp: string) => createSelector(
+    selectAllZaehlerstandstypen,
+    zaehlerstandstypen => zaehlerstandstypen?.find(el => el.zaehlerstandstyp == zaehlerstandstyp)?.id
+)
+
 // zwecke
 export const selectAllZwecke = createSelector(
     katState,
