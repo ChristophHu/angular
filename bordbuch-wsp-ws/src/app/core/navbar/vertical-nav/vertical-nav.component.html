@@ -55,11 +55,11 @@
             <a href="javascript:void(0)"
               class="flex items-center rounded focus:outline-none">
               <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
-              <span class="text-sm ml-2 leading-none">Auswertung</span>
+              <span class="text-sm ml-2 leading-none">Auswertung Service</span>
             </a>
           </div>
         </li>
-        <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung', 'Controlling', 'Service']">
+        <!-- <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung', 'Controlling', 'Service']">
             <div class="dropdown flex items-center justify-between w-full" appDropdown>
               <a class="flex items-center rounded focus:outline-none">
                 <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
@@ -68,10 +68,10 @@
               <icons class="w-6 h-6 stroke-1 stroke-current" name="chevron-down"></icons>
             </div>
             <ul class="text-sm mt-3 leading-none w-full">
-              <li class="mt-2 pl-8 hover:bg-gray-100 cursor-pointer py-2" [routerLink]="['/streifen/aktuelle-positionen']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Aktuelle Positionen</li>
+              <li class="mt-2 pl-8 hover:bg-gray-100 cursor-pointer py-2" [routerLink]="['/streifen/aktuelle-positionen']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Letzte Positionen</li>
               <li class="mt-2 pl-8 hover:bg-gray-100 cursor-pointer py-2" [routerLink]="['/streifen/ausgewaehlte-streifen']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Ausgewählte Streifen</li>
             </ul>
-          </li>
+          </li> -->
           <li class="flex flex-col mt-2 w-full hover:bg-gray-50 text-gray-600 hover:text-gray-800 cursor-pointer px-4 py-2" routerLinkActive="active-dropdown" *appIsRoleOf="['Administration', 'Leitung', 'Service']">
             <div class="dropdown flex items-center justify-between w-full" appDropdown>
               <a class="flex items-center rounded focus:outline-none">

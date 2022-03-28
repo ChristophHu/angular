@@ -9,7 +9,7 @@
     </header>
     <div class="content">
       <form [formGroup]="peilungForm">
-        <div class="hidden">
+        <div class="">
           <mat-form-field appearance="fill">
             <mat-label>id</mat-label>
             <input matInput type="text" formControlName="id" readonly>
@@ -49,8 +49,8 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Maß</mat-label>
-          <input matInput type="text" formControlName="vol">
+          <mat-label>Menge (in Lieter)</mat-label>
+          <input matInput type="text" formControlName="vol" required>
         </mat-form-field>
       </form>
     </div>

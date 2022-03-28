@@ -9,12 +9,13 @@
                 <th>Datum/Uhrzeit</th>
                 <th>Stand</th>
                 <th>Durchsicht bei</th>
-                <th class="w-6"></th>
+                <th>offene Betriebsstunden</th>
+                <!-- <th class="w-6"></th> -->
                 <th class="w-6"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray | sliceArrayByProperty:'zaehlerstandstyp':'Boot')">
+            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
                 <td>{{ zaehlerstand.name }}</td>
                 <td hidden>{{ zaehlerstand.id }}</td>
                 <td hidden>{{ zaehlerstand.id_schiff }}</td>
@@ -22,9 +23,10 @@
                 <td>{{ zaehlerstand.date | date: 'dd.MM.yyyy' }}</td>
                 <td>{{ zaehlerstand.value }}</td>
                 <td>{{ zaehlerstand.betriebsstunden }}</td>
-                <td class="w-6 h-6">
+                <td>{{ zaehlerstand.betriebsstunden - zaehlerstand.value }}</td>
+                <!-- <td class="w-6 h-6">
                     <progress-circle [value]="zaehlerstand.value" [maxvalue]="zaehlerstand.betriebsstunden"></progress-circle>
-                </td>
+                </td> -->
                 <td class="flex flex-row justify-start text-gray-500">
                     <button class="dropdown w-6 h-6" (click)="showModal(zaehlerstand)">
                         <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit"></icons>

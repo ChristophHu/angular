@@ -309,6 +309,7 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadTanks),
             concatMap(action => this.appService.getTanksVonSchiff(action.id)),
+            tap(tanks => console.log(tanks)),
             map((tanks: Tank[]) => loadedTanks({ tanks }))
         )
     })

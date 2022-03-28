@@ -40,8 +40,8 @@ export class BetankungModalComponent implements OnInit {
       name: [],
       date: [],
       location: this._formBuilder.group({
-        latitude: [],
-        longitude: []
+        latitude: [0],
+        longitude: [0]
       }),
       ort: [],
       fuel: [],
@@ -66,6 +66,10 @@ export class BetankungModalComponent implements OnInit {
       this.betankungForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
   }
+  clearLocation() {
+    this.betankungForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+  }
+
   setDate() {
     this.betankungForm.patchValue({ date: getLocalISO('now') })
     this.betankungForm.dirty

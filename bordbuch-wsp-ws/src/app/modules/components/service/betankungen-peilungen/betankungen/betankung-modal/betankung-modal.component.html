@@ -44,15 +44,18 @@
               <div class="grid grid-cols-2 gap-3" formGroupName="location">
                   <mat-form-field appearance="fill">
                       <mat-label>Latitude</mat-label>
-                      <input matInput type="text" formControlName="latitude" value="{{betankungForm.value.location.latitude | number: '2.2-6'}}">
+                      <input matInput type="text" formControlName="latitude" value="{{ betankungForm.value.location.latitude | number: '2.2-6' }}">
                   </mat-form-field>
                   <mat-form-field appearance="fill">
                       <mat-label>Longitude</mat-label>
-                      <input matInput type="text" formControlName="longitude" value="{{betankungForm.value.location.longitude | number: '2.2-6'}}">
+                      <input matInput type="text" formControlName="longitude" value="{{ betankungForm.value.location.longitude | number: '2.2-6' }}">
                   </mat-form-field>
               </div>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setCurrentLocation()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="map"></icons>
+              </button>
+              <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="clearLocation()">
+                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="minus"></icons>
               </button>
             </div>
             <mat-form-field appearance="fill">
