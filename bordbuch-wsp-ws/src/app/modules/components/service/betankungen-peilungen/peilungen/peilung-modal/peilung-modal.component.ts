@@ -56,7 +56,7 @@ export class PeilungModalComponent implements OnInit {
         this.peilungForm.patchValue({ date: data.data.date })
         this.peilungForm.patchValue(data.data.peilung)
   
-        this._specFacade.loadTanks(data.data.peilung.id_schiff)
+        this._specFacade.getTankByIDShip(data.data.peilung.id_schiff)
       }
     })
   }

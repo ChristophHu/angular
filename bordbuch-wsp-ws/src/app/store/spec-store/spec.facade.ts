@@ -153,9 +153,12 @@ export class SpecFacade {
     }
 
     // tanks
-    loadTanks(id: string) {
-        this.store.dispatch(SpecActions.loadTanks({ id }))
+    loadTanks() {
+        this.store.dispatch(SpecActions.loadTanks())
     }
+    // loadTanks(id: string) {
+    //     this.store.dispatch(SpecActions.loadTanks({ id }))
+    // }
     insertTank(insert: Tank) {
         this.store.dispatch(SpecActions.insertTank({ insert }))
     }

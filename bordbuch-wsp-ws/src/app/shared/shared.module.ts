@@ -33,6 +33,7 @@ import { TooltipModule } from './directives/tooltip/tooltip.module'
 import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overlapArrayByProperty'
+import { OrderByPipe } from './pipes/order-by/order-by.pipe'
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overl
     PageNotFoundComponent,
     DiffDateToTodayPipe,
     SliceArrayByPropertyPipe,
-    OverlapArrayByPropertyPipe
+    OverlapArrayByPropertyPipe,
+    OrderByPipe
   ],
   imports: [
     CommonModule,
@@ -100,6 +102,7 @@ import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overl
     OverlapArrayByPropertyPipe,
     ToArrayPipe,
     DiffDateToTodayPipe,
+    OrderByPipe,
     
     CommonModule,
     ModalModule,

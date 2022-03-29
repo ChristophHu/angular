@@ -281,6 +281,7 @@ export class AppService {
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getStatustypen':
+            case 'getTanks':
             // case 'getStreifen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
@@ -644,6 +645,9 @@ export class AppService {
     }
 
     // tanks
+    getTanks(): Observable<any> {
+        return this.getWithParam('getTanks', {})
+    }
     getTanksVonSchiff(id: string): Observable<any> {
         return this.getWithParam('getTanksVonSchiff', id)
     }

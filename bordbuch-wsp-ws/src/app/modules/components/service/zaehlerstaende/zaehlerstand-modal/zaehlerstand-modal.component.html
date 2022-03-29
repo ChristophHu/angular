@@ -9,7 +9,7 @@
   </header>
   <div class="content">
       <form [formGroup]="zaehlerstandForm">
-          <div class="">
+          <div class="hidden">
             <mat-form-field appearance="fill">
               <mat-label>id</mat-label>
               <input matInput type="text" formControlName="id" readonly>
@@ -26,7 +26,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Name</mat-label>
             <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
-              <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
+              <mat-option *ngFor="let schiff of (schiffe$ | async | toArray | orderBy:'name')" [value]="schiff.name">
                 {{ schiff.name }}
               </mat-option>
             </mat-select>
@@ -34,8 +34,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Typ</mat-label>
             <mat-select formControlName="zaehlerstandstyp" (selectionChange)="selectZaehlerstandstyp($event.value)">
-              <mat-option [value]="'Boot'">Boot</mat-option>
-              <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray)" [value]="zaehlerstandstyp.zaehlerstandstyp">
+              <mat-option *ngFor="let zaehlerstandstyp of (zaehlerstandstypen$ | async | toArray | orderBy:'zaehlerstandstyp')" [value]="zaehlerstandstyp.zaehlerstandstyp">
                 {{ zaehlerstandstyp.zaehlerstandstyp }}
               </mat-option>
             </mat-select>
@@ -71,6 +70,6 @@
   </div>
   <div>
     <button *ngIf="!zaehlerstandForm.pristine && zaehlerstandForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-    <!-- <button *ngIf="!zaehlerstandForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button> -->
+    <button *ngIf="!zaehlerstandForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
   </div>
 </ng-template>

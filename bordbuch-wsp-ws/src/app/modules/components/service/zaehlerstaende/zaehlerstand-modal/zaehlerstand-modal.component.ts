@@ -66,9 +66,7 @@ export class ZaehlerstandModalComponent implements OnInit {
       const name: string = this.zaehlerstandForm.value.name
       const zaehlerstandstyp: string = this.zaehlerstandForm.value.zaehlerstandstyp
 
-      console.log(`${this.zaehlerstandForm.value.name}, ${this.zaehlerstandForm.value.zaehlerstandstyp}`)
       this._specFacade.getDurchsichtByNameZaehlerstandstyp(name, zaehlerstandstyp).subscribe((val: any) => {
-        console.log(val)
         this.zaehlerstandForm.patchValue({ betriebsstunden: val })
       })
     }
@@ -79,11 +77,11 @@ export class ZaehlerstandModalComponent implements OnInit {
     this.zaehlerstandForm.dirty
   }
 
-  // create() {
-  //   const insert: Zaehlerstand = this.zaehlerstandForm.value
-  //   this._specFacade.insertZaehlerstand(insert)
-  //   this.modal?.close()
-  // }
+  create() {
+    const insert: Zaehlerstand = this.zaehlerstandForm.value
+    this._specFacade.insertZaehlerstand(insert)
+    this.modal?.close()
+  }
   update() {
     let update: Zaehlerstand = this.zaehlerstandForm.value
     this._specFacade.updateZaehlerstand(update)

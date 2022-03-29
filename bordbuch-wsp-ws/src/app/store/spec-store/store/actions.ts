@@ -252,8 +252,8 @@ export const deleteStreifeSuccess = createAction(
 
 // tanks
 export const loadTanks = createAction(
-	"[Ship Resolver] Load Tanks",
-	props<{ id: string }>()
+	"[Ship Resolver] Load Tanks"
+	// ,props<{ id: string }>()
 )
 export const loadedTanks = createAction(
 	"[Load Spec Effect] Tanks Loaded",
