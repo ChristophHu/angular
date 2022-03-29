@@ -34,13 +34,13 @@
             <div class="flex flex-row items-center">
               <mat-form-field appearance="fill">
                   <mat-label>Datum/Uhrzeit</mat-label>
-                  <input matInput type="datetime-local" formControlName="date" value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+                  <input matInput type="datetime-local" formControlName="date" value="{{betankungForm.value.date | date:'yyyy-MM-ddTHH:mm'}}">
               </mat-form-field>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
               </button>
             </div>
-            <div class="flex flex-row items-center">
+            <!-- <div class="flex flex-row items-center">
               <div class="grid grid-cols-2 gap-3" formGroupName="location">
                   <mat-form-field appearance="fill">
                       <mat-label>Latitude</mat-label>
@@ -55,9 +55,9 @@
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="map"></icons>
               </button>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="clearLocation()">
-                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="minus"></icons>
+                <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="minus-circle"></icons>
               </button>
-            </div>
+            </div> -->
             <mat-form-field appearance="fill">
               <mat-label>Ortsbezeichnung</mat-label>
               <input matInput type="text" formControlName="ort">

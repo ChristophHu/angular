@@ -70,6 +70,9 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
       this.standortForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
   }
+  clearLocation() {
+    this.standortForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+  }
   setDate() {
     this.standortForm.patchValue({ date: getLocalISO('now') })
     this.standortForm.dirty

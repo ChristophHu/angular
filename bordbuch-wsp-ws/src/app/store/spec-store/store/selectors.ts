@@ -95,6 +95,10 @@ export const selectTanks = createSelector(
     specState,
     state => state.tanks
 )
+export const selectTankByIDShip = (id: string) => createSelector(
+    selectTanks,
+    tanks => tanks?.filter(el => el.id_schiff == id)
+)
 export const selectIdByTank = (bezeichnung: string) => createSelector(
     selectTanks,
     tanks => tanks?.find(el => el.bezeichnung == bezeichnung)?.id

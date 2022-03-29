@@ -54,7 +54,7 @@
             <div class="flex flex-row items-center">
               <mat-form-field appearance="fill">
                   <mat-label>Datum/Uhrzeit</mat-label>
-                  <input matInput type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+                  <input matInput type="datetime-local" formControlName="date" value="{{zaehlerstandForm.value.date | date:'yyyy-MM-ddTHH:mm'}}">
               </mat-form-field>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
