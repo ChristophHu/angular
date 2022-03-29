@@ -29,19 +29,21 @@
               <input matInput type="text" formControlName="persnr" (keyup)="searchUser($event)">
             </mat-form-field> -->
 
-            <mat-form-field appearance="fill">
+            <mat-form-field *ngIf="!besatzungForm.value.persnr" appearance="fill">
               <mat-label>Name</mat-label>
               <mat-select formControlName="persnr">
                 <input matInput class="" placeholder="Person suchen..." (keyup)="searchUser($event)" #name autofocus>
                 <mat-select-search formControlName="search"></mat-select-search>
-                <!-- <mat-option>
-                  <input type="text" class="p-2" (keyup)="searchUser($event)" #name>
-                </mat-option> -->
                 <mat-option *ngIf="!name.value">Keine Person zur Auswahl...</mat-option>
                 <mat-option *ngFor="let name of (namen$ | async | orderBy:'name')" [value]="name.name">
                   {{ name.name }}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="besatzungForm.value.persnr" appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" formControlName="persnr" readonly>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
@@ -55,7 +57,7 @@
             <div class="flex flex-row items-center">
               <mat-form-field appearance="fill">
                   <mat-label>An Bord</mat-label>
-                  <input matInput type="datetime-local" formControlName="an_bord" value="{{besatzungForm.value.an_bord | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+                  <input matInput type="datetime-local" formControlName="an_bord" value="{{besatzungForm.value.an_bord | date:'yyyy-MM-ddTHH:mm'}}">
               </mat-form-field>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setAnBordDate()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -64,7 +66,7 @@
             <div class="flex flex-row items-center">
               <mat-form-field appearance="fill">
                   <mat-label>Von Bord</mat-label>
-                  <input matInput type="datetime-local" formControlName="von_bord" value="{{besatzungForm.value.von_bord | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+                  <input matInput type="datetime-local" formControlName="von_bord" value="{{besatzungForm.value.von_bord | date:'yyyy-MM-ddTHH:mm'}}">
               </mat-form-field>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setVonBordDate()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -83,7 +85,7 @@
     <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
   </div>
   <div>
-      <button *ngIf="!besatzungForm.pristine && besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="besatzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
       <button *ngIf="!besatzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
   </div>
 </ng-template>

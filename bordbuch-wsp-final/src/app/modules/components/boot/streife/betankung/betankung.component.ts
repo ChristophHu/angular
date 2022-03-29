@@ -33,17 +33,15 @@ export class BetankungComponent implements OnInit {
     private _formBuilder: FormBuilder, 
     private store: Store<ShipState.State>, 
     private modalService: ModalService<BetankungComponent>, 
-    private locationService: LocationService,
-    private _katFacade: KatFacade) {
-      // this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
+    private locationService: LocationService) {
       this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
       this.betankungForm = this._formBuilder.group({
         id: [],
         id_ship: [],
         date: [],
         location: this._formBuilder.group({
-          latitude: [],
-          longitude: []
+          latitude: [0],
+          longitude: [0]
         }),
         ort: [],
         fuel: [],
@@ -61,13 +59,16 @@ export class BetankungComponent implements OnInit {
 
   setDate() {
     this.betankungForm.patchValue({ date: getLocalISO('now') })
-    // this.betankungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.betankungForm.dirty
   }
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {
       this.betankungForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
+  }
+  clearLocation() {
+    this.betankungForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+    this.betankungForm.dirty
   }
 
   create() {

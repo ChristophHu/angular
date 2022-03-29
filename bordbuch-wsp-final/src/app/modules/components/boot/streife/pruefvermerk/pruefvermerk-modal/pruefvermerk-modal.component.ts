@@ -104,7 +104,6 @@ export class PruefvermerkModalComponent implements OnInit {
   }
   setDate() {
     this.pruefvermerkForm.patchValue({ date: getLocalISO('now') })
-    // this.pruefvermerkForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.pruefvermerkForm.dirty
   }
 

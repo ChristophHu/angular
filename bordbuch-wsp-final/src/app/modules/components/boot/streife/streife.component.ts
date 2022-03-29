@@ -17,6 +17,7 @@ import { Zweck } from 'src/app/core/model/zwecke.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
@@ -35,6 +36,7 @@ import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 export class StreifeComponent implements OnInit, AfterViewInit {
   @ViewChild('headlineStepper') stepper: CdkStepper | undefined
   
+  klar: boolean = false
   name!: string | undefined
   id_schiff!: string | undefined
   id!: string | undefined
@@ -69,7 +71,7 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   checkFormGroup!: FormGroup
   kontrollFormGroup!: FormGroup
 
-  kennung = ''
+  // kennung = ''
   zweck = ''
 
   kennungen$: Observable<Kennung[]>
@@ -89,6 +91,10 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       this.kennungen$ = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kennung[]>
       this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
       this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
+      this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
+        console.log(data)
+        this.name = data?.name
+      })
       this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
       this.isPatrolBeendet$ = this.store.pipe(select(ShipSelectors.isPatrolBeendet))
       this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))
@@ -112,16 +118,18 @@ export class StreifeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.zweckFormGroup = this._formBuilder.group({  
-      kennung: ['', Validators.required],
+      kennung: [{value: this.name, disabled: true}, Validators.required],
       zweck: ['', Validators.required],
+      klar: ['klar'],
+      automSpeicherung: [false]
     })
     this.kontrollFormGroup = this._formBuilder.group({
       kontrolle: [false]
     })
 
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-      this.name = ship?.name
-    })
+    // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+    //   this.name = ship?.name
+    // })
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
       if (patrol) {
@@ -170,6 +178,10 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     }
     stepper.next()
   }
+  nextDisable(stepper: CdkStepper): boolean {
+    if (stepper.selectedIndex == stepper.steps.length - 1) return true
+    return false
+  }
   previous(stepper: CdkStepper) {
     stepper.previous()
   }
@@ -184,13 +196,13 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     this.kontrollFormGroup.patchValue({ kontrolle: false })
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: new Date().toISOString().substring(0,16), status: 'vorbereitend', zweck: ''  }
+    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: getLocalISO('now'), status: 'vorbereitend', zweck: ''  }
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-      const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: new Date().toISOString().substring(0,16) })
+      const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: getLocalISO('now') })
       this.store.dispatch(ShipAction.insertPatrol({ insert }))
     })
   }
@@ -208,13 +220,13 @@ export class StreifeComponent implements OnInit, AfterViewInit {
           case 'aktiv':
             // startposition setzen
             this.locationService.getCurrentPosition().then(position => {
-              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: new Date().toISOString().substring(0,16), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
+              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
               this.store.dispatch(PositionActions.insertData({ positionReport }))
             })
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: new Date().toISOString().substring(0,16) })
+            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: getLocalISO('now') })
             break
           case 'beendet':
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: new Date().toISOString().substring(0,16) })
+            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: getLocalISO('now') })
             // this.stepperReset(this.stepper!)
             this._router.navigateByUrl('/')
             break
@@ -240,15 +252,13 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     this.store.dispatch(logout())
   }
 
-  async openBesatzungModal(id?: string) {
-    let besatzung: Besatzung | undefined
+  async openBesatzungModal(besatzung?: Besatzung) {
 
     const { BesatzungComponent } = await import(
       './besatzung/besatzung.component'
     )
 
-    if (id) {
-      besatzung = this.patrol.besatzung.find(el => el.id == id)
+    if (besatzung) {
       this.modalService.open(BesatzungComponent, {
         data: {
           title: 'Besatzungsmitglied bearbeiten',
@@ -282,17 +292,12 @@ export class StreifeComponent implements OnInit, AfterViewInit {
       './betankung/betankung.component'
     )
 
-    this.locationService.getCurrentPosition().then((data: any) => {
-      console.info(`currentPosition | latitude: ${data.latitude}, longitude: ${data.longitude}`)
-      const position: Position = { latitude: data.latitude, longitude: data.longitude }
-      this.modalServiceB.open(BetankungComponent, {
-        data: {
-          title: 'Betankung durchführen',
-          id_ship: this.id_schiff,
-          date: new Date().toISOString().substring(0,16),
-          location: position
-        }
-      })
-    }, error => console.error(error))
+    this.modalServiceB.open(BetankungComponent, {
+      data: {
+        title: 'Betankung durchführen',
+        id_ship: this.id_schiff,
+        date: getLocalISO('now')
+      }
+    })
   }
 }

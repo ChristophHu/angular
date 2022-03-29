@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { Reparatur } from 'src/app/core/model/reparatur'
 import { ModalService } from 'src/app/shared/components/modal/modal.service'
+import { getLocalISO } from 'src/app/shared/utils'
 import { RootStoreState } from 'src/app/store/root-store.state'
 import { ShipSelectors } from 'src/app/store/ship-store'
 import { PruefvermerkModalComponent } from './pruefvermerk-modal/pruefvermerk-modal.component'
@@ -43,7 +44,7 @@ export class PruefvermerkComponent implements OnInit {
         data: {
           title: 'Prüfvermerk erstellen',
           id_ship: this.id_schiff,
-          date: new Date().toISOString().substring(0,16)
+          date: getLocalISO('now')
         }
       })
     }

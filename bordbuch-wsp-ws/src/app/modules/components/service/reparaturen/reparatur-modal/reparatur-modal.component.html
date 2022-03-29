@@ -67,7 +67,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status" (selectionChange)="selectStatus($event.value)">
-          <mat-option *ngFor="let status of (status$ | async | toArray | orderBy:'bezeichnung')" [value]="status.bezeichnung">
+          <mat-option *ngFor="let status of (status$ | async | toArray)" [value]="status.bezeichnung">
             {{ status.bezeichnung }}
           </mat-option>
         </mat-select>

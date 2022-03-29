@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { MatInputModule } from '@angular/material/input'
-import {MatCheckboxModule} from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatTableModule } from '@angular/material/table'
 import { MatStepperModule } from '@angular/material/stepper'
 import { MatDialogModule } from '@angular/material/dialog'
+import { MatButtonModule } from '@angular/material/button'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { ModalModule } from './components/modal/modal.module'
 import { CardModule } from './components/card/card.module'
 import { IconLibraryModule } from 'projects/icon-library/src/public-api'
@@ -27,6 +29,8 @@ import { IvyCarouselModule } from 'projects/image-carousel/src/public-api'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 import { StickyThingDirective } from './directives/sticky-header/sticky-thing.directive'
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
+import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty';
+import { ButtonToggleGroupComponent } from './components/button-toggle-group/button-toggle-group.component'
 
 @NgModule({
     declarations: [
@@ -39,7 +43,9 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
         DiffDateToTodayPipe,
         DaysAgoPipe,
         ToArrayPipe,
-        OrderByPipe
+        OrderByPipe,
+        SliceArrayByPropertyPipe,
+        ButtonToggleGroupComponent
     ],
     imports: [
         CommonModule,
@@ -63,6 +69,8 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
         MatTableModule,
         MatStepperModule,
         MatDialogModule,
+        MatButtonModule,
+        MatButtonToggleModule,
 
         InfoPopupModule
     ],
@@ -75,6 +83,7 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
         DaysAgoPipe,
         ToArrayPipe,
         OrderByPipe,
+        SliceArrayByPropertyPipe,
         
         CommonModule,
         FormsModule,
@@ -99,10 +108,13 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
         MatStepperModule,
         MatSelectModule,
         MatDialogModule,
-
+        MatButtonModule,
+        MatButtonToggleModule,
+        
         ProgressBarComponent,
         ImageSliderComponent,
         String2numberPipe,
+        ButtonToggleGroupComponent,
 
         InfoPopupModule
     ]

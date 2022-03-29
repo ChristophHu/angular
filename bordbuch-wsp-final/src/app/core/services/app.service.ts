@@ -79,6 +79,7 @@ export class AppService {
             // betankung
             case 'insertBetankung':
                 param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                console.log(param)
                 break
 
             case 'updateBetankung':
@@ -312,6 +313,7 @@ export class AppService {
 
     // betankung
     insertBetankung(betankung: Betankung): Observable<any> {
+        console.log(betankung)
         return new Observable ((observer) => {
             const source$ = this.reducer('insertBetankung', betankung)
             source$.subscribe((data: any) => {

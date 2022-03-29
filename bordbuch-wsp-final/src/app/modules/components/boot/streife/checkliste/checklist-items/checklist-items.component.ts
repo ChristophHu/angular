@@ -9,6 +9,7 @@ import { Geraetebuch } from 'src/app/core/model/geraetebuch.model';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { KatAction, KatSelectors } from 'src/app/store/kat-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
@@ -100,7 +101,7 @@ export class ChecklistItemsComponent implements OnInit {
 
   create() {
     const status: string = this.getChecklistStatus(this.checklist.checklistItems)
-    const insert: Checklist = Object.assign({}, this.checklist, { id: this.patrolId, datum: new Date().toISOString().substring(0,16), status })
+    const insert: Checklist = Object.assign({}, this.checklist, { id: this.patrolId, datum: getLocalISO('now'), status })
     this.store.dispatch(ShipAction.insertChecklist({ insert }))
     this.modal?.close()
   }

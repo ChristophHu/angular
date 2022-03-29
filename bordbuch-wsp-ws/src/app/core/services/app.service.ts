@@ -164,10 +164,10 @@ export class AppService {
 
             // tank
             case 'insertTank':
-                param = `id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&max_vol=${data.max_vol}`
+                param = `id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&kraftstoff=${data.kraftstoff}&max_vol=${data.max_vol}`
                 break
             case 'updateTank':
-                param = `id=${data.id}&id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&max_vol=${data.max_vol}`
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&bezeichnung=${data.bezeichnung}&kraftstoff=${data.kraftstoff}&max_vol=${data.max_vol}`
                 break
 
             // checkliste
@@ -282,7 +282,6 @@ export class AppService {
             case 'getSchiffe':
             case 'getStatustypen':
             case 'getTanks':
-            // case 'getStreifen':
             case 'getZaehlerstandstypen':
             case 'getKatZwecke':
                 param = ``
@@ -646,7 +645,7 @@ export class AppService {
 
     // tanks
     getTanks(): Observable<any> {
-        return this.getWithParam('getTanks', {})
+        return this.get('getTanks')
     }
     getTanksVonSchiff(id: string): Observable<any> {
         return this.getWithParam('getTanksVonSchiff', id)

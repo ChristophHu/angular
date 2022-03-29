@@ -27,7 +27,7 @@
               <div class="flex flex-row items-center">
                 <mat-form-field appearance="fill">
                   <mat-label>Datum/Uhrzeit</mat-label>
-                  <input matInput type="datetime-local" formControlName="date" value="{{positionForm.value.date | date:'yyyy-MM-ddTHH:mm':'+1:00'}}">
+                  <input matInput type="datetime-local" formControlName="date" value="{{positionForm.value.date | date:'yyyy-MM-ddTHH:mm'}}">
                 </mat-form-field>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setDate()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -46,7 +46,10 @@
                 </div>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setCurrentLocation()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="map"></icons>
-              </button>
+                </button>
+                <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="clearLocation()">
+                  <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="minus-circle"></icons>
+                </button>
               </div>
               <mat-form-field appearance="fill">
                 <mat-label>Ort</mat-label>
@@ -64,14 +67,12 @@
 </app-modal>
 
 <ng-template #toolbar>
-    <div class="py-3 flex justify-between">
-        <div>
-            <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-            <button *ngIf="positionForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
-        </div>
-        <div>
-            <button *ngIf="!positionForm.pristine && positionForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-            <button *ngIf="!positionForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
-        </div>
-    </div>
+  <div>
+    <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    <button *ngIf="positionForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button>
+  </div>
+  <div>
+    <button *ngIf="!positionForm.pristine && positionForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+    <button *ngIf="!positionForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+  </div>
 </ng-template>

@@ -35,9 +35,9 @@ export class BesatzungComponent implements OnInit {
       funktion: [],
       persnr: [],
       name: [],
-      an_bord: [''],
-      von_bord: [''],
-      search: []
+      an_bord: [],
+      von_bord: [],
+      search: ['']
     })
   }
 
@@ -57,12 +57,10 @@ export class BesatzungComponent implements OnInit {
 
   setAnBordDate() {
     this.besatzungForm.patchValue({ an_bord: getLocalISO('now') })
-    // this.besatzungForm.patchValue({ an_bord: new Date().toISOString().substring(0,16) })
     this.besatzungForm.dirty
   }
   setVonBordDate() {
     this.besatzungForm.patchValue({ von_bord: getLocalISO('now') })
-    // this.besatzungForm.patchValue({ von_bord: new Date().toISOString().substring(0,16) })
     this.besatzungForm.dirty
   }
 
@@ -70,15 +68,9 @@ export class BesatzungComponent implements OnInit {
     console.log(e.target.value)
     if (isNumber(e.target.value.length) && e.target.value.length > 5 && e.target.value.length < 9) {
       this.namen$ = this.appService.getSearchUser(e.target.value)
-      this.appService.getSearchUser(e.target.value).subscribe((data: any) => {
-        console.log(data)
-      })
     }
     if (!isNumber(e.target.value) && e.target.value.length > 5) {
       this.namen$ = this.appService.getSearchUser(e.target.value)
-      this.appService.getSearchUser(e.target.value).subscribe((data: any) => {
-        console.log(data)
-      })
     }
   }
 

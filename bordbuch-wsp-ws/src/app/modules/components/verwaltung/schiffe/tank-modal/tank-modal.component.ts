@@ -37,6 +37,7 @@ export class TankModalComponent implements OnInit {
       id_schiff: [],
       schiffsname: [],
       bezeichnung: [],
+      kraftstoff: [],
       max_vol: []
     })
   }
@@ -46,7 +47,7 @@ export class TankModalComponent implements OnInit {
       this.title = data.data.title
       this.tankTabForm.patchValue({ id_schiff: data.data.schiff.id, name: data.data.schiff.name })
       this.tankForm.patchValue({ id_schiff: data.data.schiff.id, schiffsname: data.data.schiff.name })
-      this._specFacade.getTankByIDShip(data.data.schiff.id)
+      this.tanks$ = this._specFacade.getTankByIDShip(data.data.schiff.id) as Observable<Tank[]>
     })
   }
 
@@ -55,7 +56,7 @@ export class TankModalComponent implements OnInit {
     this.show = !this.show
   }
   newTank() {
-    this.tankForm.patchValue({ id: '', bezeichnung: '', max_vol: ''})
+    this.tankForm.patchValue({ id: '', bezeichnung: '', kraftstoff: '', max_vol: ''})
     this.show = !this.show
   }
 

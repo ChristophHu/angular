@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Peilung } from 'src/app/core/model/peilung.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { ShipSelectors, ShipState } from 'src/app/store/ship-store';
 import { PeilungModalComponent } from './peilung-modal/peilung-modal.component';
 
@@ -27,7 +28,7 @@ export class PeilungComponent {
     this.modalService.open(PeilungModalComponent, {
       data: {
         title: 'Peilung erstellen',
-        date: new Date().toISOString().substring(0,16)
+        date: getLocalISO('now')
       }
     })
   }

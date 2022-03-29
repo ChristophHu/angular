@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Checklist } from 'src/app/core/models/checklist.model';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
+import { Tank } from 'src/app/core/models/tank.model';
 import { Zaehlerstand } from 'src/app/core/models/zaehlerstand.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -94,6 +95,21 @@ export class SchiffModalComponent implements OnInit {
       betriebsstunden: 0
     }
     this._specFacade.insertZaehlerstand(zaehlerstand)
+  }
+  createFirstTank(id: string, schiff: Schiff) {
+    // id: [],
+    //   id_schiff: [],
+    //   schiffsname: [],
+    //   bezeichnung: [],
+    //   max_vol: []
+    const tank: Tank = {
+      id: '',
+      id_schiff: id,
+      bezeichnung: 'Haupttank',
+      max_vol: '100'
+    }
+    console.log(tank)
+    this._specFacade.insertTank(tank)
   }
 
   update() {

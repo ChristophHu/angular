@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let reparatur of (reparaturen$ | async | toArray); index as index"
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let reparatur of (reparaturen$ | async | toArray | sliceArrayByProperty:'status':'abgeschlossen'); index as index"
     (click)="openPruefvermerkModal(reparatur)">
     <h2 class="mb-2 text-xl">{{ reparatur.item }}</h2>
     <div class="my-2 flex flex-wrap overflow-hidden">

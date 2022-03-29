@@ -1,7 +1,7 @@
 <tabbar class="shadow-lg z-50" [tabs]="list" labelField="username" [active]="active" (onTabSelect)="changeTab($event)">
   <div class="flex w-full">
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
-    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)">Weiter</button>
+    <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)" [ngClass]="nextDisable(headlineStepper) ? 'text-gray-400' : ''" [disabled]="nextDisable(headlineStepper)">Weiter</button>
     <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
     <button *ngIf="(patrolStatus$ | async)=='beendet'" [disabled]="!checkKontrolle()" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
     <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" [disabled]="!checkKontrolle()" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" (click)="updatePatrol('aktiv')">Streife starten</button>
@@ -34,13 +34,17 @@
               </div>
             </div>
             <div class="p-4">
-              <mat-form-field appearance="fill">
+              <!-- <mat-form-field appearance="fill">
                 <mat-label>Kennung</mat-label>
                 <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
                   <mat-option *ngFor="let kennung of (kennungen$ | async)" [value]="kennung.bezeichnung">
                     {{ kennung.bezeichnung }}
                   </mat-option>
                 </mat-select>
+              </mat-form-field> -->
+              <mat-form-field appearance="fill">
+                <mat-label>Kennung</mat-label>
+                <input matInput type="text" formControlName="kennung" [value]="name" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Fahrtzweck</mat-label>
@@ -50,6 +54,17 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="klar">
+                  <mat-option selected>Klar</mat-option>
+                  <mat-option>Unklar</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="flex flex-row items-center">
+                <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
+                <mat-label>Automatische Speicherung der Position alle 60 Minuten.</mat-label>
+              </div>
             </div>
           </div>
         </cdk-step>
@@ -74,18 +89,19 @@
                 </button>
               </div>
             </div>
-            <div class="p-4 border-b hover:bg-gray-50" *ngFor="let mitglied of (besatzung$ | async | toArray)" (click)="openBesatzungModal(mitglied.id)">
+            <div class="p-4 border-b hover:bg-gray-50" *ngFor="let mitglied of (besatzung$ | async | toArray)" (click)="openBesatzungModal(mitglied)">
               <h2 class="mb-2 text-xl">{{ mitglied.funktion }}</h2>
               <div class="my-2 flex flex-wrap overflow-hidden">
                 <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">Name: </p>
-                <p class="my-1 px-1 w-2/5 overflow-hidden">{{ mitglied.name }}</p>
-                <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">von: </p>
-                <p class="my-1 px-1 w-1/5 overflow-hidden">{{ mitglied.an_bord | date:'HH:mm'}}</p>
+                <p class="my-1 px-1 w-4/5 overflow-hidden">{{ mitglied.persnr }}</p>
+                <!-- <p class="my-1 px-1 w-2/5 overflow-hidden text-gray-600">von: {{ mitglied.an_bord | date:'yyyy.MM.dd HH:mm'}}</p> -->
 
-                <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">PersNr.: </p>
-                <p class="my-1 px-1 w-2/5 overflow-hidden">{{ mitglied.persnr }}</p>
-                <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">bis: </p>
-                <p class="my-1 px-1 w-1/5 overflow-hidden">{{ mitglied.von_bord | date:'HH:mm' }}</p>
+                <!-- <p class="my-1 px-1 w-3/5 overflow-hidden text-gray-600"></p>
+                <p class="my-1 px-1 w-2/5 overflow-hidden text-gray-600">bis: {{ mitglied.von_bord | date:'yyyy.MM.dd HH:mm' }}</p> -->
+                <p class="px-1 w-1/5 overflow-hidden text-gray-600">von: </p>
+                <p class="px-1 w-4/5 overflow-hidden">{{ mitglied.an_bord | date:'yyyy.MM.dd HH:mm'}}</p>
+                <p class="px-1 w-1/5 overflow-hidden text-gray-600">bis: </p>
+                <p class="px-1 w-4/5 overflow-hidden">{{ mitglied.von_bord | date:'yyyy.MM.dd HH:mm'}}</p>
               </div>
             </div>
           </div>
@@ -197,6 +213,7 @@
                   <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
                   <mat-label>Kontrolle aller Eingaben durchgeführt</mat-label>
                 </div>
+                <app-button-toggle-group></app-button-toggle-group>
               </form>
               <!-- <label class="relative" for="kontrolle">Kontrolle aller Eingaben erfolgt: </label>
               <input type="checkbox" name="kontrolle"> -->

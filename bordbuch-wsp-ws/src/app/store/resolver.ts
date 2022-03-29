@@ -38,6 +38,7 @@ export class Resolver implements Resolve<any> {
                     this._specFacade.loadAllReparaturen({ startdate: '', enddate: ''})
                     this._specFacade.loadAllLastStandorte()
                     this._specFacade.loadAllStreifen({ startdate: '', enddate: ''})
+                    this._specFacade.loadTanks()
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

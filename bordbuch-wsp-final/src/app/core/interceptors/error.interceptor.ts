@@ -32,11 +32,11 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         switch(error.status) {
           case 0:
-            console.error('HttpErrorResponse - status: 0')
-            // ERR_CONNECTION_TIMED_OUT, ERR_CONNECTION_REFUSED, ERR_EMPTY_RESPONSE, ERR_PROXY_CONNECTION_FAILED
-            // ERR_NAME_NOT_RESOLVED nicht!!!
-            console.log('Gerätefehler, Neustart durchführen, ggf. keine Verbindung')
-            break
+            // console.error('HttpErrorResponse - status: 0')
+            // // ERR_CONNECTION_TIMED_OUT, ERR_CONNECTION_REFUSED, ERR_EMPTY_RESPONSE, ERR_PROXY_CONNECTION_FAILED
+            // // ERR_NAME_NOT_RESOLVED nicht!!!
+            // console.log('Gerätefehler, Neustart durchführen, ggf. keine Verbindung')
+            // break
 
           case 400:
             console.log(`bad request`)

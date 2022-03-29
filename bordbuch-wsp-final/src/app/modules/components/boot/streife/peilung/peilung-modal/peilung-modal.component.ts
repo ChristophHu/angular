@@ -52,7 +52,6 @@ export class PeilungModalComponent implements OnInit {
 
   setDate() {
     this.peilungForm.patchValue({ date: getLocalISO('now') })
-    // this.peilungForm.patchValue({ date: new Date().toISOString().substring(0,16) })
     this.peilungForm.dirty
   }
 

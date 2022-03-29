@@ -34,8 +34,8 @@ export class PositionComponent implements OnInit {
       id_ship: [],
       date: [],
       location: this._formBuilder.group({
-        latitude: [],
-        longitude: []
+        latitude: [0],
+        longitude: [0]
       }),
       ort: [],
       description: []
@@ -45,7 +45,9 @@ export class PositionComponent implements OnInit {
   ngOnInit(): void {
     this.modalService.getData().then((data) => {
       this.title = data.data.title
-      this.positionForm.patchValue(data.data.position)
+      if (data.data.position) {
+        this.positionForm.patchValue(data.data.position)
+      }
     })
   }
 
@@ -54,7 +56,11 @@ export class PositionComponent implements OnInit {
       this.positionForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
     })
   }
-  
+  clearLocation() {
+    this.positionForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+    this.positionForm.dirty
+  }
+
   setDate() {
     this.positionForm.patchValue({ date: getLocalISO('now') })
     this.positionForm.dirty
