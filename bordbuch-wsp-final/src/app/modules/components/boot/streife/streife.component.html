@@ -3,70 +3,26 @@
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)" [ngClass]="nextDisable(headlineStepper) ? 'text-gray-400' : ''" [disabled]="nextDisable(headlineStepper)">Weiter</button>
     <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='beendet'" [disabled]="!checkKontrolle()" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" [disabled]="!checkKontrolle()" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" (click)="updatePatrol('aktiv')">Streife starten</button>
-    <button *ngIf="(patrolStatus$ | async)=='aktiv'" [disabled]="!checkKontrolle()" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" (click)="updatePatrol('beendet')">Streife beenden</button>
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
+    <!-- [disabled]="!checkKontrolle()" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" -->
+    <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg">Streife starten</button>
+    <!-- [disabled]="!checkKontrolle()" (click)="updatePatrol('aktiv')" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" -->
+    <button *ngIf="(patrolStatus$ | async)=='aktiv'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg">Streife beenden</button>
+    <!-- [disabled]="!checkKontrolle()" (click)="updatePatrol('beendet')" [ngClass]="checkKontrolle() ? 'text-blue-500': 'text-gray-400'" -->
   </div>
 </tabbar>
   
   <div class="main_content overflow-hidden">
-    <form [formGroup]="zweckFormGroup">
       <headline-stepper [linear]="isLinear" [status]="(patrolStatus$ | async)" #headlineStepper>
-        <cdk-step [editable]="isEditable" [optional]="false" [stepControl]="zweckFormGroup.get('kennung')!">
+        <cdk-step [editable]="isEditable" [optional]="false">
+          <!-- [stepControl]="zweckFormGroup.get('kennung')!" -->
           <ng-template cdkStepLabel>
             <div class="ml-5">
               <h4 class="text-2xl text-blue-600">Streife</h4>
               <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-4 bg-white hover:bg-gray-50 rounded-lg shadow-lg overflow-x-hidden">
-            <div class="flex flex-row p-4 justify-between border-b">
-              <div>
-                <h2 class="text-2xl ">Streife</h2>
-                <p class="text-sm text-gray-500">
-                  Der Status der Streife ist {{ (patrolStatus$ | async) }}.
-                </p>
-              </div>
-              <div>
-                <button class="w-8 h-8 m-2 cursor-pointer" (click)="deletePatrol()">
-                  <icons class="w-8 h-8 stroke-1 stroke-current text-gray-500" name="trash"></icons>
-                </button>
-              </div>
-            </div>
-            <div class="p-4">
-              <!-- <mat-form-field appearance="fill">
-                <mat-label>Kennung</mat-label>
-                <mat-select formControlName="kennung" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
-                  <mat-option *ngFor="let kennung of (kennungen$ | async)" [value]="kennung.bezeichnung">
-                    {{ kennung.bezeichnung }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field> -->
-              <mat-form-field appearance="fill">
-                <mat-label>Kennung</mat-label>
-                <input matInput type="text" formControlName="kennung" [value]="name" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Fahrtzweck</mat-label>
-                <mat-select formControlName="zweck" [disabled]="(patrolStatus$ | async)!='vorbereitend'">
-                  <mat-option *ngFor="let zweck of (zwecke$ | async)" [value]="zweck.bezeichnung">
-                    {{ zweck.bezeichnung }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="klar">
-                  <mat-option selected>Klar</mat-option>
-                  <mat-option>Unklar</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div class="flex flex-row items-center">
-                <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-                <mat-label>Automatische Speicherung der Position alle 60 Minuten.</mat-label>
-              </div>
-            </div>
-          </div>
+          <app-schiff (formReady)="subformReady($event)"></app-schiff>
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>
@@ -75,36 +31,7 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Zählerstände</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-4 mb-3 bg-white rounded-lg shadow-lg">
-            <div class="flex flex-row p-4 justify-between border-b">
-              <div>
-                <h2 class="text-2xl font-bold">Besatzung</h2>
-                <p class="text-sm text-gray-500">
-                  Der Status der Streife ist
-                </p>
-              </div>
-              <div>
-                <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer" (click)="openBesatzungModal()">
-                  <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
-                </button>
-              </div>
-            </div>
-            <div class="p-4 border-b hover:bg-gray-50" *ngFor="let mitglied of (besatzung$ | async | toArray)" (click)="openBesatzungModal(mitglied)">
-              <h2 class="mb-2 text-xl">{{ mitglied.funktion }}</h2>
-              <div class="my-2 flex flex-wrap overflow-hidden">
-                <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">Name: </p>
-                <p class="my-1 px-1 w-4/5 overflow-hidden">{{ mitglied.persnr }}</p>
-                <!-- <p class="my-1 px-1 w-2/5 overflow-hidden text-gray-600">von: {{ mitglied.an_bord | date:'yyyy.MM.dd HH:mm'}}</p> -->
-
-                <!-- <p class="my-1 px-1 w-3/5 overflow-hidden text-gray-600"></p>
-                <p class="my-1 px-1 w-2/5 overflow-hidden text-gray-600">bis: {{ mitglied.von_bord | date:'yyyy.MM.dd HH:mm' }}</p> -->
-                <p class="px-1 w-1/5 overflow-hidden text-gray-600">von: </p>
-                <p class="px-1 w-4/5 overflow-hidden">{{ mitglied.an_bord | date:'yyyy.MM.dd HH:mm'}}</p>
-                <p class="px-1 w-1/5 overflow-hidden text-gray-600">bis: </p>
-                <p class="px-1 w-4/5 overflow-hidden">{{ mitglied.von_bord | date:'yyyy.MM.dd HH:mm'}}</p>
-              </div>
-            </div>
-          </div>
+          <app-besatzung></app-besatzung>
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>
@@ -113,25 +40,7 @@
               <!-- <p class="text-lg text-gray-600">Folgend: <button type="submit" class="cursor-pointer" cdkStepperNext>Prüfvermerke</button></p> -->
             </div>
           </ng-template>
-          <div class="w-full mt-4 mb-3 bg-white rounded-lg shadow-lg">
-            <div class="flex flex-row p-4 justify-between border-b">
-              <div>
-                <h2 class="text-2xl font-bold">Zählerstände</h2>
-                <p class="text-sm text-gray-500">
-                  Vor jeder Fahrt sind die eingegebenen Zählerstände zu kontrollieren. Am Ende einer Fahrt sind diese dann auf den aktuellen Stand zu aktualisieren.
-                </p>
-              </div>
-            </div>
-            <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray); index as index" (click)="openZaehlerstandModal(zaehlerstand)">
-              <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
-              <div class="my-2 flex flex-wrap overflow-hidden">
-                <p class="my-1 px-1 w-1/3 overflow-hidden text-gray-600">Einheiten: </p>
-                <p class="my-1 px-1 w-2/3 overflow-hidden">{{ zaehlerstand.value }}</p>
-                <p class="my-1 px-1 w-1/3 overflow-hidden text-gray-600">Aktualisiert: </p>
-                <p class="my-1 px-1 w-2/3 overflow-hidden">{{ zaehlerstand.date | date:'dd.MM.YYYY HH:mm'}}</p>
-              </div>
-            </div>
-          </div>
+          <app-zaehlerstand></app-zaehlerstand>
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>
@@ -150,31 +59,7 @@
             </div>
           </ng-template>
           <peilung></peilung>
-          <div class="w-full mt-4 mb-3 bg-white rounded-lg shadow-lg">
-            <div class="flex flex-row p-4 justify-between border-b">
-              <div>
-                <h2 class="text-2xl font-bold">Betankung</h2>
-                <p class="text-sm text-gray-500">
-                  Jede Betankung zum Schiff kann hier hinterlegt werden.
-                </p>
-              </div>
-              <div>
-                <button class="w-10 h-10 m-2 bg-gray-100 hover:bg-gray-200 text-blue-500 shadow-inner rounded-full cursor-pointer" (click)="openBetankungModal()">
-                  <icons class="w-8 h-8 stroke-1 stroke-current" name="add"></icons>
-                </button>
-              </div>
-            </div>
-            <div class="p-4 border-b hover:bg-gray-50" *ngFor="let betankung of (betankungen$ | async | toArray); index as index">
-              <h2 class="mb-2 text-xl">{{ betankung.fuel }}</h2>
-              <div class="my-2 flex flex-wrap overflow-hidden">
-                <p class="my-1 px-1 w-1/3 overflow-hidden text-gray-600">Menge (in L): </p>
-                <p class="my-1 px-1 w-2/3 overflow-hidden">{{ betankung.fuelfillingquantity }}</p>
-                <p class="my-1 px-1 w-1/3 overflow-hidden text-gray-600">Aktualisiert: </p>
-                <p class="my-1 px-1 w-2/3 overflow-hidden">{{ betankung.date | date:'dd.MM.YYYY HH:mm'}}</p>
-              </div>
-            </div>
-          </div>
-            
+          <app-betankung></app-betankung>            
         </cdk-step>
         <cdk-step>
           <ng-template cdkStepLabel>
@@ -198,31 +83,7 @@
               <h4 class="text-2xl text-blue-600">Kontrolle der Eingaben</h4>
             </div>
           </ng-template>
-          <div class="w-full mt-4 bg-white rounded-lg shadow-lg">
-            <div class="flex flex-row p-4 justify-between border-b">
-              <div>
-                <h2 class="text-2xl font-bold">Kontrolle</h2>
-                <p class="text-sm text-gray-500">
-                  An dieser Stelle werden offene oder unzureichend hinterlegte Eingaben angezeigt. Diese müssen zum Start und zur Beendigung der Streife bestätigt werden.
-                </p>
-              </div>
-            </div>
-            <div class="p-4 border-b hover:bg-gray-50">
-              <form [formGroup]="kontrollFormGroup">
-                <div class="flex flex-row items-center">
-                  <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-                  <mat-label>Kontrolle aller Eingaben durchgeführt</mat-label>
-                </div>
-                <app-button-toggle-group></app-button-toggle-group>
-              </form>
-              <!-- <label class="relative" for="kontrolle">Kontrolle aller Eingaben erfolgt: </label>
-              <input type="checkbox" name="kontrolle"> -->
-              <!-- <input type="checkbox" name="kontrolle">
-              <mat-label for="kontrolle"> Kontrolle aller Eingaben durchgeführt.</mat-label> -->
-            </div>
-          </div>
           <kontrolle></kontrolle>
         </cdk-step>
       </headline-stepper>
-    </form>
   </div>

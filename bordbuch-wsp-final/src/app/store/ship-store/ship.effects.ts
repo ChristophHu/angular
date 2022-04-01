@@ -26,6 +26,17 @@ export class ShipEffects {
             })
         )
     })
+    updateShip$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ShipAction.updateShip),
+            switchMap(action => {
+                return this.appService.updateSchiff(action.update).pipe(
+                    map(() => ShipAction.updateShipSuccess({ update: action.update }))
+                )
+            })
+        )
+    })
+
 
     loadPatrol$ = createEffect(() => {
         return this.actions$.pipe(

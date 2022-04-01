@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
@@ -13,11 +14,16 @@ import { ShipSelectors } from 'src/app/store/ship-store';
 })
 export class KontrolleComponent {
 
+  control: boolean = false
+  status: boolean = true
+  
   besatzung: boolean = false
   checkliste: boolean = false
   unchecked!: Checklistitem[] | undefined
 
-  constructor(private store: Store<RootStoreState>) {
+  kontrollForm: FormGroup
+
+  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder,) {
     this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)).subscribe(unchecked => {
       this.unchecked = unchecked?.filter(el => el.relevant == true)
       if (this.unchecked != undefined && this.unchecked?.length > 0) {
@@ -32,6 +38,10 @@ export class KontrolleComponent {
       } else {
         this.besatzung = false
       }
+    })
+
+    this.kontrollForm = this._formBuilder.group({
+      // kontrolle: [false]
     })
   }
 }

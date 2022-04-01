@@ -1,6 +1,5 @@
-import { createAction, createFeatureSelector, createSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Features } from "src/app/core/model/feature";
-import { Zaehlerstand } from "src/app/core/model/zaehlerstand";
 import { State } from './ship.state'
 
 
@@ -30,6 +29,10 @@ export const selectShipName = createSelector(
 )
 
 // patrol
+export const selectedPatrol = createSelector(
+    selectShipState,
+    state => state.patrol
+)
 export const isPatrolActive = createSelector(
     selectShipState,
     state => !!(state.patrol?.status == 'active')
@@ -41,11 +44,6 @@ export const isPatrolBeendet = createSelector(
 export const patrolStatus = createSelector(
     selectShipState,
     state => state.patrol?.status
-)
-
-export const selectedPatrol = createSelector(
-    selectShipState,
-    state => state.patrol
 )
 
 export const selectedPatrolBesatzung = createSelector(

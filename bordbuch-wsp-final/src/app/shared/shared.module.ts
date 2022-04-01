@@ -31,6 +31,7 @@ import { StickyThingDirective } from './directives/sticky-header/sticky-thing.di
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty';
 import { ButtonToggleGroupComponent } from './components/button-toggle-group/button-toggle-group.component'
+import { StickyDirective } from './directives/simpleSticky/sticky.directive'
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { ButtonToggleGroupComponent } from './components/button-toggle-group/but
         ImageSliderComponent,
         CarouselItemDirective, // check!
         StickyThingDirective,
+        StickyDirective,
         Number2stringPipe,
         String2numberPipe,
         DiffDateToTodayPipe,
@@ -77,6 +79,7 @@ import { ButtonToggleGroupComponent } from './components/button-toggle-group/but
     exports: [
         // directives
         StickyThingDirective,
+        StickyDirective,
 
         // pipes
         DiffDateToTodayPipe,

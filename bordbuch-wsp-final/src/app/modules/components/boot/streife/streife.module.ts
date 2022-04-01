@@ -14,12 +14,17 @@ import { PeilungComponent } from './peilung/peilung.component'
 import { PeilungModalComponent } from './peilung/peilung-modal/peilung-modal.component'
 import { WartungComponent } from './wartung/wartung.component'
 import { PruefvermerkComponent } from './pruefvermerk/pruefvermerk.component';
-import { KontrolleComponent } from './kontrolle/kontrolle.component'
+import { KontrolleComponent } from './kontrolle/kontrolle.component';
+import { SchiffComponent } from './schiff/schiff.component';
+import { BesatzungModalComponent } from './besatzung/besatzung-modal/besatzung-modal.component';
+import { BetankungModalComponent } from './betankung/betankung-modal/betankung-modal.component';
+import { ZaehlerstandModalComponent } from './zaehlerstand/zaehlerstand-modal/zaehlerstand-modal.component'
 
 @NgModule({
   declarations: [
     StreifeComponent,
     BesatzungComponent,
+    BesatzungModalComponent,
     ZaehlerstandComponent,
     BetankungComponent,
     TimelineComponent,
@@ -30,7 +35,10 @@ import { KontrolleComponent } from './kontrolle/kontrolle.component'
     WartungComponent,
     PruefvermerkComponent,
     PruefvermerkModalComponent,
-    KontrolleComponent
+    KontrolleComponent,
+    SchiffComponent,
+    BetankungModalComponent,
+    ZaehlerstandModalComponent
   ],
   imports: [
     SharedModule,

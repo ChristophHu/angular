@@ -14,6 +14,7 @@ import { Patrol } from '../model/patrol.model';
 import { Peilung } from '../model/peilung.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
+import { Schiff } from '../model/schiff.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
 import { ConnectionService } from './connection.service';
 import { LocationService } from './location.service';
@@ -125,6 +126,11 @@ export class AppService {
                 break
             case 'deletePosition':
                 param = `id=${data}`
+                break
+
+            // schiff
+            case 'updateSchiff':
+                param = `id=${data.id}&id_dienststelle=${data.id_dienststelle}&name=${data.name}&marke=${data.marke}&typ=${data.typ}&identifikationsnummer=${data.identifikationsnummer}&durchsicht=${data.durchsicht}`
                 break
 
             default:
@@ -432,6 +438,10 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
+    updateSchiff(schiff: Schiff): Observable<any> {
+        return this.update(schiff, 'updateSchiff')
+    }
+    
     getStreifeVonSchiff(id: string): Observable<any> {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getStreifeVonSchiff', id)
@@ -444,7 +454,6 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.getReducer('getZaehlerstaendeRange', id)
             source$.subscribe((data: any) => {
-                console.log(data)
                 observer.next(data)
             }, (error: any) => observer.error(error))
         })
@@ -618,7 +627,6 @@ export class AppService {
     }
 
     // updateChecklist(gbook: any) {
-    //     // console.log(data)
     //     // let gbook = JSON.parse(data[0].gbookdaten)
     //     // console.log(gbook)
     //     gbook = {"id_schiff":"1","einsatzmittel":[{"id":"75764649-769b-4935-848c-25ccb213cf56","name":"Anhaltestab","anzahl":"3","seriennummern":"","sonstiges":"false"},{"id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef","name":"Alkomat","anzahl":"1","seriennummern":"SN-1234","sonstiges":"false"},{"id":"bd34d03c-3728-4df3-9ba7-7ead0d575532","name":"Anker","anzahl":"2","seriennummern":"","sonstiges":""},{"id":"c6aac15c-4fea-49ce-943b-21070169f361","name":"Rettungsring","anzahl":"1","seriennummern":"","sonstiges":""}]}

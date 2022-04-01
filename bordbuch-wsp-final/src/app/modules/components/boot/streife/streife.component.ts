@@ -1,148 +1,113 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Besatzung } from 'src/app/core/model/besatzung.model';
-import { Betankung } from 'src/app/core/model/betankung';
-import { Kennung } from 'src/app/core/model/kennung.model';
 import { Patrol } from 'src/app/core/model/patrol.model';
-import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
-import { Ship } from 'src/app/core/model/ship.model';
-import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
-import { Zweck } from 'src/app/core/model/zwecke.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
-import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { KatSelectors } from 'src/app/store/kat-store';
 import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
-import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
-import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
-import { BesatzungComponent } from './besatzung/besatzung.component';
-import { BetankungComponent } from './betankung/betankung.component';
-import { ZaehlerstandComponent } from './zaehlerstand/zaehlerstand.component';
 
 @Component({
   selector: 'app-streife',
   templateUrl: './streife.component.html',
   styleUrls: ['./streife.component.sass']
 })
-export class StreifeComponent implements OnInit, AfterViewInit {
+export class StreifeComponent implements OnInit {
   @ViewChild('headlineStepper') stepper: CdkStepper | undefined
   
-  klar: boolean = false
-  name!: string | undefined
+  form!: FormGroup
+
+  // name!: string | undefined
   id_schiff!: string | undefined
   id!: string | undefined
 
-  // status
-  status: any[] = [
-    { id: 1, bezeichnung: 'vorbereitend'},
-    { id: 2, bezeichnung: 'aktiv' },
-    { id: 3, bezeichnung: 'beendet' }
-  ]
+  // status: any[] = [
+  //   { id: 1, bezeichnung: 'vorbereitend'},
+  //   { id: 2, bezeichnung: 'aktiv' },
+  //   { id: 3, bezeichnung: 'beendet' }
+  // ]
 
   // stepper
   isLinear: boolean = true
   isEditable: boolean = true
 
   // observables
-  ship$: Observable<Ship | undefined>
+  // ship$: Observable<Ship | undefined>
   isPatrolActive$!: Observable<boolean>
   isPatrolBeendet$!: Observable<boolean>
   patrolStatus$!: Observable<string | undefined>
-  zaehlerstaende$!: Observable<Zaehlerstand[] | undefined>
-  besatzung$!: Observable<Besatzung[] | undefined>
-  betankungen$!: Observable<Betankung[] | undefined>
 
-  zaehlerstaende: Zaehlerstand[] | undefined
+  // zaehlerstaende: Zaehlerstand[] | undefined
 
   patrol!: Patrol
 
-  zweckFormGroup!: FormGroup
-  besatzungFormGroup!: FormGroup
-  bootFormGroup!: FormGroup
-  checkFormGroup!: FormGroup
-  kontrollFormGroup!: FormGroup
+  // shipForm: FormGroup
+  // zweckFormGroup!: FormGroup
+  // besatzungFormGroup!: FormGroup
+  // bootFormGroup!: FormGroup
+  // checkFormGroup!: FormGroup
 
   // kennung = ''
-  zweck = ''
-
-  kennungen$: Observable<Kennung[]>
-  zwecke$: Observable<Zweck[]>
+  // zweck = ''
   // start = ''
 
-  constructor(
-    private store: Store<RootStoreState>, 
-    private _formBuilder: FormBuilder,
-    private _router: Router,
-    private modalService: ModalService<BesatzungComponent>,
-    private modalServiceZ: ModalService<ZaehlerstandComponent>,
-    private modalServiceB: ModalService<BetankungComponent>,
-    private locationService: LocationService,
-    private _specFacade: SpecFacade) 
-    {
-      this.kennungen$ = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kennung[]>
-      this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
-      this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
-      this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
-        console.log(data)
-        this.name = data?.name
-      })
+  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder) {
+      
+      
+      // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
+      // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
+      //   console.log(data)
+      //   this.name = data?.name
+      // })
       this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
       this.isPatrolBeendet$ = this.store.pipe(select(ShipSelectors.isPatrolBeendet))
-      this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))
-      this.besatzung$ = this.store.pipe(select(ShipSelectors.selectBesatzung))
+      this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))   
 
-      // this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
-      this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
+      // this.store.pipe(select(ShipSelectors.selectShipId))
 
-      this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen))
+      // this.checkFormGroup = this._formBuilder.group({
+      //   check: [false]
+      // })
 
-      this.store.pipe(select(ShipSelectors.selectShipId))
-
-      this.checkFormGroup = this._formBuilder.group({
-        check: [false]
-      })
+      // this.shipForm = this._formBuilder.group({
+      //   id        : [''],
+      //   name      : [''],
+      //   durchsicht: ['']
+      // })
     }
 
-  ngAfterViewInit(): void {
-    // console.log(this.patrol)
-  }
-
   ngOnInit(): void {
-    this.zweckFormGroup = this._formBuilder.group({  
-      kennung: [{value: this.name, disabled: true}, Validators.required],
-      zweck: ['', Validators.required],
-      klar: ['klar'],
-      automSpeicherung: [false]
+    this.form = this._formBuilder.group({
+      subforms: this._formBuilder.array([])
     })
-    this.kontrollFormGroup = this._formBuilder.group({
-      kontrolle: [false]
-    })
+    // this.zweckFormGroup = this._formBuilder.group({
+    //   kennung: [{value: this.name, disabled: true}, Validators.required],
+    //   zweck: ['', Validators.required],
+    // })
 
     // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
     //   this.name = ship?.name
     // })
 
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-      if (patrol) {
-        this.zweckFormGroup.patchValue(patrol!)
-        this.patrol = patrol!
-      }
-      // if (patrol?.status == 'aktiv') {
-      //   // auslagern und in den Store mit aufnehmen
-      //   this.appService.checkPositionStart(patrol)
-      // } else {
-      //   this.appService.checkPositionStop()
-      // }
-    })
+    // this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+    //   if (patrol) {
+    //     this.zweckFormGroup.patchValue(patrol!)
+    //     this.patrol = patrol!
+    //   }
+    //   // if (patrol?.status == 'aktiv') {
+    //   //   // auslagern und in den Store mit aufnehmen
+    //   //   this.appService.checkPositionStart(patrol)
+    //   // } else {
+    //   //   this.appService.checkPositionStop()
+    //   // }
+    // })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
       this.id_schiff = id_ship
@@ -151,10 +116,17 @@ export class StreifeComponent implements OnInit, AfterViewInit {
     this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
       if (id_streife) this.id = id_streife
     })
+  }
 
-    // this.store.pipe(select(ShipSelectors.selectZaehlerstaende)).subscribe(zaehlerstaende => {
-    //   this.zaehlerstaende = zaehlerstaende
-    // })
+  // formValidation
+  get subforms(): FormArray {
+    return this.form.get("subforms") as FormArray;
+  }
+
+  subformReady(subform: FormGroup) {
+    this.subforms.push(subform);
+    console.log(this.form);
+    console.log(this.subforms);
   }
 
   // list of tabs
@@ -172,10 +144,10 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   next(stepper: CdkStepper) {
-    if (stepper.selectedIndex == 0 && this.zweckFormGroup.valid) {
-      if (this.id) this.updatePatrol()
-      if (!this.id) this.erstellePatrol()
-    }
+    // if (stepper.selectedIndex == 0 && this.zweckFormGroup.valid) {
+    //   if (this.id) this.updatePatrol()
+    //   if (!this.id) this.erstellePatrol()
+    // }
     stepper.next()
   }
   nextDisable(stepper: CdkStepper): boolean {
@@ -193,111 +165,53 @@ export class StreifeComponent implements OnInit, AfterViewInit {
   }
 
   initializePatrol(stepper: CdkStepper) {
-    this.kontrollFormGroup.patchValue({ kontrolle: false })
+    // this.kontrollFormGroup.patchValue({ kontrolle: false })
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: getLocalISO('now'), status: 'vorbereitend', zweck: ''  }
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
-  erstellePatrol() {
-    // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-      const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: getLocalISO('now') })
-      this.store.dispatch(ShipAction.insertPatrol({ insert }))
-    })
-  }
-  updatePatrol(status?: string) {
-    this.kontrollFormGroup.patchValue({ kontrolle: false })
-    let update: Patrol
-    // update zum eigentlichen Start oder beenden der Streife
-    if (this.patrol.id == '' || this.patrol.id == undefined) {
-      this.erstellePatrol()
+  // erstellePatrol() {
+  //   // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
+  //   this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+  //     const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: getLocalISO('now') })
+  //     this.store.dispatch(ShipAction.insertPatrol({ insert }))
+  //   })
+  // }
+  // updatePatrol(status?: string) {
+  //   this.kontrollFormGroup.patchValue({ kontrolle: false })
+  //   let update: Patrol
+  //   // update zum eigentlichen Start oder beenden der Streife
+  //   if (this.patrol.id == '' || this.patrol.id == undefined) {
+  //     this.erstellePatrol()
       
-    }
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-      if (patrol?.id) {
-        switch (status) {
-          case 'aktiv':
-            // startposition setzen
-            this.locationService.getCurrentPosition().then(position => {
-              const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
-              this.store.dispatch(PositionActions.insertData({ positionReport }))
-            })
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: getLocalISO('now') })
-            break
-          case 'beendet':
-            update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: getLocalISO('now') })
-            // this.stepperReset(this.stepper!)
-            this._router.navigateByUrl('/')
-            break
-          default:
-            update = Object.assign({}, patrol, this.zweckFormGroup.value)
-            break
-        }
-        this.store.dispatch(ShipAction.updatePatrol({ update }))
-      }
-    })
-  }
-  deletePatrol() {
-    const id: string = this.id!
-    this.store.dispatch(ShipAction.deletePatrol({ id }))
-    this.id = ''
-  }
+  //   }
+  //   this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+  //     if (patrol?.id) {
+  //       switch (status) {
+  //         case 'aktiv':
+  //           // startposition setzen
+  //           this.locationService.getCurrentPosition().then(position => {
+  //             const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
+  //             this.store.dispatch(PositionActions.insertData({ positionReport }))
+  //           })
+  //           update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: getLocalISO('now') })
+  //           break
+  //         case 'beendet':
+  //           update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: getLocalISO('now') })
+  //           // this.stepperReset(this.stepper!)
+  //           this._router.navigateByUrl('/')
+  //           break
+  //         default:
+  //           update = Object.assign({}, patrol, this.zweckFormGroup.value)
+  //           break
+  //       }
+  //       this.store.dispatch(ShipAction.updatePatrol({ update }))
+  //     }
+  //   })
+  // }
 
-  checkKontrolle(): boolean {
-    return this.kontrollFormGroup.value.kontrolle
-  }
-
-  logout() {
-    this.store.dispatch(logout())
-  }
-
-  async openBesatzungModal(besatzung?: Besatzung) {
-
-    const { BesatzungComponent } = await import(
-      './besatzung/besatzung.component'
-    )
-
-    if (besatzung) {
-      this.modalService.open(BesatzungComponent, {
-        data: {
-          title: 'Besatzungsmitglied bearbeiten',
-          besatzung
-        }
-      })
-    } else {
-      this.modalService.open(BesatzungComponent, {
-        data: {
-          title: 'Besatzungsmitglied hinzufügen',
-          besatzung: { id_streife: this.id, persnr: '', funktion: '', an_bord: '', von_bord: ''}
-        }
-      })
-    }
-  }
-
-  async openZaehlerstandModal(zaehlerstand: Zaehlerstand) {
-    const { ZaehlerstandComponent } = await import(
-      './zaehlerstand/zaehlerstand.component'
-    )
-    this.modalServiceZ.open(ZaehlerstandComponent, {
-      data: {
-        title: 'Zählerstand aktualisieren',
-        zaehlerstand
-      }
-    })
-  }
-
-  async openBetankungModal() {
-    const { BetankungComponent } = await import(
-      './betankung/betankung.component'
-    )
-
-    this.modalServiceB.open(BetankungComponent, {
-      data: {
-        title: 'Betankung durchführen',
-        id_ship: this.id_schiff,
-        date: getLocalISO('now')
-      }
-    })
-  }
+  // logout() {
+  //   this.store.dispatch(logout())
+  // }
 }

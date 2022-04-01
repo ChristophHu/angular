@@ -108,7 +108,6 @@ export class PruefvermerkModalComponent implements OnInit {
   }
 
   decodeImages(data: any[]) {
-    console.log(data)
     data.forEach(el => {
       this.images.push(Object.assign({}, { path: el.foto }))
     })

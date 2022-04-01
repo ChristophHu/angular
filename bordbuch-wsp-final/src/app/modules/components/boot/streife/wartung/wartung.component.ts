@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MAT_TOOLTIP_DEFAULT_OPTIONS_FACTORY } from '@angular/material/tooltip';
+import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Ship } from 'src/app/core/model/ship.model';
@@ -7,14 +6,13 @@ import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipSelectors } from 'src/app/store/ship-store/';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
-import { ZaehlerstandSelectors } from 'src/app/store/zaehlerstand-store';
 
 @Component({
   selector: 'wartung',
   templateUrl: './wartung.component.html',
   styleUrls: ['./wartung.component.sass']
 })
-export class WartungComponent implements OnInit {
+export class WartungComponent {
 
   ship$: Observable<Ship | undefined>
   zaehlerstaende$: Observable<Zaehlerstand[]>
@@ -24,13 +22,6 @@ export class WartungComponent implements OnInit {
   
   constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
     this.ship$ = this.store.pipe(select(ShipSelectors.selectShip))
-    // this.zaehlerstaende$ = this.store.pipe(select(ZaehlerstandSelectors.selectAllData))
     this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
-    this.store.pipe(select(ZaehlerstandSelectors.selectAllData)).subscribe(data => console.log(data))
-    this.store.pipe(select(ZaehlerstandSelectors.selectAllData)).subscribe(data => console.log(data))
-  }
-
-  ngOnInit(): void {
-
   }
 }

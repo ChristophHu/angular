@@ -30,6 +30,12 @@ export const shipReducer = createReducer(
             ship: action.ship
         }
     }),
+    on(ShipAction.updateShipSuccess, (state, action) => {
+        return {
+            ...state,
+            ship: action.update
+        }
+    }),
     on(ShipAction.patrolLoaded, (state, action) => {
         return {
             ...state,

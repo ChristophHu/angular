@@ -8,7 +8,6 @@ export class SliceArrayByPropertyPipe implements PipeTransform {
   transform(input: any, byProperty: string, value: string = ''): any {
     if (Array.isArray(input)) {
       let result = input.filter(el => el[byProperty] != value)
-      console.log(result)
       return result
     }
     return input

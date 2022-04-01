@@ -23,6 +23,14 @@ export const shipLoaded = createAction(
 	"[Load Ship Effect] Ship Loaded",
 	props<{ ship: Ship }>()
 )
+export const updateShip = createAction(
+	"[Streife] Update Ship",
+	props<{ update: Ship }>()
+)
+export const updateShipSuccess= createAction(
+	"[Streife] Update Ship Success",
+	props<{ update: Ship }>()
+)
 
 // patrol
 export const loadPatrol = createAction(
