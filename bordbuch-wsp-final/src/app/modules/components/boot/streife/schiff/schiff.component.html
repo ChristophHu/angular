@@ -1,5 +1,5 @@
-<div class="w-full mt-4 bg-white hover:bg-gray-50 rounded-lg shadow-lg overflow-x-hidden">
-  <div class="flex flex-row p-4 justify-between border-b">
+<div class="w-full mt-4 mb-4 bg-white hover:bg-gray-50 rounded-lg shadow-lg" #scContainer>
+  <div class="flex flex-row p-4 justify-between bg-white border-b rounded-t-lg z-10" sticky [scrollContainer]="scContainer" [top]="-8">
     <div>
       <h2 class="text-2xl ">Streife</h2>
       <p class="text-sm text-gray-500">
@@ -30,7 +30,7 @@
       </div>
       <mat-form-field appearance="fill">
         <mat-label>Kennung</mat-label>
-        <input matInput type="text" formControlName="kennung" [value]="(ship$ | async)?.name">
+        <input matInput type="text" formControlName="kennung">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Fahrtzweck</mat-label>
@@ -47,15 +47,11 @@
           <mat-label>id</mat-label>
           <input matInput type="text" formControlName="id">
         </mat-form-field>
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>status</mat-label>
+          <input type="checkbox" formControlName="durchsicht">
+        </mat-form-field> -->
       </div>
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Status</mat-label>
-        <mat-select formControlName="durchsicht">
-          <mat-option *ngFor="let klar of durchsicht" [value]="durchsicht">
-            {{ klar }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
     </form>
     <div class="mt-3 flex flex-row items-center justify-between">
       <mat-label>Autom. Speicherung der Position:</mat-label>
@@ -63,17 +59,17 @@
         class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"
         (change)="changeSavings()" /> -->
       <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="position == true ? 'bg-blue-500 text-white' : 'bg-white'" (click)="position = true">Aktiv</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="position == false ? 'bg-red-400 text-white' : 'bg-white-50'" (click)="position = false">Inaktiv</button>
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="saving == true ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeSaving()">Aktiv</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="saving == false ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeSaving()">Inaktiv</button>
       </div>
     </div>
 
-    <div class="mt-3 flex flex-row items-center justify-between">
+    <!-- <div class="mt-3 flex flex-row items-center justify-between">
       <mat-label>Status des Schiffes:</mat-label>
       <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="status == true ? 'bg-blue-500 text-white' : 'bg-white'" (click)="status = true">Klar</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="status == false ? 'bg-red-400 text-white' : 'bg-white-50'" (click)="status = false">Unklar</button>
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="status == true ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus()">Klar</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="status == false ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus()">Unklar</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

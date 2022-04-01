@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
+import { Ship } from 'src/app/core/model/ship.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { getLocalISO } from 'src/app/shared/utils';
@@ -22,7 +23,11 @@ import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 export class StreifeComponent implements OnInit {
   @ViewChild('headlineStepper') stepper: CdkStepper | undefined
   
+  control: boolean = false
+  status: boolean = true
+
   form!: FormGroup
+  zweck!: FormGroup
 
   // name!: string | undefined
   id_schiff!: string | undefined
@@ -47,6 +52,7 @@ export class StreifeComponent implements OnInit {
   // zaehlerstaende: Zaehlerstand[] | undefined
 
   patrol!: Patrol
+  ship!: Ship
 
   // shipForm: FormGroup
   // zweckFormGroup!: FormGroup
@@ -58,7 +64,7 @@ export class StreifeComponent implements OnInit {
   // zweck = ''
   // start = ''
 
-  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder) {
+  constructor(private store: Store<RootStoreState>, private _router: Router, private _formBuilder: FormBuilder) {
       
       
       // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
@@ -92,22 +98,19 @@ export class StreifeComponent implements OnInit {
     //   zweck: ['', Validators.required],
     // })
 
-    // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-    //   this.name = ship?.name
-    // })
+    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+      if (ship) { this.ship = ship }
+    })
 
-    // this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
-    //   if (patrol) {
-    //     this.zweckFormGroup.patchValue(patrol!)
-    //     this.patrol = patrol!
-    //   }
-    //   // if (patrol?.status == 'aktiv') {
-    //   //   // auslagern und in den Store mit aufnehmen
-    //   //   this.appService.checkPositionStart(patrol)
-    //   // } else {
-    //   //   this.appService.checkPositionStop()
-    //   // }
-    // })
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+      if (patrol) { this.patrol = patrol! }
+      // if (patrol?.status == 'aktiv') {
+      //   // auslagern und in den Store mit aufnehmen
+      //   this.appService.checkPositionStart(patrol)
+      // } else {
+      //   this.appService.checkPositionStop()
+      // }
+    })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
       this.id_schiff = id_ship
@@ -118,15 +121,24 @@ export class StreifeComponent implements OnInit {
     })
   }
 
+  setControl(control: boolean) {
+    this.control = control
+    console.log(this.control)
+  }
+
+  setStatus(status: boolean) {
+    this.status = status
+    console.log(this.status)
+  }
+
   // formValidation
   get subforms(): FormArray {
     return this.form.get("subforms") as FormArray;
   }
 
   subformReady(subform: FormGroup) {
-    this.subforms.push(subform);
-    console.log(this.form);
-    console.log(this.subforms);
+    // this.subforms.push(subform);
+    this.zweck = subform
   }
 
   // list of tabs
@@ -168,48 +180,48 @@ export class StreifeComponent implements OnInit {
     // this.kontrollFormGroup.patchValue({ kontrolle: false })
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.id_schiff!, kennung: '', start: getLocalISO('now'), status: 'vorbereitend', zweck: ''  }
+    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: ''  }
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
-  // erstellePatrol() {
-  //   // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
-  //   this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-  //     const insert: Patrol = Object.assign({}, patrol, this.zweckFormGroup.value, { start: getLocalISO('now') })
-  //     this.store.dispatch(ShipAction.insertPatrol({ insert }))
-  //   })
-  // }
-  // updatePatrol(status?: string) {
-  //   this.kontrollFormGroup.patchValue({ kontrolle: false })
-  //   let update: Patrol
-  //   // update zum eigentlichen Start oder beenden der Streife
-  //   if (this.patrol.id == '' || this.patrol.id == undefined) {
-  //     this.erstellePatrol()
+  erstellePatrol() {
+    // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+      const insert: Patrol = Object.assign({}, patrol, this.zweck.value, { start: getLocalISO('now') })
+      this.store.dispatch(ShipAction.insertPatrol({ insert }))
+    })
+  }
+  updatePatrol(status?: string) {
+    // this.kontrollFormGroup.patchValue({ kontrolle: false })
+    let update: Patrol
+    // update zum eigentlichen Start oder beenden der Streife
+    if (this.patrol.id == '' || this.patrol.id == undefined) {
+      this.erstellePatrol()
       
-  //   }
-  //   this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
-  //     if (patrol?.id) {
-  //       switch (status) {
-  //         case 'aktiv':
-  //           // startposition setzen
-  //           this.locationService.getCurrentPosition().then(position => {
-  //             const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
-  //             this.store.dispatch(PositionActions.insertData({ positionReport }))
-  //           })
-  //           update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, start: getLocalISO('now') })
-  //           break
-  //         case 'beendet':
-  //           update = Object.assign({}, patrol, this.zweckFormGroup.value, { status: status, ende: getLocalISO('now') })
-  //           // this.stepperReset(this.stepper!)
-  //           this._router.navigateByUrl('/')
-  //           break
-  //         default:
-  //           update = Object.assign({}, patrol, this.zweckFormGroup.value)
-  //           break
-  //       }
-  //       this.store.dispatch(ShipAction.updatePatrol({ update }))
-  //     }
-  //   })
-  // }
+    }
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+      if (patrol?.id) {
+        switch (status) {
+          case 'aktiv':
+            // startposition setzen
+            // this.locationService.getCurrentPosition().then(position => {
+            //   const positionReport: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start der Streife` }
+            //   this.store.dispatch(PositionActions.insertData({ positionReport }))
+            // })
+            update = Object.assign({}, patrol, this.zweck.value, { status: status, start: getLocalISO('now') })
+            break
+          case 'beendet':
+            update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
+            // this.stepperReset(this.stepper!)
+            this._router.navigateByUrl('/')
+            break
+          default:
+            update = Object.assign({}, patrol, this.zweck.value)
+            break
+        }
+        this.store.dispatch(ShipAction.updatePatrol({ update }))
+      }
+    })
+  }
 
   // logout() {
   //   this.store.dispatch(logout())

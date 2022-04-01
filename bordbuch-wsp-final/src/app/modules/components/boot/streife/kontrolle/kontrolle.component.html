@@ -21,22 +21,22 @@
     <!-- <input type="checkbox" name="kontrolle">
     <mat-label for="kontrolle"> Kontrolle aller Eingaben durchgeführt.</mat-label> -->
 
-    <div class="mt-3 flex flex-row items-center justify-between">
+    <div class="mt-2 flex flex-row items-center justify-between">
+      <mat-label>Status des Schiffes:</mat-label>
+      <div class="ml-2 flex flex-row">
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="status == true ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus()">Klar</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="status == false ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus()">Unklar</button>
+      </div>
+    </div>
+
+    <div class="mt-2 flex flex-row items-center justify-between">
       <mat-label>Kontrolle der Eingaben durchgeführt:</mat-label>
       <!-- <input type="checkbox"
         class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none"
         (change)="changeSavings()" /> -->
       <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="control == true ? 'bg-blue-500 text-white' : 'bg-white'" (click)="control = true">Ja</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="control == false ? 'bg-red-400 text-white' : 'bg-white-50'" (click)="control = false">Nein</button>
-      </div>
-    </div>
-
-    <div class="mt-2 flex flex-row items-center justify-between">
-      <mat-label>Status des Schiffes:</mat-label>
-      <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="status == true ? 'bg-blue-500 text-white' : 'bg-white'" (click)="status = true">Klar</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="status == false ? 'bg-red-400 text-white' : 'bg-white-50'" (click)="status = false">Unklar</button>
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="control == true ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeControl()">Ja</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="control == false ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeControl()">Nein</button>
       </div>
     </div>
   </div>
