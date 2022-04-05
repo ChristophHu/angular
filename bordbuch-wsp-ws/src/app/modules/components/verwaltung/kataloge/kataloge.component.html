@@ -1,21 +1,24 @@
-<div class="container mx-auto p-4 mb-8">
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'betriebsstoffe') ? 'bg-blue-600 text-white' : ''" (click)="toggle('betriebsstoffe')">Betriebsstoffe</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'checkliste') ? 'bg-blue-600 text-white' : ''" (click)="toggle('checkliste')">Checkliste</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'dienststellen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('dienststellen')">Dienststellen</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'funktionen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('funktionen')">Funktionen</button>
-    <!-- <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'kennungen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('kennungen')">Kennungen</button> -->
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'pruefvermerkkategorien') ? 'bg-blue-600 text-white' : ''" (click)="toggle('pruefvermerkkategorien')">Prüfvermerkkategorien</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'status') ? 'bg-blue-600 text-white' : ''" (click)="toggle('status')">Reparatur-Status</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zaehlerstandstypen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zaehlerstandstypen')">Zählerstandstypen</button>
-    <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zweck') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zweck')">Zweck</button>
+<page-header></page-header>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto p-4 mb-8">
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'betriebsstoffe') ? 'bg-blue-600 text-white' : ''" (click)="toggle('betriebsstoffe')">Betriebsstoffe</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'checkliste') ? 'bg-blue-600 text-white' : ''" (click)="toggle('checkliste')">Checkliste</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'dienststellen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('dienststellen')">Dienststellen</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'funktionen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('funktionen')">Funktionen</button>
+        <!-- <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'kennungen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('kennungen')">Kennungen</button> -->
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'pruefvermerkkategorien') ? 'bg-blue-600 text-white' : ''" (click)="toggle('pruefvermerkkategorien')">Prüfvermerkkategorien</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'status') ? 'bg-blue-600 text-white' : ''" (click)="toggle('status')">Reparatur-Status</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zaehlerstandstypen') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zaehlerstandstypen')">Zählerstandstypen</button>
+        <button class="px-3 mt-2 mr-2 bg-gray-300 text-black rounded-full" [ngClass]="(kat == 'zweck') ? 'bg-blue-600 text-white' : ''" (click)="toggle('zweck')">Zweck</button>
+    </div>
+    
+    <app-kat-betriebsstoffe *ngIf="kat == 'betriebsstoffe'"></app-kat-betriebsstoffe>
+    <app-kat-checkliste *ngIf="kat == 'checkliste'"></app-kat-checkliste>
+    <app-kat-dienststellen *ngIf="kat == 'dienststellen'"></app-kat-dienststellen>
+    <app-kat-funktionen *ngIf="kat == 'funktionen'"></app-kat-funktionen>
+    <!-- <app-kat-kennungen *ngIf="kat == 'kennungen'"></app-kat-kennungen> -->
+    <app-kat-pruefvermerkkategorien *ngIf="kat == 'pruefvermerkkategorien'"></app-kat-pruefvermerkkategorien>
+    <app-kat-status *ngIf="kat == 'status'"></app-kat-status>
+    <app-kat-zaehlerstandstypen *ngIf="kat == 'zaehlerstandstypen'"></app-kat-zaehlerstandstypen>
+    <app-kat-zweck *ngIf="kat == 'zweck'"></app-kat-zweck>
 </div>
-
-<app-kat-betriebsstoffe *ngIf="kat == 'betriebsstoffe'"></app-kat-betriebsstoffe>
-<app-kat-checkliste *ngIf="kat == 'checkliste'"></app-kat-checkliste>
-<app-kat-dienststellen *ngIf="kat == 'dienststellen'"></app-kat-dienststellen>
-<app-kat-funktionen *ngIf="kat == 'funktionen'"></app-kat-funktionen>
-<!-- <app-kat-kennungen *ngIf="kat == 'kennungen'"></app-kat-kennungen> -->
-<app-kat-pruefvermerkkategorien *ngIf="kat == 'pruefvermerkkategorien'"></app-kat-pruefvermerkkategorien>
-<app-kat-status *ngIf="kat == 'status'"></app-kat-status>
-<app-kat-zaehlerstandstypen *ngIf="kat == 'zaehlerstandstypen'"></app-kat-zaehlerstandstypen>
-<app-kat-zweck *ngIf="kat == 'zweck'"></app-kat-zweck>

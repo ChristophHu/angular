@@ -1,74 +1,77 @@
-<div class="container mx-auto mt-4 px-4">
-    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th hidden>ID</th>
-                <th>Dienststelle</th>
-                <th>Marke</th>
-                <th>Typ</th>
-                <th class="w-12"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let schiff of (schiffe$ | async | toArray)">
-                <td>{{ schiff.name }}</td>
-                <td hidden>{{ schiff.id }}</td>
-                <td>{{ schiff.dienststelle }}</td>
-                <td>{{ schiff.marke }}</td>
-                <td>{{ schiff.typ }}</td>
-                <td class="flex flex-row justify-start text-gray-500">
-                    <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
-                    </button>
-                    <mat-menu #editMenu="matMenu">
-                        <button mat-menu-item (click)="showModal(schiff)">
-                            Bearbeiten
+<page-header></page-header>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto mt-4 px-4">
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th hidden>ID</th>
+                    <th>Dienststelle</th>
+                    <th>Marke</th>
+                    <th>Typ</th>
+                    <th class="w-12"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let schiff of (schiffe$ | async | toArray)">
+                    <td>{{ schiff.name }}</td>
+                    <td hidden>{{ schiff.id }}</td>
+                    <td>{{ schiff.dienststelle }}</td>
+                    <td>{{ schiff.marke }}</td>
+                    <td>{{ schiff.typ }}</td>
+                    <td class="flex flex-row justify-start text-gray-500">
+                        <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                         </button>
-                        <button mat-menu-item (click)="delete(schiff.id)">
-                            Löschen
+                        <mat-menu #editMenu="matMenu">
+                            <button mat-menu-item (click)="showModal(schiff)">
+                                Bearbeiten
+                            </button>
+                            <button mat-menu-item (click)="delete(schiff.id)">
+                                Löschen
+                            </button>
+                            <button mat-menu-item (click)="showChecklistModal(schiff)">
+                                Checkliste
+                            </button>
+                            <button mat-menu-item (click)="showMotorModal(schiff)">
+                                Motor
+                            </button>
+                            <button mat-menu-item (click)="showQRCodeModal(schiff)">
+                                QR-Code
+                            </button>
+                            <button mat-menu-item (click)="showTankModal(schiff)">
+                                Tanks
+                            </button>
+                        </mat-menu>
+                        <!-- <button class="dropdown w-6 h-6" appDropdown>
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                         </button>
-                        <button mat-menu-item (click)="showChecklistModal(schiff)">
-                            Checkliste
-                        </button>
-                        <button mat-menu-item (click)="showMotorModal(schiff)">
-                            Motor
-                        </button>
-                        <button mat-menu-item (click)="showQRCodeModal(schiff)">
-                            QR-Code
-                        </button>
-                        <button mat-menu-item (click)="showTankModal(schiff)">
-                            Tanks
-                        </button>
-                    </mat-menu>
-                    <!-- <button class="dropdown w-6 h-6" appDropdown>
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
-                    </button>
-                    <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(schiff)">
-                            <p>Bearbeiten</p>
-                        </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(schiff.id)">
-                            <p>Löschen</p>
-                        </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showChecklistModal(schiff)">
-                            <p>Checkliste</p>
-                        </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showMotorModal(schiff)">
-                            <p>Motor</p>
-                        </div>
-                        <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showTankModal(schiff)">
-                            <p>Tanks</p>
-                        </div>
-                    </div> -->
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
-        <span class="h-6 w-6 mr-2">
-            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
-        </span>
-        Schiff hinzufügen
-    </button>
+                        <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(schiff)">
+                                <p>Bearbeiten</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(schiff.id)">
+                                <p>Löschen</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showChecklistModal(schiff)">
+                                <p>Checkliste</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showMotorModal(schiff)">
+                                <p>Motor</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showTankModal(schiff)">
+                                <p>Tanks</p>
+                            </div>
+                        </div> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+            <span class="h-6 w-6 mr-2">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+            </span>
+            Schiff hinzufügen
+        </button>
+    </div>
 </div>
