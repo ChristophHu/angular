@@ -1,46 +1,58 @@
-<div class="container mx-auto mt-4 px-4">
-    <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th hidden>ID</th>
-                <th hidden>Id_schiff</th>
-                <th>Zählerstandstyp</th>
-                <th>Datum/Uhrzeit</th>
-                <th>Stand</th>
-                <th hidden>Betriebsstunden</th>
-                <th class="w-12"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
-                <td>{{ zaehlerstand.name }}</td>
-                <td hidden>{{ zaehlerstand.id }}</td>
-                <td hidden>{{ zaehlerstand.id_schiff }}</td>
-                <td>{{ zaehlerstand.zaehlerstandstyp }}</td>
-                <td>{{ zaehlerstand.date | date: 'dd.MM.yyyy HH:mm' }}</td>
-                <td>{{ zaehlerstand.value }}</td>
-                <td hidden>{{ zaehlerstand.betriebsstunden }}</td>
-                <td class="flex flex-row justify-start text-gray-500">
-                    <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
-                        <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
-                    </button>
-                    <mat-menu #editMenu="matMenu">
-                        <button mat-menu-item (click)="showModal(zaehlerstand)">
-                            Bearbeiten
+<div class="relative container h-16 px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between z-10">
+    <div>
+        <p class="flex items-center text-gray-500 text-xs">
+            <span>
+              Service > Zählerstände
+            </span>
+        </p>
+        <h4 class="text-2xl font-bold leading-tight text-gray-800">Zählerstände</h4>
+    </div>
+</div>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto mt-4 px-4">
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="w-64">Name</th>
+                    <th hidden>ID</th>
+                    <th hidden>Id_schiff</th>
+                    <th>Zählerstandstyp</th>
+                    <th class="w-40">Datum/Uhrzeit</th>
+                    <th class="w-32">Stand</th>
+                    <th hidden>Betriebsstunden</th>
+                    <th class="w-12"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray)">
+                    <td>{{ zaehlerstand.name }}</td>
+                    <td hidden>{{ zaehlerstand.id }}</td>
+                    <td hidden>{{ zaehlerstand.id_schiff }}</td>
+                    <td>{{ zaehlerstand.zaehlerstandstyp }}</td>
+                    <td>{{ zaehlerstand.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+                    <td>{{ zaehlerstand.value }}</td>
+                    <td hidden>{{ zaehlerstand.betriebsstunden }}</td>
+                    <td class="flex flex-row justify-start text-gray-500">
+                        <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                         </button>
-                        <button mat-menu-item (click)="delete(zaehlerstand.id)">
-                            Löschen
-                        </button>
-                    </mat-menu>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
-        <span class="h-6 w-6 mr-2">
-            <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
-        </span>
-        Zaehlerstand hinzufügen
-    </button>
+                        <mat-menu #editMenu="matMenu">
+                            <button mat-menu-item (click)="showModal(zaehlerstand)">
+                                Bearbeiten
+                            </button>
+                            <button mat-menu-item (click)="delete(zaehlerstand.id)">
+                                Löschen
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+            <span class="h-6 w-6 mr-2">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+            </span>
+            Zaehlerstand hinzufügen
+        </button>
+    </div>
 </div>

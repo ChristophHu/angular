@@ -106,6 +106,7 @@ export class SchiffModalComponent implements OnInit {
       id: '',
       id_schiff: id,
       bezeichnung: 'Haupttank',
+      kraftstoff: 'Diesel',
       max_vol: '100'
     }
     console.log(tank)
