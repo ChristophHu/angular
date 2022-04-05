@@ -331,15 +331,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       '../positions/position/position.component'
     )
 
-    this.locationService.getCurrentPosition().then((data: any) => {
-      console.info(`currentPosition | latitude: ${data.latitude}, longitude: ${data.longitude}`)
-      position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: data.latitude, longitude: data.longitude }, ort: '', description: ''}
-      this.modalService.open(PositionComponent, {
-        data: {
-          title: 'Position hinzufügen',
-          position
-        }
-      })
-    }, error => console.error(error))
+    position = { id_ship: this.id_ship!, id_streife: this.id_streife, date: new Date().toISOString(), location: {latitude: 0, longitude: 0 }, ort: '', description: ''}
+    this.modalService.open(PositionComponent, {
+      data: {
+        title: 'Position hinzufügen',
+        position
+      }
+    })
   }
 }

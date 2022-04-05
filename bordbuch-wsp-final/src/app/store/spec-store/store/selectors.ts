@@ -10,6 +10,12 @@ export const isSpecLoaded = createSelector(
     state => state.isAllDataLoaded
 )
 
+// unklar
+export const selectUnklar = createSelector(
+    specState,
+    state => state.unklar
+)
+
 // zaehlerstaende
 export const selectAllZaehlerstaende = createSelector(
     specState,

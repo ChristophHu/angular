@@ -20,11 +20,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bordbuch-wsp-final'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('bordbuch-wsp-final');
-  });
+  // it(`should have as title 'bordbuch-wsp-final'`, () => {
+  //   const fixture = TestBed.createComponent(AppComponent);
+  //   const app = fixture.componentInstance;
+  //   expect(app.title).toEqual('bordbuch-wsp-final');
+  // });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);

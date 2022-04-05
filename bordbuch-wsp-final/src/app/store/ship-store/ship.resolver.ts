@@ -10,13 +10,11 @@ import { PositionActions } from "../positionreport-store"
 import { SpecFacade } from "../spec-store/spec.facade"
 import { loadAllZaehlerstaende } from "../spec-store/store/actions"
 
-import { ZaehlerstandAction } from "../zaehlerstand-store"
-
 @Injectable()
 export class ShipResolver implements Resolve<any> {
     loading = false
 
-    constructor(private store: Store<RootStoreState>) {}
+    constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
         return this.store.pipe(
@@ -32,12 +30,10 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(ShipAction.loadPeilung({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadChecklist({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(PositionActions.loadAllData({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ZaehlerstandAction.loadAllData({ id_ship: route.params[route.data.param] }))
-                    console.log(`before zaehlerstand, id: ${route.params[route.data.param]}`)
                     this.store.dispatch(loadAllZaehlerstaende({ id: route.params[route.data.param]}))
-                    // this._specFacade.loadAllZaehlerstaende(route.params[route.data.param])
-                    console.log(`after zaehlerstand`)
                     this.store.dispatch(LastPositionActions.loadData())
+
+                    this._specFacade.loadUnklarByIdSchiff(route.params[route.data.param])
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

@@ -2,8 +2,11 @@
 <ul>
     <li>- [Auswahl] WSP Dienststellen ohne zugewiesene Boote werden alle Boote angezeigt.</li>
     <li>- [Auswahl] Alle Boote werden nach Namen sortiert.</li>
-    <li>- [Streife] Nach Beenden der Streife wird zur Bootsauswahl zurückgesetzt</li>
+    <li>- [Streife] Automatische Speicherung aktivierbar.</li>
+    <li>- [Streife] Setzen von "klar/unklar" zum Schiff.</li>
+    <li>- [Streife] Nach Beenden der Streife wird zur Bootsauswahl zurückgesetzt.</li>
     <li>- [Streife] Update von Zählerständen überarbeitet.</li>
+    <li>- [Streife] Aufnahme der StickyDirective zum Fixieren von Oberbegriffen.</li>
     <li>- [Menü] Map -> Karte</li>
 </ul>
 

@@ -4,7 +4,6 @@ import { select, Store } from '@ngrx/store';
 import { EMPTY, interval, Observable, Subscription } from 'rxjs';
 import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
 
-import { PositionActions } from 'src/app/store/positionreport-store';
 import { environment } from 'src/environments/environment';
 import { Besatzung } from '../model/besatzung.model';
 import { Betankung } from '../model/betankung';
@@ -15,6 +14,7 @@ import { Peilung } from '../model/peilung.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
 import { Schiff } from '../model/schiff.model';
+import { Unklar } from '../model/unklar.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
 import { ConnectionService } from './connection.service';
 import { LocationService } from './location.service';
@@ -259,161 +259,79 @@ export class AppService {
         })
     }
 
-    // streife
-    insertStreife(patrol: Patrol): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertStreife', patrol)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
-    }
-    updateStreife(patrol: Patrol): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('updateStreife', patrol)
-            source$.subscribe((status: any) => {
-                // observer.next(data)
-            })
-            // , (error: any) => observer.error(error)
-        })
-    }
-    deleteStreife(id: string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('deleteStreife', id)
-            source$.subscribe((status: any) => {
-                observer.next(status)
-            })
-            , (error: any) => observer.error(error)
-        })
-    }
-
     // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertBesatzung', besatzung)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.insert(besatzung, 'insertBesatzung')
     }
     updateBesatzung(changes: Partial<Besatzung>): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('updateBesatzung', changes)
-            source$.subscribe((status: any) => {
-                // observer.next(data)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.update(changes, 'updateBesatzung')
     }
     deleteBesatzung(id: string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('deleteBesatzung', id)
-            source$.subscribe((status: any) => {
-                observer.next(status)
-            })
-            , (error: any) => observer.error(error)
-        })
+        return this.delete(id, 'deleteBesatzung')
     }
 
     // betankung
+    getBetankungen(id : string): Observable<any> {
+        return this.getWithParam('getBetankungen', id)
+    }
     insertBetankung(betankung: Betankung): Observable<any> {
-        console.log(betankung)
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertBetankung', betankung)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.insert(betankung, 'insertBetankung')
     }
     updateBetankung(changes: Partial<Betankung>): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('updateBetankung', changes)
-            source$.subscribe((status: any) => {
-            })
-        })
+        return this.update(changes, 'updateBetankung')
     }
     deleteBetankung(id: string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('deleteBetankung', id)
-            source$.subscribe((status: any) => {
-                observer.next(status)
-            })
-            , (error: any) => observer.error(error)
-        })
+        return this.delete(id, 'deleteBetankung')
     }
 
-    // zaehlerstaende
-    // updateZaehlerstand(id: number | string, changes: Partial<Zaehlerstand>): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         console.log(changes)
-    //         const source$ = this.reducer('updateZaehlerstand', changes)
-    //         source$.subscribe((status: any) => {
-    //             // observer.next(data)
-    //         })
-    //         // , (error: any) => observer.error(error)
-    //     })
-    // }
-    updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
-        return this.update(zaehlerstand, 'updateZaehlerstand')
+    // peilung
+    getPeilung(id: string): Observable<any> {
+        return this.getWithParam('getPeilungVonSchiff', id)
+    }
+    insertPeilung(peilung: Peilung): Observable<any> {
+        return this.insert(peilung, 'insertPeilung')
     }
 
     // pruefvermerk
     insertReparatur(reparatur: Reparatur): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertReparatur', reparatur)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.insert(reparatur, 'insertReparatur')
     }
     updateReparatur(reparatur: Reparatur): Observable<any> {
         return this.update(reparatur, 'updateReparatur')
     }
 
     // position
+    getLastPositionsFromAllShips(): Observable<any> {
+        return this.get('getLastPositionsFromAllShips')
+    }
+    getPosition(id : string): Observable<any> {
+        return this.getWithParam('getPosition', id)
+    }
     insertPosition(position: PositionReport): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertPosition', position)
-            source$.subscribe((data: any) => {
-                const pos : PositionReport = Object.assign({}, position, { id: data.id })
-                observer.next(pos)
-                // observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.insert(position, 'insertPosition')
     }
     updatePosition(position: PositionReport): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('updatePosition', position)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.update(position, 'updatePosition')
     }
     deletePosition(id: string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('deletePosition', id)
-            source$.subscribe((data: any) => {
-                observer.next(data.id)
-            })
-            // , (error: any) => observer.error(error)
-        })
+        return this.delete(id, 'deletePosition')
+    }
+
+    // reparaturen
+    getReparaturen(id : string): Observable<any> {
+        return this.getWithParam('getReparaturenVonSchiff', id)
     }
 
     // reparaturfotos
     downloadReparaturFoto(id: string): Observable<any> {
-        console.log(id)
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getFotosVonReparatur', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.getWithParam('getFotosVonReparatur', id)
+        // console.log(id)
+        // return new Observable ((observer) => {
+        //     const source$ = this.getReducer('getFotosVonReparatur', id)
+        //     source$.subscribe((data: any) => {
+        //         observer.next(data)
+        //     }, (error: any) => observer.error(error))
+        // })
     }
     uploadReparaturFoto(upload: any): Observable<any> {
         return this.update(upload, 'insertReparaturFoto')
@@ -422,15 +340,17 @@ export class AppService {
         return this.delete(id, 'deleteReparaturFoto')
     }
 
-    // get
+    // schiff
     getSchiffe(): Observable<any> {
-        return new Observable ((observer) => {
-            this.getReducer('getSchiffe', {}).subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getSchiffe')
+        // return new Observable ((observer) => {
+        //     this.getReducer('getSchiffe', {}).subscribe((data: any) => {
+        //         observer.next(data)
+        //     }, (error: any) => observer.error(error))
+        // })
     }
     getSchiff(id: string): Observable<any> {
+        // return this.getWithParam('getSchiff', id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getSchiff', id)
             source$.subscribe((data: any) => {
@@ -439,10 +359,23 @@ export class AppService {
         })
     }
     updateSchiff(schiff: Schiff): Observable<any> {
+        console.log(schiff)
         return this.update(schiff, 'updateSchiff')
     }
-    
+
+    // searchUser
+    getSearchUser(searchString: string): Observable<any> {
+        return this.getWithParam('searchUser', searchString)
+    }
+
+    // status
+    getStatus(): Observable<any> {
+        return this.get('getStatustypen')
+    }
+
+    // streife
     getStreifeVonSchiff(id: string): Observable<any> {
+        // return this.getWithParam('getStreifeVonSchiff', id)
         return new Observable ((observer) => {
             const source$ = this.getReducer('getStreifeVonSchiff', id)
             source$.subscribe((data: any) => {
@@ -450,119 +383,80 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
-    getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getZaehlerstaendeRange', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+    insertStreife(patrol: Patrol): Observable<any> {
+        return this.insert(patrol, 'insertStreife')
     }
-    getReparaturen(id : string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getReparaturenVonSchiff', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+    updateStreife(patrol: Patrol): Observable<any> {
+        console.log(patrol)
+        return this.update(patrol, 'updateStreife')
     }
-    getBetankungen(id : string): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getBetankungen', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+    deleteStreife(id: string): Observable<any> {
+        return this.delete(id, 'deleteStreife')
     }
+
+    // tank
     getTanksVonSchiff(id : string): Observable<any> {
+        return this.getWithParam('getTanksVonSchiff', id)
+    }
+
+    // unklar
+    loadUnklarByIdSchiff(id: string): Observable<any> {
+        // return this.getWithParam('getUnklarByIdSchiff', id)
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getTanksVonSchiff', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
+            observer.next({id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', unklar: false, start: '2022-04-04T14:00:00.000Z'})
         })
     }
-    getPosition(id : string): Observable<any> {
+    insertUnklar(insert: Unklar): Observable<any> {
+        // return this.insert(insert, 'insertSchiff')
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getPosition', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
+            observer.next('3f1149ac-2aac-488f-aac1-2994a47d6ff1')
         })
     }
-    getLastPositionsFromAllShips(): Observable<any> {
+    updateUnklar(update: Unklar): Observable<any> {
+        // return this.update(update, 'updateUnklar')
         return new Observable ((observer) => {
-            const source$ = this.getReducer('getLastPositionsFromAllShips', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
+            observer.next(200)
         })
     }
 
-    // kat
+    // zaehlerstaende
+    getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
+        return this.getWithParam('getZaehlerstaendeRange', id)
+        // return new Observable ((observer) => {
+        //     const source$ = this.getReducer('getZaehlerstaendeRange', id)
+        //     source$.subscribe((data: any) => {
+        //         observer.next(data)
+        //     }, (error: any) => observer.error(error))
+        // })
+    }
+    updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
+        return this.update(zaehlerstand, 'updateZaehlerstand')
+    }
+
+    // katalog
     getPruefvermerke(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getPruefvermerke', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getPruefvermerke')
     }
     getPruefvermerkKategorien(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getPruefvermerksKategorien', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getPruefvermerksKategorien')
     }
     getZaehlerstandstypen(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getZaehlerstandstypen', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getZaehlerstandstypen')
     }
     getDienststellen(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getDienststellen', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getDienststellen')
     }
     getBetriebsstoffe(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getKatBetriebsstoffe', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getKatBetriebsstoffe')
     }
     getFunktionen(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getKatFunktionen', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getKatFunktionen')
     }
     getKennungen(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getKatKennungen', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getKatKennungen')
     }
     getZwecke(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getKatZwecke', {})
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getKatZwecke')
     }
     getLastChecklist(id: string): Observable<any> {
         return new Observable ((observer) => {
@@ -626,15 +520,6 @@ export class AppService {
         return status
     }
 
-    // updateChecklist(gbook: any) {
-    //     // let gbook = JSON.parse(data[0].gbookdaten)
-    //     // console.log(gbook)
-    //     gbook = {"id_schiff":"1","einsatzmittel":[{"id":"75764649-769b-4935-848c-25ccb213cf56","name":"Anhaltestab","anzahl":"3","seriennummern":"","sonstiges":"false"},{"id":"a6a9a323-89b8-45a5-96d8-61866c4a0cef","name":"Alkomat","anzahl":"1","seriennummern":"SN-1234","sonstiges":"false"},{"id":"bd34d03c-3728-4df3-9ba7-7ead0d575532","name":"Anker","anzahl":"2","seriennummern":"","sonstiges":""},{"id":"c6aac15c-4fea-49ce-943b-21070169f361","name":"Rettungsring","anzahl":"1","seriennummern":"","sonstiges":""}]}
-    //     console.log(gbook)
-    //     const checkliste: Checklist = { id_schiff: '1', datum: new Date().toISOString(), streife: '3f7bc091-9f3d-428b-bf57-429f7dba25da', gbookdaten: JSON.stringify(gbook)}
-    //     this.insertCheckliste(checkliste)
-    // }
-
     insertCheckliste(insert: Checklist): Observable<any> {
         return new Observable ((observer) => {
             const checklist: Checklist = Object.assign({}, insert, { gbookdaten: JSON.stringify(insert.checklistItems) }) //{ id_schiff: this.patrol.id_schiff, datum: new Date().toISOString(), streife: this.patrol.id!, gbookdaten: JSON.stringify(gbook)}
@@ -645,62 +530,6 @@ export class AppService {
             })
             // , (error: any) => observer.error(error))
         })
-    }
-    
-    // getChecklistItems(id: string = '1'): Observable<any> {
-    //     return new Observable ((observer) => {
-    //         const source$ = this.getReducer('getPeilungVonSchiff', id)
-    //         source$.subscribe((data: any) => {
-    //             observer.next(data)
-    //         }, (error: any) => observer.error(error))
-    //     })
-    //     // return new Observable ((observer) => {
-    //     //     from([this.items]).subscribe((data: any) => {
-    //     //         observer.next(data)
-    //     //     }, (error: any) => observer.error(error))
-    //     // })
-    // }
-    
-    getPeilung(id: string = '1'): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getPeilungVonSchiff', id)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
-    }
-    insertPeilung(peilung: Peilung): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = this.reducer('insertPeilung', peilung)
-            source$.subscribe((data: any) => {
-                const peil : Peilung = Object.assign({}, peilung, { id: data.id })
-                observer.next(peil)
-            })
-            // , (error: any) => observer.error(error)
-        })
-    }
-    updatePeilung(peil: Peilung) {
-        // return new Observable ((observer) => {
-        //     this.peilung = this.peilung.filter(el => el.id != peil.id)
-        //     this.peilung.push(peil)
-        //     console.log(this.peilung)
-
-        //     // const source$ = this.reducer('updatePosition', position)
-        //     // source$.subscribe((data: any) => {
-        // //     observer.next(peil)
-        // //     })
-        // //     , (error: any) => observer.error(error)
-        // })
-    }
-
-    // status
-    getStatus(): Observable<any> {
-        return this.get('getStatustypen')
-    }
-
-    // searchUser
-    getSearchUser(searchString: string): Observable<any> {
-        return this.getWithParam('searchUser', searchString)
     }
 
     // checkPositionStart(patrol: Patrol) {

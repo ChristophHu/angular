@@ -43,7 +43,7 @@ export class SchiffComponent implements OnInit {
 
     this.patrolForm = this._formBuilder.group({
       id: [],
-      kennung: [{ value: '', disabled: true }],
+      kennung: [{ value: '' }],
       zweck: ['', Validators.required]
     })
   }

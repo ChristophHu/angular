@@ -1,7 +1,7 @@
 import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -64,7 +64,7 @@ export class StreifeComponent implements OnInit {
   // zweck = ''
   // start = ''
 
-  constructor(private store: Store<RootStoreState>, private _router: Router, private _formBuilder: FormBuilder) {
+  constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder) {
       
       
       // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
@@ -123,12 +123,10 @@ export class StreifeComponent implements OnInit {
 
   setControl(control: boolean) {
     this.control = control
-    console.log(this.control)
   }
 
   setStatus(status: boolean) {
     this.status = status
-    console.log(this.status)
   }
 
   // formValidation
@@ -208,10 +206,10 @@ export class StreifeComponent implements OnInit {
             //   this.store.dispatch(PositionActions.insertData({ positionReport }))
             // })
             update = Object.assign({}, patrol, this.zweck.value, { status: status, start: getLocalISO('now') })
+            this._router.navigate(['../positions'], {relativeTo: this._activatedRoute})
             break
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
-            // this.stepperReset(this.stepper!)
             this._router.navigateByUrl('/')
             break
           default:

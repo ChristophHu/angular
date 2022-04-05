@@ -160,7 +160,6 @@ function today(): number {
     return new Date().setHours(0,0,0,0)
 }
 function now(): number {
-    console.log(new Date().getTime())
     return new Date().getTime()
 }
 function tomorrow(): number {

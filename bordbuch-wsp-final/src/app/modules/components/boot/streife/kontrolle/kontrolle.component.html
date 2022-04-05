@@ -8,13 +8,18 @@
     </div>
   </div>
   <div class="p-4 border-b hover:bg-gray-50">
-    <!-- <form [formGroup]="kontrollForm">
-      <div class="flex flex-row items-center">
+    <form [formGroup]="kontrollForm">
+      <div class="hidden">
+        <mat-form-field appearance="fill">
+          <mat-label>id</mat-label>
+          <input matInput type="text" formControlName="id">
+        </mat-form-field>
+      </div>
+      <!-- <div class="flex flex-row items-center">
         <input type="checkbox" formControlName="kontrolle" class="mx-4 cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
         <mat-label>Kontrolle aller Eingaben durchgeführt</mat-label>
-      </div>
-      
-    </form> -->
+      </div> -->
+    </form>
     <!-- <app-button-toggle-group></app-button-toggle-group> -->
     <!-- <label class="relative" for="kontrolle">Kontrolle aller Eingaben erfolgt: </label>
     <input type="checkbox" name="kontrolle"> -->
@@ -24,8 +29,8 @@
     <div class="mt-2 flex flex-row items-center justify-between">
       <mat-label>Status des Schiffes:</mat-label>
       <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="status == true ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus()">Klar</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="status == false ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus()">Unklar</button>
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="(unklar$ | async)?.unklar == false ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus(false)">Klar</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="(unklar$ | async)?.unklar ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus(true)">Unklar</button>
       </div>
     </div>
 
