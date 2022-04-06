@@ -433,13 +433,7 @@ export class AppService {
 
     // zaehlerstaende
     getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
-        return this.getWithParam('                     ', id)
-        // return new Observable ((observer) => {
-        //     const source$ = this.getReducer('getZaehlerstaendeRange', id)
-        //     source$.subscribe((data: any) => {
-        //         observer.next(data)
-        //     }, (error: any) => observer.error(error))
-        // })
+        return this.getWithParam('getZaehlerstaendeRange', id)
     }
     updateZaehlerstand(zaehlerstand: Zaehlerstand): Observable<any> {
         return this.update(zaehlerstand, 'updateZaehlerstand')

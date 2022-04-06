@@ -117,7 +117,6 @@ export class SchiffModalComponent implements OnInit {
     this._katFacade.deleteSchiff(this.schiffForm.value.id)
     this.modal?.close()
   }
-
   cancel() {
     this.modal?.close()
   }

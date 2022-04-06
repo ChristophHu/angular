@@ -1,0 +1,72 @@
+<app-modal #modalComponent>
+    <header class="h-16 p-8 flex items-center justify-between border-b">
+      <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+        {{ title }}
+      </p>
+      <button (click)="cancel()" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer">
+        <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="x"></icons>
+      </button>
+    </header>
+    <div class="content">
+        <form [formGroup]="klarmeldungForm">
+            <div class="">
+              <mat-form-field appearance="fill">
+                <mat-label>id</mat-label>
+                <input matInput type="text" formControlName="id" readonly>
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>id_schiff</mat-label>
+                <input matInput type="text" formControlName="id_schiff" readonly>
+              </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
+                <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
+                  {{ schiff.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="flex flex-row items-center">
+              <mat-form-field appearance="fill">
+                  <mat-label>Beginn</mat-label>
+                  <input matInput type="datetime-local" formControlName="beginn" value="{{klarmeldungForm.value.beginn | date:'yyyy-MM-ddTHH:mm'}}">
+              </mat-form-field>
+              <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setBeginn()">
+                  <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+              </button>
+            </div>
+            <div class="flex flex-row items-center">
+                <mat-form-field appearance="fill">
+                    <mat-label>Beginn</mat-label>
+                    <input matInput type="datetime-local" formControlName="ende" value="{{klarmeldungForm.value.ende | date:'yyyy-MM-ddTHH:mm'}}">
+                </mat-form-field>
+                <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEnde()">
+                    <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
+                </button>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="klar">
+                  <mat-option *ngFor="let stat of status" [value]="stat.value">
+                    {{ stat.bezeichnung }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+          </form>
+    </div>
+    <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+      <ng-container *ngTemplateOutlet="toolbar"></ng-container>
+    </footer>
+  </app-modal>
+  
+  <ng-template #toolbar>
+    <div>
+      <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+      <button *ngIf="klarmeldungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
+    </div>
+    <div>
+      <button *ngIf="!klarmeldungForm.pristine && klarmeldungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="!klarmeldungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+    </div>
+  </ng-template>

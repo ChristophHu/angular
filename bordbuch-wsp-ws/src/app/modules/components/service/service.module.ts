@@ -21,6 +21,8 @@ import { BetankungModalComponent } from './betankungen-peilungen/betankungen/bet
 import { BetankungenComponent } from './betankungen-peilungen/betankungen/betankungen.component';
 import { PeilungenComponent } from './betankungen-peilungen/peilungen/peilungen.component';
 import { PeilungModalComponent } from './betankungen-peilungen/peilungen/peilung-modal/peilung-modal.component';
+import { KlarmeldungenComponent } from './klarmeldungen/klarmeldungen.component';
+import { KlarmeldungModalComponent } from './klarmeldungen/klarmeldung-modal/klarmeldung-modal.component';
 
 const routes: Routes = [
   { path: '', component: ServiceComponent,
@@ -52,7 +54,9 @@ const routes: Routes = [
     ReparaturModalComponent,
     BetankungenPeilungenComponent,
     PeilungenComponent,
-    PeilungModalComponent
+    PeilungModalComponent,
+    KlarmeldungenComponent,
+    KlarmeldungModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),
