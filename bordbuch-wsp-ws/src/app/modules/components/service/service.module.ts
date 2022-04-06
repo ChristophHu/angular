@@ -29,6 +29,7 @@ const routes: Routes = [
     children: [
       { path: 'betankungen', component: BetankungenPeilungenComponent },
       { path: 'checklisten', component: ChecklistenComponent },
+      { path: 'klarmeldungen', component: KlarmeldungenComponent },
       { path: 'reparaturen', component: ReparaturenComponent },
       { path: 'wartungen', component: WartungenComponent },
       { path: 'zaehlerstaende', component: ZaehlerstaendeComponent }
