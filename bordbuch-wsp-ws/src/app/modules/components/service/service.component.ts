@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-service',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServiceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _specFacade: SpecFacade) { }
 
   ngOnInit(): void {
+    this._specFacade.allKlarmeldungen$.subscribe(data => console.log(data))
   }
 
 }

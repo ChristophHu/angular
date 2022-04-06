@@ -9,6 +9,7 @@ import { Checklistitem } from '../models/checklistitem.model';
 import { Dienststelle } from '../models/dienststelle.model';
 import { Filter } from '../models/filter.model';
 import { Kat } from '../models/kat.model';
+import { Klarmeldung } from '../models/klarmeldung.model';
 import { Peilung } from '../models/peilung.model';
 import { Status } from '../models/reparatur-status.model';
 import { Reparatur } from '../models/reparatur.model';
@@ -138,12 +139,24 @@ export class AppService {
                 param = `id=${data.id}&status=${data.bezeichnung}`
                 break
 
+            // katZaehlerstand
             case 'insertKatZaehlerstand':
                 param = `zaehlerstandstyp=${data.zaehlerstandstyp}`
                 break
 
             case 'updateKatZaehlerstand':
                 param = `id=${data.id}&zaehlerstandstyp=${data.zaehlerstandstyp}`
+                break
+            
+            // klarmeldungen
+            case 'insertKlarMeldung':
+                param = `id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
+                break
+            case 'updateKlarMeldung':
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
+                break
+            case 'deleteKlarmeldung':
+                param = `id=${data.id}`
                 break
 
             // schiffe
@@ -277,6 +290,7 @@ export class AppService {
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
+            case 'getKlarmeldungen':
             case 'getLastChecklistAll':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
@@ -508,6 +522,27 @@ export class AppService {
         return this.delete(id, 'deleteKatKennung')
     }
 
+    // klarmeldungen
+    // loadKlarmeldungByIdSchiff(id: string): Observable<any> {
+    //     return this.get('getKlarmeldungen')
+    //     // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
+    // }
+    getKlarmeldungen(): Observable<any> {
+        return this.get('getKlarmeldungen')
+        // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
+    }
+    insertKlarmeldung(insert: Klarmeldung): Observable<any> {
+        console.log(insert)
+        return this.insert(insert, 'insertKlarMeldung')
+    }
+    updateKlarmeldung(update: Klarmeldung): Observable<any> {
+        console.log(update)
+        return this.update(update, 'updateKlarMeldung')
+    }
+    deleteKlarmeldung(id: string): Observable<any> {
+        return this.delete(id, 'deleteKlarmeldung')
+    }
+
     // peilungen   
     getPeilungById(id: string): Observable<any> {
         return this.getWithParam('getPeilungVonSchiff', id)
@@ -610,7 +645,7 @@ export class AppService {
         return this.delete(id, 'deleteStatus')
     }
 
-    // laststandorte   
+    // laststandorte
     getAllLastStandorte(): Observable<any> {
         return this.get('getLastPositionsFromAllShips')
     }

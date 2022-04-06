@@ -97,11 +97,6 @@ export class SchiffModalComponent implements OnInit {
     this._specFacade.insertZaehlerstand(zaehlerstand)
   }
   createFirstTank(id: string, schiff: Schiff) {
-    // id: [],
-    //   id_schiff: [],
-    //   schiffsname: [],
-    //   bezeichnung: [],
-    //   max_vol: []
     const tank: Tank = {
       id: '',
       id_schiff: id,

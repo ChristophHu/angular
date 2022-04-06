@@ -26,6 +26,12 @@ export const selectChecklistByIdSchiff = (id: string) => createSelector(
     checklists => checklists?.find(el => el.id_schiff == id)
 )
 
+// Klarmeldung
+export const selectKlarmeldungen = createSelector(
+    specState,
+    state => state.klarmeldungen
+)
+
 // peilungen
 export const selectAllPeilungen = createSelector(
     specState,
@@ -113,7 +119,6 @@ export const selectZaehlerstaendeById = (id: string) => createSelector(
     selectAllZaehlerstaende,
     zaehlerstaende => zaehlerstaende?.filter(el => el.id_schiff == id)
 )
-
 export const selectDurchsichtByNameZaehlerstandstyp = (name: string, zaehlerstandstyp: string) => createSelector(
     selectAllZaehlerstaende,
     zaehlerstaende => zaehlerstaende?.find(el => el.name == name && el.zaehlerstandstyp == zaehlerstandstyp)?.betriebsstunden

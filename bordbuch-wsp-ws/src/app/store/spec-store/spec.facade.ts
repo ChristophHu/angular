@@ -16,6 +16,7 @@ import { Standort } from "src/app/core/models/standort.model";
 import { Tank } from "src/app/core/models/tank.model";
 import { Peilung } from "src/app/core/models/peilung.model";
 import { Filter } from "src/app/core/models/filter.model";
+import { Klarmeldung } from "src/app/core/models/klarmeldung.model";
 
 @Injectable()
 export class SpecFacade {
@@ -26,6 +27,7 @@ export class SpecFacade {
     allReparaturen$     = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
     allReparaturFotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
     allReparaturFotoCount$ = this.store.pipe(select(SpecSelectors.selectReparaturFotosCount)) as Observable<number>
+    allKlarmeldungen$   = this.store.pipe(select(SpecSelectors.selectKlarmeldungen)) as Observable<Klarmeldung[]>
     allLastStandorte$   = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$       = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
     allStreifen$        = this.store.pipe(select(SpecSelectors.selectAllStreifen)) as Observable<Streife[]>
@@ -62,6 +64,20 @@ export class SpecFacade {
     }
     getChecklistById(id: string): Observable<Checklist | undefined> {
         return this.store.pipe(select(SpecSelectors.selectChecklistByIdSchiff(id)))
+    }
+
+    // Klarmeldung
+    loadAllKlarmeldungen() {
+        this.store.dispatch(SpecActions.loadAllKlarmeldungen())
+    }
+    insertKlarmeldung(insert: Klarmeldung) {
+        this.store.dispatch(SpecActions.insertKlarmeldung({ insert }))
+    }
+    updateKlarmeldung(update: Klarmeldung) {
+        this.store.dispatch(SpecActions.updateKlarmeldung({ update }))
+    }
+    deleteKlarmeldung(id: string) {
+        this.store.dispatch(SpecActions.deleteKlarmeldung({ id }))
     }
 
     // peilungen

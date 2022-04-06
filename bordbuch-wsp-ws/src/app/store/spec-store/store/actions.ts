@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
 import { Filter } from "src/app/core/models/filter.model"
+import { Klarmeldung } from "src/app/core/models/klarmeldung.model"
 import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
 import { Standort } from "src/app/core/models/standort.model"
@@ -40,6 +41,47 @@ export const deleteBetankung = createAction(
 )
 export const deleteBetankungSuccess = createAction(
 	"[Modal Betankung] Delete Betankung Success",
+	props<{ id: string }>()
+)
+
+// klarmeldung
+// export const loadKlarmeldungByIdSchiff = createAction(
+// 	"[Spec Facade] Load Klarmeldung",
+// 	props<{ id: string }>()
+// )
+// export const loadKlarmeldungByIdSchiffSuccess = createAction(
+// 	"[Load Spec Effect] Load Klarmeldung Success",
+// 	props<{ klarmeldung: Klarmeldung }>()
+// )
+export const loadAllKlarmeldungen = createAction(
+	"[Spec Facade] Load Klarmeldungen"
+)
+export const loadAllKlarmeldungenSuccess = createAction(
+	"[Load Spec Effect] Load Klarmeldung Success",
+	props<{ klarmeldungen: Klarmeldung[] }>()
+)
+export const insertKlarmeldung = createAction(
+	"[Spec Facade] Insert Klarmeldung",
+	props<{ insert: Klarmeldung }>()
+)
+export const insertKlarmeldungSuccess = createAction(
+	"[Spec Effect] Insert Klarmeldung Success",
+	props<{ action: { insert: Klarmeldung }, id: string }>()
+)
+export const updateKlarmeldung = createAction(
+	"[Spec Facade] Update Klarmeldung",
+	props<{ update: Klarmeldung }>()
+)
+export const updateKlarmeldungSuccess = createAction(
+	"[Spec Effect] Update Klarmeldung Success",
+	props<{ update: Klarmeldung }>()
+)
+export const deleteKlarmeldung = createAction(
+	"[Spec Facade] Delete Klarmeldung",
+	props<{ id: string }>()
+)
+export const deleteKlarmeldungSuccess = createAction(
+	"[Spec Effect] Delete Klarmeldung Success",
 	props<{ id: string }>()
 )
 

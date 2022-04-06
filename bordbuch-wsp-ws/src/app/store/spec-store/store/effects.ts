@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap, take, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
+import { Klarmeldung } from 'src/app/core/models/klarmeldung.model'
 import { Peilung } from 'src/app/core/models/peilung.model'
 import { Reparatur } from 'src/app/core/models/reparatur.model'
 import { Standort } from 'src/app/core/models/standort.model'
@@ -17,7 +18,7 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess, insertKlarmeldung, insertKlarmeldungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, deleteKlarmeldung, deleteKlarmeldungSuccess, loadAllKlarmeldungen, loadAllKlarmeldungenSuccess,
 } from './actions'
  
 @Injectable()
@@ -89,6 +90,55 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteShipChecklist(action.id, action.date).pipe(
                     map(() => deleteShipChecklistSuccess(action))
+                )
+            })
+        )
+    })
+
+    // Klarmeldung
+    // loadKlarmeldungByIdSchiff$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(loadKlarmeldungByIdSchiff),
+    //         concatMap(action => this.appService.loadKlarmeldungByIdSchiff(action.id)),
+    //         map((klarmeldung: Klarmeldung) => loadKlarmeldungByIdSchiffSuccess({ klarmeldung }))
+    //     )
+    // })
+    loadAllKlarmeldungen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadAllKlarmeldungen),
+            concatMap(action => this.appService.getKlarmeldungen()),
+            tap(data => console.log(data)),
+            map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
+        )
+    })
+    insertKlarmeldung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertKlarmeldung),
+            switchMap(action => {
+                return this.appService.insertKlarmeldung(action.insert).pipe(
+                    tap(id => console.log(id)),
+                    map((id: string) => insertKlarmeldungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateKlarmeldung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateKlarmeldung),
+            switchMap(action => {
+                return this.appService.updateKlarmeldung(action.update).pipe(
+                    map(() => updateKlarmeldungSuccess({ update: action.update }))
+                )
+            })
+        )
+    })
+    deleteKlarmeldung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteKlarmeldung),
+            switchMap(action => {
+                return this.appService.deleteKlarmeldung(action.id).pipe(
+                    tap(id => console.log(id)),
+                    map((id: string) => deleteKlarmeldungSuccess({ id }))
                 )
             })
         )
