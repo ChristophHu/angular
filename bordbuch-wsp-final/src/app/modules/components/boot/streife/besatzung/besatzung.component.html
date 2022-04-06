@@ -12,7 +12,7 @@
       </button>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let mitglied of (besatzung$ | async | toArray)" (click)="openBesatzungModal(mitglied)">
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let mitglied of (besatzung$ | async | toArray | orderBy:'funktion':'DESC')" (click)="openBesatzungModal(mitglied)">
     <h2 class="mb-2 text-xl">{{ mitglied.funktion }}</h2>
     <div class="my-2 flex flex-wrap overflow-hidden">
       <p class="my-1 px-1 w-1/5 overflow-hidden text-gray-600">Name: </p>

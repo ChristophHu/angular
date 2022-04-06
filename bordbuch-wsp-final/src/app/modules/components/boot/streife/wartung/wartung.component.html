@@ -7,7 +7,7 @@
       </p>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async)">
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let zaehlerstand of (zaehlerstaende$ | async | orderBy:'zaehlerstandstyp')">
     <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
     <div class="my-2 flex flex-wrap overflow-hidden">
       <p class="my-1 px-1 w-2/3 overflow-hidden text-gray-600">Betriebsstunden: </p>

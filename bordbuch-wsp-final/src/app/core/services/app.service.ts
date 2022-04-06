@@ -14,7 +14,7 @@ import { Peilung } from '../model/peilung.model';
 import { PositionReport } from '../model/positionreport.model';
 import { Reparatur } from '../model/reparatur';
 import { Schiff } from '../model/schiff.model';
-import { Unklar } from '../model/unklar.model';
+import { Klarmeldung } from '../model/klarmeldung.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
 import { ConnectionService } from './connection.service';
 import { LocationService } from './location.service';
@@ -87,9 +87,6 @@ export class AppService {
                 param = `id=${data.id}id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
 
-            // case 'updateZaehlerstand':
-            //     param = `id=${data.id}&id_schiff=${data.id_ship}&value=${data.value}&date=${data.date}`
-            //     break
             case 'updateZaehlerstand':
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&id_zaehlerstandstyp=${data.id_zaehlerstandstyp}&value=${data.value}&date=${data.date}&betriebsstunden=${data.betriebsstunden}`
                 break
@@ -102,6 +99,15 @@ export class AppService {
             // checkliste
             case 'insertCheckliste':
                 param = `id_schiff=${data.id_schiff}&datum=${data.datum}&gbookdaten=${data.gbookdaten}&streife=${data.streife}`
+                break
+
+            // klarmeldungen
+            case 'insertKlarMeldung':
+                param = `id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
+                break
+            
+            case 'updateKlarMeldung':
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
                 break
 
             // pruefvermerk/reparatur
@@ -172,6 +178,7 @@ export class AppService {
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
+            case 'getKlarmeldungen':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getStatustypen':
@@ -261,6 +268,7 @@ export class AppService {
 
     // besatzung
     insertBesatzung(besatzung: Besatzung): Observable<any> {
+        console.log(besatzung)
         return this.insert(besatzung, 'insertBesatzung')
     }
     updateBesatzung(changes: Partial<Besatzung>): Observable<any> {
@@ -282,6 +290,30 @@ export class AppService {
     }
     deleteBetankung(id: string): Observable<any> {
         return this.delete(id, 'deleteBetankung')
+    }
+
+    // klarmeldungen
+    loadKlarmeldungByIdSchiff(id: string): Observable<any> {
+        // return this.get('getKlarmeldungen')
+        return new Observable ((observer) => {
+            const source$ = this.getReducer('getKlarmeldungen', {})
+            source$.subscribe((data: any) => {
+                console.log(data)
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+        // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
+        // return new Observable ((observer) => {
+        //     observer.next({ id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', Klarmeldung: false, start: '2022-04-04T14:00:00.000Z' })
+        // })
+    }
+    insertKlarmeldung(insert: Klarmeldung): Observable<any> {
+        console.log(insert)
+        return this.insert(insert, 'insertKlarMeldung')
+    }
+    updateKlarmeldung(update: Klarmeldung): Observable<any> {
+        console.log(update)
+        return this.update(update, 'updateKlarMeldung')
     }
 
     // peilung
@@ -399,29 +431,9 @@ export class AppService {
         return this.getWithParam('getTanksVonSchiff', id)
     }
 
-    // unklar
-    loadUnklarByIdSchiff(id: string): Observable<any> {
-        // return this.getWithParam('getUnklarByIdSchiff', id)
-        return new Observable ((observer) => {
-            observer.next({id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', unklar: false, start: '2022-04-04T14:00:00.000Z'})
-        })
-    }
-    insertUnklar(insert: Unklar): Observable<any> {
-        // return this.insert(insert, 'insertSchiff')
-        return new Observable ((observer) => {
-            observer.next('3f1149ac-2aac-488f-aac1-2994a47d6ff1')
-        })
-    }
-    updateUnklar(update: Unklar): Observable<any> {
-        // return this.update(update, 'updateUnklar')
-        return new Observable ((observer) => {
-            observer.next(200)
-        })
-    }
-
     // zaehlerstaende
     getZaehlerstaende(id : string): Observable<Zaehlerstand[]> {
-        return this.getWithParam('getZaehlerstaendeRange', id)
+        return this.getWithParam('                     ', id)
         // return new Observable ((observer) => {
         //     const source$ = this.getReducer('getZaehlerstaendeRange', id)
         //     source$.subscribe((data: any) => {

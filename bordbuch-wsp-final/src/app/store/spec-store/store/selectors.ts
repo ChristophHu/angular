@@ -10,10 +10,10 @@ export const isSpecLoaded = createSelector(
     state => state.isAllDataLoaded
 )
 
-// unklar
-export const selectUnklar = createSelector(
+// Klarmeldung
+export const selectKlarmeldung = createSelector(
     specState,
-    state => state.unklar
+    state => state.klarmeldung
 )
 
 // zaehlerstaende

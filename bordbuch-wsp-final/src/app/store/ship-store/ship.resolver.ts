@@ -33,7 +33,7 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(loadAllZaehlerstaende({ id: route.params[route.data.param]}))
                     this.store.dispatch(LastPositionActions.loadData())
 
-                    this._specFacade.loadUnklarByIdSchiff(route.params[route.data.param])
+                    this._specFacade.loadKlarmeldungByIdSchiff(route.params[route.data.param])
                 }
             }),
             // filter(isShipLoaded => isShipLoaded),

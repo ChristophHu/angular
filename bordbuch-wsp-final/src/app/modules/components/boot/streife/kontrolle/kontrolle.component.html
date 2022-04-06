@@ -29,8 +29,8 @@
     <div class="mt-2 flex flex-row items-center justify-between">
       <mat-label>Status des Schiffes:</mat-label>
       <div class="ml-2 flex flex-row">
-        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="(unklar$ | async)?.unklar == false ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus(false)">Klar</button>
-        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="(unklar$ | async)?.unklar ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus(true)">Unklar</button>
+        <button class="w-20 p-1 rounded-l-lg shadow-lg" [ngClass]="!(klarmeldung$ | async) || (klarmeldung$ | async)?.klar == false ? 'bg-blue-400 text-white' : 'bg-white'" (click)="changeStatus(false)">Klar</button>
+        <button class="w-20 p-1 rounded-r-lg shadow-lg" [ngClass]="(klarmeldung$ | async)?.klar ? 'bg-red-400 text-white' : 'bg-white'" (click)="changeStatus(true)">Unklar</button>
       </div>
     </div>
 

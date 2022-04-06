@@ -1,40 +1,40 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap, tap } from 'rxjs/operators'
-import { Unklar } from 'src/app/core/model/unklar.model'
+import { Klarmeldung } from 'src/app/core/model/klarmeldung.model'
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand'
 
 import { AppService } from 'src/app/core/services/app.service'
-import { insertUnklar, insertUnklarSuccess, loadAllZaehlerstaende, loadedAllZaehlerstaende, loadUnklarByIdSchiff, loadUnklarByIdSchiffSuccess, updateUnklar, updateUnklarSuccess, updateZaehlerstand, updateZaehlerstandSuccess } from './actions'
+import { insertKlarmeldung, insertKlarmeldungSuccess, loadAllZaehlerstaende, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiff, loadKlarmeldungByIdSchiffSuccess, updateKlarmeldung, updateKlarmeldungSuccess, updateZaehlerstand, updateZaehlerstandSuccess } from './actions'
  
 @Injectable()
 export class Effects {
 
-    // unklar
-    loadUnklarByIdSchiff$ = createEffect(() => {
+    // Klarmeldung
+    loadKlarmeldungByIdSchiff$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(loadUnklarByIdSchiff),
-            concatMap(action => this.appService.loadUnklarByIdSchiff(action.id)),
-            map((unklar: Unklar) => loadUnklarByIdSchiffSuccess({ unklar }))
+            ofType(loadKlarmeldungByIdSchiff),
+            concatMap(action => this.appService.loadKlarmeldungByIdSchiff(action.id)),
+            map((klarmeldung: Klarmeldung) => loadKlarmeldungByIdSchiffSuccess({ klarmeldung }))
         )
     })
-    insertUnklar$ = createEffect(() => {
+    insertKlarmeldung$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(insertUnklar),
+            ofType(insertKlarmeldung),
             switchMap(action => {
-                return this.appService.insertUnklar(action.insert).pipe(
+                return this.appService.insertKlarmeldung(action.insert).pipe(
                     tap(id => console.log(id)),
-                    map((id: string) => insertUnklarSuccess({ action, id }))
+                    map((id: string) => insertKlarmeldungSuccess({ action, id }))
                 )
             })
         )
     })
-    updateUnklar$ = createEffect(() => {
+    updateKlarmeldung$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(updateUnklar),
+            ofType(updateKlarmeldung),
             switchMap(action => {
-                return this.appService.updateUnklar(action.update).pipe(
-                    map(() => updateUnklarSuccess({ update: action.update }))
+                return this.appService.updateKlarmeldung(action.update).pipe(
+                    map(() => updateKlarmeldungSuccess({ update: action.update }))
                 )
             })
         )

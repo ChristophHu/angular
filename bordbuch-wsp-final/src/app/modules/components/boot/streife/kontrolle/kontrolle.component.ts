@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Checklistitem } from 'src/app/core/model/checklistitem.model';
 import { Ship } from 'src/app/core/model/ship.model';
-import { Unklar } from 'src/app/core/model/unklar.model';
+import { Klarmeldung } from 'src/app/core/model/klarmeldung.model';
 import { getLocalISO } from 'src/app/shared/utils';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipSelectors } from 'src/app/store/ship-store';
@@ -22,20 +22,18 @@ export class KontrolleComponent implements OnInit {
 
   control: boolean = false
   status: boolean = true
-  unklar: Unklar | undefined
+  klarmeldung: Klarmeldung | undefined
   
   besatzung: boolean = false
   checkliste: boolean = false
   unchecked!: Checklistitem[] | undefined
 
-  ship$: Observable<Ship>
-  unklar$: Observable<Unklar>
+  klarmeldung$: Observable<Klarmeldung>
 
   kontrollForm: FormGroup
 
   constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder, private _specFacade: SpecFacade) {
-    this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip)) as Observable<Ship>
-    this.unklar$ = this._specFacade.unklar$
+    this.klarmeldung$ = this._specFacade.klarmeldung$
 
     this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)).subscribe(unchecked => {
       this.unchecked = unchecked?.filter(el => el.relevant == true)
@@ -60,17 +58,14 @@ export class KontrolleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ship$.subscribe(data => {
-      if (data) {
-        // if (!!data.durchsicht) {
-        //   this.status = true
-        // } else {
-        //   this.status = false
-        // }
-      }
+    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+      if (ship) this.kontrollForm.patchValue({ id: ship.id})
     })
-    this._specFacade.unklar$.subscribe(unklar => {
-      this.unklar = unklar
+    this._specFacade.klarmeldung$.subscribe((klarmeldung: Klarmeldung) => {
+      if (klarmeldung && klarmeldung.klar) {
+        this.klarmeldung = klarmeldung
+        this.status = klarmeldung.klar
+      }
     })
   }
 
@@ -79,22 +74,22 @@ export class KontrolleComponent implements OnInit {
     this.controled.emit(this.control)
   }
 
-  changeStatus(unklar: boolean) {
-    // this.status = !this.status
+  changeStatus(klarmeldung: boolean) {
+    this.status = !this.status
     this.statused.emit(this.status)
 
-    if(unklar) {
+    if(klarmeldung) {
       // insert
-      const insert: Unklar = { id_schiff: this.kontrollForm.value.id, unklar: true, start: getLocalISO('now') }
+      const insert: Klarmeldung = { id_schiff: this.kontrollForm.value.id, klar: true, beginn: getLocalISO('now') }
       console.log(insert)
-      this._specFacade.insertUnklar(insert)
+      this._specFacade.insertKlarmeldung(insert)
     } else {
       // update
-      if (this.unklar) {
-        const update: Unklar = { id: this.unklar.id, id_schiff: this.unklar!.id_schiff, unklar: false, start: this.unklar.start, ende: getLocalISO('now') }
-        this._specFacade.updateUnklar(update)
+      if (this.klarmeldung) {
+        const update: Klarmeldung = { id: this.klarmeldung.id, id_schiff: this.klarmeldung!.id_schiff, klar: false, beginn: this.klarmeldung.beginn, ende: getLocalISO('now') }
+        this._specFacade.updateKlarmeldung(update)
       } else {
-        console.log('unklar not defined')
+        console.log('klar not defined')
       }
     }
   }

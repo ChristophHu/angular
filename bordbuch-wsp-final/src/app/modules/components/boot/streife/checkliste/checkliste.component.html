@@ -1,5 +1,5 @@
-<div class="w-full mt-4 bg-white rounded-lg shadow-lg">
-  <div class="flex flex-row p-4 justify-between border-b">
+<div class="w-full mt-4 bg-white rounded-lg shadow-lg" #scContainer>
+  <div class="flex flex-row p-4 justify-between border-b" sticky [scrollContainer]="scContainer" [top]="-8">
     <div>
       <h2 class="text-2xl font-bold">Checkliste</h2>
       <p class="text-sm text-gray-500">
@@ -16,7 +16,7 @@
       </button>
     </div>
   </div>
-  <div *ngFor="let item of (unchecked$ | async)" class="p-4 border-b hover:bg-gray-50" [ngClass]="{'text-red-600': item.relevant == true}">
+  <div *ngFor="let item of (unchecked$ | async | orderBy:'bezeichnung')" class="p-4 border-b hover:bg-gray-50" [ngClass]="{'text-red-600': item.relevant == true}">
     {{ item.bezeichnung }}
   </div>
 </div>

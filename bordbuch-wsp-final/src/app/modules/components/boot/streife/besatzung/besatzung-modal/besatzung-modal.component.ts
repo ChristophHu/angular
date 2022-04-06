@@ -37,7 +37,7 @@ export class BesatzungModalComponent implements OnInit {
       name: [],
       an_bord: [],
       von_bord: [],
-      search: ['']
+      search: []
     })
   }
 
@@ -47,11 +47,8 @@ export class BesatzungModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalService.getData().then((data) => {
-      this.title = data.data.title   
-      console.log(data.data.besatzung)   
+      this.title = data.data.title
       this.besatzungForm.patchValue(data.data.besatzung)
-      console.log(this.besatzungForm.value)
-      // this.besatzungForm.value.an_bord = data.data.besatzung.an_bord
     })
   }
 
@@ -84,7 +81,7 @@ export class BesatzungModalComponent implements OnInit {
   update() {
     const update: Update<Besatzung> = {
       id: this.besatzungForm.value.id_streife,
-      changes: this.besatzungForm.value 
+      changes: this.besatzungForm.value
     }
     this.store.dispatch(ShipAction.updatePatrolBesatzung({ update }))
     this.modal?.close()

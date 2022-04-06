@@ -26,7 +26,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Bezeichnung</mat-label>
         <mat-select (selectionChange)="selectTank($event.value)" formControlName="id_tank">
-          <mat-option *ngFor="let tank of (tanks$ | async)" [value]="tank.id" required>
+          <mat-option *ngFor="let tank of (tanks$ | async | orderBy:'bezeichnung')" [value]="tank.id" required>
             {{ tank.bezeichnung }}
           </mat-option>
         </mat-select>

@@ -1,17 +1,17 @@
 import { createReducer, on } from "@ngrx/store"
-import { Unklar } from "src/app/core/model/unklar.model"
+import { Klarmeldung } from "src/app/core/model/klarmeldung.model"
 import { Zaehlerstand } from "src/app/core/model/zaehlerstand"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { insertUnklarSuccess, loadedAllZaehlerstaende, loadUnklarByIdSchiffSuccess, updateUnklarSuccess, updateZaehlerstandSuccess } from "./actions"
+import { insertKlarmeldungSuccess, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiffSuccess, updateKlarmeldungSuccess, updateZaehlerstandSuccess } from "./actions"
 
 export interface State {
-    unklar          : Unklar            | undefined
+    klarmeldung     : Klarmeldung       | undefined
     zaehlerstaende  : Zaehlerstand[]    | undefined
     isAllDataLoaded : boolean
 }
 
 export const initialDataState: State = {
-    unklar          : undefined,
+    klarmeldung          : undefined,
     zaehlerstaende  : undefined,
     isAllDataLoaded : false
 }
@@ -19,24 +19,24 @@ export const initialDataState: State = {
 export const reducer = createReducer(
     initialDataState,
 
-    // unklar
-    on(loadUnklarByIdSchiffSuccess, (state, action) => {
+    // Klarmeldung
+    on(loadKlarmeldungByIdSchiffSuccess, (state, action) => {
         return {
             ...state,
-            unklar: action.unklar
+            klarmeldung: action.klarmeldung
         }
     }),
-    on(insertUnklarSuccess, (state, action) => {
-        const insert: Unklar = Object.assign({}, action.action.insert, {id: action.id})
+    on(insertKlarmeldungSuccess, (state, action) => {
+        const insert: Klarmeldung = Object.assign({}, action.action.insert, {id: action.id})
         return {
             ...state,
-            unklar: insert
+            klarmeldung: insert
         }
     }),
-    on(updateUnklarSuccess, (state, action) => {
+    on(updateKlarmeldungSuccess, (state, action) => {
         return {
             ...state,
-            unklar: action.update
+            klarmeldung: action.update
         }
     }),
 

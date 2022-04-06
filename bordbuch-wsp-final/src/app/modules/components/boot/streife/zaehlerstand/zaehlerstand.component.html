@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="p-4 border-b hover:bg-gray-50"
-    *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray); index as index"
+    *ngFor="let zaehlerstand of (zaehlerstaende$ | async | toArray | orderBy:'zaehlerstandstyp'); index as index"
     (click)="openZaehlerstandModal(zaehlerstand)">
     <h2 class="mb-2 text-xl">{{ zaehlerstand.zaehlerstandstyp }}</h2>
     <div class="my-2 flex flex-wrap overflow-hidden">

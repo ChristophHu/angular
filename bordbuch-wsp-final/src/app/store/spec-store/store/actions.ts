@@ -1,31 +1,31 @@
 import { createAction, props } from "@ngrx/store"
-import { Unklar } from "src/app/core/model/unklar.model"
+import { Klarmeldung } from "src/app/core/model/klarmeldung.model"
 import { Zaehlerstand } from "src/app/core/model/zaehlerstand"
 
-// unklar
-export const loadUnklarByIdSchiff = createAction(
-	"[Spec Facade] Load Unklar",
+// Klarmeldung
+export const loadKlarmeldungByIdSchiff = createAction(
+	"[Spec Facade] Load Klarmeldung",
 	props<{ id: string }>()
 )
-export const loadUnklarByIdSchiffSuccess = createAction(
-	"[Load Spec Effect] Load Unklar Success",
-	props<{ unklar: Unklar }>()
+export const loadKlarmeldungByIdSchiffSuccess = createAction(
+	"[Load Spec Effect] Load Klarmeldung Success",
+	props<{ klarmeldung: Klarmeldung }>()
 )
-export const insertUnklar = createAction(
-	"[Spec Facade] Insert Unklar",
-	props<{ insert: Unklar }>()
+export const insertKlarmeldung = createAction(
+	"[Spec Facade] Insert Klarmeldung",
+	props<{ insert: Klarmeldung }>()
 )
-export const insertUnklarSuccess = createAction(
-	"[Spec Effect] Insert Unklar Success",
-	props<{ action: { insert: Unklar }, id: string }>()
+export const insertKlarmeldungSuccess = createAction(
+	"[Spec Effect] Insert Klarmeldung Success",
+	props<{ action: { insert: Klarmeldung }, id: string }>()
 )
-export const updateUnklar = createAction(
-	"[Spec Facade] Update Unklar",
-	props<{ update: Unklar }>()
+export const updateKlarmeldung = createAction(
+	"[Spec Facade] Update Klarmeldung",
+	props<{ update: Klarmeldung }>()
 )
-export const updateUnklarSuccess = createAction(
-	"[Spec Effect] Update Unklar Success",
-	props<{ update: Unklar }>()
+export const updateKlarmeldungSuccess = createAction(
+	"[Spec Effect] Update Klarmeldung Success",
+	props<{ update: Klarmeldung }>()
 )
 
 // zaehlerstaende

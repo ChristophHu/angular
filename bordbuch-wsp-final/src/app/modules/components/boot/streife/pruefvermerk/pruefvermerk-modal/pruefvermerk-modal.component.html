@@ -28,7 +28,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Kategorie</mat-label>
         <mat-select (selectionChange)="selectKategorie($event.value)" formControlName="kategorie">
-          <mat-option *ngFor="let kategorie of kategorien$ | async" [value]="kategorie.bezeichnung">
+          <mat-option *ngFor="let kategorie of (kategorien$ | async | orderBy:'bezeichnung')" [value]="kategorie.bezeichnung">
             {{ kategorie.bezeichnung }}
           </mat-option>
         </mat-select>
@@ -36,7 +36,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Bestandteil</mat-label>
         <mat-select formControlName="item">
-          <mat-option *ngFor="let pruefvermerk of pruefvermerke$ | async" [value]="pruefvermerk.item">
+          <mat-option *ngFor="let pruefvermerk of (pruefvermerke$ | async | orderBy:'item')" [value]="pruefvermerk.item">
             {{ pruefvermerk.item }}
           </mat-option>
         </mat-select>

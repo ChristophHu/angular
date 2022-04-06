@@ -13,7 +13,7 @@
       </button>
     </div>
   </div>
-  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let betankung of (betankungen$ | async | toArray); index as index">
+  <div class="p-4 border-b hover:bg-gray-50" *ngFor="let betankung of (betankungen$ | async | toArray | orderBy:'date':'DESC'); index as index">
     <h2 class="mb-2 text-xl">{{ betankung.fuel }}</h2>
     <div class="my-2 flex flex-wrap overflow-hidden">
       <p class="my-1 px-1 w-1/3 overflow-hidden text-gray-600">Menge (in L): </p>
