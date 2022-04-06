@@ -15,6 +15,7 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positions/position/position.component';
 import { ShipSelectors } from 'src/app/store/ship-store';
 import { tap } from 'rxjs/operators';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 
 @Component({
   selector: 'app-map',
@@ -56,9 +57,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private positions$: Observable<PositionReport[] | undefined>
   private lastPositions$: Observable<PositionReport[] | undefined>
 
-  constructor(private store: Store<RootStoreState>, private appService: AppService, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
+  constructor(private store: Store<RootStoreState>, private locationService: LocationService, private _katFacade: KatFacade, private modalService: ModalService<PositionComponent>) {
     this.positions$ = this.store.pipe(select(PositionSelectors.selectAllData))
-    this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectAllData))
+    this.lastPositions$ = this._katFacade.lastPositions$
   }
 
   ngOnInit(): void {
@@ -66,7 +67,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.id_ship = ship?.id
       this.name = ship?.name
     })
-
 
     this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
       if (id_streife) {

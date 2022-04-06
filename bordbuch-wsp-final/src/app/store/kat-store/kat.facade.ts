@@ -12,6 +12,7 @@ import { Kat } from "src/app/core/model/kat.model"
 import { Dienststelle } from "src/app/core/model/dienststelle.model";
 import { Pruefvermerk } from "src/app/core/model/pruefvermerk.model";
 import { Status } from "src/app/core/model/reparatur-status.model";
+import { PositionReport } from "src/app/core/model/positionreport.model";
 
 
 @Injectable()
@@ -20,6 +21,7 @@ export class KatFacade {
     betriebsstoffe$     = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Kat[]>
     dienststellen$      = this.store.pipe(select(KatSelectors.selectDienststellen)) as Observable<Dienststelle[]>
     funktionen$         = this.store.pipe(select(KatSelectors.selectAllFunktionen)) as Observable<Kat[]>
+    lastPositions$      = this.store.pipe(select(KatSelectors.selectLastPositions)) as Observable<PositionReport[]>
     kennungen$          = this.store.pipe(select(KatSelectors.selectAllKennungen)) as Observable<Kat[]>
     pruefvermerkskategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<Kat[]>
     pruefvermerke$      = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
@@ -47,6 +49,11 @@ export class KatFacade {
     // kennungen
     loadKennungen() {
         this.store.dispatch(KatAction.loadKennungen())
+    }
+
+    // lastpositions
+    loadLastPositions() {
+        this.store.dispatch(KatAction.loadLastPositions())
     }
 
     // pruefvermerke

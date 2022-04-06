@@ -14,7 +14,7 @@ export class Effects {
     loadKlarmeldungByIdSchiff$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadKlarmeldungByIdSchiff),
-            concatMap(action => this.appService.loadKlarmeldungByIdSchiff(action.id)),
+            concatMap(action => this.appService.getKlarmeldungByIdSchiff(action.id)),
             map((klarmeldung: Klarmeldung) => loadKlarmeldungByIdSchiffSuccess({ klarmeldung }))
         )
     })

@@ -178,7 +178,6 @@ export class AppService {
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
-            case 'getKlarmeldungen':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
             case 'getStatustypen':
@@ -188,6 +187,7 @@ export class AppService {
                 break
 
             case 'getSchiff':
+            case 'getKlarmeldungByIdschiff':
                 param = `?id=${data}`
                 break
 
@@ -293,26 +293,13 @@ export class AppService {
     }
 
     // klarmeldungen
-    loadKlarmeldungByIdSchiff(id: string): Observable<any> {
-        // return this.get('getKlarmeldungen')
-        return new Observable ((observer) => {
-            const source$ = this.getReducer('getKlarmeldungen', {})
-            source$.subscribe((data: any) => {
-                console.log(data)
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
-        // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
-        // return new Observable ((observer) => {
-        //     observer.next({ id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', Klarmeldung: false, start: '2022-04-04T14:00:00.000Z' })
-        // })
+    getKlarmeldungByIdSchiff(id: string): Observable<any> {
+        return this.getWithParam('getKlarmeldungByIdSchiff', id)
     }
     insertKlarmeldung(insert: Klarmeldung): Observable<any> {
-        console.log(insert)
         return this.insert(insert, 'insertKlarMeldung')
     }
     updateKlarmeldung(update: Klarmeldung): Observable<any> {
-        console.log(update)
         return this.update(update, 'updateKlarMeldung')
     }
 

@@ -290,7 +290,7 @@ export class AppService {
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
-            case 'getKlarmeldungen':
+            case 'getKlarmeldungenAll':
             case 'getLastChecklistAll':
             case 'getLastPositionsFromAllShips':
             case 'getSchiffe':
@@ -523,13 +523,8 @@ export class AppService {
     }
 
     // klarmeldungen
-    // loadKlarmeldungByIdSchiff(id: string): Observable<any> {
-    //     return this.get('getKlarmeldungen')
-    //     // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
-    // }
     getKlarmeldungen(): Observable<any> {
-        return this.get('getKlarmeldungen')
-        // return this.getWithParam('getKlarmeldungenByIdSchiff', id)
+        return this.get('getKlarmeldungenAll')
     }
     insertKlarmeldung(insert: Klarmeldung): Observable<any> {
         console.log(insert)

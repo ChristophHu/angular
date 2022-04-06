@@ -27,6 +27,7 @@ export class KatResolver implements Resolve<any> {
                         this.store.dispatch(KatAction.loadDienststellen())
                         this.store.dispatch(KatAction.loadBetriebsstoffe())
                         this.store.dispatch(KatAction.loadFunktionen())
+                        this.store.dispatch(KatAction.loadLastPositions())
                         this.store.dispatch(KatAction.loadKennungen())
                         this.store.dispatch(KatAction.loadZwecke())
                     }, 1000)

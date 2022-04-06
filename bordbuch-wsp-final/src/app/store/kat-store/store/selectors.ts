@@ -29,6 +29,12 @@ export const selectDienststellen = createSelector(
     state => state.dienststellen
 )
 
+// lastpositions
+export const selectLastPositions = createSelector(
+    katState,
+    state => state.lastPositions
+)
+
 export const selectpruefvermerkkategorien = createSelector(
     katState,
     state => state.pruefvermerkKategorien

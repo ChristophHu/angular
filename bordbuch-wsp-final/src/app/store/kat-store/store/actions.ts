@@ -10,6 +10,7 @@ import { Kennung } from "src/app/core/model/kennung.model"
 import { Betriebsstoff } from "src/app/core/model/Betriebsstoff.model"
 import { Funktion } from "src/app/core/model/funktion.model"
 import { Status } from "src/app/core/model/reparatur-status.model"
+import { PositionReport } from "src/app/core/model/positionreport.model"
 
 // betriebsstoffe
 export const loadBetriebsstoffe = createAction(
@@ -47,7 +48,16 @@ export const loadedKennungen = createAction(
 	props<{ kennungen: Kennung[] }>()
 )
 
-// pruefvermerkp
+// lastpositions
+export const loadLastPositions = createAction(
+	"[Kat Resolver] Load LastPosition"
+)
+export const loadLastPositionsSuccess = createAction(
+	"[Load Kat Effect] Loaded LastPosition",
+	props<{ lastPositions: PositionReport[] }>()
+)
+
+// pruefvermerke
 export const loadPruefvermerke = createAction(
 	"[Kat Resolver] Load Pruefvermerke"
 )
