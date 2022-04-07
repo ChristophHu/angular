@@ -57,6 +57,10 @@ export const updatePatrol = createAction(
 	"[Streife] Update Patrol",
 	props<{ update: Patrol }>()
 )
+export const updatePatrolSuccess = createAction(
+	"[Streife] Update Patrol Success",
+	props<{ action: { update: Patrol }}>()
+)
 export const deletePatrol = createAction(
 	"[Streife] Delete Patrol",
 	props<{ id: string }>()

@@ -65,8 +65,6 @@ export class StreifeComponent implements OnInit {
   // start = ''
 
   constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder) {
-      
-      
       // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
       // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
       //   console.log(data)
@@ -178,7 +176,7 @@ export class StreifeComponent implements OnInit {
     // this.kontrollFormGroup.patchValue({ kontrolle: false })
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: ''  }
+    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: '' }
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
@@ -193,8 +191,8 @@ export class StreifeComponent implements OnInit {
     let update: Patrol
     // update zum eigentlichen Start oder beenden der Streife
     if (this.patrol.id == '' || this.patrol.id == undefined) {
+      console.log('erstelle patrol')
       this.erstellePatrol()
-      
     }
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       if (patrol?.id) {
@@ -206,14 +204,17 @@ export class StreifeComponent implements OnInit {
             //   this.store.dispatch(PositionActions.insertData({ positionReport }))
             // })
             update = Object.assign({}, patrol, this.zweck.value, { status: status, start: getLocalISO('now') })
-            this._router.navigate(['../positions'], {relativeTo: this._activatedRoute})
+            console.log(`aktiv: ${update}`)
+            this._router.navigate(['/boot', patrol.id_schiff, 'positions'], {relativeTo: this._activatedRoute})
             break
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
+            console.log(`beendet: ${update}`)
             this._router.navigateByUrl('/')
             break
           default:
             update = Object.assign({}, patrol, this.zweck.value)
+            console.log(`default: ${update}`)
             break
         }
         this.store.dispatch(ShipAction.updatePatrol({ update }))

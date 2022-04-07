@@ -63,7 +63,10 @@ export class ShipEffects {
         return this.actions$.pipe(
             ofType(ShipAction.updatePatrol),
             switchMap(action => {
-                return this.appService.updateStreife(action.update)
+                return this.appService.updateStreife(action.update).pipe(
+                    tap(data => console.log(data)),
+                    map(() => ShipAction.updatePatrolSuccess({ action }))
+                )
             })
         )
     })
