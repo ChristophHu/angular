@@ -39,16 +39,25 @@ export class KlarmeldungenComponent implements OnInit {
     }
   }
 
-  async showModal(klarmeldung: Klarmeldung): Promise<void> {
+  async showModal(klarmeldung?: Klarmeldung): Promise<void> {
     const { KlarmeldungModalComponent } = await import(
       './klarmeldung-modal/klarmeldung-modal.component'
     )
-    this._modalService.open(KlarmeldungModalComponent, {
-      data: {
-        title: 'Klarmeldung bearbeiten',
-        klarmeldung
-      }
-    })
+
+    if (klarmeldung) {
+      this._modalService.open(KlarmeldungModalComponent, {
+        data: {
+          title: 'Klarmeldung bearbeiten',
+          klarmeldung
+        }
+      })
+    } else {
+      this._modalService.open(KlarmeldungModalComponent, {
+        data: {
+          title: 'Klarmeldung hinzufügen'
+        }
+      })
+    }
   }
 
   delete(klarmeldung: Klarmeldung) {

@@ -60,6 +60,7 @@ export class AuthService {
                   break
   
                 default:
+                  console.log(xmlhttp.status)
                   observer.error({ code: xmlhttp.status, message: 'Es kam zu einem unbekannten Fehler. Kontrollieren sie ihre Verbindung und führen sie ggf. einen Neustart durch.' })
               }
               rejectWithError()

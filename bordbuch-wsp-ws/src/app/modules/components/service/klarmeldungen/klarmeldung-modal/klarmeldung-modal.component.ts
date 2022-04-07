@@ -22,8 +22,8 @@ export class KlarmeldungModalComponent implements OnInit {
 
   klarmeldungForm: FormGroup
   status: any[] = [
-    { id: 1, bezeichnung: 'klar', value: true },
-    { id: 2, bezeichnung: 'unklar', value: false }
+    { bezeichnung: 'klar', value: true },
+    { bezeichnung: 'unklar', value: false }
   ]
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<KlarmeldungModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {

@@ -38,7 +38,7 @@
             </div>
             <div class="flex flex-row items-center">
                 <mat-form-field appearance="fill">
-                    <mat-label>Beginn</mat-label>
+                    <mat-label>Ende</mat-label>
                     <input matInput type="datetime-local" formControlName="ende" value="{{klarmeldungForm.value.ende | date:'yyyy-MM-ddTHH:mm'}}">
                 </mat-form-field>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEnde()">
