@@ -17,13 +17,16 @@ import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-sel
 import { MapModule } from './map/map.module';
 import { PositionsModule } from './positions/positions.module';
 import { SpecModule } from 'src/app/store/spec-store/spec.module';
-import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
+import { PdfBerichtComponent } from './pdf-bericht/pdf-bericht.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, data: { param: 'id'}, resolve: { data: ShipResolver },
     children: [
       { path: '', component: StreifeComponent },
       { path: 'map', component: MapComponent },
+      { path: 'pdfbericht', component: PdfBerichtComponent },
       { path: 'positions', component: PositionsComponent }
     ],
   }
@@ -31,13 +34,16 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [
-    BootComponent
+    BootComponent,
+    PdfBerichtComponent
   ],
   imports: [
     StreifeModule,
     MapModule,
     PositionsModule,
     SharedModule,
+    PdfViewerModule,
+    NgxExtendedPdfViewerModule,
 
     // router
     RouterModule.forChild(routes),

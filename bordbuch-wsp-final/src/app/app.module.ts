@@ -10,7 +10,7 @@ import { RootStoreModule } from './store/root-store.module'
 import { SharedModule } from './shared/shared.module'
 import { MarkdownModule } from 'ngx-markdown'
 import { ConnectionService } from './core/services/connection.service'
-import { httpInterceptorProviders } from './core/interceptors'
+import { httpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [

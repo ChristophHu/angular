@@ -210,7 +210,8 @@ export class StreifeComponent implements OnInit {
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
             console.log(`beendet: ${update}`)
-            this._router.navigateByUrl('/')
+            this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
+            // this._router.navigateByUrl('/')
             break
           default:
             update = Object.assign({}, patrol, this.zweck.value)

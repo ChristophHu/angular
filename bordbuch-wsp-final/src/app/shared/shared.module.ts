@@ -32,6 +32,7 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe';
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty';
 import { ButtonToggleGroupComponent } from './components/button-toggle-group/button-toggle-group.component'
 import { StickyDirective } from './directives/simpleSticky/sticky.directive'
+import { SanitizeHtmlPipe2 } from './pipes/sanitize-html2/sanitize-html.pipe'
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { StickyDirective } from './directives/simpleSticky/sticky.directive'
         ToArrayPipe,
         OrderByPipe,
         SliceArrayByPropertyPipe,
-        ButtonToggleGroupComponent
+        ButtonToggleGroupComponent,
+        SanitizeHtmlPipe2
     ],
     imports: [
         CommonModule,
@@ -87,6 +89,7 @@ import { StickyDirective } from './directives/simpleSticky/sticky.directive'
         ToArrayPipe,
         OrderByPipe,
         SliceArrayByPropertyPipe,
+        SanitizeHtmlPipe2,
         
         CommonModule,
         FormsModule,
