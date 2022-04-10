@@ -152,10 +152,10 @@ export class StreifeComponent implements OnInit {
   }
 
   next(stepper: CdkStepper) {
-    // if (stepper.selectedIndex == 0 && this.zweckFormGroup.valid) {
-    //   if (this.id) this.updatePatrol()
-    //   if (!this.id) this.erstellePatrol()
-    // }
+    if (stepper.selectedIndex == 0 && this.zweck.valid) {
+      if (this.id) this.updatePatrol()
+      if (!this.id) this.erstellePatrol()
+    }
     stepper.next()
   }
   nextDisable(stepper: CdkStepper): boolean {
@@ -177,12 +177,14 @@ export class StreifeComponent implements OnInit {
     // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: '' }
+    // this.store.dispatch(ShipAction.insertPatrol({ initialize }))
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       const insert: Patrol = Object.assign({}, patrol, this.zweck.value, { start: getLocalISO('now') })
+      console.log(insert)
       this.store.dispatch(ShipAction.insertPatrol({ insert }))
     })
   }
@@ -191,10 +193,10 @@ export class StreifeComponent implements OnInit {
     let update: Patrol
     // update zum eigentlichen Start oder beenden der Streife
     if (this.patrol.id == '' || this.patrol.id == undefined) {
-      console.log('erstelle patrol')
       this.erstellePatrol()
     }
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+    console.log('after if')
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(2)).subscribe(patrol => {
       if (patrol?.id) {
         switch (status) {
           case 'aktiv':
@@ -204,26 +206,19 @@ export class StreifeComponent implements OnInit {
             //   this.store.dispatch(PositionActions.insertData({ positionReport }))
             // })
             update = Object.assign({}, patrol, this.zweck.value, { status: status, start: getLocalISO('now') })
-            console.log(`aktiv: ${update}`)
             this._router.navigate(['/boot', patrol.id_schiff, 'positions'], {relativeTo: this._activatedRoute})
             break
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
-            console.log(`beendet: ${update}`)
             this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
-            // this._router.navigateByUrl('/')
             break
-          default:
-            update = Object.assign({}, patrol, this.zweck.value)
-            console.log(`default: ${update}`)
-            break
+          // default:
+          //   update = Object.assign({}, patrol, this.zweck.value)
+          //   console.log(`default: ${update}`)
+          //   break
         }
         this.store.dispatch(ShipAction.updatePatrol({ update }))
       }
     })
   }
-
-  // logout() {
-  //   this.store.dispatch(logout())
-  // }
 }

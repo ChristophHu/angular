@@ -61,7 +61,6 @@ export class PdfBerichtComponent {
   }
 
   convertDataURIToBinary(dataURI: string): Uint8Array {
-    console.log('convert')
     const b64 = dataURI.replace(/^.+;base64,/, '');
     const raw = atob(b64);
     const rawLength = raw.length;
@@ -98,6 +97,8 @@ export class PdfBerichtComponent {
       console.log(buff)
 
       const loadingTask = pdfjs.getDocument(buff);
+
+      // fehler?
       loadingTask.promise.then((pdf: any) => {
         console.log('loading Task')
 
