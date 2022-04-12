@@ -1,9 +1,7 @@
-<div class="main_content overflow-hidden">
-    <button (click)="generateFile()">Datei</button>
-    <button (click)="g0()">G0 Test</button>
-    <button (click)="test()">Test</button>
-    
-    <div class="app-pdfcontent">
-
-    </div>
-</div>
+<app-pdf-viewer
+    #pdfViewer
+    *ngIf="pdf"
+    [pdfSrc]="pdf"
+    [zoom]="5.0"
+    [pageNumber]="page">
+</app-pdf-viewer>

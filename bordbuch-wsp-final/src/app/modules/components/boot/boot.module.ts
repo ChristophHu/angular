@@ -4,13 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShipResolver } from 'src/app/store/ship-store/ship.resolver';
 import { ShipModule } from 'src/app/store/ship-store/ship.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DataModule } from 'src/app/store/positionreport-store/data.module';
 import { ZaehlerstandModule } from 'src/app/store/zaehlerstand-store/data.module';
 import { MapComponent } from './map/map.component';
 import { StreifeComponent } from './streife/streife.component';
 import { StreifeModule } from './streife/streife.module';
 import { PositionsComponent } from './positions/positions.component';
-import { LastPositionModule } from 'src/app/store/lastposition-store/data.module';
 import { ShipSelectionResolver } from 'src/app/store/ship-selection-store/ship-selection.resolver';
 import { AppService } from 'src/app/core/services/app.service';
 import { ShipSelectionModule } from 'src/app/store/ship-selection-store/ship-selection.module';
@@ -20,6 +18,8 @@ import { SpecModule } from 'src/app/store/spec-store/spec.module';
 import { PdfBerichtComponent } from './pdf-bericht/pdf-bericht.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfViewerComponent } from './pdf-bericht/pdf-viewer/pdf-viewer.component';
+import { PositionService } from 'src/app/core/services/position.service';
 
 export const routes: Routes = [
   { path: ':id', component: BootComponent, data: { param: 'id'}, resolve: { data: ShipResolver },
@@ -35,7 +35,8 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     BootComponent,
-    PdfBerichtComponent
+    PdfBerichtComponent,
+    PdfViewerComponent
   ],
   imports: [
     StreifeModule,
@@ -49,8 +50,6 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
 
     // store
-    DataModule,
-    LastPositionModule,
     ShipSelectionModule,
     ShipModule,
     ZaehlerstandModule,
@@ -59,6 +58,7 @@ export const routes: Routes = [
   providers: [
     ShipSelectionResolver,
     ShipResolver,
+    PositionService,
     AppService
   ]
 })

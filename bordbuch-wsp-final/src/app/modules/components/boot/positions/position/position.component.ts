@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
-import { AppService } from 'src/app/core/services/app.service';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
-import { PositionActions } from 'src/app/store/positionreport-store';
+import { getLocalISO } from 'src/app/shared/utils';
 import { RootStoreState } from 'src/app/store/root-store.state';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-position',
@@ -24,6 +22,7 @@ export class PositionComponent implements OnInit {
   
   constructor(
     private store: Store<RootStoreState>, 
+    private _specFacade: SpecFacade,
     private _formBuilder: FormBuilder,
     private locationService: LocationService,
     private modalService: ModalService<PositionComponent>
@@ -67,25 +66,20 @@ export class PositionComponent implements OnInit {
   }
 
   create() {
-    console.log(this.positionForm.value)
-    const positionReport = this.positionForm.value
-    this.store.dispatch(PositionActions.insertData({ positionReport }))
+    const insert = this.positionForm.value
+    this._specFacade.insertPosition(insert)
     this.modal?.close()
   }
 
   update() {
-    console.log(this.positionForm.value)
-    const update: Update<PositionReport> = {
-      id: this.positionForm.value.id,
-      changes: this.positionForm.value
-    }
-    this.store.dispatch(PositionActions.updateData({ update }))
+    const update: PositionReport = this.positionForm.value
+    this._specFacade.updatePosition(update)
     this.modal?.close()
   }
 
   delete() {
     const id = this.positionForm.value.id
-    this.store.dispatch(PositionActions.deleteData({ id }))
+    this._specFacade.deletePosition(id)
     this.modal?.close()
   }
 

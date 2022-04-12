@@ -1,159 +1,59 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import * as $ from 'jquery'
 
 @Component({
   selector: 'app-pdf-bericht',
   templateUrl: './pdf-bericht.component.html',
   styleUrls: ['./pdf-bericht.component.sass']
 })
-export class PdfBerichtComponent {
-
+export class PdfBerichtComponent implements OnInit {
+  // pdfgenerator
   private pdfM: any
-  private file: any
+  private pdfF: any
 
-  // code
-  preview: boolean = false;
-  pageArray: string[] = [];
-  aktPage = 0;
-  pageCount = 1;
-  content: any
+  page: number
 
-  constructor() {    
+  public pdf = ''//'./assets/test.pdf'
+
+  constructor() {
     this.pdfM = pdfMake
-    this.pdfM.vfs = pdfFonts.pdfMake.vfs;
+    this.pdfM.vfs = pdfFonts.pdfMake.vfs
+
+    this.page = 1
+  }
+
+  ngOnInit(): void {
+    this.generateFile()
+  }
+
+  pageUp() {
+    this.page = this.page + 1
+  }
+  pageDown() {
+    this.page = this.page - 1
+  }
+
+  download() {
+    var a=document.createElement('a');
+    a.download='name.pdf'; // 2022-04-11 12:30:22 - wassernixe 3.pdf
+    a.href=this.pdf;
+    a.click();
+  }
+
+  generateFile() {
+    this.pdfF = this.pdfM.createPdf(this.getDefinitions(this.prepare))
+    this.pdfF.getDataUrl((data: any) => {
+      this.pdf = data
+      console.log(data)
+    })
   }
 
   private prepare: any = {
     watermark: 'Entwurf'
   }
 
-  generateFile() {
-    const pdfF = this.pdfM.createPdf(this.getDefinitions(this.prepare));
-    // const pdfFile = pdfMake.createPdf(this.getDefinitions(this.prepare));
-
-    console.log(pdfF)
-
-    pdfF.open() // blocked by browser
-    // pdfF.download('test.pdf')
-
-    // seperate
-    // const options: DocumentViewerOptions = {
-    //   title: 'My PDF'
-    // }
-    // this.document.viewDocument('assets/myFile.pdf', 'application/pdf', options)
-  }
-
-  g0() {
-    const p = this.pdfM.createPdf(this.getDefinitions(this.prepare))
-    p.getDataUrl((dataUrl: any) => {
-      // console.log(dataUrl)
-      this.getPDFMobile(dataUrl).then(() => {
-        console.log('PDF geladen.')
-        // this.initButtons();
-        // this.showPage(this.aktPage);
-        // Loader.hide();
-      }).catch(() => {
-        // Log.error(this.constructor.name, 'PDF konnte nicht geladen werden!');
-      });
-    })
-  }
-
-  convertDataURIToBinary(dataURI: string): Uint8Array {
-    const b64 = dataURI.replace(/^.+;base64,/, '');
-    const raw = atob(b64);
-    const rawLength = raw.length;
-    const array = new Uint8Array(new ArrayBuffer(rawLength));
-  
-    for (let i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-    }
-    return array;
-  }
-
-  private renderPDFPage(page: any, cv: HTMLCanvasElement, pagenum: number, renderContext: any): Promise<{ canvas: HTMLCanvasElement, page: number }> {
-    return new Promise((resolve, reject) => {
-      const renderTask = page.render(renderContext);
-      renderTask.promise.then(() => {
-        resolve({ canvas: cv, page: pagenum });
-      }).catch((e: any) => {
-        // Log.error(e);
-        reject();
-      });
-    });
-  }
-
-  private getPDFMobile(pdfdatauri: string): Promise<void> {
-    console.log('start')
-    const pdfjs = require('pdfjs-dist/build/pdf');
-    const pdfjsWorker = require('pdfjs-dist/build/pdf.worker.entry');
-    pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
-    return new Promise((resolve, reject) => {
-
-      const buff = this.convertDataURIToBinary(pdfdatauri);
-      console.log('buff')
-      console.log(buff)
-
-      const loadingTask = pdfjs.getDocument(buff);
-
-      // fehler?
-      loadingTask.promise.then((pdf: any) => {
-        console.log('loading Task')
-
-        const scale = 6;
-
-        for (let pagenum = 1; pagenum <= pdf.numPages; pagenum++) {
-
-          pdf.getPage(pagenum).then((page: any) => {
-
-            const jqcanvas = $('<canvas id="pdfcanvas_' + page.pageNumber + '">');
-            console.log(jqcanvas)
-            const canvas: HTMLCanvasElement = (<HTMLCanvasElement>jqcanvas[0]);
-            $(this.content?.nativeElement!).append(canvas);
-            const ctx = canvas.getContext("2d");
-            const viewport = page.getViewport({ scale: scale });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            const renderContext = {
-              canvasContext: ctx,
-              viewport: viewport,
-            };
-
-            this.renderPDFPage(page, canvas, pagenum, renderContext).then((data: { canvas: HTMLCanvasElement, page: number }) => {
-              this.pageArray[data.page - 1] = data.canvas.toDataURL();
-              $(data.canvas).remove();
-              if (this.pageArray.length === pdf.numPages) {
-                this.pageCount = pdf.numPages;
-                resolve();
-              }
-            }).catch((e: any) => {
-              // Log.error(e);
-              reject();
-            });
-          }).catch((e: any) => {
-            // Log.error(e);
-            reject();
-          });
-        }
-      });
-    });
-  }
-
-  test(): any {
-    const pdfFile = pdfMake.createPdf(
-      {
-        content: [
-          'First paragraph',
-          'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
-        ]
-      }
-    )
-    pdfFile.download('test.pdf')
-  }
-
-  private getDefinitions(prepare: any): any {
+  getDefinitions(prepare: any): any {
     return {
       pageSize: 'A4',
       pageOrientation: 'p',
@@ -315,5 +215,4 @@ export class PdfBerichtComponent {
     }
     
   }
-
 }

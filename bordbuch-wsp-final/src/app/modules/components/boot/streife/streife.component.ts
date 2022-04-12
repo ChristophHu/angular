@@ -1,17 +1,14 @@
 import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Patrol } from 'src/app/core/model/patrol.model';
-import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { Ship } from 'src/app/core/model/ship.model';
-import { LocationService } from 'src/app/core/services/location.service';
-import { logout } from 'src/app/modules/auth/state/actions';
+import { PositionService } from 'src/app/core/services/position.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 
@@ -25,6 +22,7 @@ export class StreifeComponent implements OnInit {
   
   control: boolean = false
   status: boolean = true
+  saving: boolean = false
 
   form!: FormGroup
   zweck!: FormGroup
@@ -64,7 +62,7 @@ export class StreifeComponent implements OnInit {
   // zweck = ''
   // start = ''
 
-  constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder) {
+  constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private p: PositionService) {
       // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
       // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
       //   console.log(data)
@@ -102,12 +100,6 @@ export class StreifeComponent implements OnInit {
 
     this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
       if (patrol) { this.patrol = patrol! }
-      // if (patrol?.status == 'aktiv') {
-      //   // auslagern und in den Store mit aufnehmen
-      //   this.appService.checkPositionStart(patrol)
-      // } else {
-      //   this.appService.checkPositionStop()
-      // }
     })
 
     this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
@@ -159,10 +151,12 @@ export class StreifeComponent implements OnInit {
     stepper.next()
   }
   nextDisable(stepper: CdkStepper): boolean {
+    if (this.zweck && this.zweck.invalid) return true
     if (stepper.selectedIndex == stepper.steps.length - 1) return true
     return false
   }
   previous(stepper: CdkStepper) {
+    console.log(this.saving)
     stepper.previous()
   }
   stepperReset(stepper: CdkStepper) {
@@ -173,18 +167,20 @@ export class StreifeComponent implements OnInit {
   }
 
   initializePatrol(stepper: CdkStepper) {
-    // this.kontrollFormGroup.patchValue({ kontrolle: false })
-    // automatische Initialisierung nach laden der (leeren | beendeten) Patrol
+    this.control = false
+
     this.stepperReset(stepper)
     const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: '' }
-    // this.store.dispatch(ShipAction.insertPatrol({ initialize }))
+    
     this.store.dispatch(ShipAction.initializePatrol({ initialize }))
   }
   erstellePatrol() {
+    this.control = false
+
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
       const insert: Patrol = Object.assign({}, patrol, this.zweck.value, { start: getLocalISO('now') })
-      console.log(insert)
+      
       this.store.dispatch(ShipAction.insertPatrol({ insert }))
     })
   }
@@ -195,7 +191,7 @@ export class StreifeComponent implements OnInit {
     if (this.patrol.id == '' || this.patrol.id == undefined) {
       this.erstellePatrol()
     }
-    console.log('after if')
+
     this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(2)).subscribe(patrol => {
       if (patrol?.id) {
         switch (status) {
@@ -206,11 +202,14 @@ export class StreifeComponent implements OnInit {
             //   this.store.dispatch(PositionActions.insertData({ positionReport }))
             // })
             update = Object.assign({}, patrol, this.zweck.value, { status: status, start: getLocalISO('now') })
+            this.control = false
             this._router.navigate(['/boot', patrol.id_schiff, 'positions'], {relativeTo: this._activatedRoute})
             break
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
-            this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
+            console.log('3 false')
+            this._router.navigate(['/'], {relativeTo: this._activatedRoute})
+            // this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
             break
           // default:
           //   update = Object.assign({}, patrol, this.zweck.value)

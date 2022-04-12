@@ -58,7 +58,6 @@ export const shipReducer = createReducer(
     }),
     on(ShipAction.updatePatrolSuccess, (state, action) => {
         let patrol: Patrol = action.action.update
-        console.log(patrol)
         return {
             ...state,
             patrol: patrol

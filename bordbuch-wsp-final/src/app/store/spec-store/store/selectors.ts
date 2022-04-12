@@ -16,6 +16,26 @@ export const selectKlarmeldung = createSelector(
     state => state.klarmeldung
 )
 
+// position
+export const selectPositions = createSelector(
+    specState,
+    state => state.positions
+)
+export const selectPositionsByPatrol = (id_streife: string) => createSelector(
+    selectPositions,
+    positions => positions?.filter(el => el.id_streife == id_streife)
+)
+export const selectPositionById = (id: any) => createSelector(
+    selectPositions,
+    position => position?.find(el => el.id == id)
+)
+
+// saving
+export const selectSaving = createSelector(
+    specState,
+    state => state.saving
+)
+
 // zaehlerstaende
 export const selectAllZaehlerstaende = createSelector(
     specState,

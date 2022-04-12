@@ -1,16 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { Position } from 'src/app/core/model/position';
+import { Subscription } from 'rxjs';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { PositionActions, PositionSelectors } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { PositionComponent } from './position/position.component';
 
 @Component({
@@ -36,7 +34,7 @@ export class PositionsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<PositionReport>()
 
-  constructor(private store: Store<RootStoreState>, private locationService: LocationService, private modalService: ModalService<PositionComponent>) { }
+  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private modalService: ModalService<PositionComponent>) { }
 
   ngOnInit(): void {
     this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
@@ -50,7 +48,7 @@ export class PositionsComponent implements OnInit {
 
         this._positionSubscription
         .add(
-          this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).subscribe((data: any) => {
+          this._specFacade.positions$.subscribe((data: PositionReport[]) => {
             this.positions = data
           })
         )
@@ -73,7 +71,7 @@ export class PositionsComponent implements OnInit {
   addPosition() {}
 
   delete(id: string) {
-    this.store.dispatch(PositionActions.deleteData({ id }))
+    this._specFacade.deletePosition(id)
   }
 
   logout() {

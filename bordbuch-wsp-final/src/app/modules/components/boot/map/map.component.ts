@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { interval, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { logout } from 'src/app/modules/auth/state/actions';
@@ -8,14 +8,12 @@ import { RootStoreState } from 'src/app/store/root-store.state';
 
 import * as L from 'leaflet'
 import { LocationService } from 'src/app/core/services/location.service';
-import { AppService } from 'src/app/core/services/app.service';
-import { PositionSelectors } from 'src/app/store/positionreport-store';
-import { LastPositionSelectors } from 'src/app/store/lastposition-store';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positions/position/position.component';
 import { ShipSelectors } from 'src/app/store/ship-store';
 import { tap } from 'rxjs/operators';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-map',
@@ -57,8 +55,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private positions$: Observable<PositionReport[] | undefined>
   private lastPositions$: Observable<PositionReport[] | undefined>
 
-  constructor(private store: Store<RootStoreState>, private locationService: LocationService, private _katFacade: KatFacade, private modalService: ModalService<PositionComponent>) {
-    this.positions$ = this.store.pipe(select(PositionSelectors.selectAllData))
+  constructor(private store: Store<RootStoreState>, private locationService: LocationService, private _katFacade: KatFacade, private _specFacade: SpecFacade, private modalService: ModalService<PositionComponent>) {
+    this.positions$ = this._specFacade.positions$
     this.lastPositions$ = this._katFacade.lastPositions$
   }
 
@@ -72,10 +70,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (id_streife) {
         this.id_streife = id_streife
 
-        this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).pipe(
-          tap(data => console.log(data))
-        )
-        this.lastPositions$ = this.store.pipe(select(LastPositionSelectors.selectDataWithoutPatrol(this.id_streife!)))
+        // this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).pipe(
+        //   tap(data => console.log(data))
+        // )
+        this.lastPositions$ = this._katFacade.lastPositions$
       }
     })
     

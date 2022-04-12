@@ -18,6 +18,7 @@ import { Klarmeldung } from '../model/klarmeldung.model';
 import { Zaehlerstand } from '../model/zaehlerstand';
 import { ConnectionService } from './connection.service';
 import { LocationService } from './location.service';
+import { PositionService } from './position.service';
 
 @Injectable({
     providedIn: 'root'
@@ -406,7 +407,6 @@ export class AppService {
         return this.insert(patrol, 'insertStreife')
     }
     updateStreife(patrol: Patrol): Observable<any> {
-        console.log(patrol)
         return this.update(patrol, 'updateStreife')
     }
     deleteStreife(id: string): Observable<any> {

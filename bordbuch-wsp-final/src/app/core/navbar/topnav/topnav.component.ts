@@ -4,7 +4,6 @@ import { EMPTY, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { Animations } from 'src/app/shared/animations';
-import { PositionActions } from 'src/app/store/positionreport-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
@@ -38,7 +37,7 @@ export class TopnavComponent {
   }
   resetStore() {
     this.store.dispatch(ShipAction.resetStore())
-    this.store.dispatch(PositionActions.resetStore())
+    // this.store.dispatch(PositionActions.resetStore())
     this.store.dispatch(ZaehlerstandAction.resetStore())
   }
 

@@ -8,6 +8,7 @@ import { Zweck } from 'src/app/core/model/zwecke.model';
 import { KatSelectors } from 'src/app/store/kat-store';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-schiff',
@@ -16,10 +17,10 @@ import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 })
 export class SchiffComponent implements OnInit {
   @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>()
-  @Output() statused: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() positionSave: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   saving: boolean = false
-  status: boolean = true
+  // status: boolean = true
 
   ship!: Ship
   patrol$: Observable<Patrol>
@@ -29,9 +30,9 @@ export class SchiffComponent implements OnInit {
   shipForm: FormGroup
   patrolForm!: FormGroup
 
-  durchsicht: string[] = ['Klar', 'Unklar']
+  // durchsicht: string[] = ['Klar', 'Unklar']
 
-  constructor(private _formBuilder: FormBuilder, private store: Store<RootStoreState>) {
+  constructor(private _formBuilder: FormBuilder, private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
     this.patrol$ = this.store.pipe(select(ShipSelectors.selectedPatrol)) as Observable<Patrol>
     this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
     
@@ -60,11 +61,11 @@ export class SchiffComponent implements OnInit {
         this.ship = ship
         this.shipForm.patchValue(ship)
         this.patrolForm.patchValue({ kennung: ship.name })
-        if (!!ship.durchsicht) {
-          this.status = true
-        } else {
-          this.status = false
-        }
+        // if (!!ship.durchsicht) {
+        //   this.status = true
+        // } else {
+        //   this.status = false
+        // }
       }
     })
     // this.ship$.subscribe(data => {
@@ -80,13 +81,14 @@ export class SchiffComponent implements OnInit {
     this.formReady.emit(this.patrolForm)
   }
 
-  changeStatus() {
-    this.status = !this.status
-    this.statused.emit(this.status)
-  }
+  // changeStatus() {
+  //   this.status = !this.status
+  //   this.statused.emit(this.status)
+  // }
   changeSaving() {
-    console.log('change')
     this.saving = !this.saving
+    this._specFacade.updateSaving(this.saving)
+    this.positionSave.emit(this.saving)
   }
 
   deletePatrol() {

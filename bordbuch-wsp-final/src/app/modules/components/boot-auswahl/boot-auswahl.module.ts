@@ -39,8 +39,6 @@ export const routes: Routes = [
     ShipSelectionModule
   ],
   providers: [
-    // ShipSelectionResolver,
-    // Resolver,
     AppService
   ]
 })

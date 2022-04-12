@@ -3,7 +3,7 @@
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-l-lg" (click)="previous(headlineStepper)" [ngClass]="stepperIndex(headlineStepper) ? 'text-gray-400' : ''" [disabled]="stepperIndex(headlineStepper)">Zurück</button>
     <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 font-medium shadow-inner rounded-r-lg" (click)="next(headlineStepper)" [ngClass]="nextDisable(headlineStepper) ? 'text-gray-400' : ''" [disabled]="nextDisable(headlineStepper)">Weiter</button>
     <button *ngIf="(patrolStatus$ | async)==null" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
-    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 text-blue-500 font-medium shadow-inner rounded-lg" [disabled]="!control" [ngClass]="control ? 'text-blue-500': 'text-gray-400'" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
+    <button *ngIf="(patrolStatus$ | async)=='beendet'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [disabled]="!control" [ngClass]="control ? 'text-blue-500': 'text-gray-400'" (click)="initializePatrol(headlineStepper)">Streife erstellen</button>
     <!--  -->
     <button *ngIf="(patrolStatus$ | async)=='vorbereitend'" class="flex-grow ml-4 p-2 px-8 bg-gray-100 font-medium shadow-inner rounded-lg" [disabled]="!control" [ngClass]="control ? 'text-blue-500': 'text-gray-400'" (click)="updatePatrol('aktiv')">Streife starten</button>
     <!--  -->
@@ -22,7 +22,7 @@
               <!-- <p class="text-lg text-gray-600">Next: <button type="submit" class="cursor-pointer" cdkStepperNext>Besatzung</button></p> -->
             </div>
           </ng-template>
-          <app-schiff (statused)="setStatus($event)" (formReady)="subformReady($event)"></app-schiff>
+          <app-schiff (positionSave)="saving" (formReady)="subformReady($event)"></app-schiff>
         </cdk-step>
         <cdk-step [editable]="isEditable" [optional]="false">
           <ng-template cdkStepLabel>
@@ -83,7 +83,7 @@
               <h4 class="text-2xl text-blue-600">Kontrolle der Eingaben</h4>
             </div>
           </ng-template>
-          <kontrolle (controled)="setControl($event)" (statused)="setStatus($event)"></kontrolle>
+          <kontrolle [(controled)]="control" (statused)="setStatus($event)"></kontrolle>
         </cdk-step>
       </headline-stepper>
   </div>

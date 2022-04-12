@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { concatMap, map, switchMap, tap } from 'rxjs/operators'
 import { Klarmeldung } from 'src/app/core/model/klarmeldung.model'
+import { PositionReport } from 'src/app/core/model/positionreport.model'
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand'
 
 import { AppService } from 'src/app/core/services/app.service'
-import { insertKlarmeldung, insertKlarmeldungSuccess, loadAllZaehlerstaende, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiff, loadKlarmeldungByIdSchiffSuccess, updateKlarmeldung, updateKlarmeldungSuccess, updateZaehlerstand, updateZaehlerstandSuccess } from './actions'
+import { deletePosition, deletePositionSuccess, insertKlarmeldung, insertKlarmeldungSuccess, insertPosition, insertPositionSuccess, loadAllZaehlerstaende, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiff, loadKlarmeldungByIdSchiffSuccess, loadPositions, loadPositionsSuccess, updateKlarmeldung, updateKlarmeldungSuccess, updatePosition, updatePositionSuccess, updateZaehlerstand, updateZaehlerstandSuccess } from './actions'
  
 @Injectable()
 export class Effects {
@@ -35,6 +36,46 @@ export class Effects {
             switchMap(action => {
                 return this.appService.updateKlarmeldung(action.update).pipe(
                     map(() => updateKlarmeldungSuccess({ update: action.update }))
+                )
+            })
+        )
+    })
+
+    // position
+    loadPositions$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadPositions),
+            concatMap(action => this.appService.getPosition(action.id)),
+            map((positionReport: PositionReport[]) => loadPositionsSuccess({ positionReport }))
+        )
+    })
+    insertPosition$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertPosition),
+            switchMap(action => {
+                return this.appService.insertPosition(action.insert).pipe(
+                    tap(id => console.log(id)),
+                    map((id: string) => insertPositionSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updatePosition$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updatePosition),
+            switchMap(action => {
+                return this.appService.updatePosition(action.update).pipe(
+                    map(() => updatePositionSuccess({ update: action.update }))
+                )
+            })
+        )
+    })
+    deletePosition$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deletePosition),
+            switchMap(action => {
+                return this.appService.deletePosition(action.id).pipe(
+                    map((id: string) => deletePositionSuccess({ id }))
                 )
             })
         )

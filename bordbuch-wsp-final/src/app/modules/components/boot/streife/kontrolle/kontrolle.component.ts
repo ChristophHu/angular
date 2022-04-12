@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
@@ -17,8 +17,12 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
   styleUrls: ['./kontrolle.component.sass']
 })
 export class KontrolleComponent implements OnInit {
-  @Output() controled: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Output() statused: EventEmitter<boolean> = new EventEmitter<boolean>()
+  // @Input() controled: boolean = false
+  @Input() set controled(value: boolean) {
+    this.control = value
+  }
+  @Output() controledChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   control: boolean = false
   status: boolean = true
@@ -71,7 +75,7 @@ export class KontrolleComponent implements OnInit {
 
   changeControl() {
     this.control = !this.control
-    this.controled.emit(this.control)
+    this.controledChange.emit(this.control)
   }
 
   changeStatus(klarmeldung: boolean) {

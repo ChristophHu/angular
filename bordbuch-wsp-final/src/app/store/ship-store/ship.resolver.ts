@@ -5,8 +5,7 @@ import { Observable } from "rxjs"
 import { finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
 import { ShipAction } from "."
-import { LastPositionActions } from "../lastposition-store"
-import { PositionActions } from "../positionreport-store"
+
 import { SpecFacade } from "../spec-store/spec.facade"
 import { loadAllZaehlerstaende } from "../spec-store/store/actions"
 
@@ -29,10 +28,10 @@ export class ShipResolver implements Resolve<any> {
                     this.store.dispatch(ShipAction.loadTank({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadPeilung({ id_ship: route.params[route.data.param] }))
                     this.store.dispatch(ShipAction.loadChecklist({ id_ship: route.params[route.data.param] }))
-                    this.store.dispatch(PositionActions.loadAllData({ id_ship: route.params[route.data.param] }))
+                    
                     this.store.dispatch(loadAllZaehlerstaende({ id: route.params[route.data.param]}))
-                    this.store.dispatch(LastPositionActions.loadData())
 
+                    this._specFacade.loadPositionsByIdSchiff(route.params[route.data.param])
                     this._specFacade.loadKlarmeldungByIdSchiff(route.params[route.data.param])
                 }
             }),

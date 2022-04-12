@@ -8,18 +8,22 @@ import * as SpecState from './store/reducers'
 import { Observable } from "rxjs";
 import { Zaehlerstand } from "src/app/core/model/zaehlerstand";
 import { Klarmeldung } from "src/app/core/model/klarmeldung.model";
+import { PositionReport } from "src/app/core/model/positionreport.model";
 
 
 @Injectable()
 export class SpecFacade {
     // public selectors
     klarmeldung$  = this.store.pipe(select(SpecSelectors.selectKlarmeldung)) as Observable<Klarmeldung>
+    positions$      = this.store.pipe(select(SpecSelectors.selectPositions)) as Observable<PositionReport[]>
+    saving$         = this.store.pipe(select(SpecSelectors.selectSaving)) as Observable<boolean>
     allZaehlerstaende$  = this.store.pipe(select(SpecSelectors.selectAllZaehlerstaende)) as Observable<Zaehlerstand[]>
 
     constructor(private store: Store<RootStoreState>) {}
 
     // public dispatches
-    // Klarmeldung
+
+    // klarmeldung
     loadKlarmeldungByIdSchiff(id: string) {
         this.store.dispatch(SpecActions.loadKlarmeldungByIdSchiff({ id }))
     }
@@ -28,6 +32,25 @@ export class SpecFacade {
     }
     updateKlarmeldung(update: Klarmeldung) {
         this.store.dispatch(SpecActions.updateKlarmeldung({ update }))
+    }
+
+    // position
+    loadPositionsByIdSchiff(id: string) {
+        this.store.dispatch(SpecActions.loadPositions({ id }))
+    }
+    insertPosition(insert: PositionReport) {
+        this.store.dispatch(SpecActions.insertPosition({ insert }))
+    }
+    updatePosition(update: PositionReport) {
+        this.store.dispatch(SpecActions.updatePosition({ update }))
+    }
+    deletePosition(id: string) {
+        this.store.dispatch(SpecActions.deletePosition({ id }))
+    }
+
+    // saving
+    updateSaving(update: boolean) {
+        this.store.dispatch(SpecActions.updateSaving({ update }))
     }
 
     // zaehlerstaende
