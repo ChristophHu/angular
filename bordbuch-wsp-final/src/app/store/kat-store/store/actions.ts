@@ -79,7 +79,7 @@ export const pruefvermerkKategorienLoaded = createAction(
 export const loadAllShip = createAction(
 	"[Kat Resolver] Load Ships"
 )
-export const allShipLoaded = createAction(
+export const loadAllShipSuccess = createAction(
 	"[Load Kat Effect] Ships Loaded",
 	props<{shipSelection: ShipSelection[]}>()
 )

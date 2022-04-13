@@ -14,15 +14,15 @@ import { ShipSelection } from 'src/app/core/model/ship-selection.model'
 import { Zaehlerstandstyp } from 'src/app/core/model/zaehlerstandstyp'
 import { Zweck } from 'src/app/core/model/zwecke.model'
 import { AppService } from 'src/app/core/services/app.service'
-import { loadAllShip, allShipLoaded, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen, loadAllStatus, loadedAllStatus, loadLastPositions, loadLastPositionsSuccess } from './actions'
+import { loadAllShip, loadPruefvermerke, pruefvermerkeLoaded, loadPruefvermerkKategorien, pruefvermerkKategorienLoaded, loadZaehlerstandstypen, zaehlerstandstypenLoaded, loadDienststellen, dienststellenLoaded, loadZwecke, loadedZwecke, loadKennungen, loadedKennungen, loadBetriebsstoffe, loadedBetriebsstoffe, loadFunktionen, loadedFunktionen, loadAllStatus, loadedAllStatus, loadLastPositions, loadLastPositionsSuccess, loadAllShipSuccess } from './actions'
  
 @Injectable()
 export class Effects {
-    loadShips$ = createEffect(() => {
+    loadAllShip$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllShip),
             concatMap(action => this.appService.getSchiffe()),
-            map((shipSelection: ShipSelection[]) => allShipLoaded({ shipSelection }))
+            map((shipSelection: ShipSelection[]) => loadAllShipSuccess({ shipSelection }))
         )
     })
     loadLastPositions$ = createEffect(() => {

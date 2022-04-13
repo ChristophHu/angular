@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { loadedAllStatus, allShipLoaded, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen, loadLastPositionsSuccess } from "./actions"
+import { loadedAllStatus, loadAllShipSuccess, pruefvermerkeLoaded, pruefvermerkKategorienLoaded, zaehlerstandstypenLoaded, dienststellenLoaded, loadedZwecke, loadedKennungen, loadedBetriebsstoffe, loadedFunktionen, loadLastPositionsSuccess } from "./actions"
 import { State } from "../state"
 
 export const initialDataState: State = {
@@ -20,7 +20,7 @@ export const initialDataState: State = {
 
 export const reducer = createReducer(
     initialDataState,
-    on(allShipLoaded, (state, action) => {
+    on(loadAllShipSuccess, (state, action) => {
         return {
             ...state,
             shipSelection: action.shipSelection
