@@ -80,8 +80,17 @@ export class AuthService {
   }
 
   b64DecodeUnicode(str: string) {
+    str = str.replace('_','/').replace('-','+')
+    switch (str.length %4) {
+      case 2:
+        str +='=='
+        break
+      case 3:
+        str +='='
+        break
+    }
     return decodeURIComponent(Array.prototype.map.call(atob(str), (c) => {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-    }).join('')) 
+    }).join(''))
   }
 }

@@ -31,6 +31,7 @@ export class KlarmeldungModalComponent implements OnInit {
     this.klarmeldungForm = this._formBuilder.group({
       id: [],
       id_schiff: [],
+      name: [],
       beginn: [],
       ende: [],
       klar: []
