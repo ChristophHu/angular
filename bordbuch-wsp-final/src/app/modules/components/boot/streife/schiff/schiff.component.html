@@ -22,10 +22,14 @@
         </mat-select>
       </mat-form-field> -->
     <form [formGroup]="patrolForm">
-      <div class="hidden">
+      <div class="">
         <mat-form-field appearance="fill">
-          <mat-label>id</mat-label>
+          <mat-label>id_streife</mat-label>
           <input matInput type="text" formControlName="id">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>id_schiff</mat-label>
+          <input matInput type="text" formControlName="id_schiff">
         </mat-form-field>
       </div>
       <mat-form-field appearance="fill">

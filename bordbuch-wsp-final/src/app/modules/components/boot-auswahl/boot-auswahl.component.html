@@ -23,7 +23,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Dienststelle</mat-label>
               <mat-select (selectionChange)="selectDienststelle($event.value)">
-                <mat-option *ngFor="let dienststelle of dienststellen$ | async" [value]="dienststelle.bezeichnung">
+                <mat-option *ngFor="let dienststelle of (dienststellen$ | async | orderBy:'bezeichnung')" [value]="dienststelle.bezeichnung">
                   {{ dienststelle.bezeichnung }}
                 </mat-option>
               </mat-select>

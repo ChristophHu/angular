@@ -71,6 +71,10 @@ export function testFunction(cb: any) {
 }
 
 // time
+export function diff() {
+    const n = new Date(now() - timezoneoffset())
+}
+
 export function getLocalISO(val: string = ''): string {
     let date: Date | string
     switch(val) {

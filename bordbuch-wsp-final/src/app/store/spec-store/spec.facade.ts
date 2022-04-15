@@ -22,6 +22,9 @@ export class SpecFacade {
     constructor(private store: Store<RootStoreState>) {}
 
     // public dispatches
+    resetStore() {
+        this.store.dispatch(SpecActions.resetStore())
+    }
 
     // klarmeldung
     loadKlarmeldungByIdSchiff(id: string) {
@@ -47,10 +50,19 @@ export class SpecFacade {
     deletePosition(id: string) {
         this.store.dispatch(SpecActions.deletePosition({ id }))
     }
+    getPositionenByIdPatrol(id_patrol: string): Observable<any> {
+        return this.store.pipe(select(SpecSelectors.selectPositionsByPatrol(id_patrol)))
+    }
+
 
     // saving
     updateSaving(update: boolean) {
         this.store.dispatch(SpecActions.updateSaving({ update }))
+    }
+
+    // ship
+    getShip(): Observable<any> {
+        return this.store.pipe(select(SpecSelectors.selectedShip))
     }
 
     // zaehlerstaende
@@ -65,4 +77,4 @@ export class SpecFacade {
     }
 }
 
-export { SpecState }
+// export { SpecState }

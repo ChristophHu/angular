@@ -1,12 +1,11 @@
 import { Component } from '@angular/core'
-import { select, Store } from '@ngrx/store';
-import { EMPTY, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { Animations } from 'src/app/shared/animations';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
-import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
+import { Ship } from '../../model/ship.model';
 
 @Component({
   selector: 'topnav',
@@ -16,16 +15,14 @@ import { ZaehlerstandAction } from 'src/app/store/zaehlerstand-store';
 })
 export class TopnavComponent {
   status: boolean = false
-  id$: Observable<string | undefined> = EMPTY
-  name$: Observable<string | undefined> = EMPTY
+  ship$: Observable<Ship>
 
   sidebarHandler() {
     this.status = !this.status
   }
 
-  constructor(private store: Store<RootStoreState>) {
-    this.id$ = this.store.pipe(select(ShipSelectors.selectShipId))
-    this.name$ = this.store.pipe(select(ShipSelectors.selectShipName))
+  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
+    this.ship$ = this._specFacade.getShip()
   }
 
   auswahl() {
@@ -36,9 +33,7 @@ export class TopnavComponent {
     this.status = !this.status
   }
   resetStore() {
-    this.store.dispatch(ShipAction.resetStore())
-    // this.store.dispatch(PositionActions.resetStore())
-    this.store.dispatch(ZaehlerstandAction.resetStore())
+    this._specFacade.resetStore()
   }
 
   logout() {

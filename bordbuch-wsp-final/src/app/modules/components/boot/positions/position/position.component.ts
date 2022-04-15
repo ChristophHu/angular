@@ -46,6 +46,10 @@ export class PositionComponent implements OnInit {
       this.title = data.data.title
       if (data.data.position) {
         this.positionForm.patchValue(data.data.position)
+      } else {
+        if (data.data.patrol) {
+          this.positionForm.patchValue({ id_streife: data.data.patrol.id, id_ship: data.data.patrol.id_schiff })
+        }
       }
     })
   }

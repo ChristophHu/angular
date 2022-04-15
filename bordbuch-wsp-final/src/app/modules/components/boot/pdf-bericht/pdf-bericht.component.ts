@@ -12,9 +12,9 @@ export class PdfBerichtComponent implements OnInit {
   private pdfM: any
   private pdfF: any
 
-  page: number
+  page: number = 1
 
-  public pdf = ''//'./assets/test.pdf'
+  public pdf = '' //'./assets/test.pdf'
 
   constructor() {
     this.pdfM = pdfMake

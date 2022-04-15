@@ -145,6 +145,8 @@ export class AppService {
                 break
         }
 
+        console.log(param)
+
         return this.httpClient.post(
             baseURL, 
             param, 

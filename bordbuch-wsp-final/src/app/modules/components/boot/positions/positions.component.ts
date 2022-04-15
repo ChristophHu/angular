@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Patrol } from 'src/app/core/model/patrol.model';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
@@ -21,10 +22,12 @@ export class PositionsComponent implements OnInit {
   id_ship!: string | undefined
   name!: string | undefined
   id_streife!: string | undefined
+  patrol!: Patrol
 
   allCheck: boolean = false
 
   positions: PositionReport[] = []
+  positions$!: Observable<PositionReport[]>
 
   public isAllPositions: boolean = false
 
@@ -34,26 +37,39 @@ export class PositionsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<PositionReport>()
 
-  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private modalService: ModalService<PositionComponent>) { }
+  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
+
+  }
 
   ngOnInit(): void {
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-      this.id_ship = ship?.id
-      this.name = ship?.name
-    })
+    // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+    //   this.id_ship = ship?.id
+    //   this.name = ship?.name
+    // })
 
-    this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) {
-        this.id_streife = id_streife
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe((patrol: Patrol | undefined) => {
+      if (patrol) {
+        this.id_streife = patrol.id
+        this.id_ship = patrol.id_schiff
+        this.patrol = patrol
 
-        this._positionSubscription
-        .add(
-          this._specFacade.positions$.subscribe((data: PositionReport[]) => {
-            this.positions = data
-          })
-        )
+        this.positions$ = this._specFacade.getPositionenByIdPatrol(patrol.id!) as Observable<PositionReport[]>
       }
     })
+
+    // this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
+    //   if (id_streife) {
+    //     this.id_streife = id_streife
+
+    //     // this._positionSubscription
+    //     // .add(
+    //     //   this._specFacade.positions$.subscribe((data: PositionReport[]) => {
+    //     //     this.positions = data
+    //     //   })
+    //     // )
+        
+    //   }
+    // })
   }
 
   ngOnDestroy(): void {
@@ -93,7 +109,8 @@ export class PositionsComponent implements OnInit {
     } else {
       this.modalService.open(PositionComponent, {
         data: {
-          title: 'Position hinzufügen'
+          title: 'Position hinzufügen',
+          patrol: this.patrol
         }
       })
     }

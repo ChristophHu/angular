@@ -8,7 +8,7 @@
     </button>
   </div>
   <div>
-    <h2 class="text-base">{{ name$ | async }}</h2>
+    <h2 class="text-base">{{ (ship$ | async)?.name }}</h2>
   </div>
   <div class="flex justify-between items-center space-x-3">
     <icons class="h-8" name="bordbuch-boot"></icons>
@@ -23,22 +23,22 @@
       <icons class="w-8 h-8 stroke-1 stroke-current" name="refresh"></icons>
       <p class="text-base leading-4">Bordbuch-Auswahl</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async)]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
+    <button class="btn" *ngIf="(ship$ | async)?.id" [routerLink]="['/boot', (ship$ | async)?.id]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="ship"></icons>
       <p class="text-base leading-4">Streife</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async), 'map']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="(ship$ | async)?.id" [routerLink]="['/boot', (ship$ | async)?.id, 'map']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="map"></icons>
       <p class="text-base leading-4">Karte</p>
     </button>
-    <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async), 'positions']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="(ship$ | async)?.id" [routerLink]="['/boot', (ship$ | async)?.id, 'positions']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Positionen</p>
     </button>
-    <!-- <button class="btn" *ngIf="id$ | async" [routerLink]="['/boot', (id$ | async), 'pdfbericht']" routerLinkActive="active-link" (click)="boot()">
+    <button class="btn" *ngIf="(ship$ | async)?.id" [routerLink]="['/boot', (ship$ | async)?.id, 'pdfbericht']" routerLinkActive="active-link" (click)="boot()">
       <icons class="w-8 h-8 stroke-1 stroke-current" name="location-marker"></icons>
       <p class="text-base leading-4">Pdf</p>
-    </button> -->
+    </button>
   </div>
   <div class="flex flex-col justify-between items-center h-full space-y-80 w-full">
     <div class="space-y-3 flex pt-8 border-gray-200 border-t justify-start pb-6 px-4 pl-4 flex-col items-center w-full">

@@ -44,15 +44,16 @@ export class SchiffComponent implements OnInit {
 
     this.patrolForm = this._formBuilder.group({
       id: [],
+      id_schiff: [],
       kennung: [{ value: '' }],
       zweck: ['', Validators.required]
     })
   }
 
   ngOnInit(): void {
-    this.patrol$.subscribe(data => {
-      if (data) {
-        this.patrolForm.patchValue(data)
+    this.patrol$.subscribe(patrol => {
+      if (patrol) {
+        this.patrolForm.patchValue(patrol)
       }
     })
 

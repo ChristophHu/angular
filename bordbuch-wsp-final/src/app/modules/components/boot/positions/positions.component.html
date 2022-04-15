@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of positions; let i = index">
+        <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of (positions$ | async); let i = index">
           <td class="w-12 text-sm pr-6 whitespace-no-wrap tracking-normal leading-4 hidden">
             {{ position.date }}
           </td>

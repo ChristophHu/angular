@@ -29,7 +29,7 @@ export class PositionService {
       this.saving = saving
       this.checkStatus()
     })
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe((patrol: any) => {
+    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe((patrol: Patrol | undefined) => {
       if (patrol) {
         console.log('status')
         console.log(patrol)
@@ -41,22 +41,36 @@ export class PositionService {
 
   checkStatus() {
     if (this.saving && this.patrol.status == 'aktiv') {
-      
-      this._specFacade.positions$.subscribe((data: PositionReport[] | undefined) => {
-        // prüfen ob gespeicherte positionen auch der streife angehören
-        console.log('positions')
-        console.log(data)
-        if (!data) {
-          // 1. Position
-          this._locationService.getCurrentPosition().then(position => {
-            const insert: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude}, ort: '', description: `Start-Position` }
-            this._specFacade.insertPosition(insert)
-          })
-        } else {
-          console.log('positionen')
-          console.log(data.length)
+
+      this._specFacade.getPositionenByIdPatrol(this.patrol.id!).subscribe((positions: PositionReport[] | undefined) => {
+        if (positions) {
           // prüfen ob gespeicherte positionen auch der streife angehören
+          console.log('positions')
+          console.log(positions)
+          console.log(positions.length)
+          if (positions.length == 0) {
+            // 1. Position
+            // this._locationService.getCurrentPosition().then(position => {
+              const insert: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: 0, longitude: 0 }, ort: '', description: `Start-Position` }
+              this._specFacade.insertPosition(insert)
+            // })
+          } else {
+            console.log('positionen')
+            // prüfen ob gespeicherte positionen auch der streife angehören
+            if (positions[0].id_streife == this.patrol.id) {
+              console.log('stimmt überein')
+              const orderedPositions = this.orderBy(positions, 'date')
+              console.log(orderedPositions)
+              console.log(orderedPositions[0].date) // lastPosition
+              // now - date > 60Min.
+              // now - date = 50 > timer 10 Min. zum Intervallstart und position setzten
+              const dt = Date.parse(positions[0].date)
+              console.log(dt)
+              // const h: string[] = positions[0].date.split(" ")
+            }
+          }
         }
+       
       })
 
 
@@ -71,6 +85,17 @@ export class PositionService {
 
       // beim erneuten öffnen der app
       // lösung: status beim schließen auf "inaktiv" setzen
+
+
     }
   }
+
+  orderBy(input: any, byProperty: string): any {
+      if (input != null && input.length > 0 && Array.isArray(input)) {
+        let result = [...input]
+        result.sort((a, b) => (a[byProperty] < b[byProperty] ? -1 : 1))
+        return result
+      }
+      return []
+    }
 }
