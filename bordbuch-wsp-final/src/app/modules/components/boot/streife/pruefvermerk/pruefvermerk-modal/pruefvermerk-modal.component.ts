@@ -1,20 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { PruefvermerkKategorien } from 'src/app/core/model/pruefvermerk-kategorie.model';
 import { Pruefvermerk } from 'src/app/core/model/pruefvermerk.model';
 import { Reparatur } from 'src/app/core/model/reparatur';
-
-import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { KatSelectors } from 'src/app/store/kat-store';
-import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { Status } from 'src/app/core/model/reparatur-status.model';
-import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
+import { getLocalISO } from 'src/app/shared/utils';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -50,7 +46,7 @@ export class PruefvermerkModalComponent implements OnInit {
     ) {
     // this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerke)) as Observable<Pruefvermerk[]>
 
-    this.kategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<PruefvermerkKategorien[]>
+    this.kategorien$ = this._katFacade.pruefvermerkskategorien$
     this.status$ = this._katFacade.status$
     
     this.reparaturfotos$ = this._specFacade.reparaturfotos$
@@ -94,7 +90,7 @@ export class PruefvermerkModalComponent implements OnInit {
   }
 
   selectKategorie(kategorie: string) {
-    this.pruefvermerke$ = this.store.pipe(select(KatSelectors.selectpruefvermerkeByKategorie(kategorie))) as Observable<Pruefvermerk[] | undefined>
+    this.pruefvermerke$ = this._katFacade.getPruefvermerkByKategorie(kategorie)
   }
   onChange($event: Pruefvermerk) {
     this.pruefvermerkForm.controls.kategorie.setValue($event.kategorie)

@@ -5,7 +5,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AppService } from 'src/app/core/services/app.service';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { NgQrScannerModule } from 'angular2-qrscanner';
-import { ShipModule } from 'src/app/store/ship-store/ship.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TabbarModule } from 'src/app/core/navbar/tabbar/tabbar.module';
 
@@ -28,9 +27,6 @@ export const routes: Routes = [
 
     // router
     RouterModule.forChild(routes),
-
-    // store
-    ShipModule
   ],
   providers: [
     AppService

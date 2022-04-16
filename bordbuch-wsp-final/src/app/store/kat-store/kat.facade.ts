@@ -60,6 +60,9 @@ export class KatFacade {
     loadPruefvermerke() {
         this.store.dispatch(KatAction.loadPruefvermerke())
     }
+    getPruefvermerkByKategorie(kategorie: string): Observable<Pruefvermerk[]> {
+        return this.store.pipe(select(KatSelectors.selectpruefvermerkeByKategorie(kategorie)))
+    }
 
     // pruefvermerkkategorien
     loadPruefvermerkkategorien() {

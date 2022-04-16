@@ -2,7 +2,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Patrol } from 'src/app/core/model/patrol.model';
@@ -10,7 +10,6 @@ import { Ship } from 'src/app/core/model/ship.model';
 import { PositionService } from 'src/app/core/services/position.service';
 import { getLocalISO } from 'src/app/shared/utils';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({

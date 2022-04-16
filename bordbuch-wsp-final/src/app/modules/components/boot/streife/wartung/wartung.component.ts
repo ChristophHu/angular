@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Ship } from 'src/app/core/model/ship.model';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store/';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -22,7 +21,6 @@ export class WartungComponent {
   
   constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
     this.ship$ = this._specFacade.ship$
-    // this.ship$ = this.store.pipe(select(ShipSelectors.selectShip))
     this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
   }
 }
