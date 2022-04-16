@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { from, Observable } from 'rxjs';
-import { Checklist } from 'src/app/core/model/checklist.model';
+import { Observable } from 'rxjs';
 import { Checklistitem } from 'src/app/core/model/checklistitem.model';
-import { Einsatzmittel } from 'src/app/core/model/einsatzmittel.model';
-import { Geraetebuch } from 'src/app/core/model/geraetebuch.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { KatSelectors } from 'src/app/store/kat-store';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { ChecklistItemsComponent } from './checklist-items/checklist-items.component';
 
 @Component({
@@ -20,8 +14,8 @@ export class ChecklisteComponent implements OnInit {
 
   unchecked$!: Observable<Checklistitem[]>
 
-  constructor(private store: Store<RootStoreState>, private modalService: ModalService<ChecklistItemsComponent>) {
-    this.unchecked$ = this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)) as Observable<Checklistitem[]>
+  constructor(private _specFacade: SpecFacade, private modalService: ModalService<ChecklistItemsComponent>) {
+    this.unchecked$ = this._specFacade.checklistItemsUnchecked$
   }
 
   ngOnInit(): void {

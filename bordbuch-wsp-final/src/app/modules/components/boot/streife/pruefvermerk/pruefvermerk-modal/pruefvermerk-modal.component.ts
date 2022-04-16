@@ -15,6 +15,7 @@ import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { Status } from 'src/app/core/model/reparatur-status.model';
 import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-pruefvermerk',
@@ -43,6 +44,7 @@ export class PruefvermerkModalComponent implements OnInit {
   constructor(
     private store: Store<RootStoreState>, 
     private _formBuilder: FormBuilder,
+    private _specFacade: SpecFacade,
     private modalService: ModalService<PruefvermerkModalComponent>,
     private _katFacade: KatFacade
     ) {
@@ -51,8 +53,8 @@ export class PruefvermerkModalComponent implements OnInit {
     this.kategorien$ = this.store.pipe(select(KatSelectors.selectpruefvermerkkategorien)) as Observable<PruefvermerkKategorien[]>
     this.status$ = this._katFacade.status$
     
-    this.reparaturfotos$ = this.store.pipe(select(ShipSelectors.selectAllReparaturFotos)) as Observable<any[]>
-    this.reparaturFotoCount$ = this.store.pipe(select(ShipSelectors.selectReparaturFotosCount)) as Observable<any>
+    this.reparaturfotos$ = this._specFacade.reparaturfotos$
+    this.reparaturFotoCount$ = this._specFacade.reparaturfotoscount$
 
     this.pruefvermerkForm = this._formBuilder.group({
       id        : [''],
@@ -78,16 +80,16 @@ export class PruefvermerkModalComponent implements OnInit {
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
 
-        this.store.pipe(select(ShipSelectors.selectReparaturFotosById(data.data.reparatur.id))).subscribe(fotos => {
+        this._specFacade.getReparaturFotosById(data.data.reparatur.id).subscribe(fotos => {
           console.log(`returned fotos: ${fotos}`)
           this.images = []
           if (fotos && fotos.length > 0) this.decodeImages(fotos)
         })
         console.log(this.id)
-        this.store.dispatch(ShipAction.downloadReparaturFotos({ id: this.id }))
+        this._specFacade.downloadReparaturFotos(this.id)
       }
 
-      this.store.pipe(select(ShipSelectors.selectAllReparaturFotos)).subscribe(data => console.log(data))
+      this._specFacade.reparaturfotos$.subscribe(data => console.log(data))
     })
   }
 
@@ -115,22 +117,21 @@ export class PruefvermerkModalComponent implements OnInit {
   uploadImage(imageBase64: string) {
     const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.pruefvermerkForm.value.id, foto: imageBase64 }
     console.log(upload)
-    this.store.dispatch(ShipAction.uploadReparaturFoto({ upload }))
+    this._specFacade.uploadReparaturFoto(upload)
   }
 
   deleteFoto(id: string) {
-    this.store.dispatch(ShipAction.deleteReparaturFoto({ id }))
+    this._specFacade.deleteReparaturFoto(id)
   }
 
   create() {
     const insert: Reparatur = this.pruefvermerkForm.value
-    this.store.dispatch(ShipAction.insertReparatur({ insert }))
+    this._specFacade.insertReparatur(insert)
     this.modal?.close()
   }
   update() {
     let update: Reparatur = this.pruefvermerkForm.value
-    console.log(update)
-    this.store.dispatch(ShipAction.updateReparatur({ update }))
+    this._specFacade.updateReparatur(update)
     this.modal?.close()
   }
 

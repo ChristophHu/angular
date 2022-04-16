@@ -27,10 +27,18 @@ export const insertPatrolBesatzungSuccess = createAction(
 )
 export const updatePatrolBesatzung = createAction(
 	"[Edit Besatzung Dialog] Besatzung Updates",
-	props<{update: Besatzung}>()
+	props<{ update: Besatzung }>()
+)
+export const updateBesatzungSuccess = createAction(
+	"[Edit Besatzung Dialog] Besatzung Updates Success",
+	props<{ update: Besatzung }>()
 )
 export const deletePatrolBesatzung = createAction(
 	"[Edit Besatzung Dialog] Besatzung Delete",
+	props<{ id: string }>()
+)
+export const deleteBesatzungSuccess = createAction(
+	"[Edit Besatzung Dialog] Besatzung Delete Success",
 	props<{ id: string }>()
 )
 
@@ -55,7 +63,15 @@ export const updateBetankung = createAction(
 	"[Edit Betankungen Dialog] Betankungen Updates",
 	props<{ update: Betankung }>()
 )
+export const updateBetankungSuccess = createAction(
+	"[Edit Betankungen Dialog] Betankungen Delete",
+	props<{ update: Betankung }>()
+)
 export const deleteBetankung = createAction(
+	"[Edit Betankungen Dialog] Betankungen Delete",
+	props<{ id: string }>()
+)
+export const deleteBetankungSuccess = createAction(
 	"[Edit Betankungen Dialog] Betankungen Delete",
 	props<{ id: string }>()
 )
@@ -72,6 +88,10 @@ export const loadChecklistSuccess = createAction(
 export const insertChecklist = createAction(
 	"[Load Ship Effect] Insert Checklist",
 	props<{ insert: Checklist }>()
+)
+export const insertChecklistSuccess = createAction(
+	"[Load Ship Effect] Insert Checklist Success",
+	props<{ action: { insert: Checklist }, id: string }>()
 )
 export const updateChecklist = createAction(
 	"[Load Ship Effect] Update Checklist",
@@ -119,7 +139,7 @@ export const loadPatrolSuccess = createAction(
 )
 export const initializePatrol = createAction(
 	"[Streife] Initialize Patrol",
-	props<{ initialize: Patrol }>()
+	props<{ patrol: Patrol }>()
 )
 export const insertPatrol = createAction(
 	"[Streife] Insert Patrol",

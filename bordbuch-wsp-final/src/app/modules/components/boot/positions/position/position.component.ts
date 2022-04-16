@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { RootStoreState } from 'src/app/store/root-store.state';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -21,7 +19,6 @@ export class PositionComponent implements OnInit {
   edit: boolean = false
   
   constructor(
-    private store: Store<RootStoreState>, 
     private _specFacade: SpecFacade,
     private _formBuilder: FormBuilder,
     private locationService: LocationService,

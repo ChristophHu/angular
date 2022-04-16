@@ -11,6 +11,7 @@ import { PositionService } from 'src/app/core/services/position.service';
 import { getLocalISO } from 'src/app/shared/utils';
 import { RootStoreState } from 'src/app/store/root-store.state';
 import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-streife',
@@ -28,8 +29,8 @@ export class StreifeComponent implements OnInit {
   zweck!: FormGroup
 
   // name!: string | undefined
-  id_schiff!: string | undefined
-  id!: string | undefined
+  // id_schiff!: string | undefined
+  // id!: string | undefined
 
   // status: any[] = [
   //   { id: 1, bezeichnung: 'vorbereitend'},
@@ -43,9 +44,10 @@ export class StreifeComponent implements OnInit {
 
   // observables
   // ship$: Observable<Ship | undefined>
-  isPatrolActive$!: Observable<boolean>
-  isPatrolBeendet$!: Observable<boolean>
-  patrolStatus$!: Observable<string | undefined>
+  // isPatrolActive$!: Observable<boolean>
+  // isPatrolBeendet$!: Observable<boolean>
+  // patrolStatus$!: Observable<string | undefined>
+  patrol$: Observable<Patrol>
 
   // zaehlerstaende: Zaehlerstand[] | undefined
 
@@ -62,15 +64,16 @@ export class StreifeComponent implements OnInit {
   // zweck = ''
   // start = ''
 
-  constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private p: PositionService) {
+  constructor(private store: Store<RootStoreState>, private _router: Router, private _activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, private _specFacade: SpecFacade, private p: PositionService) {
       // this.ship$ = this.store.pipe(select(ShipSelectors.selectedShip))
       // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(data => {
       //   console.log(data)
       //   this.name = data?.name
       // })
-      this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
-      this.isPatrolBeendet$ = this.store.pipe(select(ShipSelectors.isPatrolBeendet))
-      this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))   
+      this.patrol$ = this._specFacade.patrol$
+      // this.isPatrolActive$ = this.store.pipe(select(ShipSelectors.isPatrolActive))
+      // this.isPatrolBeendet$ = this.store.pipe(select(ShipSelectors.isPatrolBeendet))
+      // this.patrolStatus$ = this.store.pipe(select(ShipSelectors.patrolStatus))   
 
       // this.store.pipe(select(ShipSelectors.selectShipId))
 
@@ -94,21 +97,21 @@ export class StreifeComponent implements OnInit {
     //   zweck: ['', Validators.required],
     // })
 
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+    this._specFacade.ship$.subscribe(ship => {
       if (ship) { this.ship = ship }
     })
 
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe(patrol => {
+    this._specFacade.patrol$.subscribe(patrol => {
       if (patrol) { this.patrol = patrol! }
     })
 
-    this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
-      this.id_schiff = id_ship
-    })
+    // this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
+    //   this.id_schiff = id_ship
+    // })
 
-    this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) this.id = id_streife
-    })
+    // this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
+    //   if (id_streife) this.id = id_streife
+    // })
   }
 
   setControl(control: boolean) {
@@ -145,8 +148,8 @@ export class StreifeComponent implements OnInit {
 
   next(stepper: CdkStepper) {
     if (stepper.selectedIndex == 0 && this.zweck.valid) {
-      if (this.id) this.updatePatrol()
-      if (!this.id) this.erstellePatrol()
+      if (this.ship.id) this.updatePatrol()
+      if (!this.ship.id) this.erstellePatrol()
     }
     stepper.next()
   }
@@ -170,18 +173,18 @@ export class StreifeComponent implements OnInit {
     this.control = false
 
     this.stepperReset(stepper)
-    const initialize: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: '' }
+    const patrol: Patrol = { besatzung: [], ende: '', id: '', id_schiff: this.ship.id, kennung: this.ship.name, start: getLocalISO('now'), status: 'vorbereitend', zweck: '' }
     
-    this.store.dispatch(ShipAction.initializePatrol({ initialize }))
+    this._specFacade.initializePatrol(patrol)
   }
   erstellePatrol() {
     this.control = false
 
     // autom. Erstellen der Patrol in Vorbereitung (u.A. um die Besatzung hinzuzufuegen), id der DB übernehmen
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(1)).subscribe(patrol => {
+    this.patrol$.pipe(take(1)).subscribe(patrol => {
       const insert: Patrol = Object.assign({}, patrol, this.zweck.value, { start: getLocalISO('now') })
       
-      this.store.dispatch(ShipAction.insertPatrol({ insert }))
+      this._specFacade.insertPatrol(insert)
     })
   }
   updatePatrol(status?: string) {
@@ -192,7 +195,7 @@ export class StreifeComponent implements OnInit {
       this.erstellePatrol()
     }
 
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).pipe(take(2)).subscribe(patrol => {
+    this.patrol$.pipe(take(2)).subscribe(patrol => {
       if (patrol?.id) {
         switch (status) {
           case 'aktiv':
@@ -216,7 +219,7 @@ export class StreifeComponent implements OnInit {
           //   console.log(`default: ${update}`)
           //   break
         }
-        this.store.dispatch(ShipAction.updatePatrol({ update }))
+        this._specFacade.updatePatrol(update)
       }
     })
   }

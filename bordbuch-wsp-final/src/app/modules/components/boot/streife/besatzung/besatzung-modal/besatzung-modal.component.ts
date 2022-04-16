@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Update } from '@ngrx/entity';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Funktion } from 'src/app/core/model/funktion.model';
@@ -9,8 +7,8 @@ import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO, isNumber } from 'src/app/shared/utils';
-import { KatSelectors } from 'src/app/store/kat-store';
-import { ShipAction, ShipState } from 'src/app/store/ship-store';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-besatzung-modal',
@@ -27,8 +25,8 @@ export class BesatzungModalComponent implements OnInit {
   funktionen$: Observable<Funktion[]>
   namen$!: Observable<any>
 
-  constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<BesatzungModalComponent>, private appService: AppService) {
-    this.funktionen$ = this.store.pipe(select(KatSelectors.selectAllFunktionen)) as Observable<Funktion[]>
+  constructor(private _formBuilder: FormBuilder, private _specFacade: SpecFacade, private _katFacade: KatFacade, private modalService: ModalService<BesatzungModalComponent>, private appService: AppService) {
+    this.funktionen$ = this._katFacade.funktionen$
     this.besatzungForm = this._formBuilder.group({
       id: [],
       id_streife: [],
@@ -73,22 +71,18 @@ export class BesatzungModalComponent implements OnInit {
 
   create() {
     const insert: Besatzung = this.besatzungForm.value
-    console.log(insert)
-    this.store.dispatch(ShipAction.insertPatrolBesatzung({ insert }))
+    this._specFacade.insertBesatzung(insert)
     this.modal?.close()
   }
 
   update() {
-    const update: Update<Besatzung> = {
-      id: this.besatzungForm.value.id_streife,
-      changes: this.besatzungForm.value
-    }
-    this.store.dispatch(ShipAction.updatePatrolBesatzung({ update }))
+    const update: Besatzung = this.besatzungForm.value
+    this._specFacade.updateBesatzung(update)
     this.modal?.close()
   }
 
   delete(id: string) {
-    this.store.dispatch(ShipAction.deletePatrolBesatzung({ id }))
+    this._specFacade.deleteBesatzung(id)
     this.modal?.close()
   }
 

@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Betankung } from 'src/app/core/model/betankung';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { BetankungModalComponent } from './betankung-modal/betankung-modal.component';
 
 @Component({
@@ -18,10 +16,10 @@ export class BetankungComponent {
   id_schiff!: string
   betankungen$!: Observable<Betankung[]>
 
-  constructor(private store: Store<RootStoreState>, private modalService: ModalService<BetankungModalComponent>) {
-    this.betankungen$ = this.store.pipe(select(ShipSelectors.selectBetankungen)) as Observable<Betankung[]>
-    this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
-      if (id_ship) this.id_schiff = id_ship
+  constructor(private _specFacade: SpecFacade, private modalService: ModalService<BetankungModalComponent>) {
+    this.betankungen$ = this._specFacade.betankung$
+    this._specFacade.ship$.subscribe(ship => {
+      if (ship) this.id_schiff = ship.id
     })
   }
 

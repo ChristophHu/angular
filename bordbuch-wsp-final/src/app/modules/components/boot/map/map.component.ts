@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { Position } from 'src/app/core/model/position';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
@@ -10,8 +10,6 @@ import * as L from 'leaflet'
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { PositionComponent } from '../positions/position/position.component';
-import { ShipSelectors } from 'src/app/store/ship-store';
-import { tap } from 'rxjs/operators';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
@@ -55,20 +53,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private positions$: Observable<PositionReport[] | undefined>
   private lastPositions$: Observable<PositionReport[] | undefined>
 
-  constructor(private store: Store<RootStoreState>, private locationService: LocationService, private _katFacade: KatFacade, private _specFacade: SpecFacade, private modalService: ModalService<PositionComponent>) {
+  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private _katFacade: KatFacade, private modalService: ModalService<PositionComponent>) {
     this.positions$ = this._specFacade.positions$
     this.lastPositions$ = this._katFacade.lastPositions$
   }
 
   ngOnInit(): void {
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+    this._specFacade.ship$.subscribe(ship => {
       this.id_ship = ship?.id
       this.name = ship?.name
     })
 
-    this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-      if (id_streife) {
-        this.id_streife = id_streife
+    this._specFacade.patrol$.subscribe(patrol => {
+      if (patrol) {
+        this.id_streife = patrol.id
 
         // this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).pipe(
         //   tap(data => console.log(data))

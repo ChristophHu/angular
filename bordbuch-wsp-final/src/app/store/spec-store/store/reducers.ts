@@ -11,7 +11,7 @@ import { Ship } from "src/app/core/model/ship.model"
 import { Tank } from "src/app/core/model/tank.model"
 import { Zaehlerstand } from "src/app/core/model/zaehlerstand"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { deletePatrolBesatzung, deletePatrolSuccess, deletePositionSuccess, deleteReparaturFotoSuccess, downloadReparaturFotosSuccess, initializePatrol, insertBetankungSuccess, insertKlarmeldungSuccess, insertPatrolBesatzungSuccess, insertPatrolSuccess, insertPeilungSuccess, insertPositionSuccess, insertReparaturSuccess, loadBetankungenSuccess, loadChecklistSuccess, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiffSuccess, loadPatrolSuccess, loadPeilungSuccess, loadPositionsSuccess, loadReparaturenSuccess, loadShipSuccess, loadTankSuccess, resetStore, updateChecklistSuccess, updateKlarmeldungSuccess, updatePatrolBesatzung, updatePatrolSuccess, updatePeilungSuccess, updatePositionSuccess, updateReparaturSuccess, updateSaving, updateShipSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { deleteBesatzungSuccess, deleteBetankungSuccess, deletePatrolBesatzung, deletePatrolSuccess, deletePositionSuccess, deleteReparaturFotoSuccess, downloadReparaturFotosSuccess, initializePatrol, insertBetankungSuccess, insertChecklistSuccess, insertKlarmeldungSuccess, insertPatrolBesatzungSuccess, insertPatrolSuccess, insertPeilungSuccess, insertPositionSuccess, insertReparaturSuccess, loadBetankungenSuccess, loadChecklistSuccess, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiffSuccess, loadPatrolSuccess, loadPeilungSuccess, loadPositionsSuccess, loadReparaturenSuccess, loadShipSuccess, loadTankSuccess, resetStore, updateBesatzungSuccess, updateBetankungSuccess, updateChecklistSuccess, updateKlarmeldungSuccess, updatePatrolBesatzung, updatePatrolSuccess, updatePeilungSuccess, updatePositionSuccess, updateReparaturSuccess, updateSaving, updateShipSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
 
 export interface State {
     betankungen     : Betankung[]       | undefined
@@ -63,7 +63,7 @@ export const reducer = createReducer(
             patrol: Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
         }
     }),
-    on(updatePatrolBesatzung, (state, action) => {
+    on(updateBesatzungSuccess, (state, action) => {
         let cleared = [...state.patrol?.besatzung!]
         cleared = cleared.filter(el => el.id != action.update.id)
         cleared.push(action.update)
@@ -78,7 +78,7 @@ export const reducer = createReducer(
         //     patrol: Object.assign({}, state.patrol, { besatzung: clearedBesatzung })
         // }
     }),
-    on(deletePatrolBesatzung, (state, action) => {
+    on(deleteBesatzungSuccess, (state, action) => {
         const newState = state.patrol?.besatzung.filter(el => el.id !== action.id)
         return {
             ...state,
@@ -102,12 +102,36 @@ export const reducer = createReducer(
             betankungen: clearedBetankung
         }
     }),
+    on(updateBetankungSuccess, (state, action) => {
+        let cleared = [...state.betankungen!]
+        cleared = cleared.filter(el => el.id != action.update.id)
+        cleared.push(action.update)
+        return {
+            ...state,
+            betankungen: cleared
+        }
+    }),
+    on(deleteBetankungSuccess, (state, action) => {
+        let cleared: Betankung[] | undefined = checkStateForEmptyArrays(state.betankungen)
+        cleared = cleared.filter(el => el.id != action.id)
+        return {
+            ...state,
+            betankungen: cleared
+        }
+    }),
 
     // checklist
     on(loadChecklistSuccess, (state, action) => {
         return {
             ...state,
             checklist: action.checklist
+        }
+    }),
+    on(insertChecklistSuccess, (state, action) => {
+        const insert: Checklist = Object.assign({}, action.action.insert, {id: action.id})
+        return {
+            ...state,
+            checklist: insert
         }
     }),
     on(updateChecklistSuccess, (state, action) => {
@@ -147,7 +171,7 @@ export const reducer = createReducer(
         }
     }),
     on(initializePatrol, (state, action) => {
-        let patrol: Patrol = Object.assign({}, action.initialize)
+        let patrol: Patrol = Object.assign({}, action.patrol)
         return {
             ...state,
             patrol: patrol

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { PositionReport } from 'src/app/core/model/positionreport.model';
@@ -8,7 +8,6 @@ import { LocationService } from 'src/app/core/services/location.service';
 import { logout } from 'src/app/modules/auth/state/actions';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { PositionComponent } from './position/position.component';
 
@@ -30,11 +29,8 @@ export class PositionsComponent implements OnInit {
   positions$!: Observable<PositionReport[]>
 
   public isAllPositions: boolean = false
-
   private _positionSubscription = new Subscription
-  
   public displayedColumns: string[] = ['Nr.', 'date', 'description', 'action'];
-
   public dataSource = new MatTableDataSource<PositionReport>()
 
   constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private modalService: ModalService<PositionComponent>) {
@@ -47,7 +43,7 @@ export class PositionsComponent implements OnInit {
     //   this.name = ship?.name
     // })
 
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe((patrol: Patrol | undefined) => {
+    this._specFacade.patrol$.subscribe((patrol: Patrol) => {
       if (patrol) {
         this.id_streife = patrol.id
         this.id_ship = patrol.id_schiff

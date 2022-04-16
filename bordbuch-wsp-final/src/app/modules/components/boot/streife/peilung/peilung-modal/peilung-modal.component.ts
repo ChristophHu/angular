@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Update } from '@ngrx/entity';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Peilung } from 'src/app/core/model/peilung.model';
 import { Tank } from 'src/app/core/model/tank.model';
 import { AppService } from 'src/app/core/services/app.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
-import { dateToLocalISOString, getLocalISO } from 'src/app/shared/utils';
-import { ShipAction, ShipSelectors, ShipState } from 'src/app/store/ship-store';
+import { getLocalISO } from 'src/app/shared/utils';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-peilung-modal',
@@ -24,9 +22,8 @@ export class PeilungModalComponent implements OnInit {
   id_ship: string = ''
   tanks$: Observable<Tank[]>
 
-  constructor(private _formBuilder: FormBuilder, private store: Store<ShipState.State>, private modalService: ModalService<PeilungModalComponent>, private appService: AppService) {
-
-    this.tanks$ = this.store.pipe(select(ShipSelectors.selectTanks)) as Observable<Tank[]>
+  constructor(private _formBuilder: FormBuilder, private _specFacade: SpecFacade, private modalService: ModalService<PeilungModalComponent>, private appService: AppService) {
+    this.tanks$ = this._specFacade.tanks$
 
     this.peilungForm = this._formBuilder.group({
       id: [],
@@ -41,8 +38,8 @@ export class PeilungModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(data => {
-      this.peilungForm.patchValue({ id_schiff: data })
+    this._specFacade.ship$.subscribe(ship => {
+      this.peilungForm.patchValue({ id_schiff: ship.id })
     })
     this.modalService.getData().then((data) => {
       this.title = data.data.title
@@ -57,15 +54,14 @@ export class PeilungModalComponent implements OnInit {
 
   selectTank(id_tank: string) {
     this.peilungForm.controls.id_tank.setValue(id_tank)
-    this.store.pipe(select(ShipSelectors.selectTankById(id_tank))).subscribe(data => {
-      this.peilungForm.patchValue({ max_vol: data?.max_vol, bezeichnung: data?.bezeichnung })
+    this._specFacade.getTankById(id_tank).subscribe(tank => {
+      this.peilungForm.patchValue({ max_vol: tank?.max_vol, bezeichnung: tank?.bezeichnung })
     })
   }
 
   create() {
     const insert: Peilung = this.peilungForm.value
-    console.log(insert)
-    this.store.dispatch(ShipAction.insertPeilung({ insert }))
+    this._specFacade.insertPeilung(insert)
     this.modal?.close()
   }
 

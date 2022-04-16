@@ -4,10 +4,8 @@ import { Store } from "@ngrx/store"
 import { Observable } from "rxjs"
 import { finalize, first, tap } from "rxjs/operators"
 import { RootStoreState } from "src/app/store/root-store.state"
-
-
 import { SpecFacade } from "../spec-store/spec.facade"
-import { loadAllZaehlerstaende } from "../spec-store/store/actions"
+
 
 @Injectable()
 export class SpecResolver implements Resolve<any> {
@@ -21,17 +19,14 @@ export class SpecResolver implements Resolve<any> {
             tap(() => {
                 if (!this.loading) {
                     this.loading = true
-                    // this.store.dispatch(ShipAction.loadShip({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadPatrol({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadReparaturen({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadBetankungen({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadTank({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadPeilung({ id_ship: route.params[route.data.param] }))
-                    // this.store.dispatch(ShipAction.loadChecklist({ id_ship: route.params[route.data.param] }))
-                    
-                    
-                    this.store.dispatch(loadAllZaehlerstaende({ id: route.params[route.data.param]}))
-
+                    this._specFacade.loadShip(route.params[route.data.param])
+                    this._specFacade.loadPatrol(route.params[route.data.param])
+                    this._specFacade.loadReparaturen(route.params[route.data.param])
+                    this._specFacade.loadBetankungen(route.params[route.data.param])
+                    this._specFacade.loadTank(route.params[route.data.param])
+                    this._specFacade.loadPeilung(route.params[route.data.param])
+                    this._specFacade.loadChecklist(route.params[route.data.param])
+                    this._specFacade.loadAllZaehlerstaende(route.params[route.data.param])
                     this._specFacade.loadPositionsByIdSchiff(route.params[route.data.param])
                     this._specFacade.loadKlarmeldungByIdSchiff(route.params[route.data.param])
                 }

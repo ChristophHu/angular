@@ -1,13 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Patrol } from 'src/app/core/model/patrol.model';
 import { Ship } from 'src/app/core/model/ship.model';
 import { Zweck } from 'src/app/core/model/zwecke.model';
-import { KatSelectors } from 'src/app/store/kat-store';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipAction, ShipSelectors } from 'src/app/store/ship-store';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -32,9 +29,9 @@ export class SchiffComponent implements OnInit {
 
   // durchsicht: string[] = ['Klar', 'Unklar']
 
-  constructor(private _formBuilder: FormBuilder, private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
-    this.patrol$ = this.store.pipe(select(ShipSelectors.selectedPatrol)) as Observable<Patrol>
-    this.zwecke$ = this.store.pipe(select(KatSelectors.selectAllZwecke)) as Observable<Zweck[]>
+  constructor(private _formBuilder: FormBuilder, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
+    this.patrol$ = this._specFacade.patrol$
+    this.zwecke$ = this._katFacade.zweck$
     
     this.shipForm = this._formBuilder.group({
       id: [],
@@ -57,7 +54,7 @@ export class SchiffComponent implements OnInit {
       }
     })
 
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => { 
+    this._specFacade.ship$.subscribe(ship => { 
       if (ship) {
         this.ship = ship
         this.shipForm.patchValue(ship)
@@ -94,8 +91,7 @@ export class SchiffComponent implements OnInit {
 
   deletePatrol() {
     const id: string = this.patrolForm.value.id
-    this.store.dispatch(ShipAction.deletePatrol({ id }))
-    // this.id = ''
+    this._specFacade.deletePatrol(id)
   }
 
 }

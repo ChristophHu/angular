@@ -1,14 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { Besatzung } from 'src/app/core/model/besatzung.model';
 import { Checklistitem } from 'src/app/core/model/checklistitem.model';
-import { Ship } from 'src/app/core/model/ship.model';
 import { Klarmeldung } from 'src/app/core/model/klarmeldung.model';
 import { getLocalISO } from 'src/app/shared/utils';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -36,18 +32,20 @@ export class KontrolleComponent implements OnInit {
 
   kontrollForm: FormGroup
 
-  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder, private _specFacade: SpecFacade) {
+  constructor(private _formBuilder: FormBuilder, private _specFacade: SpecFacade) {
     this.klarmeldung$ = this._specFacade.klarmeldung$
 
-    this.store.pipe(select(ShipSelectors.selectUncheckedChecklistItems)).subscribe(unchecked => {
-      this.unchecked = unchecked?.filter(el => el.relevant == true)
+    this._specFacade.checklistItemsUnchecked$.subscribe(items => {
+      this.unchecked = items?.filter(el => el.relevant == true)
       if (this.unchecked != undefined && this.unchecked?.length > 0) {
         this.checkliste = true
       } else {
         this.checkliste = false
       }
     })
-    this.store.pipe(select(ShipSelectors.selectBesatzung)).subscribe((besatzung: Besatzung[] | undefined) => {
+
+    this._specFacade
+    this._specFacade.besatzung$.subscribe((besatzung: Besatzung[] | undefined) => {
       if (besatzung == undefined || besatzung.length < 1) {
         this.besatzung = true
       } else {
@@ -62,7 +60,7 @@ export class KontrolleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
+    this._specFacade.ship$.subscribe(ship => {
       if (ship) this.kontrollForm.patchValue({ id: ship.id})
     })
     this._specFacade.klarmeldung$.subscribe((klarmeldung: Klarmeldung) => {

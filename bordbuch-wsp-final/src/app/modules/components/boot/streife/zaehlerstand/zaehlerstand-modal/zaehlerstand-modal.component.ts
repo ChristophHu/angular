@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
-import { RootStoreState } from 'src/app/store/root-store.state';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
@@ -20,7 +18,7 @@ export class ZaehlerstandModalComponent implements OnInit {
   title: string = ''
   zaehlerstandForm: FormGroup
 
-  constructor(private store: Store<RootStoreState>, private _formBuilder: FormBuilder, private modalServiceZ: ModalService<ZaehlerstandModalComponent>, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
+  constructor(private _formBuilder: FormBuilder, private modalServiceZ: ModalService<ZaehlerstandModalComponent>, private _specFacade: SpecFacade, private _katFacade: KatFacade) {
     this.zaehlerstandForm = this._formBuilder.group({
       id              : [''],
       id_schiff       : [''],

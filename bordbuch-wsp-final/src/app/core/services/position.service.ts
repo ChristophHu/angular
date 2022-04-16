@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { select, Store } from '@ngrx/store';
 import { interval, Observable } from 'rxjs';
 import { getLocalISO } from 'src/app/shared/utils';
-import { RootStoreState } from 'src/app/store/root-store.state';
-import { ShipSelectors } from 'src/app/store/ship-store';
-import { SpecSelectors } from 'src/app/store/spec-store';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
 import { Patrol } from '../model/patrol.model';
@@ -21,15 +17,15 @@ export class PositionService {
 
   private _positionLogInterval: Observable<number> = interval(environment.positionLogInterval*(60*1000))
   
-  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private _locationService: LocationService) {
+  constructor(private _specFacade: SpecFacade, private _locationService: LocationService) {
     console.log('positionservice constr.')
-    this.store.pipe(select(SpecSelectors.selectSaving)).subscribe((saving: boolean) => {
+    this._specFacade.saving$.subscribe((saving: boolean) => {
       console.log('saving')
       console.log(saving)
       this.saving = saving
       this.checkStatus()
     })
-    this.store.pipe(select(ShipSelectors.selectedPatrol)).subscribe((patrol: Patrol | undefined) => {
+    this._specFacade.patrol$.subscribe((patrol: Patrol | undefined) => {
       if (patrol) {
         console.log('status')
         console.log(patrol)

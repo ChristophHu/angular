@@ -13,7 +13,7 @@ import { Tank } from 'src/app/core/model/tank.model'
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand'
 
 import { AppService } from 'src/app/core/services/app.service'
-import { deleteBetankung, deletePatrol, deletePatrolBesatzung, deletePatrolSuccess, deletePosition, deletePositionSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, insertBetankung, insertBetankungSuccess, insertChecklist, insertKlarmeldung, insertKlarmeldungSuccess, insertPatrol, insertPatrolBesatzung, insertPatrolBesatzungSuccess, insertPatrolSuccess, insertPeilung, insertPeilungSuccess, insertPosition, insertPositionSuccess, insertReparatur, insertReparaturSuccess, loadAllZaehlerstaende, loadBetankungen, loadBetankungenSuccess, loadChecklist, loadChecklistSuccess, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiff, loadKlarmeldungByIdSchiffSuccess, loadPatrol, loadPatrolSuccess, loadPeilung, loadPeilungSuccess, loadPositions, loadPositionsSuccess, loadReparaturen, loadReparaturenSuccess, loadShip, loadShipSuccess, loadTank, loadTankSuccess, updateBetankung, updateKlarmeldung, updateKlarmeldungSuccess, updatePatrol, updatePatrolBesatzung, updatePatrolSuccess, updatePosition, updatePositionSuccess, updateReparatur, updateReparaturSuccess, updateShip, updateShipSuccess, updateZaehlerstand, updateZaehlerstandSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess } from './actions'
+import { deleteBesatzungSuccess, deleteBetankung, deleteBetankungSuccess, deletePatrol, deletePatrolBesatzung, deletePatrolSuccess, deletePosition, deletePositionSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, insertBetankung, insertBetankungSuccess, insertChecklist, insertKlarmeldung, insertKlarmeldungSuccess, insertPatrol, insertPatrolBesatzung, insertPatrolBesatzungSuccess, insertPatrolSuccess, insertPeilung, insertPeilungSuccess, insertPosition, insertPositionSuccess, insertReparatur, insertReparaturSuccess, loadAllZaehlerstaende, loadBetankungen, loadBetankungenSuccess, loadChecklist, loadChecklistSuccess, loadedAllZaehlerstaende, loadKlarmeldungByIdSchiff, loadKlarmeldungByIdSchiffSuccess, loadPatrol, loadPatrolSuccess, loadPeilung, loadPeilungSuccess, loadPositions, loadPositionsSuccess, loadReparaturen, loadReparaturenSuccess, loadShip, loadShipSuccess, loadTank, loadTankSuccess, updateBesatzungSuccess, updateBetankung, updateBetankungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, updatePatrol, updatePatrolBesatzung, updatePatrolSuccess, updatePeilung, updatePosition, updatePositionSuccess, updateReparatur, updateReparaturSuccess, updateShip, updateShipSuccess, updateZaehlerstand, updateZaehlerstandSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess } from './actions'
  
 @Injectable()
 export class Effects {
@@ -33,9 +33,8 @@ export class Effects {
         return this.actions$.pipe(
             ofType(updatePatrolBesatzung),
             switchMap(action => {
-                // return this.appService.updateBesatzung(action.update.changes)
-                return this.appService.updateBesatzung(action.update.changes).pipe(
-                    map(id => updateBesatzungSuccess({ action, id }))
+                return this.appService.updateBesatzung(action.update).pipe(
+                    map(() => updateBesatzungSuccess({ update: action.update }))
                 )
             })
         )
@@ -44,13 +43,12 @@ export class Effects {
         return this.actions$.pipe(
             ofType(deletePatrolBesatzung),
             switchMap(action => {
-                // return this.appService.deleteBesatzung(action.id)
                 return this.appService.deleteBesatzung(action.id).pipe(
-                    map(id => deleteBesatzungSuccess({ action.id }))
+                    map((id: string) => deleteBesatzungSuccess({ id: id }))
                 )
             })
         )
-    }, { dispatch: false })
+    })
 
     // betankung
     loadBetankungen$ = createEffect(() => {
@@ -78,8 +76,8 @@ export class Effects {
             ofType(updateBetankung),
             switchMap(action => {
                 // return this.appService.updateBetankung(action.update.changes)
-                return this.appService.updateBetankung(action.update.changes).pipe(
-                    map(id => updateBetankungSuccess({ action, id }))
+                return this.appService.updateBetankung(action.update).pipe(
+                    map(() => updateBetankungSuccess(action))
                 )
             })
         )
@@ -90,11 +88,11 @@ export class Effects {
             switchMap(action => {
                 // return this.appService.deleteBetankung(action.id)
                 return this.appService.deleteBetankung(action.id).pipe(
-                    map(id => deleteBetankungSuccess({ action, id }))
+                    map(id => deleteBetankungSuccess(id))
                 )
             })
         )
-    }, { dispatch: false })
+    })
 
     // checklist
     loadChecklist$ = createEffect(() => {
@@ -379,4 +377,8 @@ export class Effects {
     })
 
     constructor(private actions$: Actions, private appService: AppService ) {}
+}
+
+function insertChecklisteSuccess(arg0: { action: { insert: Checklist } & import("@ngrx/store/src/models").TypedAction<"[Load Ship Effect] Insert Checklist">; id: any }): any {
+    throw new Error('Function not implemented.')
 }

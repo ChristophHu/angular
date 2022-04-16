@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Update } from '@ngrx/entity';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Betankung } from 'src/app/core/model/betankung';
 import { Betriebsstoff } from 'src/app/core/model/Betriebsstoff.model';
@@ -10,8 +8,8 @@ import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
-import { KatSelectors } from 'src/app/store/kat-store';
-import { ShipAction, ShipState } from 'src/app/store/ship-store';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-betankung-modal',
@@ -27,11 +25,12 @@ export class BetankungModalComponent implements OnInit {
   betriebsstoffe$: Observable<Betriebsstoff[]>
 
   constructor(
-    private _formBuilder: FormBuilder, 
-    private store: Store<ShipState.State>, 
+    private _formBuilder: FormBuilder,  
+    private _specFacade: SpecFacade,
+    private _katFacade: KatFacade,
     private modalService: ModalService<BetankungModalComponent>, 
     private locationService: LocationService) {
-      this.betriebsstoffe$ = this.store.pipe(select(KatSelectors.selectAllBetriebsstoffe)) as Observable<Betriebsstoff[]>
+      this.betriebsstoffe$ = this._katFacade.betriebsstoffe$
       this.betankungForm = this._formBuilder.group({
         id: [],
         id_ship: [],
@@ -71,22 +70,18 @@ export class BetankungModalComponent implements OnInit {
   create() {
     const insert: Betankung = this.betankungForm.value
     console.log(insert)
-    this.store.dispatch(ShipAction.insertBetankung({ insert }))
+    this._specFacade.insertBetankung(insert)
     this.modal?.close()
   }
 
   update() {
-    const update: Update<Betankung> = {
-      id: this.betankungForm.value.id_streife,
-      changes: this.betankungForm.value 
-    }
-    console.log(update)
-    this.store.dispatch(ShipAction.updateBetankung({ update }))
+    const update: Betankung = this.betankungForm.value
+    this._specFacade.updateBetankung(update)
     this.modal?.close()
   }
 
   delete(id: string) {
-    this.store.dispatch(ShipAction.deleteBetankung({ id }))
+    this._specFacade.deleteBetankung(id)
     this.modal?.close()
   }
 

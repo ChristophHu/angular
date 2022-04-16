@@ -21,7 +21,8 @@ export class WartungComponent {
   yesterday = new Date().setDate(new Date().getDate() - 1);
   
   constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
-    this.ship$ = this.store.pipe(select(ShipSelectors.selectShip))
+    this.ship$ = this._specFacade.ship$
+    // this.ship$ = this.store.pipe(select(ShipSelectors.selectShip))
     this.zaehlerstaende$ = this._specFacade.allZaehlerstaende$
   }
 }
