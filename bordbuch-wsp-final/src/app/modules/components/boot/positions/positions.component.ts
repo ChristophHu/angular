@@ -50,6 +50,7 @@ export class PositionsComponent implements OnInit {
         this.patrol = patrol
 
         this.positions$ = this._specFacade.getPositionenByIdPatrol(patrol.id!) as Observable<PositionReport[]>
+        this._specFacade.getPositionenByIdPatrol(patrol.id!).subscribe(data => console.log(data))
       }
     })
 

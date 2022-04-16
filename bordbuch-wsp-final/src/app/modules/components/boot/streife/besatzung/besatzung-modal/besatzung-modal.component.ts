@@ -52,15 +52,14 @@ export class BesatzungModalComponent implements OnInit {
 
   setAnBordDate() {
     this.besatzungForm.patchValue({ an_bord: getLocalISO('now') })
-    this.besatzungForm.dirty
+    this.besatzungForm.markAsDirty()
   }
   setVonBordDate() {
     this.besatzungForm.patchValue({ von_bord: getLocalISO('now') })
-    this.besatzungForm.dirty
+    this.besatzungForm.markAsDirty()
   }
 
   searchUser(e: any) {
-    console.log(e.target.value)
     if (isNumber(e.target.value.length) && e.target.value.length > 5 && e.target.value.length < 9) {
       this.namen$ = this.appService.getSearchUser(e.target.value)
     }

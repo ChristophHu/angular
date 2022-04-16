@@ -113,8 +113,8 @@
 
 <ng-template #toolbar>
   <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-  <button *ngIf="!pruefvermerkForm.pristine && pruefvermerkForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-  <button *ngIf="!pruefvermerkForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+  <button *ngIf="pruefvermerkForm.dirty && pruefvermerkForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+  <button *ngIf="pruefvermerkForm.dirty && !pruefvermerkForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
 </ng-template>
 
 <!-- image-slider-galerie -->

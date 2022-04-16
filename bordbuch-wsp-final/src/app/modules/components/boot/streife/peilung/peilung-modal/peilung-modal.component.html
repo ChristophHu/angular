@@ -48,7 +48,6 @@
           <mat-label>Menge (in Liter)</mat-label>
           <input matInput type="number" formControlName="vol" required>
         </mat-form-field>
-      <!-- </div> -->
     </form>
   </div>
   <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
@@ -59,11 +58,8 @@
 <ng-template #toolbar>
   <div>
     <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-    <!-- <button *ngIf="besatzungForm.value.id" (click)="delete(besatzungForm.value.id)" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">löschen</button> -->
   </div>
   <div>
-    <!-- <button *ngIf="!peilungForm.pristine && peilungForm.value.id" (click)="update()" type="button"
-      class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button> -->
-    <button *ngIf="!peilungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+    <button *ngIf="peilungForm.dirty && !peilungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
   </div>
 </ng-template>

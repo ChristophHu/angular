@@ -14,7 +14,6 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 })
 export class KontrolleComponent implements OnInit {
   @Output() statused: EventEmitter<boolean> = new EventEmitter<boolean>()
-  // @Input() controled: boolean = false
   @Input() set controled(value: boolean) {
     this.control = value
   }
@@ -83,7 +82,6 @@ export class KontrolleComponent implements OnInit {
     if(klarmeldung) {
       // insert
       const insert: Klarmeldung = { id_schiff: this.kontrollForm.value.id, klar: true, beginn: getLocalISO('now') }
-      console.log(insert)
       this._specFacade.insertKlarmeldung(insert)
     } else {
       // update

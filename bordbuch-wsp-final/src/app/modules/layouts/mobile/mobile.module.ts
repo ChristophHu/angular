@@ -6,6 +6,8 @@ import { RouterModule, Routes } from '@angular/router'
 import { Resolver } from 'src/app/store/resolver'
 import { KatModule } from 'src/app/store/kat-store/kat.module'
 import { KatFacade } from 'src/app/store/kat-store/kat.facade'
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade'
+import { SpecModule } from 'src/app/store/spec-store/spec.module'
 
 export const routes: Routes = [
   { path: '', component: MobileComponent,
@@ -23,11 +25,13 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     TopnavModule,
-    KatModule
+    KatModule,
+    SpecModule
   ],
   providers: [
     Resolver,
-    KatFacade
+    KatFacade,
+    SpecFacade
   ]
 })
 export class MobileModule { }

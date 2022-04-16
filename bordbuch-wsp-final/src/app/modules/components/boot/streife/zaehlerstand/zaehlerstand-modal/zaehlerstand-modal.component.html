@@ -53,8 +53,11 @@
   </app-modal>
   
   <ng-template #toolbar>
-    <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
-    <button (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Zählerstand
-      übernehmen</button>
+    <div>
+      <button (click)="cancel()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Abbrechen</button>
+    </div>
+    <div>
+      <button *ngIf="zaehlerstandForm.dirty" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Zählerstand übernehmen</button>
+    </div>
   </ng-template>
   

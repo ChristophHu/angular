@@ -264,6 +264,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = this.reducer(reducer_func, id)
             source$.subscribe((status: any) => {
+                console.log(status)
                 observer.next(status)
             }), (error: any) => observer.error(error)
         })

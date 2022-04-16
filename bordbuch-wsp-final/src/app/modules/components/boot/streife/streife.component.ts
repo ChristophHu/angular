@@ -147,6 +147,7 @@ export class StreifeComponent implements OnInit {
 
   next(stepper: CdkStepper) {
     if (stepper.selectedIndex == 0 && this.zweck.valid) {
+      console.log('update streife bei next')
       if (this.ship.id) this.updatePatrol()
       if (!this.ship.id) this.erstellePatrol()
     }
@@ -158,7 +159,6 @@ export class StreifeComponent implements OnInit {
     return false
   }
   previous(stepper: CdkStepper) {
-    console.log(this.saving)
     stepper.previous()
   }
   stepperReset(stepper: CdkStepper) {
@@ -213,11 +213,13 @@ export class StreifeComponent implements OnInit {
             // this._router.navigate(['/'], {relativeTo: this._activatedRoute})
             this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
             break
-          // default:
-          //   update = Object.assign({}, patrol, this.zweck.value)
-          //   console.log(`default: ${update}`)
-          //   break
+          default:
+            update = Object.assign({}, patrol, this.zweck.value)
+            console.log(`default: ${update}`)
+            break
         }
+        console.log('updatePatrol')
+        console.log(update)
         this._specFacade.updatePatrol(update)
       }
     })

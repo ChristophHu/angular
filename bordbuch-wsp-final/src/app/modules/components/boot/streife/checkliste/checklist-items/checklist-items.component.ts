@@ -34,7 +34,7 @@ export class ChecklistItemsComponent implements OnInit {
     this.unchecked$ = this._specFacade.checklistItemsUnchecked$
 
     this.modalService.getData().then((data) => {
-      this.title = data.data.title      
+      this.title = data.data.title
     })
 
     this._specFacade.checklist$.subscribe((checklist: any) => {
@@ -61,7 +61,6 @@ export class ChecklistItemsComponent implements OnInit {
     const update: Checklist = Object.assign({}, this.checklist)
     const cleared: Checklistitem[] = this.checklist.checklistItems?.filter(el => el.id != newItem.id)!
     update.checklistItems = [...cleared, newItem]
-
     this._specFacade.updateChecklist(update)
   }
   getChecklistStatus(checklistItems?: Checklistitem[]): string {

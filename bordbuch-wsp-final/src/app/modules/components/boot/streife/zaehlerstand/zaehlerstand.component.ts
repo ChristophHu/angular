@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zaehlerstand } from 'src/app/core/model/zaehlerstand';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
+import { getLocalISO } from 'src/app/shared/utils';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { ZaehlerstandModalComponent } from './zaehlerstand-modal/zaehlerstand-modal.component';
 
@@ -25,7 +26,7 @@ export class ZaehlerstandComponent {
     this.modalService.open(ZaehlerstandModalComponent, {
       data: {
         title: 'Zählerstand aktualisieren',
-        zaehlerstand
+        zaehlerstand: Object.assign({}, zaehlerstand, {date: getLocalISO('now') })
       }
     })
   }

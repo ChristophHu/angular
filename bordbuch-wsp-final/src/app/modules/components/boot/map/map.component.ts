@@ -50,11 +50,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private allShips: L.Marker[] = []
   private allShippsGroup: L.LayerGroup = L.layerGroup()
 
-  private positions$: Observable<PositionReport[] | undefined>
+  private positions$!: Observable<PositionReport[] | undefined>
   private lastPositions$: Observable<PositionReport[] | undefined>
 
   constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade, private locationService: LocationService, private _katFacade: KatFacade, private modalService: ModalService<PositionComponent>) {
-    this.positions$ = this._specFacade.positions$
     this.lastPositions$ = this._katFacade.lastPositions$
   }
 
@@ -68,9 +67,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (patrol) {
         this.id_streife = patrol.id
 
-        // this.positions$ = this.store.pipe(select(PositionSelectors.selectDataByPatrol(this.id_streife!))).pipe(
-        //   tap(data => console.log(data))
-        // )
+        this.positions$ = this._specFacade.getPositionenByIdPatrol(patrol.id!) as Observable<PositionReport[]>
+
         this.lastPositions$ = this._katFacade.lastPositions$
       }
     })
@@ -82,6 +80,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mark_current_position()
 
     this.positions$.subscribe(positions => {
+      console.log(positions)
       if (positions) this.set_standort_marker(positions)
     })
     this.lastPositions$.subscribe(positions => {

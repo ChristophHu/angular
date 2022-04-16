@@ -79,7 +79,10 @@ export const reducer = createReducer(
         // }
     }),
     on(deleteBesatzungSuccess, (state, action) => {
-        const newState = state.patrol?.besatzung.filter(el => el.id !== action.id)
+        console.log(action.id)
+        console.log(state.patrol?.besatzung)
+        const newState = state.patrol?.besatzung.filter(el => el.id != action.id)
+        console.log(newState)
         return {
             ...state,
             patrol: Object.assign({}, state.patrol, { besatzung: newState })

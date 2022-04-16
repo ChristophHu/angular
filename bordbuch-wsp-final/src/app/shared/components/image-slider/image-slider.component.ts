@@ -13,7 +13,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
     this.element = el.nativeElement
   }
   ngOnInit(): void {
-    console.log(this.images)
+
   }
 
   ngOnDestroy(): void {

@@ -55,7 +55,7 @@ export class BetankungModalComponent implements OnInit {
 
   setDate() {
     this.betankungForm.patchValue({ date: getLocalISO('now') })
-    this.betankungForm.dirty
+    this.betankungForm.markAsDirty()
   }
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {
@@ -64,12 +64,11 @@ export class BetankungModalComponent implements OnInit {
   }
   clearLocation() {
     this.betankungForm.patchValue({ location: { latitude: 0, longitude: 0 }})
-    this.betankungForm.dirty
+    this.betankungForm.markAsDirty()
   }
 
   create() {
     const insert: Betankung = this.betankungForm.value
-    console.log(insert)
     this._specFacade.insertBetankung(insert)
     this.modal?.close()
   }

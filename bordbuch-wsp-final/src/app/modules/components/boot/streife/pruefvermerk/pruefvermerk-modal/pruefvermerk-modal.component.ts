@@ -102,7 +102,8 @@ export class PruefvermerkModalComponent implements OnInit {
   }
   setDate() {
     this.pruefvermerkForm.patchValue({ date: getLocalISO('now') })
-    this.pruefvermerkForm.dirty
+    this.pruefvermerkForm.markAsDirty()
+    console.log(this.pruefvermerkForm)
   }
 
   decodeImages(data: any[]) {
@@ -112,7 +113,6 @@ export class PruefvermerkModalComponent implements OnInit {
   }
   uploadImage(imageBase64: string) {
     const upload: { id?: string, id_reparatur: string, foto: string } = { id_reparatur: this.pruefvermerkForm.value.id, foto: imageBase64 }
-    console.log(upload)
     this._specFacade.uploadReparaturFoto(upload)
   }
 
