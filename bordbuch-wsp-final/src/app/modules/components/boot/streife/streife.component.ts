@@ -104,6 +104,10 @@ export class StreifeComponent implements OnInit {
       if (patrol) { this.patrol = patrol! }
     })
 
+    this._specFacade.saving$.subscribe((save) => {
+      this.saving = save
+    })
+
     // this.store.pipe(select(ShipSelectors.selectShipId)).subscribe(id_ship => {
     //   this.id_schiff = id_ship
     // })
@@ -210,8 +214,8 @@ export class StreifeComponent implements OnInit {
           case 'beendet':
             update = Object.assign({}, patrol, this.zweck.value, { status: status, ende: getLocalISO('now') })
             console.log('3 false')
-            // this._router.navigate(['/'], {relativeTo: this._activatedRoute})
-            this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
+            this._router.navigate(['/'], {relativeTo: this._activatedRoute})
+            // this._router.navigate(['/boot', patrol.id_schiff, 'pdfbericht'], {relativeTo: this._activatedRoute})
             break
           default:
             update = Object.assign({}, patrol, this.zweck.value)

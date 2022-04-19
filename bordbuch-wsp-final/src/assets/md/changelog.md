@@ -1,3 +1,16 @@
+## <u>1.0.4x002</u>
+<ul>
+    <li>- [Streife] Nach Start der Streife zu Positionen wechseln.</li>
+    <li>- [Streife] Nach Beendigung der Streife zur Bootsauswahl springen.</li>
+    <li>- [Streife] Schiff kann nun manuell als "klar/unklar" gemeldet werden.</li>
+    <li>- [Streife] Bilder werden korrekt zu Prüfvermerken angezeigt.</li>
+    <li>- [Positionen] Das automatische Setzen von Positionen an an- und abgewählt werden.</li>
+    <li>- [Positionen] Positionen werden nach Auswahl alle 60 Min. gesetzt.</li>
+    <li>- Ordnen aller Listen (Alphabetisch)</li>
+</ul>
+
+&nbsp;
+
 ## <u>1.0.4x001</u>
 <ul>
     <li>- [Auswahl] WSP Dienststellen ohne zugewiesene Boote werden alle Boote angezeigt.</li>

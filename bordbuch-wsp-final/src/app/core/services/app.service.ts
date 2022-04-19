@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { EMPTY, interval, Observable, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
 import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors';
 
 import { environment } from 'src/environments/environment';

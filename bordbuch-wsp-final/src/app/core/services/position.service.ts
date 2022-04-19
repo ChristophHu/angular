@@ -15,6 +15,8 @@ export class PositionService {
   private saving: boolean = false
   private patrol!: Patrol
 
+  static isSet: boolean = false
+
   private _positionLogInterval: Observable<number> = interval(environment.positionLogInterval*(60*1000))
   
   constructor(private _specFacade: SpecFacade, private _locationService: LocationService) {
@@ -37,6 +39,16 @@ export class PositionService {
 
   checkStatus() {
     if (this.saving && this.patrol.status == 'aktiv') {
+      if (!PositionService.isSet) {
+        PositionService.isSet = true
+        setInterval(() => {
+          console.log('autom. set position')
+          this._locationService.getCurrentPosition().then(position => {
+            const insert: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude }, ort: '', description: `` }
+            this._specFacade.insertPosition(insert)
+          })
+        }, 10*60*1000)
+      }
 
       this._specFacade.getPositionenByIdPatrol(this.patrol.id!).subscribe((positions: PositionReport[] | undefined) => {
         if (positions) {
@@ -62,6 +74,12 @@ export class PositionService {
               // now - date = 50 > timer 10 Min. zum Intervallstart und position setzten
               const dt = Date.parse(positions[0].date)
               console.log(dt)
+              setInterval(() => {
+                this._locationService.getCurrentPosition().then(position => {
+                  const insert: PositionReport = { id_streife: this.patrol.id, id_ship: this.patrol.id_schiff, date: getLocalISO('now'), location: { latitude: position.latitude, longitude: position.longitude }, ort: '', description: `` }
+                  this._specFacade.insertPosition(insert)
+                })
+              }, 60*60*1000)
               // const h: string[] = positions[0].date.split(" ")
             }
           }
@@ -83,6 +101,8 @@ export class PositionService {
       // lösung: status beim schließen auf "inaktiv" setzen
 
 
+    } else {
+      
     }
   }
 
