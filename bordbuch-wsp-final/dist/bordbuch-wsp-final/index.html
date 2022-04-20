@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="de"><head>
+    <meta charset="utf-8">
+    <title>Bordbuch Wsp</title>
+    <base href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: 'unsafe-inline' 'unsafe-eval'; frame-src * data: filesystem: blob:; object-src * data: filesystem: blob:; script-src * data: 'unsafe-inline' 'unsafe-eval'; style-src * 'self' data: 'unsafe-inline' 'unsafe-eval'; img-src * data: filesystem: blob:; font-src * data: filesystem: blob:; connect-src * data: filesystem: blob: http: https:; media-src * data: filesystem: blob:; child-src *; worker-src *; form-action *; base-uri *; manifest-src * data: filesystem: blob:">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">  
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon36.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
+    <style type="text/css">@font-face{font-family:'Material Icons';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/materialicons/v126/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');}.material-icons{font-family:'Material Icons';font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased;}</style>
+    <style>*,::after,::before{box-sizing:border-box;}:root{-moz-tab-size:4;tab-size:4;}html{line-height:1.15;-webkit-text-size-adjust:100%;}body{margin:0;}body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';}html{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";line-height:1.5;}body{font-family:inherit;line-height:inherit;}*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb;}*{--tw-shadow:0 0 #0000;}*{--tw-ring-inset:var(--tw-empty, );--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59, 130, 246, 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;}</style><link href="./assets/style/tailwind.min.css" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="./assets/style/tailwind.min.css"></noscript>
+  <style>body,html{height:100%;}body{font-family:Roboto,Helvetica Neue,sans-serif;}html{-moz-tab-size:4;tab-size:4;line-height:1.15;-webkit-text-size-adjust:100%;}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}html{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5;}body{font-family:inherit;line-height:inherit;}*,:after,:before{box-sizing:border-box;border:0 solid;}*,:after,:before{--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-transform:translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));--tw-border-opacity:1;border-color:rgba(229,231,235,var(--tw-border-opacity));--tw-ring-inset:var(--tw-empty, );--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:#3b82f680;--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-blur:var(--tw-empty, );--tw-brightness:var(--tw-empty, );--tw-contrast:var(--tw-empty, );--tw-grayscale:var(--tw-empty, );--tw-hue-rotate:var(--tw-empty, );--tw-invert:var(--tw-empty, );--tw-saturate:var(--tw-empty, );--tw-sepia:var(--tw-empty, );--tw-drop-shadow:var(--tw-empty, );--tw-filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);}@font-face{font-family:Roboto;src:url(Roboto-Regular.a8d6ac03c7b96b7acb62.ttf) format("ttf");}*{-webkit-user-select:none;user-select:none;}body{overflow:hidden;--tw-bg-opacity:1;background-color:rgba(229,231,235,var(--tw-bg-opacity));}</style><link rel="stylesheet" href="styles.baf400f60058e24542b1.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.baf400f60058e24542b1.css"></noscript></head>
+  <body class="" onload="onLoad()" onunload="onUnload()">
+    <app-root></app-root>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+      function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+      function onUnload() {
+        // cordova.plugins.foregroundService.stop();
+        // console.log('foregroundservice stop');
+      }
+
+      function onDeviceReady() {
+        // document.addEventListener('pause', onPause, false);
+        // document.addEventListener('resume', onResume, false);
+        document.addEventListener("menubutton", onMenuKeyDown, false);
+        document.addEventListener('backbutton', onBackKeyDown, false);
+
+        // cordova.plugins.foregroundService.start('Notification Title', 'Notification Text', 'drawable-icon-name', [notification importance], [notification id]);
+
+        // High priority with notification id 10
+        // ('myicon.png' is in the 'res/drawable' folder)
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon', 3, 10);
+
+        // Notification id is optional
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon', 3);
+
+        // Notification importance is optional, the default is 1 - Low (no sound or vibration)
+        // cordova.plugins.foregroundService.start('GPS Running', 'Background Service', 'myicon');
+
+        // Icon is optional, but will use a 'star' icon as the default
+        // cordova.plugins.foregroundService.start('Bordbuch WSP', 'Background Service');
+        // setTimeout(function() {
+        //   cordova.plugins.foregroundService.stop();
+        //   console.log('foregroundservice stop');
+        // }, 10*60*1000);
+
+        // /**
+        // * This callback will be executed every time a geolocation is recorded in the background.
+        // */
+        // var callbackFn = function(location) {
+        //     console.log('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
+
+        //     // Do your HTTP request here to POST location to your server.
+        //     // jQuery.post(url, JSON.stringify(location));
+
+        //     /*
+        //     IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        //     and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        //     IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        //     */
+        //     backgroundGeoLocation.finish();
+        // };
+
+        // var failureFn = function(error) {
+        //     console.log('BackgroundGeoLocation error');
+        // };
+
+        // BackgroundGeoLocation is highly configurable. See platform specific configuration options
+        // backgroundGeoLocation.configure(callbackFn, failureFn, {
+        //     desiredAccuracy: 10,
+        //     stationaryRadius: 20,
+        //     distanceFilter: 30,
+        //     debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+        //     stopOnTerminate: false, // <-- enable this to clear background location settings when the app terminates
+        // });
+
+        // // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
+        // backgroundGeoLocation.start();
+
+        // // If you wish to turn OFF background-tracking, call the #stop method.
+        // backgroundGeoLocation.stop();
+      }
+
+      function onPause() {
+        // console.log('paused');
+        // cordova.plugins.foregroundService.start('Bordbuch WSP', 'Background Service');
+        // console.log('foregroundservice started')
+      }
+
+      function onResume() {
+        // console.log('resumed');
+        // cordova.plugins.foregroundService.stop();
+        // console.log('foregroundservice stop');
+      }
+
+      function onMenuKeyDown() {
+        console.log('menu key deactivated');
+      }
+      function onBackKeyDown() {
+        console.log('back key deactivated');
+      }
+
+      window.addEventListener("cordovacallbackerror", function (event) {
+        // event.error contains the original error object
+        // console.log(error);
+      });
+    </script>
+  <script src="runtime.9102a4c4ba165a4ba4d9.js" defer></script><script src="polyfills.e6c6c5c49a4e6c5914e2.js" defer></script><script src="scripts.d8f91d1ba359d8714a4a.js" defer></script><script src="main.31bc0fce929c37430850.js" defer></script>
+
+</body></html>
