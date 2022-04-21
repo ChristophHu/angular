@@ -75,11 +75,13 @@ export class PositionComponent implements OnInit {
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {
       this.positionForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
+      this.position = { latitude: position.latitude, longitude: position.longitude }
       this.positionForm.markAsDirty()
     })
   }
   clearLocation() {
     this.positionForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+    this.position = { latitude: 0, longitude: 0 }
     this.positionForm.markAsDirty()
   }
   setPosition() {
