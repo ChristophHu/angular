@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import * as L from 'leaflet'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+// import * as L from 'leaflet'
+import * as Map from 'leaflet'
 import { Position } from 'src/app/core/model/position';
 import { LocationService } from 'src/app/core/services/location.service';
 
@@ -8,7 +9,8 @@ import { LocationService } from 'src/app/core/services/location.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.sass']
 })
-export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('map') mapElement!: ElementRef;
   @Output() positionActiveChange: EventEmitter<Position> = new EventEmitter<Position>()
   @Input() set positionActive(value: Position) {
     this.position = value
@@ -16,9 +18,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   position: Position = { latitude: 0, longitude: 0 }
 
-  private map!: L.Map
+  private map!: Map.Map
 
-  private svgIcon = L.divIcon({
+  private svgIcon = Map.divIcon({
     html: `
     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 149 178">
       <path fill="#414141" stroke="#FFF" stroke-width="5" stroke-miterlimit="10" d="M126 23l-6-6A69 69 0 0 0 74 1a69 69 0 0 0-51 22A70 70 0 0 0 1 74c0 21 7 38 22 52l43 47c6 6 11 6 16 0l48-51c12-13 18-29 18-48 0-20-8-37-22-51z"/>
@@ -38,11 +40,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private locationService: LocationService) { }
 
-  ngOnInit(): void {
-    if (this.position == { latitude: 0, longitude: 0 }) this.setCurrentPosition()
-  }
-
   ngAfterViewInit(): void {
+    if (this.position == { latitude: 0, longitude: 0 }) this.setCurrentPosition()
+    console.log(this.position)
     this.createMap()
     this.center_current_position()
     this.setMarker()
@@ -57,21 +57,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   	
     if (this.map) this.map.remove()
 
-	  this.map = L.map('map', {
+	  this.map = Map.map(this.mapElement.nativeElement, {
       center: [this.position.latitude, this.position.longitude],
       zoom: zoom,
       zoomControl: false
 	  })
   
 	  // Layer: OpenStreetMap
-	  var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	  var OpenStreetMap_Mapnik = Map.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 18,
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	  });
 	  OpenStreetMap_Mapnik.addTo(this.map)
   
 	  // Layer: OpenSeaMap
-	  var OpenSeaMap = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+	  var OpenSeaMap = Map.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
 		maxZoom: 18,
 		attribution: 'Map data: &copy; <a href="http://www.openseamap.org">OpenSeaMap</a> contributors'
 	  });
@@ -79,13 +79,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
   setMarker() {
-    let marker_position = new L.Marker([this.position.latitude, this.position.longitude], {draggable: true, icon: this.svgIcon })
+    let marker_position = new Map.Marker([this.position.latitude, this.position.longitude], {draggable: true, icon: this.svgIcon })
     marker_position.on('dragend', (event: any) => {
       var marker = event.target;
       var position = marker.getLatLng()
       this.position = { latitude: position.lat, longitude: position.lng }
-      marker.setLatLng(new L.LatLng(position.lat, position.lng), { draggable:'true', icon: this.svgIcon })
-      this.map.panTo(new L.LatLng(position.lat, position.lng))
+      marker.setLatLng(new Map.LatLng(position.lat, position.lng), { draggable:'true', icon: this.svgIcon })
+      this.map.panTo(new Map.LatLng(position.lat, position.lng))
 
       this.positionActiveChange.emit(this.position)
     })
@@ -94,7 +94,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   center_current_position() {
     this.locationService.getCurrentPosition().then(position => {
-      this.map.panTo(new L.LatLng( position.latitude, position.longitude ))
+      this.map.panTo(new Map.LatLng( position.latitude, position.longitude ))
     })
   }
   setCurrentPosition() {
