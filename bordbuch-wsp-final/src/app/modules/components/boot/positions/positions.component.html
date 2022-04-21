@@ -10,10 +10,10 @@
           <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4 hidden">
             Id
           </th>
-          <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
+          <!-- <th class="px-2 text-gray-600 dark:text-gray-400 font-normal text-left text-md tracking-normal leading-4">
             <input type="checkbox" [checked]="allCheck" (click)="toggleCheck()" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-          </th>
-          <th class="text-gray-600 dark:text-gray-400 font-normal pr-2 text-left text-md tracking-normal leading-4">
+          </th> -->
+          <th class="text-gray-600 dark:text-gray-400 font-normal pl-2 pr-2 text-left text-md tracking-normal leading-4">
             Nr.
           </th>
           <th class="text-gray-600 dark:text-gray-400 font-normal pr-6 text-left text-md tracking-normal leading-4">
@@ -28,17 +28,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of (positions$ | async); let i = index">
+        <tr class="h-12 bg-gray-50 border-b border-gray-300 text-gray-800 dark:text-gray-100" *ngFor="let position of (positions$ | async | orderBy:'date'); let i = index">
           <td class="w-12 text-sm pr-6 whitespace-no-wrap tracking-normal leading-4 hidden">
             {{ position.date }}
           </td>
           <td class="text-sm px-2 whitespace-no-wrap tracking-normal leading-4 hidden">
             {{ position.id }}
           </td>
-          <td class="px-2 text-left whitespace-no-wrap text-sm tracking-normal leading-4">
+          <!-- <td class="px-2 text-left whitespace-no-wrap text-sm tracking-normal leading-4">
             <input type="checkbox" class="cursor-pointer relative w-5 h-5 border rounded border-gray-400 bg-white dark:bg-gray-800 outline-none" />
-          </td>
-          <td class="text-sm pr-2 whitespace-no-wrap tracking-normal leading-4">
+          </td> -->
+          <td class="text-sm pl-2 pr-2 whitespace-no-wrap tracking-normal leading-4">
             {{ i + 1 }}
           </td>
           <td class="w-12 text-sm pr-6 whitespace-no-wrap tracking-normal leading-4">
@@ -48,9 +48,6 @@
             {{ position.ort }}
           </td>
           <td class="text-sm pr-2 whitespace-no-wrap tracking-normal leading-4">
-            <!-- <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="openModal(position)">
-              <p>Bearbeiten</p>
-            </div> -->
             <button class="w-6 h-6">
               <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="edit" (click)="openModal(position)"></icons>
             </button>

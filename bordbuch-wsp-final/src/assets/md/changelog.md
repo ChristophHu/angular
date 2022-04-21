@@ -1,3 +1,11 @@
+## <u>1.0.4x003</u>
+<ul>
+    <li>- [Auswahl] QR-Code-Scanner schießt sich nach 30 Sekunden.</li>
+    <li>- [Positionen] Positionen können auf der Karte gesetzt/verschoben werden.</li>
+</ul>
+
+&nbsp;
+
 ## <u>1.0.4x002</u>
 <ul>
     <li>- [Streife] Nach Start der Streife zu Positionen wechseln.</li>

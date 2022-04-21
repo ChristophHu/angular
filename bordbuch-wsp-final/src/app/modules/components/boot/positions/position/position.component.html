@@ -44,8 +44,11 @@
                         <input matInput type="text" formControlName="longitude" value="{{positionForm.value.location.longitude | number: '2.2-6'}}">
                     </mat-form-field>
                 </div>
-                <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setCurrentLocation()">
+                <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="isVisible = !isVisible">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="map"></icons>
+                </button>
+                <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setCurrentLocation()">
+                  <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="location-marker"></icons>
                 </button>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="clearLocation()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="minus-circle"></icons>
@@ -64,6 +67,24 @@
     <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
         <ng-container *ngTemplateOutlet="toolbar"></ng-container>
     </footer>
+    <!-- map -->
+    <div *ngIf="isVisible" class="absolute w-full lg:max-w-lg md:max-w-md top-0 bottom-0 right-0 bg-gray-50 dark:bg-gray-800 text-left overflow-hidden shadow-xl sm:align-middle" @slideInRight @slideOutRight>
+      <header class="h-16 p-8 flex items-center justify-between border-b">
+        <p tabindex="0" class="dark:text-gray-50 focus:outline-none text-2xl font-semibold leading-6 text-gray-800">
+          Koordinaten setzen
+        </p>
+        <button (click)="isVisible = !isVisible" class="w-6 h-6 ml-3 focus:outline-none rounded-md cursor-pointer">
+          <icons class="w-6 h-6 stroke-2 stroke-current text-gray-500" name="arrow-right"></icons>
+        </button>
+      </header>
+      <div class="map_content">
+        <app-map [(positionActive)]="position"></app-map>
+      </div>
+      <footer class="absolute h-16 px-8 right-0 bottom-0 left-0 flex items-center justify-between border-t">
+        <button (click)="isVisible = !isVisible" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
+        <button (click)="setPosition()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Speichern</button>
+      </footer>
+    </div>
 </app-modal>
 
 <ng-template #toolbar>

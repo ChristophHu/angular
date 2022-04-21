@@ -7,16 +7,36 @@ import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { getLocalISO } from 'src/app/shared/utils';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Position } from 'src/app/core/model/position';
+
 @Component({
   selector: 'app-position',
   templateUrl: './position.component.html',
-  styleUrls: ['./position.component.sass']
+  styleUrls: ['./position.component.sass'],
+  animations: [
+    trigger('slideInRight', [
+      state('void', style({ transform: 'translate3d(100%, 0, 0)' })),
+      state('*', style({ transform: 'translate3d(0, 0, 0)' })),
+      transition('void => false', []),
+      transition('void => *', animate('200ms 100ms cubic-bezier(0.0, 0.0, 0.2, 1)'))
+    ]),
+    trigger('slideOutRight', [
+      state('*', style({ transform: 'translate3d(0, 0, 0)' })),
+      state('void', style({ transform: 'translate3d(100%, 0, 0)' })),
+      transition('false => void', []),
+      transition('* => void', animate('200ms cubic-bezier(0.0, 0.0, 0.2, 1)'))
+    ])
+  ] 
 })
 export class PositionComponent implements OnInit {
   @ViewChild('modalComponent') modal: | ModalComponent<PositionComponent> | undefined;
   title: string = ''
   positionForm: FormGroup
   edit: boolean = false
+
+  isVisible: boolean = false
+  position: Position = { latitude: 0, longitude: 0 }
   
   constructor(
     private _specFacade: SpecFacade,
@@ -43,9 +63,10 @@ export class PositionComponent implements OnInit {
       this.title = data.data.title
       if (data.data.position) {
         this.positionForm.patchValue(data.data.position)
+        this.position = data.data.position.location
       } else {
         if (data.data.patrol) {
-          this.positionForm.patchValue({ id_streife: data.data.patrol.id, id_ship: data.data.patrol.id_schiff })
+          this.positionForm.patchValue({ id_streife: data.data.patrol.id, id_ship: data.data.patrol.id_schiff, date: new Date().toISOString() })
         }
       }
     })
@@ -54,10 +75,16 @@ export class PositionComponent implements OnInit {
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {
       this.positionForm.patchValue({ location: { latitude: position.latitude, longitude: position.longitude }})
+      this.positionForm.markAsDirty()
     })
   }
   clearLocation() {
     this.positionForm.patchValue({ location: { latitude: 0, longitude: 0 }})
+    this.positionForm.markAsDirty()
+  }
+  setPosition() {
+    this.positionForm.patchValue({ location: this.position })
+    this.isVisible = false
     this.positionForm.markAsDirty()
   }
 

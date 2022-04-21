@@ -57,9 +57,10 @@ export class QrscannerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.modalService.getData().then((data) => {
-      // this.id = data.data.id
-    })
+    this.modalService.getData().then(() => {})
+    setTimeout(() => {
+      this.cancel()
+    }, 30*1000)
   }
 
   onCodeResult(result: string) {

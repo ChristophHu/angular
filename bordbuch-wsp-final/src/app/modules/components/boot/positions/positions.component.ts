@@ -38,11 +38,6 @@ export class PositionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.store.pipe(select(ShipSelectors.selectedShip)).subscribe(ship => {
-    //   this.id_ship = ship?.id
-    //   this.name = ship?.name
-    // })
-
     this._specFacade.patrol$.subscribe((patrol: Patrol) => {
       if (patrol) {
         this.id_streife = patrol.id
@@ -53,25 +48,12 @@ export class PositionsComponent implements OnInit {
         this._specFacade.getPositionenByIdPatrol(patrol.id!).subscribe(data => console.log(data))
       }
     })
-
-    // this.store.pipe(select(ShipSelectors.selectPatrolId)).subscribe(id_streife => {
-    //   if (id_streife) {
-    //     this.id_streife = id_streife
-
-    //     // this._positionSubscription
-    //     // .add(
-    //     //   this._specFacade.positions$.subscribe((data: PositionReport[]) => {
-    //     //     this.positions = data
-    //     //   })
-    //     // )
-        
-    //   }
-    // })
   }
 
   ngOnDestroy(): void {
     this._positionSubscription.unsubscribe()
   }
+  
   toggleCheck() {
     this.allCheck = !this.allCheck
     // let items: Checklistitem[] = []
