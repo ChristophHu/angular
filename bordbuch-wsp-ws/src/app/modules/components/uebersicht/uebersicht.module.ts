@@ -7,6 +7,8 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UebersichtComponent } from './uebersicht.component';
+import { BooteKlarmeldungComponent } from './boote-klarmeldung/boote-klarmeldung.component';
+import { DienststellenKlarmeldungComponent } from './dienststellen-klarmeldung/dienststellen-klarmeldung.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -18,7 +20,9 @@ const routes: Routes = [
 ]
 @NgModule({
   declarations: [
-    UebersichtComponent
+    UebersichtComponent,
+    BooteKlarmeldungComponent,
+    DienststellenKlarmeldungComponent
   ],
   imports: [
     RouterModule.forChild(routes),
