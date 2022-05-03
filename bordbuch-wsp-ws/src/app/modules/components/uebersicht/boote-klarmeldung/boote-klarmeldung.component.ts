@@ -1,58 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as PlotlyJS from 'plotly.js-dist-min'
+import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
+import { Schiff } from 'src/app/core/models/schiff.model';
+import { KatFacade } from 'src/app/store/kat-store/kat.facade';
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 
 @Component({
   selector: 'app-boote-klarmeldung',
   templateUrl: './boote-klarmeldung.component.html',
   styleUrls: ['./boote-klarmeldung.component.sass']
 })
-export class BooteKlarmeldungComponent implements OnInit {
+export class BooteKlarmeldungComponent implements AfterViewInit {
 
-  // dienststellen[]
-  // id            : string
-  // bezeichnung   : string
-  // position      : Position
-  // adresse       : { 
-  //   strasse     : string
-  //   hausnummer  : string
-  //   postleitzahl: string
-  //   ort         : string
-  // }
-  // mailadresse   : string
+  private dienststellen: string[] = []
+  private schiffe: any[] = []
 
-  // schiffe[]
-  // id            : string
-  // id_dienststelle?: string
-  // name          : string
-  // marke         : string
-  // typ           : string
-  // identifikationsnummer: string
-  // dienststelle  : string
-  // durchsicht    : string
-
-  // klarmeldungen[]
-  // id?         : string
-  // id_schiff   : string
-  // klar        : boolean
-  // beginn       : string
-  // ende?       : string
-
-  private dienststellen: string[] = ['WSP Ost', 'WSP Mitte', 'WSP West']
-  private schiffe: any[] = [
-    { id: '2', name: 'WSP30 Sturmmöve', dienststelle: 'WSP Ost' },
-    { id: '4', name: 'WSP31 Albatros', dienststelle: 'WSP Ost' },
-    { id: '6', name: 'WSP20 Lietze', dienststelle: 'WSP Mitte' },
-    { id: '8', name: 'WSP22 Spree', dienststelle: 'WSP Mitte' },
-    { id: '10', name: 'WSP10 Wannsee', dienststelle: 'WSP West' }
-  ]
-  private klarmeldungen: any[] = [
-    { id: '1', id_schiff: '2', klar: false }
-  ]
+  private klarmeldungen: any[] = []
 
   private labels: string[] = []
   private parents: string[] = []
   private values: number[] = []
   private colors: string[] = ["#3495eb","#3495eb","#3495eb"]
+
+  constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) {
+    this._katFacade.schiffe$.subscribe((data: Schiff[]) => {
+      if (data) {
+        this.schiffe = data
+        let dienststellen: string[] = []
+        data.forEach((el: Schiff) => {
+          dienststellen.push(el.dienststelle)
+        })
+        let dienststellenSet = new Set(dienststellen)
+        this.dienststellen = [...dienststellenSet]
+        this.build()
+        this.basicChart()
+      }
+    })
+    this._specFacade.allKlarmeldungen$.subscribe((data: Klarmeldung[]) => {
+      if (data) {
+        this.klarmeldungen = data
+        this.build()
+        this.basicChart()
+      }
+    })
+  }
+
+  ngAfterViewInit(): void {
+    this.build()
+    this.basicChart()
+  }
 
   build() {
     this.labels.push(...this.dienststellen)
@@ -81,11 +77,6 @@ export class BooteKlarmeldungComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    this.build()
-    this.basicChart()
-  }
-
   basicChart() {
     const data: any = [
       {
@@ -99,23 +90,6 @@ export class BooteKlarmeldungComponent implements OnInit {
         values: [
           ...this.values
         ],
-        // labels: [
-        //   'WSP Ost', 'WSP Mitte', 'WSP West',
-        //   'WSP30 Sturmmöve', 'WSP31 Albatros', 'WSP32 Eisvogel', 'WSP33 Dahme', 'WSP34 Seeschwalbe', 'WSP50 RIB',
-        //   'WSP20 Lietze', 'WSP22 Spree', 'WSP23 Seeadler', 'WSP24 Schwanenwerder',
-        //   'WSP10 Wannsee', 'WSP11 Mollymauk', 'WSP12 Graureiher', 'WSP14 Pelikan', 'WSP15 Alk', 'WSP16 Kormoran'
-        // ],
-        // parents: ['', '', '',
-        //   'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost', 'WSP Ost',
-        //   'WSP Mitte', 'WSP Mitte', 'WSP Mitte', 'WSP Mitte',
-        //   'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West', 'WSP West'
-        // ],
-        // values: [6, 4, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-
-        // labels: ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
-        // parents: ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve" ],
-        // values:  [65, 14, 12, 10, 2, 6, 6, 4, 4],
-
         leaf: {"opacity": 0.4},
         marker: {
           line: {"width": 2},
@@ -138,6 +112,6 @@ export class BooteKlarmeldungComponent implements OnInit {
       sunburstcolorway:[...this.colors]
     }
 
-    PlotlyJS.newPlot('klarmeldungen', data, layout);
+    let t = PlotlyJS.newPlot('klarmeldungen', data, layout);
   }
 }

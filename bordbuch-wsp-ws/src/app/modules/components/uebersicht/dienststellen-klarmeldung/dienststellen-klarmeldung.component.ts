@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as PlotlyJS from 'plotly.js-dist-min'
 import { Dienststelle } from 'src/app/core/models/dienststelle.model';
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
@@ -11,47 +11,43 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
   templateUrl: './dienststellen-klarmeldung.component.html',
   styleUrls: ['./dienststellen-klarmeldung.component.sass']
 })
-export class DienststellenKlarmeldungComponent implements OnInit {
+export class DienststellenKlarmeldungComponent implements AfterViewInit {
 
-  private dienststellen: string[] = [] //['WSP Ost', 'WSP Mitte', 'WSP West']
-  private schiffe: Schiff[] = [
-    // { id: '2', name: 'WSP30 Sturmmöve', dienststelle: 'WSP Ost' },
-    // { id: '4', name: 'WSP31 Albatros', dienststelle: 'WSP Ost' },
-    // { id: '6', name: 'WSP20 Lietze', dienststelle: 'WSP Mitte' },
-    // { id: '8', name: 'WSP22 Spree', dienststelle: 'WSP Mitte' },
-    // { id: '10', name: 'WSP10 Wannsee', dienststelle: 'WSP West' }
-  ]
-  private klarmeldungen: Klarmeldung[] = [
-    // { id: '1', id_schiff: '2', klar: false }
-  ]
+  private dienststellen: string[] = []
+  private schiffe: Schiff[] = []
+  private klarmeldungen: Klarmeldung[] = []
 
   private klar: number[] = []
   private unklar: number[] = []
 
+  private data: any[] = []
+  private layout: any
+
   constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) {
-    this._katFacade.dienststellen$.subscribe((data: Dienststelle[]) => {
-      if (data) {
-        console.log(data)
-        data.forEach((el: Dienststelle) => {
-          this.dienststellen.push(el.bezeichnung)
-        })
-      }
-    })
+    console.log('construct')
     this._katFacade.schiffe$.subscribe((data: Schiff[]) => {
       if (data) {
-        console.log(data)
         this.schiffe = data
+        let dienststellen: string[] = []
+        data.forEach((el: Schiff) => {
+          dienststellen.push(el.dienststelle)
+        })
+        let dienststellenSet = new Set(dienststellen)
+        this.dienststellen = [...dienststellenSet]
+        this.build()
+        this.basicChart()
       }
     })
     this._specFacade.allKlarmeldungen$.subscribe((data: Klarmeldung[]) => {
       if (data) {
-        console.log(data)
         this.klarmeldungen = data
+        this.build()
+        this.basicChart()
       }
     })
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.build()
     this.basicChart()
   }
@@ -70,12 +66,10 @@ export class DienststellenKlarmeldungComponent implements OnInit {
       })
       if (unklar) this.unklar[index] += 1
     })
-    console.log(this.klar)
-    console.log(this.unklar)
   }
 
   basicChart() {
-    const data: any[] = [
+    this.data = [
       {
         // klar
         x: [...this.dienststellen],
@@ -100,7 +94,7 @@ export class DienststellenKlarmeldungComponent implements OnInit {
       }
     ]
 
-    const layout: any = {
+    this.layout = {
       // title: 'January 2013 Sales Report',
       showtitle: false,
       showlegend: false,
@@ -168,7 +162,6 @@ export class DienststellenKlarmeldungComponent implements OnInit {
         b: 20
       },
     }
-
-    PlotlyJS.newPlot('dst_klarmeldungen', data, layout)
+    PlotlyJS.newPlot('dst_klarmeldungen', this.data, this.layout)
   }
 }
