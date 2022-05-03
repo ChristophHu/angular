@@ -23,14 +23,12 @@ import { ImageSliderComponent } from './components/image-slider/image-slider.com
 import { CarouselItemDirective } from './directives/carousel-item.directive'
 import { IvyCarouselModule } from 'image-carousel'
 import { ToArrayPipe } from './pipes/to-array/to-array.pipe'
-import { BarChartVerticalComponent } from './components/charts/bar-chart-vertical/bar-chart-vertical.component'
 import { RxjsNotificationsModule } from 'projects/rxjs-notifications/src/public-api'
 import { ProgressComponent } from './components/progress/progress.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component'
 import { DiffDateToTodayPipe } from './pipes/diffDateToToday/diff-date-to-today.pipe'
 import { InfoPopupModule } from './directives/info-popup/info-popup.module'
 import { TooltipModule } from './directives/tooltip/tooltip.module'
-import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overlapArrayByProperty'
 import { OrderByPipe } from './pipes/order-by/order-by.pipe'
@@ -45,8 +43,6 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe'
     ImageSliderComponent,
     CarouselItemDirective,
     ToArrayPipe,
-    BarChartVerticalComponent,
-    PieChartComponent,
     ProgressComponent,
     PageNotFoundComponent,
     DiffDateToTodayPipe,
@@ -85,8 +81,6 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe'
   exports: [
     // components
     ImageSliderComponent,
-    BarChartVerticalComponent,
-    PieChartComponent,
     ProgressComponent,
     PageNotFoundComponent,
 

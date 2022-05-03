@@ -1,4 +1,4 @@
-import { NgModule, SecurityContext } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,8 +9,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { RootStoreModule } from './store/root-store.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { httpInterceptorProviders } from './core/interceptors';
-import { MarkdownLibraryModule } from 'projects/markdown-library/src/lib/markdown-library.module';
-import { HttpClient } from '@angular/common/http';
+// import { MarkdownLibraryModule } from 'projects/markdown-library/src/lib/markdown-library.module';
+// import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,10 +23,10 @@ import { HttpClient } from '@angular/common/http';
     BrowserAnimationsModule,
     RootStoreModule,
     // MarkdownModule.forRoot(),
-    MarkdownLibraryModule.forRoot({
-      loader: HttpClient,
-      sanitize: SecurityContext.NONE,
-    }),
+    // MarkdownLibraryModule.forRoot({
+    //   loader: HttpClient,
+    //   sanitize: SecurityContext.NONE,
+    // }),
     StoreRouterConnectingModule.forRoot()
   ],
   providers: [

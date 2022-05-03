@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NgChartsModule } from 'ng2-charts';
 
 import { PlotlyModule } from 'projects/plotly/src/public-api';
 import * as PlotlyJS from 'plotly.js-dist-min';
@@ -26,7 +25,6 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forChild(routes),
-    NgChartsModule,
     SharedModule,
     PlotlyModule
   ]
