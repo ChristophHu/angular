@@ -28,11 +28,10 @@ export class DienststellenKlarmeldungComponent implements OnInit {
   private klar: number[] = []
   private unklar: number[] = []
 
-  public graph: any
-
   constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this._katFacade.dienststellen$.subscribe((data: Dienststelle[]) => {
       if (data) {
+        console.log(data)
         data.forEach((el: Dienststelle) => {
           this.dienststellen.push(el.bezeichnung)
         })
@@ -40,11 +39,13 @@ export class DienststellenKlarmeldungComponent implements OnInit {
     })
     this._katFacade.schiffe$.subscribe((data: Schiff[]) => {
       if (data) {
+        console.log(data)
         this.schiffe = data
       }
     })
     this._specFacade.allKlarmeldungen$.subscribe((data: Klarmeldung[]) => {
       if (data) {
+        console.log(data)
         this.klarmeldungen = data
       }
     })
@@ -69,6 +70,8 @@ export class DienststellenKlarmeldungComponent implements OnInit {
       })
       if (unklar) this.unklar[index] += 1
     })
+    console.log(this.klar)
+    console.log(this.unklar)
   }
 
   basicChart() {
