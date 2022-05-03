@@ -6,7 +6,7 @@
     </div>
 
     <div class="container mx-auto p-4">
-        <div class="w-full  mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
+        <!-- <div class="w-full  mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
             <div class="w-96 h-96 border-b border-gray-400 dark:border-gray-600 rounded-t">
                 <h2 class="mb-3 font-bold text-xl">Verteilung von Typen</h2>
                 <div id="c"></div>
@@ -14,28 +14,32 @@
             <div class="w-full h-24 bg-gray-100 dark:bg-gray-700 rounded-b">
 
             </div>
+        </div> -->
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="w-full sm:w-1/2 mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
+                <h2 class="m-2 text-center text-2xl">Einsatzbereitschaft von Schiffen</h2>
+                <div class="flex justify-center w-full h-96 border-b border-gray-400 dark:border-gray-600 rounded-t">
+                    <app-boote-klarmeldung></app-boote-klarmeldung>
+                </div>
+                <div class="w-full p-4 bg-gray-100 dark:bg-gray-600 text-gray-700 rounded-b">
+                    <p>Darstellung aller in der WSP hinterlegten Schiffen zu ihren zugewiesenen Dienststelle. Die Schiffe bilden dabei farblich ihre Einsatzbereitschaft dar.</p>
+                    <div class="mt-2 text-blue-400 cursor-pointer">> Klarmeldungen</div>
+                </div>
+            </div>
+            
+            <div class="w-full sm:w-1/2 mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
+                <h2 class="m-2 text-center text-2xl">Einsatzbereitschaft von Dienststellen</h2>
+                <div class="flex justify-center w-full h-96 border-b border-gray-400 dark:border-gray-600 rounded-t">
+                    <app-dienststellen-klarmeldung></app-dienststellen-klarmeldung>
+                </div>
+                <div class="w-full p-4 bg-gray-100 dark:bg-gray-600 text-gray-700 rounded-b">
+                    <p>Verteilung von einsatzbereiten und unklaren Schiffen nach hinterlegter Dienststelle.</p>
+                    <div class="mt-2 text-blue-400 cursor-pointer">> Klarmeldungen</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="w-full sm:w-1/2 mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
-    <h2 class="m-2 text-center text-2xl">Einsatzbereitschaft von Schiffen</h2>
-    <div class="flex justify-center w-full h-96 border-b border-gray-400 dark:border-gray-600 rounded-t">
-        <app-boote-klarmeldung></app-boote-klarmeldung>
-    </div>
-    <div class="w-full p-4 bg-gray-100 dark:bg-gray-600 text-gray-700 rounded-b">
-        <p>Darstellung aller in der WSP hinterlegten Schiffen zu ihren zugewiesenen Dienststelle. Die Schiffe bilden dabei farblich ihre Einsatzbereitschaft dar.</p>
-        <div class="mt-2 text-blue-400 cursor-pointer">> Klarmeldungen</div>
-    </div>
-</div>
 
-<div class="w-full sm:w-1/2 mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
-    <h2 class="m-2 text-center text-2xl">Einsatzbereitschaft von Dienststellen</h2>
-    <div class="flex justify-center w-full h-96 border-b border-gray-400 dark:border-gray-600 rounded-t">
-        <app-dienststellen-klarmeldung></app-dienststellen-klarmeldung>
-    </div>
-    <div class="w-full p-4 bg-gray-100 dark:bg-gray-600 text-gray-700 rounded-b">
-        <p>Verteilung von einsatzbereiten und unklaren Schiffen nach hinterlegter Dienststelle.</p>
-        <div class="mt-2 text-blue-400 cursor-pointer">> Klarmeldungen</div>
-    </div>
-</div>

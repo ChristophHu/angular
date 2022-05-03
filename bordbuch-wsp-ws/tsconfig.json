@@ -6,9 +6,7 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    
     "strictPropertyInitialization": false,
-
     "noImplicitOverride": true,
     "paths": {
       "image-carousel": [
@@ -36,9 +34,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-
-    
-
     "strictTemplates": true
   }
 }
