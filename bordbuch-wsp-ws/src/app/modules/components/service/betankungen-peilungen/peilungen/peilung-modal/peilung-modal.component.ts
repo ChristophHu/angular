@@ -72,7 +72,7 @@ export class PeilungModalComponent implements OnInit {
 
   setDate() {
     this.peilungForm.patchValue({ date: getLocalISO('now') })
-    this.peilungForm.dirty
+    this.peilungForm.markAsDirty()
   }
 
   create() {

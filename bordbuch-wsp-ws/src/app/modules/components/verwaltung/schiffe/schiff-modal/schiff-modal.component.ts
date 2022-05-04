@@ -52,7 +52,7 @@ export class SchiffModalComponent implements OnInit {
   }
   // setDate() {
   //   this.schiffForm.patchValue({ durchsicht: getLocalISO('now') })
-  //   this.schiffForm.dirty
+  //   this.schiffForm.markAsDirty()
   // }
 
   create() {

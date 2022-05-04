@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap, take, tap } from 'rxjs'
+import { concatMap, map, switchMap, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model'
@@ -107,7 +107,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadAllKlarmeldungen),
             concatMap(action => this.appService.getKlarmeldungen()),
-            tap(data => console.log(data)),
             map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
         )
     })
@@ -116,7 +115,6 @@ export class Effects {
             ofType(insertKlarmeldung),
             switchMap(action => {
                 return this.appService.insertKlarmeldung(action.insert).pipe(
-                    tap(id => console.log(id)),
                     map((id: string) => insertKlarmeldungSuccess({ action, id }))
                 )
             })
@@ -137,8 +135,7 @@ export class Effects {
             ofType(deleteKlarmeldung),
             switchMap(action => {
                 return this.appService.deleteKlarmeldung(action.id).pipe(
-                    tap(id => console.log(id)),
-                    map((id: string) => deleteKlarmeldungSuccess({ id }))
+                    map(() => deleteKlarmeldungSuccess(action))
                 )
             })
         )
@@ -359,8 +356,6 @@ export class Effects {
         return this.actions$.pipe(
             ofType(loadTanks),
             concatMap(action => this.appService.getTanks()),
-            // concatMap(action => this.appService.getTanksVonSchiff(action.id)),
-            tap(tanks => console.log(tanks)),
             map((tanks: Tank[]) => loadedTanks({ tanks }))
         )
     })

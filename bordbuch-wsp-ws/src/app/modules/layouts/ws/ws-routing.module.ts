@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AppService } from 'src/app/core/services/app.service';
-import { KatFacade } from 'src/app/store/kat-store/kat.facade';
-import { KatModule } from 'src/app/store/kat-store/kat.module';
-import { Resolver } from 'src/app/store/resolver';
-import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
-import { SpecModule } from 'src/app/store/spec-store/spec.module';
-import { WsComponent } from './ws.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+// import { AppService } from 'src/app/core/services/app.service'
+import { KatFacade } from 'src/app/store/kat-store/kat.facade'
+import { KatModule } from 'src/app/store/kat-store/kat.module'
+import { Resolver } from 'src/app/store/resolver'
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade'
+import { SpecModule } from 'src/app/store/spec-store/spec.module'
+import { WsComponent } from './ws.component'
 
 const routes: Routes = [
   { path: '', component: WsComponent, resolve: { data: Resolver },
@@ -19,7 +19,7 @@ const routes: Routes = [
       { path: '**', redirectTo: 'service'}
     ]
   }
-];
+]
 
 @NgModule({
   imports: [
@@ -31,8 +31,8 @@ const routes: Routes = [
   providers: [
     Resolver,
     KatFacade,
-    SpecFacade,
-    AppService
+    SpecFacade
+    // AppService
   ]
 })
 export class WsRoutingModule { }

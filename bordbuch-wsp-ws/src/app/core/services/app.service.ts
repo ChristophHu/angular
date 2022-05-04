@@ -40,7 +40,7 @@ export class AppService {
         const backendUrl: string = this._connectionService.getBackendUrl()
         const token     : string = this._connectionService.getToken()
 
-        // console.info(`reducer | action: '${action}', data: ${data}`)
+        console.info(`reducer | action: '${action}', data: ${data}`)
         // console.table(`data: ${data}`)
 
         const baseURL = `${backendUrl}/${action}`
@@ -156,7 +156,7 @@ export class AppService {
                 param = `id=${data.id}&id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
                 break
             case 'deleteKlarmeldung':
-                param = `id=${data.id}`
+                param = `id=${data}`
                 break
 
             // schiffe
@@ -262,7 +262,7 @@ export class AppService {
         const backendUrl: string = this._connectionService.getBackendUrl()
         const token     : string = this._connectionService.getToken()
 
-        console.info(`getreducer | action: '${action}', data: `, data)
+        // console.info(`getreducer | action: '${action}', data: `, data)
 
         const baseURL = `${backendUrl}/${action}`
         let param = ``
@@ -527,11 +527,9 @@ export class AppService {
         return this.get('getKlarmeldungenAll')
     }
     insertKlarmeldung(insert: Klarmeldung): Observable<any> {
-        console.log(insert)
         return this.insert(insert, 'insertKlarMeldung')
     }
     updateKlarmeldung(update: Klarmeldung): Observable<any> {
-        console.log(update)
         return this.update(update, 'updateKlarMeldung')
     }
     deleteKlarmeldung(id: string): Observable<any> {

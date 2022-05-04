@@ -74,7 +74,7 @@ export class ZaehlerstandModalComponent implements OnInit {
 
   setDate() {
     this.zaehlerstandForm.patchValue({ date: getLocalISO('now') })
-    this.zaehlerstandForm.dirty
+    this.zaehlerstandForm.markAsDirty()
   }
 
   create() {

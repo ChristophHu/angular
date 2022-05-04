@@ -75,7 +75,7 @@ export class AusgewaehlterStandortModalComponent implements OnInit {
   }
   setDate() {
     this.standortForm.patchValue({ date: getLocalISO('now') })
-    this.standortForm.dirty
+    this.standortForm.markAsDirty()
   }
 
   create() {

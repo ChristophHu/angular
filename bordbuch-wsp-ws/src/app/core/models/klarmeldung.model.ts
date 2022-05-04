@@ -2,6 +2,7 @@ export interface Klarmeldung {
     id?         : string
     id_schiff   : string
     klar        : boolean
-    beginn       : string
+    beginn      : string
     ende?       : string
+    name?       : string
 }

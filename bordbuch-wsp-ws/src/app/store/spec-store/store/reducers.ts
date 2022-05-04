@@ -116,7 +116,7 @@ export const reducer = createReducer(
     }),
     on(insertKlarmeldungSuccess, (state, action) => {
         let klarmeldung: Klarmeldung = Object.assign({}, action.action.insert, { id: action.id })
-        let cleared: Klarmeldung[] | undefined = checkStateForEmptyArrays(state.peilungen)
+        let cleared: Klarmeldung[] | undefined = checkStateForEmptyArrays(state.klarmeldungen)
         cleared = cleared?.filter(el => el.id != action.action.insert.id)
         cleared = [...cleared!, ...[klarmeldung]]
         return {
@@ -167,7 +167,6 @@ export const reducer = createReducer(
         }
     }),
     on(updatePeilungSuccess, (state, action) => {
-        // let reparatur: Reparatur = Object.assign({}, action.action.update, { id: action.id })
         let cleared: Peilung[] | undefined = checkStateForEmptyArrays(state.peilungen)
         cleared = cleared?.filter(el => el.id != action.action.update.id)
         cleared = [...cleared!, ...[action.action.update]]

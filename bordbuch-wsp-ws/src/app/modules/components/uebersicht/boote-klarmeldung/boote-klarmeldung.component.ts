@@ -20,7 +20,7 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
   private labels: string[] = []
   private parents: string[] = []
   private values: number[] = []
-  private colors: string[] = ["#3495eb","#3495eb","#3495eb"]
+  private colors: string[] = []
 
   constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this._katFacade.schiffe$.subscribe((data: Schiff[]) => {
@@ -55,7 +55,10 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
     const rootParents = new Array(this.dienststellen.length).fill('')
     this.values = new Array(this.dienststellen.length).fill(0)
     this.parents.push(...rootParents)
-    this.schiffe.forEach((el) => {
+
+    let tempColor = new Array(this.dienststellen.length + this.schiffe.length).fill('#3495eb')
+    this.colors = [...tempColor]
+    this.schiffe.forEach((el, index_schiff) => {
       // labels
       this.labels.push(el.name)
       // parents
@@ -64,15 +67,12 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
       const index = this.dienststellen.indexOf(el.dienststelle) // 0
       this.values[index]+=1
 
-      let col: boolean = false
-      this.klarmeldungen.forEach((klar: any) => {
-        if (klar.id_schiff == el.id) col = true
+      this.klarmeldungen.forEach((klarmeldung: Klarmeldung) => {        
+          if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) {
+            this.colors[this.dienststellen.length + index_schiff] = '#ef553b'
+          }
       })
-      if (col) {
-        this.colors.push('#ef553b')
-      } else {
-        this.colors.push('#3495eb')
-      }
+
       this.values.push(1)
     })
   }
@@ -111,7 +111,10 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
       },
       sunburstcolorway:[...this.colors]
     }
-
-    let t = PlotlyJS.newPlot('klarmeldungen', data, layout);
+    try {
+      PlotlyJS.newPlot('klarmeldungen', data, layout)
+    } catch (err) {
+      // console.log(err)
+    }
   }
 }

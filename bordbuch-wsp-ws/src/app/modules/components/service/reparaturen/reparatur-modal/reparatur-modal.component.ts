@@ -87,7 +87,7 @@ export class ReparaturModalComponent implements OnInit {
   }
   setDate() {
     this.reparaturForm.patchValue({ date: getLocalISO('now') })
-    this.reparaturForm.dirty
+    this.reparaturForm.markAsDirty()
   }
 
   decodeImages(data: any[]) {

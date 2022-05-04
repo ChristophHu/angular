@@ -54,7 +54,7 @@ export class ChecklisteModalComponent implements OnInit {
 
   setDate() {
     this.checklistForm.patchValue({ datum: getLocalISO('now') })
-    this.checklistForm.dirty
+    this.checklistForm.markAsDirty()
   }
   changeCheck(item: Checklistitem) {
     this.checklistKat = this.checklistKat.filter(el => el.id != item.id)

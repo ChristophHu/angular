@@ -18,7 +18,7 @@
                     <td hidden>{{ klarmeldung.id_schiff }}</td>
                     <td>{{ klarmeldung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>
                     <td>{{ klarmeldung.ende | date:"dd.MM.yyyy HH:mm" }}</td>
-                    <td>{{ klarmeldung.klar }}</td>
+                    <td>{{ klarmeldung.klar ? 'klar' : 'unklar' }}</td>
                     <td class="flex flex-row justify-start text-gray-500">
                         <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
                             <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>

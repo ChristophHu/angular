@@ -24,7 +24,6 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
   private layout: any
 
   constructor(private _katFacade: KatFacade, private _specFacade: SpecFacade) {
-    console.log('construct')
     this._katFacade.schiffe$.subscribe((data: Schiff[]) => {
       if (data) {
         this.schiffe = data
@@ -61,8 +60,8 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
       this.klar[index]+=1
 
       let unklar: boolean = false
-      this.klarmeldungen.forEach((klar: Klarmeldung) => {
-        if (klar.id_schiff == el.id) unklar = true
+      this.klarmeldungen.forEach((klarmeldung: Klarmeldung) => {
+        if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) unklar = true
       })
       if (unklar) this.unklar[index] += 1
     })
@@ -162,6 +161,10 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         b: 20
       },
     }
-    PlotlyJS.newPlot('dst_klarmeldungen', this.data, this.layout)
+    try {
+      PlotlyJS.newPlot('dst_klarmeldungen', this.data, this.layout)
+    } catch (err) {
+      // console.log(err)
+    }
   }
 }

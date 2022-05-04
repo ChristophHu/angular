@@ -50,11 +50,13 @@ export class KlarmeldungModalComponent implements OnInit {
   }
   setBeginn() {
     this.klarmeldungForm.patchValue({ beginn: getLocalISO('now') })
-    this.klarmeldungForm.dirty
+    this.klarmeldungForm.markAsDirty()
+    // this.klarmeldungForm.value.klar = false
   }
   setEnde() {
     this.klarmeldungForm.patchValue({ ende: getLocalISO('now') })
-    this.klarmeldungForm.dirty
+    this.klarmeldungForm.markAsDirty()
+    // this.klarmeldungForm.value.klar = true
   }
 
   create() {
@@ -62,9 +64,11 @@ export class KlarmeldungModalComponent implements OnInit {
       id_schiff: this.klarmeldungForm.value.id_schiff, 
       beginn: this.klarmeldungForm.value.beginn,
       ende: this.klarmeldungForm.value.ende,
-      klar: this.klarmeldungForm.value.klar
+      klar: this.klarmeldungForm.value.klar,
+      name: this.klarmeldungForm.value.name
     }
     this._specFacade.insertKlarmeldung(insert)
+    this.modal?.close()
   }
   update() {
     const update: Klarmeldung = {
@@ -72,9 +76,11 @@ export class KlarmeldungModalComponent implements OnInit {
       id_schiff: this.klarmeldungForm.value.id_schiff, 
       beginn: this.klarmeldungForm.value.beginn,
       ende: this.klarmeldungForm.value.ende,
-      klar: this.klarmeldungForm.value.klar
+      klar: this.klarmeldungForm.value.klar,
+      name: this.klarmeldungForm.value.name
     }
     this._specFacade.updateKlarmeldung(update)
+    this.modal?.close()
   }
   delete() {
     if (this.klarmeldungForm.value.id) this._specFacade.deleteKlarmeldung(this.klarmeldungForm.value.id)

@@ -72,7 +72,7 @@ export class BetankungModalComponent implements OnInit {
 
   setDate() {
     this.betankungForm.patchValue({ date: getLocalISO('now') })
-    this.betankungForm.dirty
+    this.betankungForm.markAsDirty()
   }
 
   create() {
