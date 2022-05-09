@@ -63,7 +63,7 @@ export const selectReparaturFotosCount = createSelector(
 )
 export const selectReparaturFotosById = (id: string) => createSelector(
     selectAllReparaturFotos,
-    reparaturfotos => reparaturfotos?.filter(el => el.id == id)
+    reparaturfotos => reparaturfotos?.filter(el => el.id_reparatur == id)
 )
 
 // laststandorte
