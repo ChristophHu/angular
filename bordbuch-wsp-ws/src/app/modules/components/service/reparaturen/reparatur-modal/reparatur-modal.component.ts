@@ -37,7 +37,7 @@ export class ReparaturModalComponent implements OnInit {
     this.pruefvermerkkategorien$ = _katFacade.pruefvermerkkategorien$
     this.status$ = _katFacade.status$
     this.schiffe$ = _katFacade.schiffe$
-    // this.reparaturfotos$ = this._specFacade.allReparaturFotos$
+    this.reparaturfotos$ = this._specFacade.allReparaturFotos$
     this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
 
     this.reparaturForm = this._formBuilder.group({
