@@ -109,6 +109,10 @@ export const selectIdByTank = (bezeichnung: string) => createSelector(
     selectTanks,
     tanks => tanks?.find(el => el.bezeichnung == bezeichnung)?.id
 )
+export const selectTankByID = (id: string) => createSelector(
+    selectTanks,
+    tanks => tanks?.find(el => el.id == id)?.bezeichnung
+)
 
 // zaehlerstaende
 export const selectAllZaehlerstaende = createSelector(

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ServiceComponent } from './service.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -19,8 +18,8 @@ import { ReparaturModalComponent } from './reparaturen/reparatur-modal/reparatur
 import { BetankungenPeilungenComponent } from './betankungen-peilungen/betankungen-peilungen.component';
 import { BetankungModalComponent } from './betankungen-peilungen/betankungen/betankung-modal/betankung-modal.component';
 import { BetankungenComponent } from './betankungen-peilungen/betankungen/betankungen.component';
-import { PeilungenComponent } from './betankungen-peilungen/peilungen/peilungen.component';
-import { PeilungModalComponent } from './betankungen-peilungen/peilungen/peilung-modal/peilung-modal.component';
+import { PeilungenComponent } from './peilungen/peilungen.component';
+import { PeilungModalComponent } from './peilungen/peilung-modal/peilung-modal.component';
 import { KlarmeldungenComponent } from './klarmeldungen/klarmeldungen.component';
 import { KlarmeldungModalComponent } from './klarmeldungen/klarmeldung-modal/klarmeldung-modal.component';
 
@@ -28,6 +27,7 @@ const routes: Routes = [
   { path: '', component: ServiceComponent,
     children: [
       { path: 'betankungen', component: BetankungenPeilungenComponent },
+      { path: 'peilungen', component: PeilungenComponent },
       { path: 'checklisten', component: ChecklistenComponent },
       { path: 'klarmeldungen', component: KlarmeldungenComponent },
       { path: 'reparaturen', component: ReparaturenComponent },

@@ -29,6 +29,7 @@
     "@types/plotly.js-dist-min": "^2.3.0",
     "angular-datatables": "^13.0.1",
     "angularx-qrcode": "^13.0.3",
+    "browser-image-compression": "^2.0.0",
     "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.11.3",
     "leaflet": "^1.7.1",

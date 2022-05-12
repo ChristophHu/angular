@@ -60,10 +60,10 @@ export class AppService {
 
             // betankung
             case 'insertBetankung':
-                param = `id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                param = `id_schiff=${data.id_ship}&id_tank=${data.id_tank}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
             case 'updateBetankung':
-                param = `id=${data.id}&id_schiff=${data.id_ship}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
+                param = `id=${data.id}&id_schiff=${data.id_ship}&id_tank=${data.id_tank}&latitude=${data.location.latitude}&longitude=${data.location.longitude}&date=${data.date}&ort=${data.ort}&fuel=${data.fuel}&fuelfilllingquantity=${data.fuelfillingquantity}`
                 break
 
             case'deleteBetankung':

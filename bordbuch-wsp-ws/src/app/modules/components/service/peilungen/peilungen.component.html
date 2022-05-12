@@ -1,0 +1,98 @@
+<page-header></page-header>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto mt-4 px-4">
+        <div class="flex flex-row mb-3">
+            <icons class="w-6 h-6 stroke-2 stroke-current" name="table"></icons>
+            <span class="ml-2 text-lg font-bold">Ergebnisse</span>
+        </div>
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="w-28">Datum</th>
+                    <th hidden>id</th>
+                    <th hidden>id_schiff</th>
+                    <th hidden>id_tank</th>
+                    <th>Name</th>
+                    <th>Bezeichnung</th>
+                    <th>Menge (in L)</th>
+                    <th class="w-12"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let peilung of (peilungen$ | async | toArray)">
+                    <td>{{ peilung.date | date: 'dd.MM.yyyy' }}</td>
+                    <td hidden>{{ peilung.id }}</td>
+                    <td hidden>{{ peilung.id_schiff }}</td>
+                    <td hidden>{{ peilung.id_tank }}</td>
+                    <td>{{ peilung.schiffsname }}</td>
+                    <td>{{ peilung.bezeichnung }}</td>
+                    <td>{{ peilung.vol }} (von {{ peilung.max_vol }})</td>
+                    <td class="flex flex-row justify-start text-gray-500">
+                        <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <mat-menu #editMenu="matMenu">
+                            <button mat-menu-item (click)="showModal(peilung)" tooltip="Bearbeiten der ausgewählten Peilung" placement="top" [offset]="20">
+                                Bearbeiten
+                            </button>
+                            <button mat-menu-item (click)="delete(peilung.id)">
+                                Löschen
+                            </button>
+                        </mat-menu>
+                        <!-- <button class="dropdown w-6 h-6" appDropdown>
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(peilung)">
+                                <p>Bearbeiten</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(peilung.id)">
+                                <p>Löschen</p>
+                            </div>
+                        </div> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+            <span class="h-6 w-6 mr-2">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+            </span>
+            Peilung hinzufügen
+        </button>
+    </div>
+</div>
+
+<div *ngIf="showfilter">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 py-3 border-b">
+        <div class="h-8 flex items-center">
+            <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'year') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('year')">Jahr</button>
+            <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'month') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('month')">Monat</button>
+            <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'week') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('week')">Woche</button>
+            <button class="px-3 mr-2 bg-gray-200 text-black hover:bg-gray-300 hover:text-gray-500 hover:shadow-inner shadow rounded-full" [ngClass]="(filter == 'today') ? 'bg-blue-600 text-white' : ''" (click)="toggleFilter('today')">Heute</button>
+        </div>
+        <div class="lg:justify-self-end">
+            <form [formGroup]="filterForm">
+                <div class="h-8 flex flex-row items-center">
+                    <div class="w-48 mr-2">
+                        <mat-form-field appearance="fill">
+                            <input matInput type="date" formControlName="startdate" value="{{filterForm.value.startdate | date:'yyyy-MM-dd'}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-48 mr-2">
+                        <mat-form-field appearance="fill">
+                            <input matInput type="date" formControlName="enddate" value="{{filterForm.value.enddate | date:'yyyy-MM-dd'}}">
+                        </mat-form-field>
+                    </div>
+                    <button (click)="toggleFilter('')" class="w-6 h-6 focus:outline-none rounded-md cursor-pointer" [ngClass]="(filter == '') ? 'bg-blue-600 text-white' : ''">
+                        <icons class="w-6 h-6 stroke-2 stroke-current" name="search"></icons>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 
+<div class="mt-4">
+    
+</div> -->

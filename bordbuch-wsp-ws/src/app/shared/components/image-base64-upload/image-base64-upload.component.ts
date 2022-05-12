@@ -4,8 +4,8 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { AppService } from 'src/app/core/services/app.service';
-// import * as _ from 'lodash';
+
+import imageCompression from 'browser-image-compression'
 
 @Component({
   selector: 'image-base64-upload',
@@ -23,68 +23,43 @@ export class ImageBase64UploadComponent implements OnInit {
 
   ngOnInit() {}
 
-  fileChangeEvent(fileInput: any): false | void {
-    let file = fileInput.target.files[0]
+  async fileChangeEvent(fileInput: any) {
+    const imageFile = fileInput.target.files[0];
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
-    const max_size = 500000
-    const allowed_types = ['image/jpeg', 'image/png']
-    const max_height = 15200
-    const max_width = 25600
-
-    if (fileInput.target.files[0].size > max_size) {
-      this.imageError = 'Maximale Größe ist ' + max_size / 1000 + 'Kb.'
-
-      return false
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+      allowed_types: ['image/jpeg', 'image/png']
     }
 
-    if (!allowed_types.includes(fileInput.target.files[0].type)) {
-        this.imageError = 'Es sind nud die Datei-Formate *.jpg/*.png erlaubt.';
-        return false;
+    if (!options.allowed_types.includes(fileInput.target.files[0].type)) {
+      this.imageError = 'Es sind nud die Datei-Formate *.jpg/*.png erlaubt.';
+    } else {
+      try {
+        const compressedFile = await imageCompression(imageFile, options);
+        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+  
+        // await uploadToServer(compressedFile); // write your own logic
+        let reader = new FileReader()
+        reader.onload = () => {
+          const res = btoa(reader.result as string)
+          this.imageBase64.emit(res)
+        }
+        reader.onerror = function (error) {
+          console.log('Error: ', error)
+        }
+        reader.readAsDataURL(compressedFile)
+      } catch (error) {
+        console.log(error);
+      }
     }
-
-    let reader = new FileReader()
-    reader.onload = () => {
-      const res = btoa(reader.result as string)
-      this.imageBase64.emit(res)
-    }
-    reader.onerror = function (error) {
-      console.error('Error: ', error)
-    }
-    reader.readAsDataURL(file)
   }
 
-  // fileChangeEvent2(fileInput: any): false | void {
-  //   let imageURLBase64: any
-  //   console.log(fileInput)
-  //   this.imageError = null
-  //   if (fileInput.target.files && fileInput.target.files[0]) {
 
-  //     // Size Filter Bytes
-  //     const max_size = 500000
-  //     const allowed_types = ['image/jpeg']
-  //     const max_height = 15200
-  //     const max_width = 25600
-
-  //     if (fileInput.target.files[0].size > max_size) {
-  //       this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'Mb'
-
-  //       return false
-  //     }
-
-  //     if (!allowed_types.includes(fileInput.target.files[0].type)) {
-  //         this.imageError = 'Only Images are allowed ( JPG )';
-  //         return false;
-  //     }
-  //     const reader = new FileReader()
-  //     reader.onload = () => {
-  //       imageURLBase64 = reader.result
-  //       console.log(reader.result)
-  //       this.imageBase64.emit(reader.result)
-  //     }
-
-  //     reader.readAsDataURL(fileInput.target.files[0])
-  //   }
-  // }
 
   removeImage() {
     this.cardImageBase64 = null

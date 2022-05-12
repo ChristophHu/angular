@@ -190,6 +190,9 @@ export class SpecFacade {
     getTankByIDShip(id: string): Observable<Tank[] | undefined> {
         return this.store.pipe(select(SpecSelectors.selectTankByIDShip(id)))
     }
+    getTankById(id: string): Observable<string | undefined> {
+        return this.store.pipe(select(SpecSelectors.selectTankByID(id)))
+    }
     getIdByTank(bezeichnung: string): Observable<string | undefined> {
         return this.store.pipe(select(SpecSelectors.selectIdByTank(bezeichnung)))
     }

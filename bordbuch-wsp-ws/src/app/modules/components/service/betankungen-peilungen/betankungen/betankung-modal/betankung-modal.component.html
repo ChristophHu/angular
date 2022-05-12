@@ -18,12 +18,24 @@
                 <mat-label>id_ship</mat-label>
                 <input matInput type="text" formControlName="id_ship" readonly>
               </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>id_tank</mat-label>
+                <input matInput type="text" formControlName="id_tank" readonly>
+              </mat-form-field>
             </div>
             <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
               <mat-select formControlName="name" (selectionChange)="selectShip($event.value)">
                 <mat-option *ngFor="let schiff of (schiffe$ | async | toArray)" [value]="schiff.name">
                   {{ schiff.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Tank</mat-label>
+              <mat-select formControlName="tank" (selectionChange)="selectTank($event.value)">
+                <mat-option *ngFor="let tank of (tanks$ | async | toArray)" [value]="tank.bezeichnung">
+                  {{ tank.bezeichnung }}
                 </mat-option>
               </mat-select>
             </mat-form-field>

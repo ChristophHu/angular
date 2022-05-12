@@ -36,6 +36,8 @@ export class PeilungModalComponent implements OnInit {
     this.schiffe$ = _katFacade.schiffe$
     this.tank$ = _specFacade.allTanks$
 
+    _specFacade.allTanks$.subscribe(data => console.log(data))
+
     this.peilungForm = this._formBuilder.group({
       id: [],
       id_schiff: [],
@@ -56,7 +58,8 @@ export class PeilungModalComponent implements OnInit {
         this.peilungForm.patchValue({ date: data.data.date })
         this.peilungForm.patchValue(data.data.peilung)
   
-        this._specFacade.getTankByIDShip(data.data.peilung.id_schiff)
+        this.tank$ = this._specFacade.getTankByIDShip(data.data.peilung.id_schiff) as Observable<Tank[]>
+        // this._specFacade.getTankByIDShip(data.data.peilung.id_schiff).subscribe(data => console.log(data))
       }
     })
   }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Betankung } from 'src/app/core/models/betankung';
 import { Kat } from 'src/app/core/models/kat.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
+import { Tank } from 'src/app/core/models/tank.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -23,6 +24,7 @@ export class BetankungModalComponent implements OnInit {
 
   betriebsstoffe$: Observable<Kat[]>
   schiffe$: Observable<Schiff[]>
+  tanks$: Observable<Tank[]>
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -37,12 +39,14 @@ export class BetankungModalComponent implements OnInit {
     this.betankungForm = this._formBuilder.group({
       id: [],
       id_ship: [],
+      id_tank: [],
       name: [],
       date: [],
       location: this._formBuilder.group({
         latitude: [0],
         longitude: [0]
       }),
+      tank: [],
       ort: [],
       fuel: [],
       fuelfillingquantity: []
@@ -53,13 +57,25 @@ export class BetankungModalComponent implements OnInit {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
 
-      this.betankungForm.patchValue({ date: data.data.date })
-      this.betankungForm.patchValue(data.data.betankung)
+      if (data.data.date) this.betankungForm.patchValue({ date: data.data.date })
+      if (data.data.betankung) {
+        this.betankungForm.patchValue(data.data.betankung)
+
+        this.tanks$ = this._specFacade.getTankByIDShip(data.data.betankung.id_ship) as Observable<Tank[]>
+        this._specFacade.getTankById(data.data.betankung.id_tank).subscribe((tank: any) => this.betankungForm.patchValue({ tank }))
+      }
     })
   }
 
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe((id: any) => this.betankungForm.patchValue({ id_ship: id }))
+    this.tanks$ = this._specFacade.getTankByIDShip(this.betankungForm.value.id_ship) as Observable<Tank[]>
+    this._specFacade.allTanks$.subscribe((data: any) => {
+      console.log(data)
+    })
+  }
+  selectTank(name: string) {
+    this._specFacade.getIdByTank(name).subscribe((id: any) => this.betankungForm.patchValue({ id_tank: id }))
   }
   setCurrentLocation() {
     this.locationService.getCurrentPosition().then(position => {
