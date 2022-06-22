@@ -30,6 +30,11 @@ export const selectChecklistByIdSchiff = (id: string) => createSelector(
 export const selectKlarmeldungen = createSelector(
     specState,
     state => state.klarmeldungen
+    // state => state.klarmeldungen?.find(el => el.klar !== 'inst')
+)
+export const selectInstandsetzungen = createSelector(
+    specState,
+    state => state.klarmeldungen?.filter(el => el.klar == false)
 )
 
 // peilungen

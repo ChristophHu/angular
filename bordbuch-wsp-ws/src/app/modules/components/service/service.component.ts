@@ -8,10 +8,8 @@ import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 })
 export class ServiceComponent implements OnInit {
 
-  constructor(private _specFacade: SpecFacade) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this._specFacade.allKlarmeldungen$.subscribe(data => console.log(data))
-  }
+  ngOnInit(): void {}
 
 }

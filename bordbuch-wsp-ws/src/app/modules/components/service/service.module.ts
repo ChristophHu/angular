@@ -15,20 +15,22 @@ import { WartungMotorenComponent } from './wartungen/wartung-motoren/wartung-mot
 import { WartungSchiffeComponent } from './wartungen/wartung-schiffe/wartung-schiffe.component';
 import { WartungSchiffModalComponent } from './wartungen/wartung-schiffe/wartung-schiff-modal/wartung-schiff-modal.component';
 import { ReparaturModalComponent } from './reparaturen/reparatur-modal/reparatur-modal.component';
-import { BetankungenPeilungenComponent } from './betankungen-peilungen/betankungen-peilungen.component';
-import { BetankungModalComponent } from './betankungen-peilungen/betankungen/betankung-modal/betankung-modal.component';
-import { BetankungenComponent } from './betankungen-peilungen/betankungen/betankungen.component';
+import { BetankungModalComponent } from './betankungen/betankung-modal/betankung-modal.component';
+import { BetankungenComponent } from './betankungen/betankungen.component';
 import { PeilungenComponent } from './peilungen/peilungen.component';
 import { PeilungModalComponent } from './peilungen/peilung-modal/peilung-modal.component';
 import { KlarmeldungenComponent } from './klarmeldungen/klarmeldungen.component';
 import { KlarmeldungModalComponent } from './klarmeldungen/klarmeldung-modal/klarmeldung-modal.component';
+import { InstandsetzungenComponent } from './instandsetzungen/instandsetzungen.component';
+import { InstandsetzungModalComponent } from './instandsetzungen/instandsetzung-modal/instandsetzung-modal.component';
 
 const routes: Routes = [
   { path: '', component: ServiceComponent,
     children: [
-      { path: 'betankungen', component: BetankungenPeilungenComponent },
+      { path: 'betankungen', component: BetankungenComponent },
       { path: 'peilungen', component: PeilungenComponent },
       { path: 'checklisten', component: ChecklistenComponent },
+      { path: 'instandsetzungen', component: InstandsetzungenComponent },
       { path: 'klarmeldungen', component: KlarmeldungenComponent },
       { path: 'reparaturen', component: ReparaturenComponent },
       { path: 'wartungen', component: WartungenComponent },
@@ -53,11 +55,12 @@ const routes: Routes = [
     WartungSchiffeComponent,
     WartungSchiffModalComponent,
     ReparaturModalComponent,
-    BetankungenPeilungenComponent,
     PeilungenComponent,
     PeilungModalComponent,
     KlarmeldungenComponent,
-    KlarmeldungModalComponent
+    KlarmeldungModalComponent,
+    InstandsetzungenComponent,
+    InstandsetzungModalComponent
   ],
   imports: [
     RouterModule.forChild(routes),

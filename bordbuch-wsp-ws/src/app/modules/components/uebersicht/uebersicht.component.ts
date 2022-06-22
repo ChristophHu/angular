@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { getLocalISO } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-uebersicht',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UebersichtComponent implements OnInit {
 
+  public today = getLocalISO('now')
+  
   ngOnInit(): void {
     
   }

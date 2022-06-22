@@ -10,6 +10,11 @@ import { Streife } from "src/app/core/models/streife.model"
 import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 
+// store
+export const resetStore = createAction(
+	"[Menu] Reset Store"
+)
+
 // betankungen
 export const loadAllBetankungen = createAction(
 	"[Kat Resolver] Load Betankungen",

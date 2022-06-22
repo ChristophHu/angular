@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store'
 import { logout } from 'src/app/modules/auth/state/actions'
 import { selectBackendresponse } from 'src/app/modules/auth/state/selectors'
 import { RootStoreState } from 'src/app/store/root-store.state'
+import { SpecFacade } from 'src/app/store/spec-store/spec.facade'
 
 @Component({
   selector: 'app-vertical-nav',
@@ -16,13 +17,14 @@ export class VerticalNavComponent implements OnInit {
   clickEvent() {
     this.status = !this.status;
   }
-  constructor(private store: Store<RootStoreState>) {
+  constructor(private store: Store<RootStoreState>, private _specFacade: SpecFacade) {
     this.store.pipe(select(selectBackendresponse)).subscribe((data: any) => {
       this.response = data
     })
   }
 
   logout() {
+    this._specFacade.resetStore()
     this.store.dispatch(logout())
   }
 

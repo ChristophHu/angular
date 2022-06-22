@@ -1,0 +1,56 @@
+<page-header></page-header>
+<div class="absolute top-20 right-0 bottom-0 left-0">
+    <div class="container mx-auto mt-4 px-4">
+        <table datatable [dtOptions]="dtOptions" class="row-border hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Schiff</th>
+                    <th hidden>ID</th>
+                    <th>Beginn</th>
+                    <th>Ende</th>
+                    <th>Status</th>
+                    <th class="w-12"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let klarmeldung of (klarmeldungen$ | async | toArray)">
+                    <td>{{ klarmeldung.name }}</td>
+                    <td hidden>{{ klarmeldung.id_schiff }}</td>
+                    <td>{{ klarmeldung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>
+                    <td>{{ klarmeldung.ende | date:"dd.MM.yyyy HH:mm" }}</td>
+                    <td>{{ klarmeldung.klar ? 'klar' : 'unklar' }}</td>
+                    <td class="flex flex-row justify-start text-gray-500">
+                        <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <mat-menu #editMenu="matMenu">
+                            <button mat-menu-item (click)="showModal(klarmeldung)">
+                                Bearbeiten
+                            </button>
+                            <button mat-menu-item (click)="delete(klarmeldung)">
+                                Löschen
+                            </button>
+                        </mat-menu>
+                        <!-- <button class="dropdown w-6 h-6" appDropdown>
+                            <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
+                        </button>
+                        <div class="mt-6 bg-white shadow w-24 absolute z-30 right-0 mr-6 rounded">
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="showModal(checklist)">
+                                <p>Bearbeiten</p>
+                            </div>
+                            <div class="text-xs w-full hover:bg-blue-600 p-4 cursor-pointer hover:text-white" (click)="delete(checklist)">
+                                <p>Löschen</p>
+                            </div>
+                        </div> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="mt-5 p-2 flex items-center bg-gray-100 border border-gray-300 text-gray-600 transition duration-150 ease-in-out hover:bg-blue-600 hover:text-white rounded cursor-pointer" (click)="showModal()">
+            <span class="h-6 w-6 mr-2">
+                <icons class="w-6 h-6 stroke-1 stroke-current" name="add"></icons>
+            </span>
+            Klarmeldung hinzufügen
+        </button>
+    </div>
+</div>

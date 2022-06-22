@@ -27,6 +27,7 @@ export class SpecFacade {
     allReparaturen$     = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
     allReparaturFotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
     allReparaturFotoCount$ = this.store.pipe(select(SpecSelectors.selectReparaturFotosCount)) as Observable<number>
+    allInstandsetzungen$ = this.store.pipe(select(SpecSelectors.selectInstandsetzungen)) as Observable<Klarmeldung[]>
     allKlarmeldungen$   = this.store.pipe(select(SpecSelectors.selectKlarmeldungen)) as Observable<Klarmeldung[]>
     allLastStandorte$   = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$       = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
@@ -37,6 +38,10 @@ export class SpecFacade {
     constructor(private store: Store<RootStoreState>) {}
 
     // public dispatches
+    // resetStore
+    resetStore() {
+        this.store.dispatch(SpecActions.resetStore())
+    }
 
     // betankungen
     loadAllBetankungen(filter: Filter) {
