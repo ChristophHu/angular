@@ -61,7 +61,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
 
       let unklar: boolean = false
       this.klarmeldungen.forEach((klarmeldung: Klarmeldung) => {
-        if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) unklar = true
+        if (klarmeldung.id_schiff == el.id && klarmeldung.klar == 'false') unklar = true
       })
       if (unklar) this.unklar[index] += 1
     })

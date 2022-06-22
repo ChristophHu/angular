@@ -34,7 +34,7 @@ export const selectKlarmeldungen = createSelector(
 )
 export const selectInstandsetzungen = createSelector(
     specState,
-    state => state.klarmeldungen?.filter(el => el.klar == false)
+    state => state.klarmeldungen?.filter(el => el.klar == 'false')
 )
 
 // peilungen

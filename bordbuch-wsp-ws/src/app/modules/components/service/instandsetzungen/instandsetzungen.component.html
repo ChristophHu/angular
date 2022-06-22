@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let klarmeldung of (klarmeldungen$ | async | toArray)">
+                <tr *ngFor="let klarmeldung of (instandsetzungen$ | async | toArray)">
                     <td>{{ klarmeldung.name }}</td>
                     <td hidden>{{ klarmeldung.id_schiff }}</td>
                     <td>{{ klarmeldung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>

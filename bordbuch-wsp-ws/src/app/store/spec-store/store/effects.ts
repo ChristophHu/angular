@@ -18,7 +18,7 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess, insertKlarmeldung, insertKlarmeldungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, deleteKlarmeldung, deleteKlarmeldungSuccess, loadAllKlarmeldungen, loadAllKlarmeldungenSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess, insertKlarmeldung, insertKlarmeldungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, deleteKlarmeldung, deleteKlarmeldungSuccess, loadAllKlarmeldungen, loadAllKlarmeldungenSuccess, loadAllInstandsetzungen, loadAllInstandsetzungenSuccess, insertInstandsetzung, insertInstandsetzungSuccess, updateInstandsetzung, updateInstandsetzungSuccess, deleteInstandsetzung, deleteInstandsetzungSuccess,
 } from './actions'
  
 @Injectable()
@@ -90,6 +90,48 @@ export class Effects {
             switchMap(action => {
                 return this.appService.deleteShipChecklist(action.id, action.date).pipe(
                     map(() => deleteShipChecklistSuccess(action))
+                )
+            })
+        )
+    })
+
+    // Instandsetzung
+    loadAllInstandsetzungen$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(loadAllInstandsetzungen),
+            switchMap(action => {
+                return this.appService.getInstandsetzungen().pipe(
+                    map((instandsetzungen: Klarmeldung[]) => loadAllInstandsetzungenSuccess({ instandsetzungen }))
+                )
+            })
+        )
+    })
+    insertInstandsetzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(insertInstandsetzung),
+            switchMap(action => {
+                return this.appService.insertInstandsetzung(action.insert).pipe(
+                    map((id: string) => insertInstandsetzungSuccess({ action, id }))
+                )
+            })
+        )
+    })
+    updateInstandsetzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(updateInstandsetzung),
+            switchMap(action => {
+                return this.appService.updateInstandsetzung(action.update).pipe(
+                    map(() => updateInstandsetzungSuccess({ update: action.update }))
+                )
+            })
+        )
+    })
+    deleteInstandsetzung$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(deleteInstandsetzung),
+            switchMap(action => {
+                return this.appService.deleteInstandsetzung(action.id).pipe(
+                    map(() => deleteInstandsetzungSuccess(action))
                 )
             })
         )

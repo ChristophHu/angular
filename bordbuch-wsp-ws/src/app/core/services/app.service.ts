@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { selectBackendUrl, selectToken } from 'src/app/modules/auth/state/selectors'
+import { getLocalISO } from 'src/app/shared/utils';
 import { Betankung } from '../models/betankung';
 import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
@@ -27,6 +28,10 @@ import { ConnectionService } from './connection.service';
 
 export class AppService {
 
+    private inst: Klarmeldung[] = [
+        { id: '1', id_schiff: '000', klar: 'inst', beginn: getLocalISO('now') },
+        { id: '2', id_schiff: '325', klar: 'inst', beginn: getLocalISO('now'), ende: getLocalISO('now') }
+    ] 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
         this._store.pipe(select(selectToken)).subscribe((token: string) => {
             if (token) this._connectionService.setToken(token)
@@ -520,6 +525,45 @@ export class AppService {
     }
     deleteKennung(id: string): Observable<any> {
         return this.delete(id, 'deleteKatKennung')
+    }
+
+    // instandsetzungen
+    getInstandsetzungen(): Observable<any> {
+        return new Observable ((observer) => {
+            const source$ = of(this.inst)
+            source$.subscribe((data: any) => {
+                observer.next(data)
+            }, (error: any) => observer.error(error))
+        })
+    }
+    insertInstandsetzung(insert: Klarmeldung): Observable<any> {
+        this.inst.push(insert)
+        return new Observable ((observer) => {
+            const source$ = of(null)
+            source$.subscribe((data: any) => {
+                observer.next( new Date() )
+            }), (error: any) => observer.error(error)
+        })
+    }
+    updateInstandsetzung(update: Klarmeldung): Observable<any> {
+        let cleared = this.inst.filter(el => el.id !== update.id)
+        cleared.push(update)
+        return new Observable ((observer) => {
+            const source$ = of(200)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }),
+            (error: any) => observer.error(error)
+        })
+    }
+    deleteInstandsetzung(id: string): Observable<any> {
+        this.inst.filter(el => el.id !== id)
+        return new Observable ((observer) => {
+            const source$ = of(200)
+            source$.subscribe((status: any) => {
+                observer.next(status)
+            }), (error: any) => observer.error(error)
+        })
     }
 
     // klarmeldungen

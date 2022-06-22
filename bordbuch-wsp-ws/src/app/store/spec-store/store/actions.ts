@@ -49,15 +49,40 @@ export const deleteBetankungSuccess = createAction(
 	props<{ id: string }>()
 )
 
+// instandsetzung
+export const loadAllInstandsetzungen = createAction(
+	"[Spec Facade] Load Instandsetzungen"
+)
+export const loadAllInstandsetzungenSuccess = createAction(
+	"[Load Spec Effect] Load Instandsetzungen Success",
+	props<{ instandsetzungen: Klarmeldung[] }>()
+)
+export const insertInstandsetzung = createAction(
+	"[Spec Facade] Insert Instandsetzung",
+	props<{ insert: Klarmeldung }>()
+)
+export const insertInstandsetzungSuccess = createAction(
+	"[Spec Effect] Insert Instandsetzung Success",
+	props<{ action: { insert: Klarmeldung }, id: string }>()
+)
+export const updateInstandsetzung = createAction(
+	"[Spec Facade] Update Instandsetzung",
+	props<{ update: Klarmeldung }>()
+)
+export const updateInstandsetzungSuccess = createAction(
+	"[Spec Effect] Update Instandsetzung Success",
+	props<{ update: Klarmeldung }>()
+)
+export const deleteInstandsetzung = createAction(
+	"[Spec Facade] Delete Instandsetzung",
+	props<{ id: string }>()
+)
+export const deleteInstandsetzungSuccess = createAction(
+	"[Spec Effect] Delete Instandsetzung Success",
+	props<{ id: string }>()
+)
+
 // klarmeldung
-// export const loadKlarmeldungByIdSchiff = createAction(
-// 	"[Spec Facade] Load Klarmeldung",
-// 	props<{ id: string }>()
-// )
-// export const loadKlarmeldungByIdSchiffSuccess = createAction(
-// 	"[Load Spec Effect] Load Klarmeldung Success",
-// 	props<{ klarmeldung: Klarmeldung }>()
-// )
 export const loadAllKlarmeldungen = createAction(
 	"[Spec Facade] Load Klarmeldungen"
 )

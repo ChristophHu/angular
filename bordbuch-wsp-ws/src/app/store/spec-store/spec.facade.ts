@@ -71,6 +71,20 @@ export class SpecFacade {
         return this.store.pipe(select(SpecSelectors.selectChecklistByIdSchiff(id)))
     }
 
+    // Instandsetzung
+    loadAllInstandsetzung() {
+        this.store.dispatch(SpecActions.loadAllInstandsetzungen())
+    }
+    insertInstandsetzung(insert: Klarmeldung) {
+        this.store.dispatch(SpecActions.insertInstandsetzung({ insert }))
+    }
+    updateInstandsetzung(update: Klarmeldung) {
+        this.store.dispatch(SpecActions.updateInstandsetzung({ update }))
+    }
+    deleteInstandsetzung(id: string) {
+        this.store.dispatch(SpecActions.deleteInstandsetzung({ id }))
+    }
+
     // Klarmeldung
     loadAllKlarmeldungen() {
         this.store.dispatch(SpecActions.loadAllKlarmeldungen())
