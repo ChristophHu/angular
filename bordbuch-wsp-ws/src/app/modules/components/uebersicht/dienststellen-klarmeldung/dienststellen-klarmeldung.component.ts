@@ -91,7 +91,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         // klar
         x: [...this.dienststellen],
         y: [...this.klar],
-        name: 'Klar',
+        name: 'Schiffe',
         type: 'bar',
         marker: {
           color: '#3495eb',

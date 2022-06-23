@@ -22,8 +22,8 @@ export class InstandsetzungModalComponent implements OnInit {
 
   instandsetzungForm: FormGroup
   status: any[] = [
-    { bezeichnung: 'Instandsetzung', value: true },
-    { bezeichnung: 'Fahrbereit', value: false }
+    { bezeichnung: 'Fahrbereit', value: true },
+    { bezeichnung: 'Instandsetzung', value: false }
   ]
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<InstandsetzungModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {

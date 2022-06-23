@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as PlotlyJS from 'plotly.js-dist-min'
+import { Instandsetzung } from 'src/app/core/models/Instandsetzung.model';
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
@@ -15,7 +16,8 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
   private dienststellen: string[] = []
   private schiffe: any[] = []
 
-  private klarmeldungen: any[] = []
+  private klarmeldungen: Klarmeldung[] = []
+  private instandsetzungen: Instandsetzung[] = []
 
   private labels: string[] = []
   private parents: string[] = []
@@ -39,6 +41,13 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
     this._specFacade.allKlarmeldungen$.subscribe((data: Klarmeldung[]) => {
       if (data) {
         this.klarmeldungen = data
+        this.build()
+        this.basicChart()
+      }
+    })
+    this._specFacade.allInstandsetzungen$.subscribe((data: Instandsetzung[]) => {
+      if (data) {
+        this.instandsetzungen = data
         this.build()
         this.basicChart()
       }
@@ -71,6 +80,12 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
           if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) {
             this.colors[this.dienststellen.length + index_schiff] = '#ef553b'
           }
+      })
+
+      this.instandsetzungen.forEach((instandsetzung: Instandsetzung) => {        
+        if (instandsetzung.id_schiff == el.id && instandsetzung.klar == false) {
+          this.colors[this.dienststellen.length + index_schiff] = '#665d5d'
+        }
       })
 
       this.values.push(1)
