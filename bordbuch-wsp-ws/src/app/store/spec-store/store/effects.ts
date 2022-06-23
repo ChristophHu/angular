@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap, tap } from 'rxjs'
+import { map, switchMap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model'
@@ -18,7 +18,8 @@ import {
     loadAllZaehlerstaende, loadedAllZaehlerstaende, insertZaehlerstand, insertZaehlerstandSuccess, updateZaehlerstand, updateZaehlerstandSuccess, deleteZaehlerstand, deleteZaehlerstandSuccess, 
     loadAllReparaturen, loadedAllReparaturen, insertReparatur, insertReparaturSuccess, updateReparatur, updateReparaturSuccess, deleteReparatur, deleteReparaturSuccess,
     loadAllStreifen, loadedAllStreifen, insertStreife, insertStreifeSuccess, updateStreife, updateStreifeSuccess, deleteStreife, deleteStreifeSuccess,
-    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess, insertKlarmeldung, insertKlarmeldungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, deleteKlarmeldung, deleteKlarmeldungSuccess, loadAllKlarmeldungen, loadAllKlarmeldungenSuccess, loadAllInstandsetzungen, loadAllInstandsetzungenSuccess, insertInstandsetzung, insertInstandsetzungSuccess, updateInstandsetzung, updateInstandsetzungSuccess, deleteInstandsetzung, deleteInstandsetzungSuccess,
+    loadAllLastStandorte, loadedAllLastStandorte, loadAllStandorte, loadedAllStandorte, insertStandort, insertStandortSuccess, updateStandort, updateStandortSuccess, deleteStandort, deleteStandortSuccess, uploadReparaturFoto, uploadReparaturFotoSuccess, downloadReparaturFotos, downloadReparaturFotosSuccess, deleteReparaturFoto, deleteReparaturFotoSuccess, loadTanks, loadedTanks, insertTank, insertTankSuccess, updateTank, updateTankSuccess, deleteTank, deleteTankSuccess, insertPeilung, insertPeilungSuccess, updatePeilung, updatePeilungSuccess, deletePeilung, deletePeilungSuccess, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungen, loadPeilungenSuccess, insertKlarmeldung, insertKlarmeldungSuccess, updateKlarmeldung, updateKlarmeldungSuccess, deleteKlarmeldung, deleteKlarmeldungSuccess, loadAllKlarmeldungen, loadAllKlarmeldungenSuccess, loadAllInstandsetzungenSuccess, insertInstandsetzungSuccess, updateInstandsetzungSuccess, deleteInstandsetzungSuccess,
+    loadAllInstandsetzungen, insertInstandsetzung, updateInstandsetzung, deleteInstandsetzung
 } from './actions'
  
 @Injectable()
@@ -70,8 +71,11 @@ export class Effects {
     loadAllShipChecklists$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllShipChecklists),
-            concatMap(action => this.appService.getAllShipChecklists()),
-            map((checklists: Checklist[]) => loadedAllShipChecklists({ checklists }))
+            switchMap(action => {
+                return this.appService.getAllShipChecklists().pipe(
+                    map((checklists: Checklist[]) => loadedAllShipChecklists({ checklists }))
+                )
+            })
         )
     })
     insertChecklist$ = createEffect(() => {
@@ -138,18 +142,14 @@ export class Effects {
     })
 
     // Klarmeldung
-    // loadKlarmeldungByIdSchiff$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(loadKlarmeldungByIdSchiff),
-    //         concatMap(action => this.appService.loadKlarmeldungByIdSchiff(action.id)),
-    //         map((klarmeldung: Klarmeldung) => loadKlarmeldungByIdSchiffSuccess({ klarmeldung }))
-    //     )
-    // })
     loadAllKlarmeldungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllKlarmeldungen),
-            concatMap(action => this.appService.getKlarmeldungen()),
-            map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
+            switchMap(action => {
+                return this.appService.getKlarmeldungen().pipe(
+                    map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
+                )
+            })
         )
     })
     insertKlarmeldung$ = createEffect(() => {
@@ -187,8 +187,11 @@ export class Effects {
     loadPeilungenById$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadPeilungenById),
-            concatMap(action => this.appService.getPeilungById(action.id)),
-            map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
+            switchMap(action => {
+                return this.appService.getPeilungById(action.id).pipe(
+                    map((peilungen: Peilung[]) => loadPeilungenByIdSuccess({ peilungen }))
+                )
+            })
         )
     })
     loadPeilungen$ = createEffect(() => {
@@ -278,8 +281,11 @@ export class Effects {
     downloadReparaturFotos$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(downloadReparaturFotos),
-            concatMap(action => this.appService.downloadReparaturFoto(action.id)),
-            map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
+            switchMap(action => {
+                return this.appService.downloadReparaturFoto(action.id).pipe(
+                    map((fotos: any[]) => downloadReparaturFotosSuccess({ fotos }))
+                )
+            })
         )
     })
     uploadReparaturFoto$ = createEffect(() => {
@@ -307,8 +313,11 @@ export class Effects {
     loadAllLastStandorte$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllLastStandorte),
-            concatMap(action => this.appService.getAllLastStandorte()),
-            map((laststandorte: Standort[]) => loadedAllLastStandorte({ laststandorte }))
+            switchMap(action => {
+                return this.appService.getAllLastStandorte().pipe(
+                    map((laststandorte: Standort[]) => loadedAllLastStandorte({ laststandorte }))
+                )
+            })
         )
     })
 
@@ -316,8 +325,11 @@ export class Effects {
     loadAllStandorteVonStreife$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllStandorte),
-            concatMap(action => this.appService.getAllStandorteVonStreife(action.id)),
-            map((standorte: Standort[]) => loadedAllStandorte({ standorte }))
+            switchMap(action => {
+                return this.appService.getAllStandorteVonStreife(action.id).pipe(
+                    map((standorte: Standort[]) => loadedAllStandorte({ standorte }))
+                )
+            })
         )
     })
     insertStandort$ = createEffect(() => {
@@ -397,8 +409,11 @@ export class Effects {
     loadTanks$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadTanks),
-            concatMap(action => this.appService.getTanks()),
-            map((tanks: Tank[]) => loadedTanks({ tanks }))
+            switchMap(action => {
+                return this.appService.getTanks().pipe(
+                    map((tanks: Tank[]) => loadedTanks({ tanks }))
+                )
+            })
         )
     })
     insertTank$ = createEffect(() => {
@@ -436,8 +451,11 @@ export class Effects {
     loadAllZaehlerstaende$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllZaehlerstaende),
-            concatMap(action => this.appService.getAllZaehlerstaende()),
-            map((zaehlerstaende: Zaehlerstand[]) => loadedAllZaehlerstaende({ zaehlerstaende }))
+            switchMap(action => {
+                return this.appService.getAllZaehlerstaende().pipe(
+                    map((zaehlerstaende: Zaehlerstand[]) => loadedAllZaehlerstaende({ zaehlerstaende }))
+                )
+            })
         )
     })
     insertZaehlerstand$ = createEffect(() => {

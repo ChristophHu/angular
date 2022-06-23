@@ -30,8 +30,9 @@ export class AppService {
 
     private inst: Klarmeldung[] = [
         { id: '1', id_schiff: '000', klar: 'inst', beginn: getLocalISO('now') },
-        { id: '2', id_schiff: '325', klar: 'inst', beginn: getLocalISO('now'), ende: getLocalISO('now') }
-    ] 
+        { id: '2', id_schiff: '325', klar: 'inst', beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
+    ]
+
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
         this._store.pipe(select(selectToken)).subscribe((token: string) => {
             if (token) this._connectionService.setToken(token)
@@ -530,6 +531,7 @@ export class AppService {
     // instandsetzungen
     getInstandsetzungen(): Observable<any> {
         return new Observable ((observer) => {
+            console.log(this.inst)
             const source$ = of(this.inst)
             source$.subscribe((data: any) => {
                 observer.next(data)

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { concatMap, map, switchMap, tap } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { Dienststelle } from 'src/app/core/models/dienststelle.model'
 import { Kat } from 'src/app/core/models/kat.model'
 import { Pruefvermerk } from 'src/app/core/models/pruefvermerk.model'
@@ -26,8 +26,11 @@ export class Effects {
     loadBetriebsstoffe$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadBetriebsstoffe),
-            concatMap(action => this.appService.getBetriebsstoffe()),
-            map((kat: Kat[]) => loadedBetriebsstoffe({ kat }))
+            switchMap(action => {
+                return this.appService.getBetriebsstoffe().pipe(
+                    map((kat: Kat[]) => loadedBetriebsstoffe({ kat }))
+                )
+            })
         )
     })
     insertBetriebsstoff$ = createEffect(() => {
@@ -65,8 +68,11 @@ export class Effects {
     loadCheckliste$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadCheckliste),
-            concatMap(action => this.appService.getCheckliste()),
-            map((kat: Kat[]) => loadedCheckliste({ kat }))
+            switchMap(action => {
+                return this.appService.getCheckliste().pipe(
+                    map((kat: Kat[]) => loadedCheckliste({ kat }))
+                )
+            })
         )
     })
     insertChecklist$ = createEffect(() => {
@@ -104,8 +110,11 @@ export class Effects {
     loadDienststellen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadDienststellen),
-            concatMap(action => this.appService.getDienststellen()),
-            map((dienststelle: Dienststelle[]) => loadedDienststellen({ dienststelle }))
+            switchMap(action => {
+                return this.appService.getDienststellen().pipe(
+                    map((dienststelle: Dienststelle[]) => loadedDienststellen({ dienststelle }))
+                )
+            })
         )
     })
     insertDienststelle$ = createEffect(() => {
@@ -143,8 +152,11 @@ export class Effects {
     loadFunktionen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadFunktionen),
-            concatMap(action => this.appService.getFunktionen()),
-            map((kat: Kat[]) => loadedFunktionen({ kat }))
+            switchMap(action => {
+                return this.appService.getFunktionen().pipe(
+                    map((kat: Kat[]) => loadedFunktionen({ kat }))
+                )
+            })
         )
     })
     insertFunktion$ = createEffect(() => {
@@ -182,8 +194,11 @@ export class Effects {
     loadKennungen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadKennungen),
-            concatMap(action => this.appService.getKennungen()),
-            map((kat: Kat[]) => loadedKennungen({ kat }))
+            switchMap(action => {
+                return  this.appService.getKennungen().pipe(
+                    map((kat: Kat[]) => loadedKennungen({ kat }))
+                )
+            })
         )
     })
     insertKennungen$ = createEffect(() => {
@@ -221,8 +236,11 @@ export class Effects {
     loadPruefvermerke$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadPruefvermerke),
-            concatMap(action => this.appService.getPruefvermerke()),
-            map((pruefvermerk: Pruefvermerk[]) => loadedPruefvermerke({ pruefvermerk }))
+            switchMap(action => {
+                return this.appService.getPruefvermerke().pipe(
+                    map((pruefvermerk: Pruefvermerk[]) => loadedPruefvermerke({ pruefvermerk }))
+                )
+            })
         )
     })
     insertPruefvermerk$ = createEffect(() => {
@@ -260,8 +278,11 @@ export class Effects {
     loadPruefvermerkkategorien$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadPruefvermerkkategorien),
-            concatMap(action => this.appService.getPruefvermerkkategorien()),
-            map((kat: Kat[]) => loadedPruefvermerkkategorien({ kat }))
+            switchMap(action => {
+                return this.appService.getPruefvermerkkategorien().pipe(
+                    map((kat: Kat[]) => loadedPruefvermerkkategorien({ kat }))
+                )
+            })
         )
     })
     insertPruefvermerkkategorie$ = createEffect(() => {
@@ -299,8 +320,11 @@ export class Effects {
     loadSchiffe$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadSchiffe),
-            concatMap(action => this.appService.getSchiffe()),
-            map((schiffe: Schiff[]) => loadedSchiffe({ schiffe }))
+            switchMap(action => {
+                return this.appService.getSchiffe().pipe(
+                    map((schiffe: Schiff[]) => loadedSchiffe({ schiffe }))
+                )
+            })
         )
     })
     insertSchiff$ = createEffect(() => {
@@ -338,8 +362,11 @@ export class Effects {
     loadAllStatus$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadAllStatus),
-            concatMap(action => this.appService.getStatus()),
-            map((status: Status[]) => loadedAllStatus({ status }))
+            switchMap(action => {
+                return this.appService.getStatus().pipe(
+                    map((status: Status[]) => loadedAllStatus({ status }))
+                )
+            })
         )
     })
     insertStatus$ = createEffect(() => {
@@ -377,8 +404,11 @@ export class Effects {
     loadZaehlerstandstypen$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadZaehlerstandstypen),
-            concatMap(action => this.appService.getZaehlerstandstypen()),
-            map((kat: Zaehlerstandstyp[]) => loadedZaehlerstandstypen({ kat }))
+            switchMap(action => {
+                return this.appService.getZaehlerstandstypen().pipe(
+                    map((kat: Zaehlerstandstyp[]) => loadedZaehlerstandstypen({ kat }))
+                )
+            })
         )
     })
     insertZaehlerstandstyp$ = createEffect(() => {
@@ -416,8 +446,11 @@ export class Effects {
     loadZweck$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(loadZweck),
-            concatMap(action => this.appService.getZweck()),
-            map((kat: Kat[]) => loadedZweck({ kat }))
+            switchMap(action => {
+                return this.appService.getZweck().pipe(
+                    map((kat: Kat[]) => loadedZweck({ kat }))
+                )
+            })
         )
     })
     insertZweck$ = createEffect(() => {
