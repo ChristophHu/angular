@@ -47,6 +47,13 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         this.basicChart()
       }
     })
+    this._specFacade.allInstandsetzungen$.subscribe((data: Instandsetzung[]) => {
+      if (data) {
+        this.instandsetzungen = data
+        this.build()
+        this.basicChart()
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -71,6 +78,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
 
       let inst: boolean = false
       this.instandsetzungen.forEach((instandsetzung: Instandsetzung) => {
+        console.log(instandsetzung)
         if (instandsetzung.id_schiff == el.id && instandsetzung.klar == false) inst = true
       })
       if (inst) this.inst[index] += 1
@@ -83,7 +91,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         // klar
         x: [...this.dienststellen],
         y: [...this.klar],
-        name: '',
+        name: 'Klar',
         type: 'bar',
         marker: {
           color: '#3495eb',
@@ -94,7 +102,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         // unklar
         x: [...this.dienststellen],
         y: [...this.unklar],
-        name: '',
+        name: 'Unklar',
         type: 'bar',
         marker: {
           color: '#ef553b',
@@ -105,7 +113,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
         // inst
         x: [...this.dienststellen],
         y: [...this.inst],
-        name: '',
+        name: 'Inst.',
         type: 'bar',
         marker: {
           color: '#665d5d',

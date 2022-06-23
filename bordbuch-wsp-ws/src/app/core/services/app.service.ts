@@ -30,8 +30,8 @@ import { ConnectionService } from './connection.service';
 export class AppService {
 
     private inst: Instandsetzung[] = [
-        { id: '1', id_schiff: '000', klar: false, beginn: getLocalISO('now') },
-        { id: '2', id_schiff: '325', klar: true, beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
+        { id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', klar: false, beginn: getLocalISO('now') },
+        { id: '2', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', klar: true, beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
     ]
 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
@@ -544,7 +544,7 @@ export class AppService {
         return new Observable ((observer) => {
             const source$ = of(null)
             source$.subscribe((data: any) => {
-                observer.next( new Date() )
+                observer.next(Date.now())
             }), (error: any) => observer.error(error)
         })
     }
