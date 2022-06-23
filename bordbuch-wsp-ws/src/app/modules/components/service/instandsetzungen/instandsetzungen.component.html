@@ -18,7 +18,7 @@
                     <td hidden>{{ instandsetzung.id_schiff }}</td>
                     <td>{{ instandsetzung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>
                     <td>{{ instandsetzung.ende | date:"dd.MM.yyyy HH:mm" }}</td>
-                    <td>{{ instandsetzung.klar ? 'klar' : 'unklar' }}</td>
+                    <td>{{ instandsetzung.klar ? 'Fahrbereit' : 'Instandsetzung' }}</td>
                     <td class="flex flex-row justify-start text-gray-500">
                         <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
                             <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>

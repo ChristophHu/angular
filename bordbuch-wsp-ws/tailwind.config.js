@@ -7,6 +7,9 @@ module.exports = {
   darkMode: 'class', // false or 'media' or 'class'
   theme: {
     extend: {
+      spacing: {
+        '128': '32rem',
+      },
       zIndex: {
         '100': '100',
       }

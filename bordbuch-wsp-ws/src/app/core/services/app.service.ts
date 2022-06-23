@@ -532,7 +532,6 @@ export class AppService {
     // instandsetzungen
     getInstandsetzungen(): Observable<any> {
         return new Observable ((observer) => {
-            console.log(this.inst)
             const source$ = of(this.inst)
             source$.subscribe((data: any) => {
                 observer.next(data)
@@ -540,8 +539,9 @@ export class AppService {
         })
     }
     insertInstandsetzung(insert: Instandsetzung): Observable<any> {
-        console.log(Object.assign({}, insert, { id: Date.now() }))
-        this.inst.push(Object.assign({}, insert, { id: Date.now() }))
+        // console.log(insert)
+        // this.inst.push(insert)
+        // console.log(this.inst)
         return new Observable ((observer) => {
             const source$ = of(null)
             source$.subscribe((data: any) => {
