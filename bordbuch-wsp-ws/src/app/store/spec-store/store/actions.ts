@@ -2,6 +2,7 @@ import { createAction, props } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
 import { Filter } from "src/app/core/models/filter.model"
+import { Instandsetzung } from "src/app/core/models/Instandsetzung.model"
 import { Klarmeldung } from "src/app/core/models/klarmeldung.model"
 import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
@@ -59,19 +60,19 @@ export const loadAllInstandsetzungenSuccess = createAction(
 )
 export const insertInstandsetzung = createAction(
 	"[Spec Facade] Insert Instandsetzung",
-	props<{ insert: Klarmeldung }>()
+	props<{ insert: Instandsetzung }>()
 )
 export const insertInstandsetzungSuccess = createAction(
 	"[Spec Effect] Insert Instandsetzung Success",
-	props<{ action: { insert: Klarmeldung }, id: string }>()
+	props<{ action: { insert: Instandsetzung }, id: string }>()
 )
 export const updateInstandsetzung = createAction(
 	"[Spec Facade] Update Instandsetzung",
-	props<{ update: Klarmeldung }>()
+	props<{ update: Instandsetzung }>()
 )
 export const updateInstandsetzungSuccess = createAction(
 	"[Spec Effect] Update Instandsetzung Success",
-	props<{ update: Klarmeldung }>()
+	props<{ update: Instandsetzung }>()
 )
 export const deleteInstandsetzung = createAction(
 	"[Spec Facade] Delete Instandsetzung",

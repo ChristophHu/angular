@@ -13,21 +13,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let klarmeldung of (instandsetzungen$ | async | toArray)">
-                    <td>{{ klarmeldung.name }}</td>
-                    <td hidden>{{ klarmeldung.id_schiff }}</td>
-                    <td>{{ klarmeldung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>
-                    <td>{{ klarmeldung.ende | date:"dd.MM.yyyy HH:mm" }}</td>
-                    <td>{{ klarmeldung.klar ? 'klar' : 'unklar' }}</td>
+                <tr *ngFor="let instandsetzung of (instandsetzungen$ | async | toArray)">
+                    <td>{{ instandsetzung.name }}</td>
+                    <td hidden>{{ instandsetzung.id_schiff }}</td>
+                    <td>{{ instandsetzung.beginn | date:"dd.MM.yyyy HH:mm" }}</td>
+                    <td>{{ instandsetzung.ende | date:"dd.MM.yyyy HH:mm" }}</td>
+                    <td>{{ instandsetzung.klar ? 'klar' : 'unklar' }}</td>
                     <td class="flex flex-row justify-start text-gray-500">
                         <button class="w-6 h-6" [matMenuTriggerFor]="editMenu">
                             <icons class="w-6 h-6 stroke-1 stroke-current cursor-pointer" name="dots-horizontal"></icons>
                         </button>
                         <mat-menu #editMenu="matMenu">
-                            <button mat-menu-item (click)="showModal(klarmeldung)">
+                            <button mat-menu-item (click)="showModal(instandsetzung)">
                                 Bearbeiten
                             </button>
-                            <button mat-menu-item (click)="delete(klarmeldung)">
+                            <button mat-menu-item (click)="delete(instandsetzung)">
                                 Löschen
                             </button>
                         </mat-menu>

@@ -17,6 +17,7 @@ import { Tank } from "src/app/core/models/tank.model";
 import { Peilung } from "src/app/core/models/peilung.model";
 import { Filter } from "src/app/core/models/filter.model";
 import { Klarmeldung } from "src/app/core/models/klarmeldung.model";
+import { Instandsetzung } from "src/app/core/models/Instandsetzung.model";
 
 @Injectable()
 export class SpecFacade {
@@ -27,7 +28,7 @@ export class SpecFacade {
     allReparaturen$     = this.store.pipe(select(SpecSelectors.selectAllReparaturen)) as Observable<Reparatur[]>
     allReparaturFotos$  = this.store.pipe(select(SpecSelectors.selectAllReparaturFotos)) as Observable<any[]>
     allReparaturFotoCount$ = this.store.pipe(select(SpecSelectors.selectReparaturFotosCount)) as Observable<number>
-    allInstandsetzungen$ = this.store.pipe(select(SpecSelectors.selectInstandsetzungen)) as Observable<Klarmeldung[]>
+    allInstandsetzungen$ = this.store.pipe(select(SpecSelectors.selectInstandsetzungen)) as Observable<Instandsetzung[]>
     allKlarmeldungen$   = this.store.pipe(select(SpecSelectors.selectKlarmeldungen)) as Observable<Klarmeldung[]>
     allLastStandorte$   = this.store.pipe(select(SpecSelectors.selectAllLastStandorte)) as Observable<Standort[]>
     allStandorte$       = this.store.pipe(select(SpecSelectors.selectAllStandorte)) as Observable<Standort[]>
@@ -75,10 +76,10 @@ export class SpecFacade {
     loadAllInstandsetzung() {
         this.store.dispatch(SpecActions.loadAllInstandsetzungen())
     }
-    insertInstandsetzung(insert: Klarmeldung) {
+    insertInstandsetzung(insert: Instandsetzung) {
         this.store.dispatch(SpecActions.insertInstandsetzung({ insert }))
     }
-    updateInstandsetzung(update: Klarmeldung) {
+    updateInstandsetzung(update: Instandsetzung) {
         this.store.dispatch(SpecActions.updateInstandsetzung({ update }))
     }
     deleteInstandsetzung(id: string) {

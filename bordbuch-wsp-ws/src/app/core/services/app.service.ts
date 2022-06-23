@@ -9,6 +9,7 @@ import { Checklist } from '../models/checklist.model';
 import { Checklistitem } from '../models/checklistitem.model';
 import { Dienststelle } from '../models/dienststelle.model';
 import { Filter } from '../models/filter.model';
+import { Instandsetzung } from '../models/Instandsetzung.model';
 import { Kat } from '../models/kat.model';
 import { Klarmeldung } from '../models/klarmeldung.model';
 import { Peilung } from '../models/peilung.model';
@@ -28,9 +29,9 @@ import { ConnectionService } from './connection.service';
 
 export class AppService {
 
-    private inst: Klarmeldung[] = [
-        { id: '1', id_schiff: '000', klar: 'inst', beginn: getLocalISO('now') },
-        { id: '2', id_schiff: '325', klar: 'inst', beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
+    private inst: Instandsetzung[] = [
+        { id: '1', id_schiff: '000', klar: false, beginn: getLocalISO('now') },
+        { id: '2', id_schiff: '325', klar: true, beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
     ]
 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
@@ -538,7 +539,7 @@ export class AppService {
             }, (error: any) => observer.error(error))
         })
     }
-    insertInstandsetzung(insert: Klarmeldung): Observable<any> {
+    insertInstandsetzung(insert: Instandsetzung): Observable<any> {
         this.inst.push(insert)
         return new Observable ((observer) => {
             const source$ = of(null)
@@ -547,7 +548,7 @@ export class AppService {
             }), (error: any) => observer.error(error)
         })
     }
-    updateInstandsetzung(update: Klarmeldung): Observable<any> {
+    updateInstandsetzung(update: Instandsetzung): Observable<any> {
         let cleared = this.inst.filter(el => el.id !== update.id)
         cleared.push(update)
         return new Observable ((observer) => {

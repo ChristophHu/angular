@@ -68,7 +68,7 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
       this.values[index]+=1
 
       this.klarmeldungen.forEach((klarmeldung: Klarmeldung) => {        
-          if (klarmeldung.id_schiff == el.id && klarmeldung.klar == 'false') {
+          if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) {
             this.colors[this.dienststellen.length + index_schiff] = '#ef553b'
           }
       })

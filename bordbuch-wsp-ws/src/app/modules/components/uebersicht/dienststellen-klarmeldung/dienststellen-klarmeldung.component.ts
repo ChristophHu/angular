@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as PlotlyJS from 'plotly.js-dist-min'
 import { Dienststelle } from 'src/app/core/models/dienststelle.model';
+import { Instandsetzung } from 'src/app/core/models/Instandsetzung.model';
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
@@ -16,9 +17,11 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
   private dienststellen: string[] = []
   private schiffe: Schiff[] = []
   private klarmeldungen: Klarmeldung[] = []
+  private instandsetzungen: Instandsetzung[] = []
 
   private klar: number[] = []
   private unklar: number[] = []
+  private inst: number[] = []
 
   private data: any[] = []
   private layout: any
@@ -54,6 +57,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
   build() {
     this.klar = new Array(this.dienststellen.length).fill(0)
     this.unklar = new Array(this.dienststellen.length).fill(0)
+    this.inst = new Array(this.dienststellen.length).fill(0)
 
     this.schiffe.forEach((el: Schiff) => {
       const index = this.dienststellen.indexOf(el.dienststelle) // 0
@@ -61,9 +65,15 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
 
       let unklar: boolean = false
       this.klarmeldungen.forEach((klarmeldung: Klarmeldung) => {
-        if (klarmeldung.id_schiff == el.id && klarmeldung.klar == 'false') unklar = true
+        if (klarmeldung.id_schiff == el.id && klarmeldung.klar == false) unklar = true
       })
       if (unklar) this.unklar[index] += 1
+
+      let inst: boolean = false
+      this.instandsetzungen.forEach((instandsetzung: Instandsetzung) => {
+        if (instandsetzung.id_schiff == el.id && instandsetzung.klar == false) inst = true
+      })
+      if (inst) this.inst[index] += 1
     })
   }
 
@@ -90,13 +100,24 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
           color: '#ef553b',
           opacity: 0.4
         }
+      },
+      {
+        // inst
+        x: [...this.dienststellen],
+        y: [...this.inst],
+        name: '',
+        type: 'bar',
+        marker: {
+          color: '#665d5d',
+          opacity: 0.4
+        }
       }
     ]
 
     this.layout = {
       // title: 'January 2013 Sales Report',
       showtitle: false,
-      showlegend: false,
+      showlegend: true,
       barmode: 'grouped',
 
       xaxis: {

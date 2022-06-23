@@ -8,7 +8,7 @@
       </button>
     </header>
     <div class="content">
-        <form [formGroup]="klarmeldungForm">
+        <form [formGroup]="instandsetzungForm">
             <div class="hidden">
               <mat-form-field appearance="fill">
                 <mat-label>id</mat-label>
@@ -30,7 +30,7 @@
             <div class="flex flex-row items-center">
               <mat-form-field appearance="fill">
                   <mat-label>Beginn</mat-label>
-                  <input matInput type="datetime-local" formControlName="beginn" value="{{klarmeldungForm.value.beginn | date:'yyyy-MM-ddTHH:mm'}}">
+                  <input matInput type="datetime-local" formControlName="beginn" value="{{instandsetzungForm.value.beginn | date:'yyyy-MM-ddTHH:mm'}}">
               </mat-form-field>
               <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setBeginn()">
                   <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -39,7 +39,7 @@
             <div class="flex flex-row items-center">
                 <mat-form-field appearance="fill">
                     <mat-label>Ende</mat-label>
-                    <input matInput type="datetime-local" formControlName="ende" value="{{klarmeldungForm.value.ende | date:'yyyy-MM-ddTHH:mm'}}">
+                    <input matInput type="datetime-local" formControlName="ende" value="{{instandsetzungForm.value.ende | date:'yyyy-MM-ddTHH:mm'}}">
                 </mat-form-field>
                 <button class="w-6 h-6 mx-3 focus:outline-none rounded-md cursor-pointer" (click)="setEnde()">
                     <icons class="w-6 h-6 stroke-1 stroke-current text-black" name="calendar-event"></icons>
@@ -63,10 +63,10 @@
   <ng-template #toolbar>
     <div>
       <button (click)="cancel()" type="button" class="p-2 mr-3 bg-gray-800 text-white rounded">Abbrechen</button>
-      <button *ngIf="klarmeldungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
+      <button *ngIf="instandsetzungForm.value.id" (click)="delete()" type="button" class="p-2 mr-3 bg-red-400 text-black rounded">Löschen</button>
     </div>
     <div>
-      <button *ngIf="!klarmeldungForm.pristine && klarmeldungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
-      <button *ngIf="!klarmeldungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
+      <button *ngIf="!instandsetzungForm.pristine && instandsetzungForm.value.id" (click)="update()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Speichern</button>
+      <button *ngIf="!instandsetzungForm.value.id" (click)="create()" type="button" class="p-2 ml-3 bg-gray-800 text-white rounded">Erstellen</button>
     </div>
   </ng-template>

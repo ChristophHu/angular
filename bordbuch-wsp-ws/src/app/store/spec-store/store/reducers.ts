@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { Betankung } from "src/app/core/models/betankung"
 import { Checklist } from "src/app/core/models/checklist.model"
+import { Instandsetzung } from "src/app/core/models/Instandsetzung.model"
 import { Klarmeldung } from "src/app/core/models/klarmeldung.model"
 import { Peilung } from "src/app/core/models/peilung.model"
 import { Reparatur } from "src/app/core/models/reparatur.model"
@@ -9,13 +10,16 @@ import { Streife } from "src/app/core/models/streife.model"
 import { Tank } from "src/app/core/models/tank.model"
 import { Zaehlerstand } from "src/app/core/models/zaehlerstand.model"
 import { checkStateForEmptyArrays } from "src/app/shared/utils"
-import { resetStore, clearReparaturen, deleteBetankungSuccess, deleteKlarmeldungSuccess, deletePeilungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertKlarmeldungSuccess, insertPeilungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadAllKlarmeldungenSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungenSuccess, updateBetankungSuccess, updateKlarmeldungSuccess, updatePeilungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess } from "./actions"
+import { resetStore, clearReparaturen, deleteBetankungSuccess, deleteKlarmeldungSuccess, deletePeilungSuccess, deleteReparaturFotoSuccess, deleteReparaturSuccess, deleteShipChecklistSuccess, deleteStandortSuccess, deleteStreifeSuccess, deleteTankSuccess, deleteZaehlerstandSuccess, downloadReparaturFotosSuccess, insertBetankungSuccess, insertKlarmeldungSuccess, insertPeilungSuccess, insertReparaturSuccess, insertShipChecklistSuccess, insertStandortSuccess, insertStreifeSuccess, insertTankSuccess, insertZaehlerstandSuccess, loadAllKlarmeldungenSuccess, loadedAllBetankungen, loadedAllLastStandorte, loadedAllReparaturen, loadedAllShipChecklists, loadedAllStandorte, loadedAllStreifen, loadedAllZaehlerstaende, loadedTanks, loadPeilungenById, loadPeilungenByIdSuccess, loadPeilungenSuccess, updateBetankungSuccess, updateKlarmeldungSuccess, updatePeilungSuccess, updateReparaturSuccess, updateStandortSuccess, updateStreifeSuccess, updateTankSuccess, updateZaehlerstandSuccess, uploadReparaturFotoSuccess,
+    loadAllInstandsetzungenSuccess, insertInstandsetzungSuccess, updateInstandsetzungSuccess, deleteInstandsetzungSuccess
+} from "./actions"
 
 export interface State {
     checklists      : Checklist[]       | undefined
     betankungen     : Betankung[]       | undefined
     reparaturen     : Reparatur[]       | undefined
     reparaturfotos  : any[]             | undefined
+    instandsetzungen: Instandsetzung[]  | undefined
     klarmeldungen   : Klarmeldung[]     | undefined
     laststandorte   : Standort[]        | undefined
     peilungen       : Peilung[]         | undefined
@@ -32,6 +36,7 @@ export const initialDataState: State = {
     reparaturen     : undefined,
     reparaturfotos  : undefined,
     klarmeldungen   : undefined,
+    instandsetzungen: undefined,
     laststandorte   : undefined,
     peilungen       : undefined,
     standorte       : undefined,
@@ -109,6 +114,42 @@ export const reducer = createReducer(
         return {
             ...state,
             checklists: clearedShipCheckliste
+        }
+    }),
+
+    // Instandsetzung
+    on(loadAllInstandsetzungenSuccess, (state, action) => {
+        return {
+            ...state,
+            instandsetzungen: action.instandsetzungen
+        }
+    }),
+    on(insertInstandsetzungSuccess, (state, action) => {
+        let instandsetzung: Instandsetzung = Object.assign({}, action.action.insert, { id: action.id })
+        let cleared: Instandsetzung[] | undefined = checkStateForEmptyArrays(state.instandsetzungen)
+        cleared = cleared?.filter(el => el.id != action.action.insert.id)
+        cleared = [...cleared!, ...[instandsetzung]]
+        return {
+            ...state,
+            instandsetzungen: cleared
+        }
+    }),
+    on(updateInstandsetzungSuccess, (state, action) => {
+        let cleared: Instandsetzung[] | undefined = checkStateForEmptyArrays(state.instandsetzungen)
+        cleared = cleared?.filter(el => el.id != action.update.id)
+        cleared = [...cleared!, ...[action.update]]
+        return {
+            ...state,
+            instandsetzungen: cleared
+        }
+    }),
+    on(deleteInstandsetzungSuccess, (state, action) => {
+        let cleared: Instandsetzung[] | undefined = checkStateForEmptyArrays(state.instandsetzungen)
+        cleared = cleared?.filter(el => el.id != action.id)
+        cleared = [...cleared!]
+        return {
+            ...state,
+            instandsetzungen: cleared
         }
     }),
 

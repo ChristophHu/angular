@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
+import { Instandsetzung } from 'src/app/core/models/Instandsetzung.model';
 import { Schiff } from 'src/app/core/models/schiff.model';
 import { ModalComponent } from 'src/app/shared/components/modal/modal.component';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
@@ -20,15 +20,15 @@ export class InstandsetzungModalComponent implements OnInit {
 
   schiffe$: Observable<Schiff[]>
 
-  klarmeldungForm: FormGroup
+  instandsetzungForm: FormGroup
   status: any[] = [
-    { bezeichnung: 'klar', value: true },
-    { bezeichnung: 'unklar', value: false }
+    { bezeichnung: 'Instandsetzung', value: true },
+    { bezeichnung: 'Fahrbereit', value: false }
   ]
   
   constructor(private _formBuilder: FormBuilder, private _modalService: ModalService<InstandsetzungModalComponent>, private _katFacade: KatFacade, private _specFacade: SpecFacade) {
     this.schiffe$ = this._katFacade.schiffe$
-    this.klarmeldungForm = this._formBuilder.group({
+    this.instandsetzungForm = this._formBuilder.group({
       id: [],
       id_schiff: [],
       name: [],
@@ -41,49 +41,47 @@ export class InstandsetzungModalComponent implements OnInit {
   ngOnInit(): void {
     this._modalService.getData().then((data) => {
       this.title = data.data.title
-      this.klarmeldungForm.patchValue(data.data.klarmeldung)
+      this.instandsetzungForm.patchValue(data.data.instandsetzung)
     })
   }
 
   selectShip(name: string) {
-    this._katFacade.getIdByShip(name).subscribe(id => this.klarmeldungForm.patchValue({ id_schiff: id }))
+    this._katFacade.getIdByShip(name).subscribe(id => this.instandsetzungForm.patchValue({ id_schiff: id }))
   }
   setBeginn() {
-    this.klarmeldungForm.patchValue({ beginn: getLocalISO('now') })
-    this.klarmeldungForm.markAsDirty()
-    // this.klarmeldungForm.value.klar = false
+    this.instandsetzungForm.patchValue({ beginn: getLocalISO('now') })
+    this.instandsetzungForm.markAsDirty()
   }
   setEnde() {
-    this.klarmeldungForm.patchValue({ ende: getLocalISO('now') })
-    this.klarmeldungForm.markAsDirty()
-    // this.klarmeldungForm.value.klar = true
+    this.instandsetzungForm.patchValue({ ende: getLocalISO('now') })
+    this.instandsetzungForm.markAsDirty()
   }
 
   create() {
-    const insert: Klarmeldung = { 
-      id_schiff: this.klarmeldungForm.value.id_schiff, 
-      beginn: this.klarmeldungForm.value.beginn,
-      ende: this.klarmeldungForm.value.ende,
-      klar: this.klarmeldungForm.value.klar,
-      name: this.klarmeldungForm.value.name
+    const insert: Instandsetzung = { 
+      id_schiff: this.instandsetzungForm.value.id_schiff, 
+      beginn: this.instandsetzungForm.value.beginn,
+      ende: this.instandsetzungForm.value.ende,
+      klar: this.instandsetzungForm.value.klar,
+      name: this.instandsetzungForm.value.name
     }
-    this._specFacade.insertKlarmeldung(insert)
+    this._specFacade.insertInstandsetzung(insert)
     this.modal?.close()
   }
   update() {
-    const update: Klarmeldung = {
-      id: this.klarmeldungForm.value.id,
-      id_schiff: this.klarmeldungForm.value.id_schiff, 
-      beginn: this.klarmeldungForm.value.beginn,
-      ende: this.klarmeldungForm.value.ende,
-      klar: this.klarmeldungForm.value.klar,
-      name: this.klarmeldungForm.value.name
+    const update: Instandsetzung = {
+      id: this.instandsetzungForm.value.id,
+      id_schiff: this.instandsetzungForm.value.id_schiff, 
+      beginn: this.instandsetzungForm.value.beginn,
+      ende: this.instandsetzungForm.value.ende,
+      klar: this.instandsetzungForm.value.klar,
+      name: this.instandsetzungForm.value.name
     }
-    this._specFacade.updateKlarmeldung(update)
+    this._specFacade.updateInstandsetzung(update)
     this.modal?.close()
   }
   delete() {
-    if (this.klarmeldungForm.value.id) this._specFacade.deleteKlarmeldung(this.klarmeldungForm.value.id)
+    if (this.instandsetzungForm.value.id) this._specFacade.deleteInstandsetzung(this.instandsetzungForm.value.id)
   }
 
   cancel() {

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { map, switchMap } from 'rxjs'
+import { map, switchMap, tap } from 'rxjs'
 import { Betankung } from 'src/app/core/models/betankung'
 import { Checklist } from 'src/app/core/models/checklist.model'
+import { Instandsetzung } from 'src/app/core/models/Instandsetzung.model'
 import { Klarmeldung } from 'src/app/core/models/klarmeldung.model'
 import { Peilung } from 'src/app/core/models/peilung.model'
 import { Reparatur } from 'src/app/core/models/reparatur.model'
@@ -105,7 +106,7 @@ export class Effects {
             ofType(loadAllInstandsetzungen),
             switchMap(action => {
                 return this.appService.getInstandsetzungen().pipe(
-                    map((instandsetzungen: Klarmeldung[]) => loadAllInstandsetzungenSuccess({ instandsetzungen }))
+                    map((instandsetzungen: Instandsetzung[]) => loadAllInstandsetzungenSuccess({ instandsetzungen }))
                 )
             })
         )
@@ -147,7 +148,8 @@ export class Effects {
             ofType(loadAllKlarmeldungen),
             switchMap(action => {
                 return this.appService.getKlarmeldungen().pipe(
-                    map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
+                    map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen })),
+                    tap(data => console.log(data))
                 )
             })
         )

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Klarmeldung } from 'src/app/core/models/klarmeldung.model';
+import { Instandsetzung } from 'src/app/core/models/Instandsetzung.model';
 import { ModalService } from 'src/app/shared/components/modal/modal.service';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,7 @@ export class InstandsetzungenComponent implements OnInit {
   dtOptions: DataTables.Settings = {}
   dtTrigger: Subject<any> = new Subject()
 
-  instandsetzungen$!: Observable<Klarmeldung[]>
+  instandsetzungen$!: Observable<Instandsetzung[]>
 
   constructor(private _modalService: ModalService<InstandsetzungModalComponent>, private _specFacade: SpecFacade) {
     this.instandsetzungen$ = this._specFacade.allInstandsetzungen$
@@ -39,16 +39,16 @@ export class InstandsetzungenComponent implements OnInit {
     }
   }
 
-  async showModal(klarmeldung?: Klarmeldung): Promise<void> {
+  async showModal(instandsetzung?: Instandsetzung): Promise<void> {
     const { InstandsetzungModalComponent } = await import(
       './instandsetzung-modal/instandsetzung-modal.component'
     )
 
-    if (klarmeldung) {
+    if (instandsetzung) {
       this._modalService.open(InstandsetzungModalComponent, {
         data: {
           title: 'Instandsetzung bearbeiten',
-          klarmeldung
+          instandsetzung
         }
       })
     } else {
@@ -60,7 +60,7 @@ export class InstandsetzungenComponent implements OnInit {
     }
   }
 
-  delete(klarmeldung: Klarmeldung) {
-    this._specFacade.deleteKlarmeldung(klarmeldung.id!)
+  delete(instandsetzung: Instandsetzung) {
+    this._specFacade.deleteInstandsetzung(instandsetzung.id!)
   }
 }
