@@ -6,7 +6,7 @@ import { AbstractCentralNotification } from './_core/abstracts/toast.abstract';
 import { NotificationService } from './notification.service';
 import { GlobalNotificationConfig } from './_core/models/notification.model';
 import { USER_TOAST_CONFIG } from './_core/configs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule
+    // BrowserAnimationsModule
   ],
   exports: [
     NotificationComponent

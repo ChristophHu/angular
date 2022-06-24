@@ -109,10 +109,10 @@ export class KatFunktionenComponent implements OnInit {
         'Soll dieser Eintrag wirklich entfernt werden?',
       config: {
         headerText: 'Eintrag entfernen',
-        type: 'information',
+        type: 'warning',
         data: {
           id: 0,
-          description: 'Der gewählte EIntrag wird gelöscht.',
+          description: 'Der gewählte Eintrag wird gelöscht.',
           response: false
         },
       },

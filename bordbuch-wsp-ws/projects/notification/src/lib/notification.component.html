@@ -1,5 +1,5 @@
 <div *ngFor="let notification of toastQueue; let idx = index" (animationend)="onAnimationDone($event, idx, notification)"
-  class="container animation-{{notification.position}} bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg right-0">
+  class="container animation-{{notification.position}} bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg right-0 z-50">
   <ng-container *ngTemplateOutlet="toastTpl; context: { $implicit: notification, idx: idx }"></ng-container>
 </div>
 
@@ -32,9 +32,12 @@
         <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ payload.headerText }}</p>
         <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ payload.content }}</p>
     </div>
-    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0 cursor-pointer" (click)="close(idx)">
-      <div class="pt-2 pb-2 w-full flex justify-center">
-          <span class="text-sm text-yellow-400">OK</span>
+    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0">
+      <div class="sm:pt-4 pb-4 sm:border-b dark:border-gray-700 border-gray-300 sm:w-full flex sm:justify-center cursor-pointer" (click)="payload.data.response = true; close(idx)">
+          <span class="sm:text-sm text-xs text-blue-400 mr-4 sm:mr-0">Ja</span>
+      </div>
+      <div class="sm:pt-4 pb-4 flex sm:justify-center w-full cursor-pointer" (click)="close(idx)">
+          <span class="sm:text-sm text-xs text-gray-600 dark:text-gray-400">Nein</span>
       </div>
     </div>
   </div>
