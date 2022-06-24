@@ -1,0 +1,80 @@
+<div *ngFor="let notification of toastQueue; let idx = index" (animationend)="onAnimationDone($event, idx, notification)"
+  class="container animation-{{notification.position}} bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg right-0">
+  <ng-container *ngTemplateOutlet="toastTpl; context: { $implicit: notification, idx: idx }"></ng-container>
+</div>
+
+<ng-template #toastTpl let-payload let-idx="idx">
+  <!-- error -->
+  <div *ngIf="payload.type=='error'" class="h-full flex justify-between">
+    <div class="sm:px-6 p-2 flex mt-4 sm:mt-0 ml-4 sm:ml-0 items-center justify-center bg-red-400 sm:rounded-tl sm:rounded-bl w-12 h-12 sm:h-auto sm:w-auto text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+          <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z" />
+      </svg>
+    </div>
+    <div class="flex flex-col justify-center xl:-ml-4 pl-4 xl:pl-1 sm:w-3/5 pt-4 sm:pb-4 pb-2">
+        <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ payload.headerText }}</p>
+        <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ payload.content }}</p>
+    </div>
+    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0 cursor-pointer" (click)="close(idx)">
+      <div class="pt-2 pb-2 w-full flex justify-center">
+          <span class="text-sm text-red-400">OK</span>
+      </div>
+    </div>
+  </div>
+  <!-- warning -->
+  <div *ngIf="payload.type=='warning'" class="h-full flex justify-between">
+    <div class="sm:px-6 p-2 flex mt-4 sm:mt-0 ml-4 sm:ml-0 items-center justify-center bg-yellow-400 sm:rounded-tl sm:rounded-bl w-12 h-12 sm:h-auto sm:w-auto text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+          <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z" />
+      </svg>
+    </div>
+    <div class="flex flex-col justify-center xl:-ml-4 pl-4 xl:pl-1 sm:w-3/5 pt-4 sm:pb-4 pb-2">
+        <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ payload.headerText }}</p>
+        <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ payload.content }}</p>
+    </div>
+    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0 cursor-pointer" (click)="close(idx)">
+      <div class="pt-2 pb-2 w-full flex justify-center">
+          <span class="text-sm text-yellow-400">OK</span>
+      </div>
+    </div>
+  </div>
+  <!-- information -->
+  <div *ngIf="payload.type=='information'" class="h-full flex justify-between">
+    <div class="sm:px-6 p-2 flex mt-4 sm:mt-0 ml-4 sm:ml-0 items-center justify-center bg-blue-400 sm:rounded-tl sm:rounded-bl w-12 h-12 sm:h-auto sm:w-auto text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+          <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z" />
+      </svg>
+    </div>
+    <div class="flex flex-col justify-center xl:-ml-4 pl-4 xl:pl-1 sm:w-3/5 pt-4 sm:pb-4 pb-2">
+        <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ payload.headerText }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ payload.content }}</p>
+    </div>
+    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0">
+        <div class="sm:pt-4 pb-4 sm:border-b dark:border-gray-700 border-gray-300 sm:w-full flex sm:justify-center cursor-pointer" (click)="payload.data.response = true; close(idx)">
+            <span class="sm:text-sm text-xs text-blue-400 mr-4 sm:mr-0">View</span>
+        </div>
+        <div class="sm:pt-4 pb-4 flex sm:justify-center w-full cursor-pointer" (click)="close(idx)">
+            <span class="sm:text-sm text-xs text-gray-600 dark:text-gray-400">Dismiss</span>
+        </div>
+    </div>
+  </div>
+  <!-- success -->
+  <div *ngIf="payload.type=='success'" class="h-full flex justify-between">
+    <div class="sm:px-6 p-2 flex mt-4 sm:mt-0 ml-4 sm:ml-0 items-center justify-center bg-green-400 sm:rounded-tl sm:rounded-bl w-12 h-12 sm:h-auto sm:w-auto text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+          <path class="heroicon-ui" d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-2.3-8.7l1.3 1.29 3.3-3.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-2-2a1 1 0 0 1 1.4-1.42z" />
+      </svg>
+    </div>
+    <div class="flex flex-col justify-center xl:-ml-4 pl-4 xl:pl-1 sm:w-3/5 pt-4 sm:pb-4 pb-2">
+        <p class="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">{{ payload.headerText }}</p>
+        <p class="h-12 text-sm text-gray-600 dark:text-gray-400 font-normal line-clamp">{{ payload.content }}</p>
+    </div>
+    <div class="flex sm:flex-col sm:justify-center sm:border-l dark:border-gray-700 items-center border-gray-300 sm:w-1/6 pl-4 sm:pl-0 cursor-pointer" (click)="close(idx)">
+      <div class="pt-2 pb-2 w-full flex justify-center">
+          <span class="text-sm text-green-400">OK</span>
+      </div>
+    </div>
+  </div>
+  <!-- request -->
+
+</ng-template>

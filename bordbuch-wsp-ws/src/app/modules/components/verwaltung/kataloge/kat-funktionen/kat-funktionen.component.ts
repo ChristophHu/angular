@@ -8,6 +8,9 @@ import { KatFacade } from 'src/app/store/kat-store/kat.facade'
 import { KatFunktionModalComponent } from './kat-funktion-modal/kat-funktion-modal.component'
 import { environment } from 'src/environments/environment'
 
+import { NotificationHandler } from 'projects/notification/src/lib/_core/models/notification.model';
+import { NotificationService } from 'projects/notification/src/public-api';
+
 @Component({
   selector: 'app-kat-funktionen',
   templateUrl: './kat-funktionen.component.html',
@@ -20,7 +23,24 @@ export class KatFunktionenComponent implements OnInit {
   
   funktionen$: Observable<Kat[]>
 
-  constructor(private _modalService: ModalService<KatFunktionModalComponent>, private _katFacade: KatFacade, private _RxjsNotificationService: RxjsNotificationsService) {
+  private CONTENT_EXAMPLES = [
+    {
+      content:
+        'Soll dieser Eintrag wirklich entfernt werden?',
+      config: {
+        headerText: 'Eintrag entfernen',
+        type: 'information',
+        data: {
+          id: 0,
+          status: 'success',
+          description: 'Payment successfully processed.',
+          response: false
+        },
+      },
+    }
+  ]
+
+  constructor(private _modalService: ModalService<KatFunktionModalComponent>, private notificationService: NotificationService, private _katFacade: KatFacade, private _RxjsNotificationService: RxjsNotificationsService) {
     this.funktionen$ = _katFacade.funktionen$
   }
 
@@ -39,6 +59,28 @@ export class KatFunktionenComponent implements OnInit {
         "url": environment.base_href + "assets/data/datatables.german.json" // "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
       }
     }
+  }
+
+  show(): void {
+    const contentObj = {
+      content:
+        'Soll dieser Eintrag wirklich entfernt werden?',
+      config: {
+        headerText: 'Eintrag entfernen',
+        type: 'information',
+        data: {
+          id: 0,
+          description: 'Der gewählte EIntrag wird gelöscht.',
+          response: false
+        },
+      },
+    }
+
+    const { content, config } = contentObj;
+    let toast: NotificationHandler | null = null;
+    toast = contentObj.config ? this.notificationService.open(content, config) : this.notificationService.open(content);
+
+    toast.onClose().subscribe(data => console.log(data))
   }
   
   async showModal(kat?: Kat): Promise<void> {
@@ -62,9 +104,28 @@ export class KatFunktionenComponent implements OnInit {
   }
 
   delete(id: string) {
-    const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
-    this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
-      if (response) this._katFacade.deleteFunktion(id)
-    })
+    const contentObj = {
+      content:
+        'Soll dieser Eintrag wirklich entfernt werden?',
+      config: {
+        headerText: 'Eintrag entfernen',
+        type: 'information',
+        data: {
+          id: 0,
+          description: 'Der gewählte EIntrag wird gelöscht.',
+          response: false
+        },
+      },
+    }
+
+    const { content, config } = contentObj;
+    let toast: NotificationHandler | null = null;
+    toast = contentObj.config ? this.notificationService.open(content, config) : this.notificationService.open(content);
+
+    toast.onClose().subscribe(data => console.log(data))
+    // const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
+    // this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
+    //   if (response) this._katFacade.deleteFunktion(id)
+    // })
   }
 }

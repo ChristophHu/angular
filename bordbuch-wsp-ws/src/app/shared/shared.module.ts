@@ -32,7 +32,7 @@ import { TooltipModule } from './directives/tooltip/tooltip.module'
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overlapArrayByProperty'
 import { OrderByPipe } from './pipes/order-by/order-by.pipe'
-import { ImageSliderModule } from './components/image-slider/image-slider.module'
+import { NotificationModule } from 'projects/notification/src/public-api'
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     IsRoleOfDirective,
     TitlecasePipe,
     SanitizeHtmlPipe,
+    ImageSliderComponent,
     CarouselItemDirective,
     ToArrayPipe,
     ProgressComponent,
@@ -61,7 +62,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     // icon lib
     IconLibraryModule,
     IvyCarouselModule,
-    ImageSliderModule,
+    NotificationModule,
 
     // mat
     MatCheckboxModule,
@@ -81,6 +82,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
   ],
   exports: [
     // components
+    ImageSliderComponent,
     ProgressComponent,
     PageNotFoundComponent,
 
@@ -105,6 +107,7 @@ import { ImageSliderModule } from './components/image-slider/image-slider.module
     IconLibraryModule,
     IvyCarouselModule,
     RxjsNotificationsModule,
+    NotificationModule,
 
     // mat
     MatCheckboxModule,

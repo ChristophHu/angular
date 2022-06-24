@@ -184,6 +184,37 @@
         }
       }
     },
+    "notification": {
+      "projectType": "library",
+      "root": "projects/notification",
+      "sourceRoot": "projects/notification/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/notification/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/notification/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/notification/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/notification/src/test.ts",
+            "tsConfig": "projects/notification/tsconfig.spec.json",
+            "karmaConfig": "projects/notification/karma.conf.js"
+          }
+        }
+      }
+    },
     "plotly": {
       "projectType": "library",
       "root": "projects/plotly",
