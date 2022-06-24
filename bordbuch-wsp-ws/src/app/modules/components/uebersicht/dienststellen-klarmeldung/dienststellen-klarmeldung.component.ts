@@ -78,7 +78,6 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
 
       let inst: boolean = false
       this.instandsetzungen.forEach((instandsetzung: Instandsetzung) => {
-        console.log(instandsetzung)
         if (instandsetzung.id_schiff == el.id && instandsetzung.klar == false) inst = true
       })
       if (inst) this.inst[index] += 1
@@ -184,7 +183,7 @@ export class DienststellenKlarmeldungComponent implements AfterViewInit {
       },
 
       width: 500,
-      height: 340,
+      height: 400,
       margin: {
         t: 20,
         b: 20

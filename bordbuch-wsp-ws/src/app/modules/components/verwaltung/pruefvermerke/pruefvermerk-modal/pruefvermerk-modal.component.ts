@@ -53,7 +53,6 @@ export class PruefvermerkModalComponent implements OnInit {
   }
   update() {
     let update: Pruefvermerk = this.pruefvermerkForm.value
-    console.log(update)
     this._katFacade.updatePruefvermerk(update)
     this.modal?.close()
   }

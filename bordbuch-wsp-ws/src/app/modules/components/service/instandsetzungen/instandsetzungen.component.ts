@@ -20,7 +20,6 @@ export class InstandsetzungenComponent implements OnInit {
 
   constructor(private _modalService: ModalService<InstandsetzungModalComponent>, private _specFacade: SpecFacade) {
     this.instandsetzungen$ = this._specFacade.allInstandsetzungen$
-    this._specFacade.allInstandsetzungen$.subscribe(data => console.log(data))
   }
 
   ngOnInit(): void {

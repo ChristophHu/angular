@@ -32,7 +32,6 @@ const routes: Routes = [
     Resolver,
     KatFacade,
     SpecFacade
-    // AppService
   ]
 })
 export class WsRoutingModule { }

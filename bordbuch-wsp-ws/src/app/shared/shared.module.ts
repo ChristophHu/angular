@@ -32,6 +32,7 @@ import { TooltipModule } from './directives/tooltip/tooltip.module'
 import { SliceArrayByPropertyPipe } from './pipes/sliceArrayByProperty/sliceArrayByProperty'
 import { OverlapArrayByPropertyPipe } from './pipes/overlapArrayByProperty/overlapArrayByProperty'
 import { OrderByPipe } from './pipes/order-by/order-by.pipe'
+import { ImageSliderModule } from './components/image-slider/image-slider.module'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,6 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe'
     IsRoleOfDirective,
     TitlecasePipe,
     SanitizeHtmlPipe,
-    ImageSliderComponent,
     CarouselItemDirective,
     ToArrayPipe,
     ProgressComponent,
@@ -61,6 +61,7 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe'
     // icon lib
     IconLibraryModule,
     IvyCarouselModule,
+    ImageSliderModule,
 
     // mat
     MatCheckboxModule,
@@ -80,7 +81,6 @@ import { OrderByPipe } from './pipes/order-by/order-by.pipe'
   ],
   exports: [
     // components
-    ImageSliderComponent,
     ProgressComponent,
     PageNotFoundComponent,
 

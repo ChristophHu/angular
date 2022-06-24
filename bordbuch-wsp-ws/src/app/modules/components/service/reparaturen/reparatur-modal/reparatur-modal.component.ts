@@ -38,7 +38,6 @@ export class ReparaturModalComponent implements OnInit {
     this.status$ = _katFacade.status$
     this.schiffe$ = _katFacade.schiffe$
     this.reparaturfotos$ = this._specFacade.allReparaturFotos$
-    this._specFacade.allReparaturFotos$.subscribe(data => console.log(data))
     this.reparaturFotoCount$ = _specFacade.allReparaturFotoCount$
 
     this.reparaturForm = this._formBuilder.group({
@@ -62,12 +61,10 @@ export class ReparaturModalComponent implements OnInit {
       this.reparaturForm.patchValue(data.data.reparatur)
 
       if (data.data.reparatur) {
-        console.log(data.data.reparatur.id)
         this.selectKategorie(data.data.reparatur.kategorie)
         this.selectStatus(data.data.reparatur.status)
 
         this._specFacade.getReparaturFotosById(data.data.reparatur.id).subscribe(fotos => {
-          console.log(fotos)
           this.images = []
           if (fotos && fotos.length > 0) this.decodeImages(fotos)
         })

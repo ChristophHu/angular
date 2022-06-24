@@ -55,7 +55,6 @@ export const reducer = createReducer(
 
     // betankungen
     on(loadedAllBetankungen, (state, action) => {
-        console.log('loadAllBetankungen')
         return {
             ...state,
             betankungen: action.betankungen

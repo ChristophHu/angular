@@ -116,8 +116,8 @@ export class BooteKlarmeldungComponent implements AfterViewInit {
     ]
 
     const layout: any = {
-      width: 340,
-      height: 340,
+      width: 400,
+      height: 400,
       margin: {
         t: 20, 
         l: 0, 

@@ -16,26 +16,26 @@ export class AuthGuard implements CanActivate {
             select(isLoggedIn),
             tap(loggedIn => {
                 if (!loggedIn) {
-                    console.log('AuthGuard-canActivate: false')
+                    // console.log('AuthGuard-canActivate: false')
                     this._router.navigateByUrl('/login')
                 } else {
-                    console.log('AuthGuard-canActivate: true')
+                    // console.log('AuthGuard-canActivate: true')
                 }
             })
         )
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        return this.store.pipe(
-            select(isLoggedIn),
-            tap(loggedIn => {
-                if (!loggedIn) {
-                    console.log('AuthGuard-canActivateChild: false')
-                    this._router.navigateByUrl('/login')
-                } else {
-                    console.log('AuthGuard-canActivateChild: true')
-                }
-            })
-        )
-    }
+    // canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    //     return this.store.pipe(
+    //         select(isLoggedIn),
+    //         tap(loggedIn => {
+    //             if (!loggedIn) {
+    //                 console.log('AuthGuard-canActivateChild: false')
+    //                 this._router.navigateByUrl('/login')
+    //             } else {
+    //                 console.log('AuthGuard-canActivateChild: true')
+    //             }
+    //         })
+    //     )
+    // }
 }

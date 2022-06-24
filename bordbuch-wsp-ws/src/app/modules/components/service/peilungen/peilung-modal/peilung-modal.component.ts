@@ -33,10 +33,9 @@ export class PeilungModalComponent implements OnInit {
     private _specFacade: SpecFacade
   ) {
     this.betriebsstoffe$ = _katFacade.betriebsstoffe$
-    this.schiffe$ = _katFacade.schiffe$
-    this.tank$ = _specFacade.allTanks$
+    this.schiffe$ = this._katFacade.schiffe$
+    this.tank$ = this._specFacade.allTanks$
 
-    _specFacade.allTanks$.subscribe(data => console.log(data))
 
     this.peilungForm = this._formBuilder.group({
       id: [],
@@ -59,7 +58,6 @@ export class PeilungModalComponent implements OnInit {
         this.peilungForm.patchValue(data.data.peilung)
   
         this.tank$ = this._specFacade.getTankByIDShip(data.data.peilung.id_schiff) as Observable<Tank[]>
-        // this._specFacade.getTankByIDShip(data.data.peilung.id_schiff).subscribe(data => console.log(data))
       }
     })
   }
@@ -85,7 +83,6 @@ export class PeilungModalComponent implements OnInit {
   }
   update() {
     let update: Peilung = this.peilungForm.value
-    console.log(update)
     this._specFacade.updatePeilung(update)
     this.modal?.close()
   }

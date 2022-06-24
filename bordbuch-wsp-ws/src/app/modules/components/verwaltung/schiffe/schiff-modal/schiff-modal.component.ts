@@ -59,7 +59,6 @@ export class SchiffModalComponent implements OnInit {
     const insert: Schiff = this.schiffForm.value
     this._katFacade.insertSchiff(insert)
     this._katFacade.schiffe$.subscribe((schiffe: Schiff[])=> {
-      console.log(schiffe)
       this._katFacade.getIdByShip(insert.name).subscribe(id => {
         if (id) {
           this.createFirstChecklist(id, insert)
@@ -104,7 +103,6 @@ export class SchiffModalComponent implements OnInit {
       kraftstoff: 'Diesel',
       max_vol: '100'
     }
-    console.log(tank)
     this._specFacade.insertTank(tank)
   }
 

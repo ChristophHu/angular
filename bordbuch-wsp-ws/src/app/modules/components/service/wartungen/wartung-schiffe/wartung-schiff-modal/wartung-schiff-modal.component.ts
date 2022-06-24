@@ -64,7 +64,6 @@ export class WartungSchiffModalComponent implements OnInit {
   }
 
   selectZaehlerstandstyp(zaehlerstandstyp: string) {
-    console.log(zaehlerstandstyp)
     this._katFacade.getIdByZaehlerstandstyp(zaehlerstandstyp).subscribe(id => this.zaehlerstandForm.patchValue({ id_zaehlerstandstyp: id }))
   }
   selectShip(name: string) {
@@ -86,13 +85,6 @@ export class WartungSchiffModalComponent implements OnInit {
   // }
   update() {
     let update: Zaehlerstand = this.zaehlerstandForm.value
-    // this._katFacade.getShipById(this.zaehlerstandForm.value.id).subscribe(schiff => {
-    //   if (schiff) {
-    //     let update: Schiff = Object.assign({}, schiff, { durchsicht: this.zaehlerstandForm.value.betriebsstunden })
-    //     console.log(update)
-    //     this._katFacade.updateSchiff(update)
-    //   }
-    // })
     this._specFacade.updateZaehlerstand(update)
     this.modal?.close()
   }

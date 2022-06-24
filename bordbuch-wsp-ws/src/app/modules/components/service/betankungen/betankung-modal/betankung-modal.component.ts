@@ -70,9 +70,6 @@ export class BetankungModalComponent implements OnInit {
   selectShip(name: string) {
     this._katFacade.getIdByShip(name).subscribe((id: any) => this.betankungForm.patchValue({ id_ship: id }))
     this.tanks$ = this._specFacade.getTankByIDShip(this.betankungForm.value.id_ship) as Observable<Tank[]>
-    this._specFacade.allTanks$.subscribe((data: any) => {
-      console.log(data)
-    })
   }
   selectTank(name: string) {
     this._specFacade.getIdByTank(name).subscribe((id: any) => this.betankungForm.patchValue({ id_tank: id }))

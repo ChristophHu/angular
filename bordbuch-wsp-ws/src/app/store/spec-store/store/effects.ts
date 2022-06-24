@@ -148,8 +148,7 @@ export class Effects {
             ofType(loadAllKlarmeldungen),
             switchMap(action => {
                 return this.appService.getKlarmeldungen().pipe(
-                    map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen })),
-                    tap(data => console.log(data))
+                    map((klarmeldungen: Klarmeldung[]) => loadAllKlarmeldungenSuccess({ klarmeldungen }))
                 )
             })
         )
