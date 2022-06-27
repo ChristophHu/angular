@@ -122,10 +122,9 @@ export class KatFunktionenComponent implements OnInit {
     let toast: NotificationHandler | null = null;
     toast = contentObj.config ? this.notificationService.open(content, config) : this.notificationService.open(content);
 
-    toast.onClose().subscribe(data => console.log(data))
-    // const notification: Notification = { content: 'Soll dieser Eintrag wirklich entfernt werden?', title: 'Eintrag löschen', type: NotificationType.Alert, exception: ExceptionType.YesNo }
-    // this._RxjsNotificationService.addAndResponseNotification(notification).pipe(take(1)).subscribe((response: boolean) => {
-    //   if (response) this._katFacade.deleteFunktion(id)
-    // })
+    toast.onClose().subscribe(data => {
+      console.log(data.response)
+      if (data.response) this._katFacade.deleteFunktion(id)
+    })
   }
 }
