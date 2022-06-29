@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { UebersichtComponent } from './uebersicht.component';
 import { BooteKlarmeldungComponent } from './boote-klarmeldung/boote-klarmeldung.component';
 import { DienststellenKlarmeldungComponent } from './dienststellen-klarmeldung/dienststellen-klarmeldung.component';
+import { AusfallzeitenComponent } from './ausfallzeiten/ausfallzeiten.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -21,7 +22,8 @@ const routes: Routes = [
   declarations: [
     UebersichtComponent,
     BooteKlarmeldungComponent,
-    DienststellenKlarmeldungComponent
+    DienststellenKlarmeldungComponent,
+    AusfallzeitenComponent
   ],
   imports: [
     RouterModule.forChild(routes),

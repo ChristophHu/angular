@@ -119,8 +119,8 @@ export class KatFunktionenComponent implements OnInit {
     }
 
     const { content, config } = contentObj;
-    let toast: NotificationHandler | null = null;
-    toast = contentObj.config ? this.notificationService.open(content, config) : this.notificationService.open(content);
+    let toast: NotificationHandler | null = null
+    toast = contentObj.config ? this.notificationService.open(content, config) : this.notificationService.open(content)
 
     toast.onClose().subscribe(data => {
       console.log(data.response)

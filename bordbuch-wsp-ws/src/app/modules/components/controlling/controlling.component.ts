@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Zaehlerstandstyp } from 'src/app/core/models/zaehlerstandstyp.model';
 import { KatFacade } from 'src/app/store/kat-store/kat.facade';
 import { SpecFacade } from 'src/app/store/spec-store/spec.facade';
 

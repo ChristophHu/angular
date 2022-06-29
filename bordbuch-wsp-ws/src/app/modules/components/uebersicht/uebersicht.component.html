@@ -39,6 +39,17 @@
                     <div class="mt-2 text-blue-400 cursor-pointer" [routerLink]="['/service/instandsetzungen']">> Instandsetzungen</div>
                 </div>
             </div>
+
+            <div class="w-full mb-8 sm:mb-0 mr-0 sm:mr-8 rounded bg-white dark:bg-gray-800 shadow">
+                <h2 class="m-2 text-center text-2xl">Ausfallzeiten</h2>
+                <div class="flex justify-center w-full h-128 border-b border-gray-400 dark:border-gray-600 rounded-t">
+                    <app-ausfallzeiten></app-ausfallzeiten>
+                </div>
+                <div class="w-full p-4 bg-gray-100 dark:bg-gray-600 text-gray-700 rounded-b">
+                    <p>Verteilung von einsatzbereiten und unklaren Schiffen nach hinterlegter Dienststelle.</p>
+                    <div class="mt-2 text-blue-400 cursor-pointer" [routerLink]="['/service/klarmeldungen']">> Klarmeldungen</div>
+                </div>
+            </div>
         </div>
         * Die angezeigten Daten haben den Stand <span>{{ today | date: 'HH:mm dd.MM.yyyy' }}</span>
     </div>
