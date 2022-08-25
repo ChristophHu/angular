@@ -56,7 +56,7 @@ export const loadAllInstandsetzungen = createAction(
 )
 export const loadAllInstandsetzungenSuccess = createAction(
 	"[Load Spec Effect] Load Instandsetzungen Success",
-	props<{ instandsetzungen: Klarmeldung[] }>()
+	props<{ instandsetzungen: Instandsetzung[] }>()
 )
 export const insertInstandsetzung = createAction(
 	"[Spec Facade] Insert Instandsetzung",

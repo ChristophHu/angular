@@ -26,49 +26,51 @@ export class AusfallzeitenComponent implements OnInit {
     console.log(klar)
 
     this._katFacade.schiffe$.subscribe((schiffe: Schiff[]) => {
-      schiffe.forEach(schiff => {
-        this.schiffe.push(Object.assign({}, { name: schiff.name, klar: klar }))
-      })
+      if (schiffe) {
+        schiffe.forEach(schiff => {
+          this.schiffe.push(Object.assign({}, { name: schiff.name, klar: klar }))
+        })
+      }
     })
 
     // unklar
     this._specFacade.allKlarmeldungen$.subscribe((klarmeldungen: Klarmeldung[]) => {
-      klarmeldungen.forEach(klarmeldung => {
-        if (klarmeldung.ende) {
-          const ende: string = klarmeldung.ende.slice(0, -1)
-          const endeD: Date = new Date(ende)
-          var klar = Math.round((new Date(klarmeldung.beginn.slice(0, -1)).valueOf() - new Date(klarmeldung.ende.slice(0, -1)).valueOf()) / (1000 * 3600))
-        } else {
-          var klar = Math.round((new Date(klarmeldung.beginn.slice(0, -1)).valueOf() - new Date().valueOf()) / (1000 * 3600))
-        }
-
-        let schiff = this.schiffe.find(schiff => schiff['name'] == klarmeldung.name)
-        this.schiffe.filter(schiff => schiff['name'] != klarmeldung.name)
-
-        schiff = Object.assign({}, schiff, { klar: schiff.klar - klar, unklar: schiff.unklar + klar })
-
-        this.schiffe.push(schiff)        
-      })
+      if (klarmeldungen) {
+        klarmeldungen.forEach(klarmeldung => {
+          if (klarmeldung.ende) {
+            var klar = Math.round((new Date(klarmeldung.beginn.slice(0, -1)).valueOf() - new Date(klarmeldung.ende.slice(0, -1)).valueOf()) / (1000 * 3600))
+          } else {
+            var klar = Math.round((new Date(klarmeldung.beginn.slice(0, -1)).valueOf() - new Date().valueOf()) / (1000 * 3600))
+          }
+  
+          let schiff = this.schiffe.find(schiff => schiff['name'] == klarmeldung.name)
+          this.schiffe.filter(schiff => schiff['name'] != klarmeldung.name)
+  
+          schiff = Object.assign({}, schiff, { klar: schiff.klar - klar, unklar: schiff.unklar + klar })
+  
+          this.schiffe.push(schiff)        
+        })
+      }
     })
 
     // inst
     this._specFacade.allInstandsetzungen$.subscribe((instandsetzungen: Instandsetzung[]) => {
-      instandsetzungen.forEach(instandsetzung => {
-        if (instandsetzung.ende) {
-          const ende: string = instandsetzung.ende.slice(0, -1)
-          const endeD: Date = new Date(ende)
-          var inst = Math.round((new Date(instandsetzung.beginn.slice(0, -1)).valueOf() - new Date(instandsetzung.ende.slice(0, -1)).valueOf()) / (1000 * 3600))
-        } else {
-          var inst = Math.round((new Date(instandsetzung.beginn.slice(0, -1)).valueOf() - new Date().valueOf()) / (1000 * 3600))
-        }
-
-        let schiff = this.schiffe.find(schiff => schiff['name'] == instandsetzung.name)
-        this.schiffe.filter(schiff => schiff['name'] != instandsetzung.name)
-
-        schiff = Object.assign({}, schiff, { klar: schiff.klar - inst, inst: schiff.unklar + inst })
-
-        this.schiffe.push(schiff)        
-      })
+      if (instandsetzungen) {
+        instandsetzungen.forEach(instandsetzung => {
+          if (instandsetzung.ende) {
+            var inst = Math.round((new Date(instandsetzung.beginn.slice(0, -1)).valueOf() - new Date(instandsetzung.ende.slice(0, -1)).valueOf()) / (1000 * 3600))
+          } else {
+            var inst = Math.round((new Date(instandsetzung.beginn.slice(0, -1)).valueOf() - new Date().valueOf()) / (1000 * 3600))
+          }
+  
+          let schiff = this.schiffe.find(schiff => schiff['name'] == instandsetzung.name)
+          this.schiffe.filter(schiff => schiff['name'] != instandsetzung.name)
+  
+          schiff = Object.assign({}, schiff, { klar: schiff.klar - inst, inst: schiff.unklar + inst })
+  
+          this.schiffe.push(schiff)        
+        })
+      }
     })
 
     console.log(this.schiffe)
