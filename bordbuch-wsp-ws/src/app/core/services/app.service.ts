@@ -29,10 +29,10 @@ import { ConnectionService } from './connection.service';
 
 export class AppService {
 
-    private inst: Instandsetzung[] = [
-        { id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', name: 'Neues Testschiff', klar: false, beginn: getLocalISO('now') },
-        { id: '2', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', name: 'Neues Testschiff', klar: true, beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
-    ]
+    // private inst: Instandsetzung[] = [
+    //     { id: '1', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', name: 'Neues Testschiff', klar: false, beginn: getLocalISO('now') },
+    //     { id: '2', id_schiff: '3f1149ac-2aac-488f-aac1-2994a47d6ff0', name: 'Neues Testschiff', klar: true, beginn: getLocalISO('yesterday'), ende: getLocalISO('now') }
+    // ]
 
     constructor(private _store: Store, private httpClient: HttpClient, private _connectionService: ConnectionService) {
         this._store.pipe(select(selectToken)).subscribe((token: string) => {
@@ -153,6 +153,17 @@ export class AppService {
 
             case 'updateKatZaehlerstand':
                 param = `id=${data.id}&zaehlerstandstyp=${data.zaehlerstandstyp}`
+                break
+
+            // instandsetzungen
+            case 'insertInstandsetzung':
+                param = `id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
+                break
+            case 'updateInstandsetzung':
+                param = `id=${data.id}&id_schiff=${data.id_schiff}&beginn=${data.beginn}&ende=${data.ende}&klar=${data.klar}`
+                break
+            case 'deleteInstandsetzung':
+                param = `id=${data}`
                 break
             
             // klarmeldungen
@@ -296,6 +307,7 @@ export class AppService {
             case 'getKatBetriebsstoffe':
             case 'getKatFunktionen':
             case 'getKatKennungen':
+            case 'getInstandsetzungenAll':
             case 'getKlarmeldungenAll':
             case 'getLastChecklistAll':
             case 'getLastPositionsFromAllShips':
@@ -530,43 +542,17 @@ export class AppService {
 
     // instandsetzungen
     getInstandsetzungen(): Observable<any> {
-        return new Observable ((observer) => {
-            const source$ = of(this.inst)
-            source$.subscribe((data: any) => {
-                observer.next(data)
-            }, (error: any) => observer.error(error))
-        })
+        return this.get('getInstandsetzungenAll')
     }
     insertInstandsetzung(insert: Instandsetzung): Observable<any> {
-        // console.log(insert)
-        // this.inst.push(insert)
-        // console.log(this.inst)
-        return new Observable ((observer) => {
-            const source$ = of(null)
-            source$.subscribe((data: any) => {
-                observer.next(Date.now())
-            }), (error: any) => observer.error(error)
-        })
+
+        return this.insert(insert, 'insertInstandsetzung')
     }
     updateInstandsetzung(update: Instandsetzung): Observable<any> {
-        let cleared = this.inst.filter(el => el.id !== update.id)
-        cleared.push(update)
-        return new Observable ((observer) => {
-            const source$ = of(200)
-            source$.subscribe((status: any) => {
-                observer.next(status)
-            }),
-            (error: any) => observer.error(error)
-        })
+        return this.update(update, 'updateInstandsetzung')
     }
     deleteInstandsetzung(id: string): Observable<any> {
-        this.inst.filter(el => el.id !== id)
-        return new Observable ((observer) => {
-            const source$ = of(200)
-            source$.subscribe((status: any) => {
-                observer.next(status)
-            }), (error: any) => observer.error(error)
-        })
+        return this.delete(id, 'deleteInstandsetzung')
     }
 
     // klarmeldungen
